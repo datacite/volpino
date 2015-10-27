@@ -92,7 +92,7 @@ end
 
 namespace :deploy do
   before :starting, "files:upload"
-  before :starting, "sidekiq:quiet"
+  #before :starting, "sidekiq:quiet"
 
   desc 'Restart application'
   task :restart do
@@ -102,10 +102,8 @@ namespace :deploy do
   end
 
   after :publishing, :restart
-  after :publishing, "data:migrate"
-  after :publishing, "swagger:docs"
 
   after :finishing, "deploy:cleanup"
-  after :finishing, "sidekiq:stop"
-  after :finished, "sidekiq:start"
+  #after :finishing, "sidekiq:stop"
+  #after :finished, "sidekiq:start"
 end
