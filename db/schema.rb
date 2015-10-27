@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20151026185035) do
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer  "resource_owner_id", limit: 4,     null: false
     t.integer  "application_id",    limit: 4,     null: false
-    t.string   "token",             limit: 255,   null: false
+    t.string   "token",             limit: 191,   null: false
     t.integer  "expires_in",        limit: 4,     null: false
     t.text     "redirect_uri",      limit: 65535, null: false
     t.datetime "created_at",                      null: false
@@ -29,8 +29,8 @@ ActiveRecord::Schema.define(version: 20151026185035) do
   create_table "oauth_access_tokens", force: :cascade do |t|
     t.integer  "resource_owner_id", limit: 4
     t.integer  "application_id",    limit: 4
-    t.string   "token",             limit: 255, null: false
-    t.string   "refresh_token",     limit: 255
+    t.string   "token",             limit: 191, null: false
+    t.string   "refresh_token",     limit: 191
     t.integer  "expires_in",        limit: 4
     t.datetime "revoked_at"
     t.datetime "created_at",                    null: false
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20151026185035) do
 
   create_table "oauth_applications", force: :cascade do |t|
     t.string   "name",         limit: 255,                null: false
-    t.string   "uid",          limit: 255,                null: false
+    t.string   "uid",          limit: 191,                null: false
     t.string   "secret",       limit: 255,                null: false
     t.text     "redirect_uri", limit: 65535,              null: false
     t.string   "scopes",       limit: 255,   default: "", null: false
