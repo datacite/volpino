@@ -1,0 +1,10 @@
+{
+  "run_list": [
+    "recipe[volpino]"
+  ],
+  "phantomjs": {
+    "version": "1.9.7",
+    "base_url": "https://bitbucket.org/ariya/phantomjs/downloads" },
+  "redisio": {
+    "version": "3.0.2" }
+}
