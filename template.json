@@ -5,8 +5,8 @@
       "access_key": "{{user `access_key`}}",
       "secret_key": "{{user `secret_key`}}",
       "region": "us-east-1",
-      "source_ami": "ami-4dfb5d26",
-      "instance_type": "m3.medium",
+      "source_ami": "ami-77fb5d1c",
+      "instance_type": "m1.small",
       "ssh_username": "ubuntu",
       "ami_name": "volpino {{timestamp}}"
     }
@@ -31,7 +31,7 @@
   "post-processors": [
     {
       "type": "atlas",
-      "artifact": "{{user `atlas_name`}}",
+      "artifact": "datacite/volpino",
       "artifact_type": "amazon.ami",
       "token": "{{user `atlas_token`}}",
       "metadata": {
@@ -46,13 +46,12 @@
     "headless": "false",
     "memory": "2048",
     "mirror": "http://releases.ubuntu.com",
-    "access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
-    "secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
-    "atlas_token": "{{env `ATLAS_TOKEN`}}",
-    "atlas_name": "{{env `ATLAS_NAME`}}"
+    "access_key": "{{env `AWS_KEY`}}",
+    "secret_key": "{{env `AWS_SECRET`}}",
+    "atlas_token": "{{env `ATLAS_TOKEN`}}"
   },
    "push": {
-    "name": "{{user `atlas_name`}}",
+    "name": "datacite/volpino",
     "vcs": true
   }
 }
