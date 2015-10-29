@@ -6,8 +6,10 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      .logo
+      %span.logo.pull-left
         = link_to image_tag('logo-small.png'), root_path
+      %a.navbar-brand{href: "#"}
+        Profiles
 
     .navbar-collapse.collapse
       - unless ["sessions","registrations"].include?(controller.controller_name)
