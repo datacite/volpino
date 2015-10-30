@@ -239,8 +239,7 @@ Devise.setup do |config|
 
   config.omniauth :orcid, ENV['ORCID_CLIENT_ID'], ENV['ORCID_CLIENT_SECRET'],
                           authorize_params: {
-                            #scope: '/orcid-profile/read-limited /orcid-works/create'
-                            scope: '/authenticate'
+                            scope: '/orcid-profile/read-limited /orcid-works/create'
                           },
                           client_options: {
                             site: ENV['ORCID_API_URL'],
