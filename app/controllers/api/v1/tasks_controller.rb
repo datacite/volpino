@@ -1,7 +1,7 @@
 module Api
   module V1
     class TasksController < ApplicationController
-      doorkeeper_for :all
+      before_action :doorkeeper_authorize!
       respond_to :json
 
       def index
@@ -14,7 +14,7 @@ module Api
       end
 
       private
-      
+
       def current_user
         @current_user ||= User.find(doorkeeper_token.resource_owner_id)
       end
