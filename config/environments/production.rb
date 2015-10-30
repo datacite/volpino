@@ -44,9 +44,9 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
 
-  # Use the lowest log level to ensure availability of diagnostic information
-  # when problems arise.
-  config.log_level = :debug
+  # See everything in the log (default is :info)
+  log_level = ENV["LOG_LEVEL"] ? ENV["LOG_LEVEL"].to_sym : :info
+  config.log_level = log_level
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]

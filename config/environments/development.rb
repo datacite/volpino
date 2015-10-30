@@ -36,6 +36,9 @@ Rails.application.configure do
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
 
+  # See everything in the log (default is :info)
+  config.log_level = :debug
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end
