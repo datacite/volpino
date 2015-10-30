@@ -9,5 +9,12 @@
     "bootstrap-sass": "~3.3.4",
     "font-awesome": "~4.4.0",
     "queue-async": "~1.0.7"
+  },
+  "overrides": {
+    "font-awesome": {
+      "main": [
+        "./fonts/*"
+      ]
+    }
   }
 }
