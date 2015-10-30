@@ -28,6 +28,7 @@ gem 'devise', '~> 3.5', '>= 3.5.2'
 gem 'doorkeeper', '~> 3.0', '>= 3.0.1'
 gem 'omniauth-orcid', '~> 1.0'
 gem 'omniauth-github'
+gem 'httplog'
 gem 'cancancan', '~> 1.9.2'
 
 gem 'sprockets-rails', '~> 2.2.0', :require => 'sprockets/railtie'
@@ -44,7 +45,6 @@ group :development do
   gem 'capistrano-bundler', '~> 1.1.2', :require => false
   gem 'capistrano-npm', '~> 1.0.0'
   gem 'hologram', '~> 1.3.1'
-  gem 'httplog'
 end
 
 group :development, :test do
