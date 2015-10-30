@@ -3,13 +3,13 @@ labs_links:
    url: http://blog.labs.datacite.org
    icon: rss
  - name: Profiles
-   url: http://profiles.labs.datacite.org
+   url: https://profiles.labs.datacite.org
    icon: user
  - name: Schema
    url: http://schema.labs.datacite.org
    icon: file-code-o
  - name: Search
-   url: http://search.labs.datacite.org
+   url: https://search.labs.datacite.org
    icon: search
 production_links:
  - name: Blog

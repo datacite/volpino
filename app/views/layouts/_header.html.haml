@@ -6,13 +6,12 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      %span.logo.pull-left
-        = link_to image_tag('logo-small.png'), 'http://www.datacite.org'
+      = link_to image_tag('logo-small.png', class: 'logo'), 'http://www.datacite.org'
+
+    .navbar-collapse.collapse
       %a.navbar-brand{href: "/"}
         = icon('user')
         Profiles
-
-    .navbar-collapse.collapse
       - unless ["sessions","registrations"].include?(controller.controller_name)
         %ul.nav.navbar-nav.navbar-right
           - if user_signed_in?
