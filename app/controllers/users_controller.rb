@@ -20,8 +20,6 @@ class UsersController < ApplicationController
     else
       # admin updates user account
       @user = User.find(params[:id])
-      @reports = Report.available(@user.role)
-      @doc = Doc.find("api")
       load_index
       render :index
     end
@@ -33,15 +31,7 @@ class UsersController < ApplicationController
 
       load_user
 
-      if params[:user][:subscribe]
-        report = Report.find(params[:user][:subscribe])
-        @user.reports << report
-      elsif params[:user][:unsubscribe]
-        report = Report.find(params[:user][:unsubscribe])
-        @user.reports.delete(report)
-      else
-        sign_in @user, :bypass => true if @user.update_attributes(safe_params)
-      end
+      sign_in @user, :bypass => true if @user.update_attributes(safe_params)
 
       render :show
     else
@@ -59,17 +49,6 @@ class UsersController < ApplicationController
     @user.destroy
     load_index
     render :index
-  end
-
-  def update_password
-    load_user
-    if @user.update_with_password(user_params)
-      # Sign in the user by passing validation in case his password changed
-      sign_in @user, :bypass => true
-      redirect_to root_path
-    else
-      render "edit"
-    end
   end
 
   protected
@@ -99,12 +78,8 @@ class UsersController < ApplicationController
   def safe_params
     params.require(:user).permit(:name,
                                  :email,
-                                 :password,
-                                 :password_confirmation,
-                                 :subscribe,
-                                 :unsubscribe,
+                                 :auto_update,
                                  :role,
-                                 :publisher_id,
                                  :authentication_token)
   end
 end

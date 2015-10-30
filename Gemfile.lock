@@ -150,6 +150,7 @@ GEM
       haml (~> 4.0.0)
       nokogiri (~> 1.6.0)
       ruby_parser (~> 3.5)
+    httplog (0.2.11)
     i18n (0.7.0)
     jbuilder (2.2.16)
       activesupport (>= 3.0.0, < 5)
@@ -349,6 +350,7 @@ DEPENDENCIES
   github-markdown (~> 0.6.3)
   haml-rails (~> 0.9)
   hologram (~> 1.3.1)
+  httplog
   jbuilder (~> 2.2.12)
   mysql2 (= 0.3.18)
   omniauth-github

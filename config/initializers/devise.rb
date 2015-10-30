@@ -232,20 +232,24 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
+
   config.omniauth :github, ENV['GITHUB_CLIENT_ID'],
                            ENV['GITHUB_CLIENT_SECRET'],
                            scope: "user,repo" if ENV['GITHUB_CLIENT_ID']
 
-  # config.omniauth :orcid, ENV['ORCID_CLIENT_ID'], ENV['ORCID_CLIENT_SECRET'],
-  #                         authorize_params: {
-  #                           scope: '/orcid-profile/read-limited /orcid-works/create'
-  #                         },
-  #                         client_options: {
-  #                           site: ENV['ORCID_API_URL'],
-  #                           authorize_url: "#{ENV['ORCID_URL']}/oauth/authorize",
-  #                           token_url: "#{ENV['ORCID_API_URL']}/oauth/token"
-  #                         },
-  #                         provider_ignores_state: true
+  config.omniauth :orcid, ENV['ORCID_CLIENT_ID'], ENV['ORCID_CLIENT_SECRET'],
+                          authorize_params: {
+                            #scope: '/orcid-profile/read-limited /orcid-works/create'
+                            scope: '/authenticate'
+                          },
+                          client_options: {
+                            site: ENV['ORCID_API_URL'],
+                            authorize_url: "#{ENV['ORCID_URL']}/oauth/authorize",
+                            token_url: "#{ENV['ORCID_API_URL']}/oauth/token"
+                          }
+                          # provider_ignores_state: true
+
+  OmniAuth.config.logger = Rails.logger
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

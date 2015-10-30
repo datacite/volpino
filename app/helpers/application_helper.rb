@@ -28,16 +28,20 @@ module ApplicationHelper
   def auto_update_text
     if !user_signed_in?
       'panel-default'
-    else
+    elsif current_user.auto_update
       'panel-success'
+    else
+      'panel-warning'
     end
   end
 
   def enabled_text
     if !user_signed_in?
       ''
-    else
+    elsif current_user.auto_update
       '<span class="small pull-right">enabled</span>'
+    else
+      '<span class="small pull-right">disabled</span>'
     end
   end
 

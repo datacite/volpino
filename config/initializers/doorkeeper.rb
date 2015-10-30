@@ -3,7 +3,7 @@ Doorkeeper.configure do
   orm :active_record
 
   resource_owner_authenticator do
-    User.find_by_id(session[:user_id]) || redirect_to(new_user_session_url)
+    User.find_by_id(session[:user_id]) || redirect_to(new_session_url)
   end
 
   # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.
@@ -18,7 +18,7 @@ Doorkeeper.configure do
 
   # Access token expiration time (default 2 hours).
   # If you want to disable expiration, set this to nil.
-  # access_token_expires_in 2.hours
+  access_token_expires_in 6.months
 
   # Assign a custom TTL for implicit grants.
   # custom_access_token_expires_in do |oauth_client|

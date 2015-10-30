@@ -9,7 +9,6 @@ gem 'sinatra', :require => nil
 gem "config"
 gem "whenever", "~> 0.9.0", require: false
 gem 'bugsnag', '~> 2.8.6'
-gem 'doorkeeper', '~> 3.0', '>= 3.0.1'
 gem "faraday", "~> 0.9.0"
 gem "faraday_middleware", "~> 0.9.1"
 gem 'excon', '~> 0.45.3'
@@ -26,6 +25,7 @@ gem "github-markdown", "~> 0.6.3"
 gem "rouge", "~> 1.7.2"
 
 gem 'devise', '~> 3.5', '>= 3.5.2'
+gem 'doorkeeper', '~> 3.0', '>= 3.0.1'
 gem 'omniauth-orcid', '~> 1.0'
 gem 'omniauth-github'
 gem 'cancancan', '~> 1.9.2'
@@ -44,6 +44,7 @@ group :development do
   gem 'capistrano-bundler', '~> 1.1.2', :require => false
   gem 'capistrano-npm', '~> 1.0.0'
   gem 'hologram', '~> 1.3.1'
+  gem 'httplog'
 end
 
 group :development, :test do

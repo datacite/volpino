@@ -10,7 +10,6 @@
   <div class="panel-body">
     <% if can?(:create, User) && (controller.action_name == "edit" || (controller.action_name == "update" && !@user.errors.empty?)) %>
       <%= simple_form_for @user, :url => user_path(@user), :html => { :remote => true } do |f| %>
-          <%= f.input :name, input_html: { class: "form-user" } %>
           <%= f.input :email, input_html: { class: "form-user" } %>
           <%= f.input :authentication_token, label: "API key", input_html: { class: "form-user" } %>
 
@@ -23,6 +22,8 @@
       <dl class="dl-horizontal">
         <dt>Name</dt>
         <dd><%= @user.name %></dd>
+        <dt>ORCID</dt>
+        <dd><%= link_to "https://orcid.org/#{@user.uid}", "https://orcid.org/#{@user.uid}" %></dd>
         <% if @user.email.present? %>
           <dt>Email</dt>
           <dd><%= @user.email %></dd>
@@ -31,13 +32,15 @@
         <dd><%= @user.authentication_token %></dd>
         <dt>Role</dt>
         <% if @user.role == "admin" %>
-          <dd>Admin - full access to the admin dashboard</dd>
+          <dd>Admin</dd>
         <% elsif @user.role == "staff" %>
-          <dd>Staff - read access to the admin dashboard</dd>
+          <dd>Staff</dd>
         <% else %>
-          <dd>User - read access to the API</dd>
+          <dd>User</dd>
         <% end %>
       </dl>
     <% end %>
   </div>
 </div>
+
+<%= render :partial => 'orcid' %>

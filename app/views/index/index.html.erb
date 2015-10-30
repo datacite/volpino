@@ -1,0 +1,34 @@
+<div class="panel panel-default">
+  <div class="panel-heading panel-title">
+    DataCite Profiles
+  </div>
+  <div class="panel-body">
+    <p>Please register with <strong>DataCite Profiles</strong> for DataCite services that require authentication. You register by signing in via your ORCID account. The supported services are listed below, other services will be added over time.</p>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading panel-title">
+    Adding Works to ORCID
+  </div>
+  <div class="panel-body">
+    <p>
+      <% if signed_in? %>
+        By signing in with ORCID you enabled DataCite to add your works to your ORCID record
+        via the <strong>Auto-Update</strong> and <strong>Search&nbsp;and&nbsp;Link</strong> Services.
+      <% else %>
+        Please sign in with ORCID to have DataCite add your works to your ORCID record
+        via the <strong>Auto-Update</strong> and <strong>Search&nbsp;and&nbsp;Link</strong> Services.
+      <% end %>
+      <div>
+        <%= icon("search", class: "fa-2x fa-pull-left") %>
+        <p><strong>Search and Link</strong>. Add works you find via <%= link_to 'DataCite Search', 'http://search.labs.datacite.org' %> to your ORCID record.</p>
+      </div>
+      <br/>
+      <div>
+        <%= icon("exchange", class: "fa-2x fa-pull-left") %>
+        <p><strong>Auto-update</strong>. Have works with your ORCID identifier automatically added to your ORCID record.</p>
+      </div>
+    </p>
+  </div>
+</div>
