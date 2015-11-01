@@ -2,8 +2,9 @@ class ServicesController < ApplicationController
   before_filter :load_service, only: [:show, :edit, :update, :destroy]
   before_filter :load_index, only: [:index]
   before_filter :new_service, only: [:create]
+  before_action :authenticate_user!, :only => [:show]
   before_filter :load_user, only: [:show]
-  load_and_authorize_resource
+  load_and_authorize_resource :except => [:show]
 
   def show
     redirect_to "#{@service.redirect_uri}?jwt=#{@user.jwt_payload}"
@@ -64,7 +65,7 @@ class ServicesController < ApplicationController
     if user_signed_in?
       @user = current_user
     else
-      fail CanCan::AccessDenied.new("Please sign in first.", :read, User)
+      store_location_for(:user, services_path(params[:id]))
     end
   end
 

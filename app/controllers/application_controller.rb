@@ -9,6 +9,10 @@ class ApplicationController < ActionController::Base
     request.env['omniauth.origin'] || stored_location_for(resource) || '/users/me'
   end
 
+  def after_sign_out_path_for(resource_or_scope)
+    request.referrer
+  end
+  
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to main_app.root_url, :alert => exception.message
   end
