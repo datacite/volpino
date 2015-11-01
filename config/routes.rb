@@ -9,12 +9,6 @@ Rails.application.routes.draw do
     delete 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
   end
 
-  # use_doorkeeper do
-  #   controllers :applications => 'oauth/applications'
-  # end
-
-  get 'sso', :to => 'sso#login'
-
   authenticate :user, lambda { |u| u.is_admin? } do
     mount Sidekiq::Web => '/sidekiq'
   end

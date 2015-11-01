@@ -49,17 +49,6 @@ module Volpino
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
-
-    config.to_prepare do
-      # Only Applications list
-      Doorkeeper::ApplicationsController.layout "application"
-
-      # Only Authorization endpoint
-      Doorkeeper::AuthorizationsController.layout "application"
-
-      # Only Authorized Applications
-      Doorkeeper::AuthorizedApplicationsController.layout "application"
-    end
   end
 end
 

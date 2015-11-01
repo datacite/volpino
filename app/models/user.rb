@@ -20,6 +20,12 @@ class User < ActiveRecord::Base
     authentication_token
   end
 
+  def orcid
+    if provider == 'orcid'
+      "https://orcid.org/#{uid}"
+    end
+  end
+
   def self.generate_user(auth)
     authentication_token = generate_authentication_token
 

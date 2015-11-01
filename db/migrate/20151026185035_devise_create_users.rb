@@ -9,10 +9,11 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string   :uid,                    limit: 191
       t.string   :authentication_token,   limit: 191
       t.string   :role,                   limit: 255, default: 'user'
+      t.boolean  :auto_update,            default: true
+      t.datetime :expires_at
       t.timestamps
     end
 
-    add_index :users, :email,             unique: true
     add_index :users, :uid,               unique: true
   end
 end

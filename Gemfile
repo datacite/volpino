@@ -25,8 +25,6 @@ gem "github-markdown", "~> 0.6.3"
 gem "rouge", "~> 1.7.2"
 
 gem 'devise', '~> 3.5', '>= 3.5.2'
-gem 'doorkeeper', '~> 3.0', '>= 3.0.1'
-gem 'doorkeeper-jwt'
 gem "omniauth-persona"
 gem 'omniauth-github', '~> 1.1.2'
 gem "omniauth-orcid", "~> 1.0"
