@@ -46,6 +46,7 @@ class User < ActiveRecord::Base
       uid: uid,
       name: name,
       email: email,
+      role: role,
       api_key: api_key,
       iat: Time.now.to_i
     }
