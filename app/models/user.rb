@@ -1,7 +1,11 @@
-class User < ActiveRecord::Base
-  devise :omniauthable, :omniauth_providers => [:orcid, :github]
+require 'jwt'
 
-  scope :query, ->(query) { where("name like ? OR email like ? OR authentication_token like ?", "%#{query}%", "%#{query}%", "%#{query}%") }
+class User < ActiveRecord::Base
+  devise :omniauthable, :omniauth_providers => [:orcid, :github, :persona]
+
+  has_many :applications, class_name: 'Doorkeeper::Application', as: :owner
+
+  scope :query, ->(query) { where("name like ? OR email like ? OR uid = ?", "%#{query}%", "%#{query}%", "%#{query}%") }
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create(generate_user(auth))
@@ -17,12 +21,11 @@ class User < ActiveRecord::Base
   end
 
   def self.generate_user(auth)
+    authentication_token = generate_authentication_token
+
     if User.count > 0 || Rails.env.test?
-      authentication_token = generate_authentication_token
       role = "user"
     else
-      # use admin role and specific token for first user
-      authentication_token = ENV['API_KEY']
       role = "admin"
     end
 
@@ -30,6 +33,17 @@ class User < ActiveRecord::Base
       name: auth.info.name,
       authentication_token: authentication_token,
       role: role }
+  end
+
+  def jwt_payload
+    claims = {
+      uid: uid,
+      name: name,
+      email: email,
+      iat: Time.now.to_i
+    }
+
+    JWT.encode(claims, ENV['JWT_SECRET_KEY'])
   end
 
   private

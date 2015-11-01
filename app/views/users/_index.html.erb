@@ -1,6 +1,4 @@
 <div class="page-header clearfix">
-  <h1 class="pull-left">Users</h1>
-
   <%= form_tag(users_path, :method => "get", :class => "form-inline text-center", :role => "form") do %>
     <div class="form-group">
       <%= search_field_tag :query, params[:query], :placeholder => "Search", :class => "form-control" %>

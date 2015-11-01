@@ -118,9 +118,9 @@ $asbestos:      #6c797a;
 
 $gray:          lighten($silver, 15%);
 $gray-light:    lighten($silver, 20%);
-$gray-lighter:  lighten($silver, 30%);
-$gray-dark:     darken($silver, 20%);
-$gray-darker:   darken($silver, 30%);
+$gray-lighter:  lighten($silver, 21%);
+$gray-dark:     lighten($silver, 10%);
+$gray-darker:   lighten($silver, 5%);
 $inverse:       white;
 
 $brand-primary:         $wet-asphalt;
@@ -138,6 +138,7 @@ $link-hover-color:      mix($peter-river, black, 85%);
 
 $hr-border:             $gray;
 $brand-primary-light:   lighten($wet-asphalt, 20%);
+
 /*doc
 ---
 title: Typography
@@ -232,7 +233,7 @@ $btn-warning-active-bg: mix($brand-warning, black, 85%);
 $btn-inverse-hover-bg:  overlay($brand-primary, darken(white, 37.5%));
 $btn-inverse-active-bg: mix($brand-primary, black, 85%);
 
-$btn-link-disabled-color: $gray-lighter;
+$btn-link-disabled-color: $gray-light;
 
 /*doc
 ---
@@ -255,10 +256,26 @@ Lagotto uses a fixed navbar on top, avoiding submenus if possible. For navigatio
 
 */
 
-$navbar-link-space:    20px;
-$navbar-sublink-space: 9px;
-$navbar-height:        60px;
-$navbar-inverse-bg:    $brand-primary;
+$navbar-link-space:     20px;
+$navbar-sublink-space:  9px;
+$navbar-height:         60px;
+$navbar-inverse-bg:     $brand-primary;
+
+$navbar-default-color:  $brand-primary;
+$navbar-default-bg:     $inverse;
+$navbar-default-border: $gray-lighter;
+
+$navbar-default-link-color:                #777;
+$navbar-default-link-hover-color:          #333;
+$navbar-default-link-hover-bg:             transparent;
+$navbar-default-link-active-color:         #555;
+$navbar-default-link-active-bg:            darken($navbar-default-bg, 6.5%);
+$navbar-default-link-disabled-color:       $gray-light;
+$navbar-default-link-disabled-bg:          transparent;
+
+$navbar-default-toggle-hover-bg:           $gray-light;
+$navbar-default-toggle-icon-bar-bg:        $brand-primary;
+$navbar-default-toggle-border-color:       $gray-light;
 
 $nav-tabs-border-color: $gray;
 $nav-tabs-active-link-hover-color: $gray-dark;
@@ -476,19 +493,6 @@ $fa-font-path: "font-awesome/fonts";
 @import "bootstrap-sass/assets/stylesheets/bootstrap-sprockets";
 @import "bootstrap-sass/assets/stylesheets/bootstrap";
 @import "font-awesome/scss/font-awesome";
-@import "swagger-ui";
-
-html {
-  overflow: -moz-scrollbars-vertical;
-  overflow-y: scroll;
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-top: 80px;
-  margin-bottom: 300px;
-}
 
 // Fix inconsistencies
 // small span.label { vertical-align: bottom; font-size: 66%; margin-left: 0.5em; }
@@ -518,17 +522,17 @@ legend { color: $brand-primary; font-size: $font-size-h2; font-weight: bold; lin
 .help-block { font-weight: normal; }
 .boolean { padding-left: 5px; padding-right: 5px; }
 select.form-control { width: 190px; }
-.form-user { width: 500px !important; }
+.form-user { width: 600px !important; }
 div.work { margin-top: 2em; margin-bottom: 15px; }
 div.work .btn-toolbar { padding-left: 1px; }
 #flash_alert a { color: $brand-primary; text-decoration: underline; }
 label.date { display: block; }
 select.form-control.date { display: inline; }
-.form-group.has-error input, .form-group.has-error span.help-block, .has-error { color: $brand-danger; }
+.form-group.has-error input, .form-group.has-error span.help-block, .form-group.has-error label, .has-error { color: $brand-danger; }
 .form-group.has-error input, .form-group.has-error textarea, .form-group.has-error select { border: 1px solid $brand-danger; }
 h1 { margin-top: 0; }
 h5, h4.work { margin-bottom: 0; }
-.loading {margin: 1em; }
+.loading {margin: 1em; color: $gray; }
 #results, #results-references, #results-recommendations h2:first-child, h4.work:first-child { margin-top: 0; }
 #results, #results-references, #results-recommendations h4, #results p { margin-bottom: 0; }
 #results, #results-references, #results-recommendations p { line-height: 1.33; }
@@ -552,112 +556,70 @@ dt, dd { line-height: 1.5; }
 form.sandbox input { font-family: $font-family-base; font-size: 0.9em; }
 form.sandbox input[type="button"] { -webkit-appearance: none; background-color: $gray-dark; color: white;  border:1px solid $gray-dark; border-radius: 3px; }
 // make the scrollbar always visible
-html { overflow: -moz-scrollbars-vertical; overflow-y: scroll; }
-
+html {
+  overflow: -moz-scrollbars-vertical;
+  overflow-y: scroll;
+  position: relative;
+  min-height: 100%;
+}
 // navbar
-.navbar-default {
-  background-color: $inverse;
-  border-color: $gray;
-  .navbar-brand {
-    color: $brand-primary;
+.navbar-default .navbar-brand {
+  color: $brand-primary;
+  font-size: 1.75em;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  text-align: center;
+  margin: auto;
+  .fa {
+   font-size: 18px;
+   vertical-align: middle;
+   padding-bottom: 4px;
+  }
+}
+.navbar {
+  margin-bottom: 0;
+}
+.subnav {
+  margin: 0;
+  top: 0;
+  height: 60px;
+  background-color: $gray;
+  border-bottom: 1px solid $gray-dark;
+  margin-bottom: 20px;
+  h1 {
+    display: inline;
     font-size: 1.75em;
-    position: absolute;
-    width: 100%;
-    left: 0;
-    text-align: center;
-    margin: auto;
-    .fa {
-     font-size: 18px;
-     vertical-align: middle;
-     padding-bottom: 4px;
-    }
-    &:hover, &:focus {
-      color: $brand-secondary; }}
-  .navbar-text {
-    color: $brand-primary; }
-  .navbar-nav {
-    > li {
-      > a {
-        color: $brand-primary;
-        &:hover,  &:focus {
-          color: $brand-primary-light; }}}
-    > .active {
-      > a, > a:hover, > a:focus {
-        color: $brand-primary-light;
-        background-color: $gray-light; }}
-    > .open {
-      > a, > a:hover, > a:focus {
-        color: $brand-primary-light;
-        background-color: $gray-light; }}}
-  .navbar-toggle {
-    border-color: $gray-light;
-    &:hover, &:focus {
-      background-color: $gray-light; }
-    .icon-bar {
-      background-color: $brand-primary; }}
-  .navbar-collapse,
-  .navbar-form {
-    border-color: $brand-primary; }
-  .navbar-link {
+    font-weight: normal;
+    margin: 12px 0 12px 10px;
+  }
+  .navbar-nav a {
     color: $brand-primary;
-    &:hover {
-      color: $brand-primary-light; }}}
-@media (max-width: 767px) {
-  .navbar-default .navbar-nav .open .dropdown-menu {
-    > li > a {
-      color: $brand-primary;
-      &:hover, &:focus {
-        color: $brand-primary-light; }}
-    > .active {
-      > a, > a:hover, > a:focus, {
-        color: $brand-primary-light;
-        background-color: $gray-light; }}}
+    font-size: 1.25em;
+  }
+  .navbar-nav .dropdown-menu {
+    font-size: .75em;
+  }
 }
-img.logo {
-  padding-top: 6px;
-}
-.logo-small {
-  margin-top: -4px;
-  padding-right: 4px
-}
-.dropdown .label {
-  font-size: .85em;
-  color: #000000;
-  background-color: $body-bg;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #000000;
-  padding: .25em .35em;
+.subnav.affix {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
 }
 .dropdown-header {
   font-size: 1.25em;
   color: gray;
 }
-.panel-heading {
-  h2 {
-    font-size: 1em;
-
-    .small {
-      font-size: .75em;
-      padding-top: .25em;
-    }
-  }
+.dropdown-menu {
+  z-index: 1040;
 }
-.panel-body i {
-  margin-right: 10px;
+.markdown #content {
+  background-color: white;
+  border: 1px solid $gray;
+  padding: 0 1.5em 0 1.5em;
+  margin-bottom: 20px;
 }
-.orcid {
-
-  .input-group {
-    margin: 1px auto 0 auto;
-  }
-}
-p.orcid {
-  font-size: 1.25em;
-}
-
-body#home { background-color: white; }
-div.home { font-size: 1.25em; }
 .markdown pre { font-size: 1em; border: 0; padding: 10px; line-height: 1.1; }
 .markdown code {
   margin: 0 2px;
@@ -697,7 +659,9 @@ div.home { font-size: 1.25em; }
   list-style: disc outside none;
   margin-left: 1.1em;
 }
-
+.logo {
+  margin-top: 6px;
+}
 .footer {
   position: absolute;
   bottom: 0;
@@ -732,5 +696,9 @@ div.home { font-size: 1.25em; }
   }
   .share a {
     margin-right: 1em;
+    font-size: 16px;
   }
+}
+.user {
+  height: 20px;
 }

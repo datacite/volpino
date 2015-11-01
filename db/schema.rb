@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151030070349) do
+ActiveRecord::Schema.define(version: 20151101121307) do
 
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer  "resource_owner_id", limit: 4,     null: false
@@ -49,9 +49,20 @@ ActiveRecord::Schema.define(version: 20151030070349) do
     t.string   "scopes",       limit: 255,   default: "", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "owner_id",     limit: 4
+    t.string   "owner_type",   limit: 255
   end
 
+  add_index "oauth_applications", ["owner_id", "owner_type"], name: "index_oauth_applications_on_owner_id_and_owner_type", using: :btree
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
+
+  create_table "services", force: :cascade do |t|
+    t.string   "name",         limit: 255, null: false
+    t.string   "title",        limit: 255, null: false
+    t.text     "redirect_uri", limit: 255, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "name",                 limit: 191
@@ -68,7 +79,6 @@ ActiveRecord::Schema.define(version: 20151030070349) do
     t.datetime "expires_at"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["uid"], name: "index_users_on_uid", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", using: :btree
 
 end

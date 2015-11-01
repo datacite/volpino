@@ -26,8 +26,12 @@ gem "rouge", "~> 1.7.2"
 
 gem 'devise', '~> 3.5', '>= 3.5.2'
 gem 'doorkeeper', '~> 3.0', '>= 3.0.1'
-gem 'omniauth-orcid', '~> 1.0'
-gem 'omniauth-github'
+gem 'doorkeeper-jwt'
+gem "omniauth-persona"
+gem 'omniauth-github', '~> 1.1.2'
+gem "omniauth-orcid", "~> 1.0"
+gem 'omniauth', '~> 1.2.2'
+gem 'jwt', '~> 1.5', '>= 1.5.1'
 gem 'httplog'
 gem 'cancancan', '~> 1.9.2'
 

@@ -3,7 +3,7 @@ Doorkeeper.configure do
   orm :active_record
 
   resource_owner_authenticator do
-    User.find_by_id(session[:user_id]) || redirect_to(new_session_url)
+    current_user || warden.authenticate!(:scope => :user)
   end
 
   # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.
@@ -27,7 +27,7 @@ Doorkeeper.configure do
 
   # Use a custom class for generating the access token.
   # https://github.com/doorkeeper-gem/doorkeeper#custom-access-token-generator
-  # access_token_generator "::Doorkeeper::JWT"
+  access_token_generator "::Doorkeeper::JWT"
 
   # Reuse access token for the same resource owner within an application (disabled by default)
   # Rationale: https://github.com/doorkeeper-gem/doorkeeper/issues/383
@@ -40,7 +40,7 @@ Doorkeeper.configure do
   # Optional parameter :confirmation => true (default false) if you want to enforce ownership of
   # a registered application
   # Note: you must also run the rails g doorkeeper:application_owner generator to provide the necessary support
-  # enable_application_owner :confirmation => false
+  enable_application_owner :confirmation => true
 
   # Define access token scopes for your provider
   # For more information go to
@@ -100,4 +100,36 @@ Doorkeeper.configure do
 
   # WWW-Authenticate Realm (default "Doorkeeper").
   # realm "Doorkeeper"
+end
+
+Doorkeeper::JWT.configure do
+  # Set the payload for the JWT token. This should contain unique information
+  # about the user.
+  # Defaults to a randomly generated token in a hash
+  # { token: "RANDOM-TOKEN" }
+  token_payload do |opts|
+    user = User.find(opts[:resource_owner_id])
+
+    {
+      user: {
+        uid: user.uid,
+        name: user.name
+      }
+    }
+  end
+
+  # Set the encryption secret. This would be shared with any other applications
+  # that should be able to read the payload of the token.
+  # Defaults to "secret"
+  secret_key ENV['JWT_SECRET_KEY']
+
+  # If you want to use RS* encoding specify the path to the RSA key
+  # to use for signing.
+  # If you specify a secret_key_path it will be used instead of secret_key
+  # secret_key_path "path/to/file.pem"
+
+  # Specify encryption type. Supports any algorithim in
+  # https://github.com/progrium/ruby-jwt
+  # defaults to nil
+  encryption_method :hmac
 end

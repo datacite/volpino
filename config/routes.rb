@@ -9,14 +9,19 @@ Rails.application.routes.draw do
     delete 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
   end
 
-  use_doorkeeper
+  # use_doorkeeper do
+  #   controllers :applications => 'oauth/applications'
+  # end
+
+  get 'sso', :to => 'sso#login'
 
   authenticate :user, lambda { |u| u.is_admin? } do
     mount Sidekiq::Web => '/sidekiq'
   end
 
-  root :to => "index#index"
+  root :to => 'index#index'
 
   resources :docs, :only => [:index, :show], :constraints => { :id => /[0-z\-\.\(\)]+/ }
+  resources :services
   resources :users
 end

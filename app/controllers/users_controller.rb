@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   def show
+    @title = 'Settings'
     respond_to do |format|
       format.js { render :show }
       format.html
