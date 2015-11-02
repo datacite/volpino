@@ -597,6 +597,7 @@ html {
   }
   .navbar-nav .dropdown-menu {
     font-size: .75em;
+    z-index: 1040;
   }
 }
 .subnav.affix {
@@ -608,9 +609,6 @@ html {
 .dropdown-header {
   font-size: 1.25em;
   color: gray;
-}
-.dropdown-menu {
-  z-index: 1040;
 }
 .markdown #content {
   background-color: white;
