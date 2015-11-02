@@ -49,6 +49,9 @@ function contributionsViz(json, sources) {
   }
 
   d3.select("#content").insert("div")
+    .attr("class", "panel")
+    .append("div")
+    .attr("class", "panel-body")
     .attr("id", "results");
 
   for (var i=0; i<data.length; i++) {
