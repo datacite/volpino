@@ -1,8 +1,8 @@
 module ApplicationHelper
   def login_link
     case ENV['OMNIAUTH']
-    when "github" then link_to "Sign in with Github", user_omniauth_authorize_path(:github), :id => "sign_in"
-    when "orcid" then link_to "Sign in with ORCID", user_omniauth_authorize_path(:orcid), :id => "sign_in"
+    when "github" then link_to "Sign in with Github", user_omniauth_authorize_path(:github), id: "sign_in"
+    when "orcid" then link_to "Sign in with ORCID", user_omniauth_authorize_path(:orcid), id: "sign_in"
     when "persona" then
       form_tag "/users/auth/persona/callback", id: "persona_form", class: "navbar-form" do
         hidden_field_tag('assertion') +
