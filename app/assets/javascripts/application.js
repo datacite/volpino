@@ -16,7 +16,12 @@
 //= require jquery/dist/jquery.js
 //= require jquery-ujs/src/rails.js
 //= require jquery-bootpag/lib/jquery.bootpag.js
+//= require d3/d3.js
 //= require queue-async/queue.js
 //= require bootstrap-sass/assets/javascripts/bootstrap-sprockets
 //
+// Load common d3 helper functions
+//= require bar_chart
+//= require donut_chart
+//= require d3_helpers
 //= require_self

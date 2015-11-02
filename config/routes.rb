@@ -18,4 +18,5 @@ Rails.application.routes.draw do
   resources :docs, :only => [:index, :show], :constraints => { :id => /[0-z\-\.\(\)]+/ }
   resources :services
   resources :users
+  resources :works
 end

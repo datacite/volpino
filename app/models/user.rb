@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
 
   def orcid
     if provider == 'orcid'
-      "https://orcid.org/#{uid}"
+      "http://orcid.org/#{uid}"
     end
   end
 
