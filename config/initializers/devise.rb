@@ -216,8 +216,22 @@ Devise.setup do |config|
   config.omniauth :github, ENV['GITHUB_CLIENT_ID'],
                            ENV['GITHUB_CLIENT_SECRET'],
                            scope: "user,repo" if ENV['GITHUB_CLIENT_ID']
-  config.omniauth :orcid, ENV['ORCID_CLIENT_ID'],
-                          ENV['ORCID_CLIENT_SECRET'] if ENV['ORCID_CLIENT_ID']
+  if ENV['ORCID_API_URL'] == 'https://api.orcid.org'
+    config.omniauth :orcid, ENV['ORCID_CLIENT_ID'], ENV['ORCID_CLIENT_SECRET'],
+                            authorize_params: {
+                              scope: '/orcid-profile/read-limited /orcid-works/create'
+                            },
+                            client_options: {
+                              site: ENV['ORCID_API_URL'],
+                              authorize_url: "#{ENV['ORCID_URL']}/oauth/authorize",
+                              token_url: "#{ENV['ORCID_API_URL']}/oauth/token"
+                            },
+                            provider_ignores_state: true
+  elsif ENV['ORCID_CLIENT_ID']
+    config.omniauth :orcid, ENV['ORCID_CLIENT_ID'],
+                            ENV['ORCID_CLIENT_SECRET']
+  end
+
   config.omniauth :persona
 
   # ==> Warden configuration
