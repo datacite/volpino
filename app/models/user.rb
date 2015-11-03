@@ -35,9 +35,13 @@ class User < ActiveRecord::Base
       role = "admin"
     end
 
+    timestamp = auth.credentials && auth.credentials.expires_at
+    timestamp = Time.at(timestamp).utc if timestamp.present?
+
     { name: auth.info && auth.info.name,
       authentication_token: authentication_token,
-      role: role }
+      role: role,
+      expires_at: timestamp }
   end
 
   def jwt_payload
