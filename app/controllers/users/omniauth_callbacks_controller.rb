@@ -4,8 +4,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def failure
-    #raise OAuth2::Error
-    flash[:alert] = "Error signing in with ORCID"
+    flash[:alert] = "Error signing in with ORCID: #{request.env["omniauth.error.type"].to_s.humanize}"
     redirect_to root_path
   end
 
