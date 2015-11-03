@@ -35,8 +35,7 @@ class User < ActiveRecord::Base
       role = "admin"
     end
 
-    { email: auth.info.email,
-      name: auth.info.name,
+    { name: auth.info.name,
       authentication_token: authentication_token,
       role: role }
   end
