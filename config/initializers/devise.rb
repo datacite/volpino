@@ -220,7 +220,8 @@ Devise.setup do |config|
   config.omniauth :orcid, ENV['ORCID_CLIENT_ID'],
                           ENV['ORCID_CLIENT_SECRET'],
                           member: ENV['ORCID_MEMBER'],
-                          sandbox: ENV['ORCID_SANDBOX']
+                          sandbox: ENV['ORCID_SANDBOX'],
+                          skip_info: true
 
   config.omniauth :persona
 
