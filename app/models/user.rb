@@ -5,7 +5,8 @@ class User < ActiveRecord::Base
 
   has_many :applications, class_name: 'Doorkeeper::Application', as: :owner
 
-  scope :query, ->(query) { where("name like ? OR email like ? OR uid = ?", "%#{query}%", "%#{query}%", "%#{query}%") }
+  scope :query, ->(query) { where("name like ? OR uid like ? OR authentication_token like ?", "%#{query}%", "%#{query}%", "%#{query}%") }
+  scope :ordered, -> { order("created_at DESC") }
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create(generate_user(auth))
