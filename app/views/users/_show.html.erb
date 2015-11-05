@@ -11,7 +11,7 @@
     <% if can?(:create, User) && (controller.action_name == "edit" || (controller.action_name == "update" && !@user.errors.empty?)) %>
       <%= simple_form_for @user, :url => user_path(@user), :html => { :remote => true } do |f| %>
           <%= f.input :email, input_html: { class: "form-user" } %>
-          <%= f.input :authentication_token, label: "API key", input_html: { class: "form-user" } %>
+          <%= f.input :api_key, label: "API key", input_html: { class: "form-user" } %>
 
           <div class="form-group">
             <%= f.submit "Save ", class: "btn btn-default" %>
@@ -22,6 +22,10 @@
       <dl class="dl-horizontal">
         <dt>Name</dt>
         <dd><%= @user.name %></dd>
+        <% if @user.other_names.present? %>
+          <dt>Other Names</dt>
+          <dd><%= h(@user.other_names.join(', ')) %></dd>
+        <% end %>
         <% if @user.orcid.present? %>
           <dt>ORCID</dt>
           <dd><%= link_to @user.orcid, @user.orcid %></dd>
@@ -31,7 +35,7 @@
           <dd><%= @user.email %></dd>
         <% end %>
         <dt>API Key</dt>
-        <dd><%= @user.authentication_token %></dd>
+        <dd><%= @user.api_key %></dd>
         <dt>Role</dt>
         <% if @user.role == "admin" %>
           <dd>Admin</dd>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151101121307) do
+ActiveRecord::Schema.define(version: 20151105084333) do
 
   create_table "services", force: :cascade do |t|
     t.string   "name",         limit: 255, null: false
@@ -29,13 +29,17 @@ ActiveRecord::Schema.define(version: 20151101121307) do
     t.string   "provider",             limit: 255
     t.string   "uid",                  limit: 191
     t.string   "authentication_token", limit: 191
-    t.string   "role",                 limit: 255, default: "user"
-    t.boolean  "auto_update",                      default: true
+    t.string   "role",                 limit: 255,   default: "user"
+    t.boolean  "auto_update",                        default: true
     t.datetime "expires_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "other_names",          limit: 65535
+    t.string   "api_key",              limit: 191
+    t.boolean  "skip_info",                          default: false
   end
 
+  add_index "users", ["family_name", "given_names"], name: "index_users_on_family_name_and_given_names", using: :btree
   add_index "users", ["uid"], name: "index_users_on_uid", unique: true, using: :btree
 
 end

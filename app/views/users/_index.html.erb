@@ -36,7 +36,7 @@
           <div id="user_<%= user.id %>" class="panel-collapse collapse.in">
             <div class="panel-body">
               <%= simple_form_for user, url: user_path(user), html: { role: "form", remote: true } do |f| %>
-                <%= f.input :authentication_token, label: "API key", input_html: { class: "form-user" } %>
+                <%= f.input :api_key, label: "API key", input_html: { class: "form-user" } %>
                 <%= f.input :role, collection: roles.map { |role| [role.titleize, role] }, include_blank: false, input_html: { class: "form-user" } %>
 
                 <div class="form-group">
@@ -65,8 +65,11 @@
                 <%= link_to h(user.email), "mailto:#{user.email}" %>
               <% end %>
 
+              <h5>ORCID</h5>
+              <%= link_to h(user.orcid), user.orcid %>
+
               <h5>API key</h5>
-              <%= user.authentication_token %>
+              <%= user.api_key %>
 
               <h5>Role</h5>
               <%= user.role.capitalize %>

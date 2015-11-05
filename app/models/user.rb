@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   scope :query, ->(query) { where("name like ? OR uid like ? OR authentication_token like ?", "%#{query}%", "%#{query}%", "%#{query}%") }
   scope :ordered, -> { order("created_at DESC") }
 
+  serialize :other_names, JSON
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create(generate_user(auth))
   end
@@ -28,8 +30,6 @@ class User < ActiveRecord::Base
   end
 
   def self.generate_user(auth)
-    authentication_token = generate_authentication_token
-
     if User.count > 0 || Rails.env.test?
       role = "user"
     else
@@ -40,18 +40,20 @@ class User < ActiveRecord::Base
     timestamp = Time.at(timestamp).utc if timestamp.present?
 
     { name: auth.info && auth.info.name,
-      authentication_token: authentication_token,
+      authentication_token: auth.credentials.token,
+      expires_at: timestamp,
       role: role,
-      expires_at: timestamp }
+      api_key: generate_authentication_token }
   end
 
   def jwt_payload
     claims = {
       uid: uid,
+      authentication_token: authentication_token,
+      expires_at: expires_at,
       name: name,
       email: email,
       role: role,
-      api_key: api_key,
       iat: Time.now.to_i
     }
 
