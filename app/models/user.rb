@@ -17,6 +17,11 @@ class User < ActiveRecord::Base
     role == "admin"
   end
 
+  # Helper method to check for admin or staff user
+  def is_admin_or_staff?
+    ["admin", "staff"].include?(role)
+  end
+
   def orcid
     if provider == 'orcid'
       "http://orcid.org/#{uid}"
@@ -58,7 +63,7 @@ class User < ActiveRecord::Base
   end
 
   def names_for_search
-    ([name] + other_names).map { |n| '"' + n + '"' }.join(" OR ")
+    ([name] + Array(other_names)).map { |n| '"' + n + '"' }.join(" OR ")
   end
 
   private
