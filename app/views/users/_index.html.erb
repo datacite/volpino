@@ -68,8 +68,10 @@
               <h5>ORCID</h5>
               <%= link_to h(user.orcid), user.orcid %>
 
-              <h5>API key</h5>
-              <%= user.api_key %>
+              <% if user.api_key.present? %>
+                <h5>API key</h5>
+                <%= user.api_key %>
+              <% end %>
 
               <h5>Role</h5>
               <%= user.role.capitalize %>
