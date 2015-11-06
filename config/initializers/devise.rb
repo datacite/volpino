@@ -55,7 +55,7 @@ Devise.setup do |config|
   # It can be set to an array that will enable http authentication only for the
   # given strategies, for example, `config.http_authenticatable = [:token]` will
   # enable it only for token authentication.
-  config.http_authenticatable = true
+  # config.http_authenticatable = true
 
   # If http headers should be returned for AJAX requests. True by default.
   # config.http_authenticatable_on_xhr = true
@@ -125,7 +125,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :validatable
   # Range for password length. Default is 6..128.
-  config.password_length = 6..128
+  # config.password_length = 6..128
 
   # Email regex used to validate email formats. It simply asserts that
   # an one (and only one) @ exists in the given string. This is mainly
@@ -163,7 +163,7 @@ Devise.setup do |config|
   # ==> Configuration for :recoverable
   #
   # Defines which key will be used when recovering the password for an account
-  config.reset_password_keys = [:email]
+  # config.reset_password_keys = [:email]
 
   # Time interval you can reset your password with a reset password key.
   # Don't put a too small interval or your users won't have the time to
@@ -213,16 +213,10 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  config.omniauth :github, ENV['GITHUB_CLIENT_ID'],
-                           ENV['GITHUB_CLIENT_SECRET'],
-                           scope: "user,repo" if ENV['GITHUB_CLIENT_ID']
-
   config.omniauth :orcid, ENV['ORCID_CLIENT_ID'],
                           ENV['ORCID_CLIENT_SECRET'],
                           member: ENV['ORCID_MEMBER'],
                           sandbox: ENV['ORCID_SANDBOX']
-
-  config.omniauth :persona
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

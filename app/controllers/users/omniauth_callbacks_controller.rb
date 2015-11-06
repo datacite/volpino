@@ -13,11 +13,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     auth = request.env["omniauth.auth"]
 
     @user = User.from_omniauth(auth)
-    unless @user.skip_info
-      @user.update_attributes(family_name: auth.info.fetch(:last_name, nil),
-                              given_names: auth.info.fetch(:first_name, nil),
-                              other_names: auth.extra.fetch(:raw_info, {}).fetch(:other_names, nil),
-                              skip_info: true)
+    if Time.now > (@user.expires_at || 1.day.ago)
+      auth_hash = User.get_auth_hash(auth)
+      @user.update_attributes(auth_hash)
     end
 
     if @user.persisted?

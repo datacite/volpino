@@ -6,13 +6,17 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def after_sign_in_path_for(resource)
-    request.env['omniauth.origin'] || stored_location_for(resource) || '/users/me'
+    if resource.created_at > 1.minute.ago
+      '/users/me'
+    else
+      request.env['omniauth.origin'] || stored_location_for(resource) || '/users/me'
+    end
   end
 
   def after_sign_out_path_for(resource_or_scope)
-    request.referrer
+    root_path
   end
-  
+
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to main_app.root_url, :alert => exception.message
   end

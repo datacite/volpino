@@ -1,26 +1,20 @@
 require 'jwt'
 
 class User < ActiveRecord::Base
-  devise :omniauthable, :omniauth_providers => [:orcid, :github, :persona]
+  devise :omniauthable, :omniauth_providers => [:orcid]
 
-  has_many :applications, class_name: 'Doorkeeper::Application', as: :owner
-
-  scope :query, ->(query) { where("name like ? OR uid like ? OR authentication_token like ?", "%#{query}%", "%#{query}%", "%#{query}%") }
+  scope :query, ->(query) { where("name like ? OR uid like ?", "%#{query}%", "%#{query}%") }
   scope :ordered, -> { order("created_at DESC") }
 
   serialize :other_names, JSON
 
   def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create(generate_user(auth))
+    where(provider: auth.provider, uid: auth.uid).first_or_create
   end
 
   # Helper method to check for admin user
   def is_admin?
     role == "admin"
-  end
-
-  def api_key
-    authentication_token
   end
 
   def orcid
@@ -29,8 +23,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.generate_user(auth)
-    if User.count > 0 || Rails.env.test?
+  def self.get_auth_hash(auth)
+    if User.count > 1 || Rails.env.test?
       role = "user"
     else
       role = "admin"
@@ -40,6 +34,9 @@ class User < ActiveRecord::Base
     timestamp = Time.at(timestamp).utc if timestamp.present?
 
     { name: auth.info && auth.info.name,
+      family_name: auth.info.fetch(:last_name, nil),
+      given_names: auth.info.fetch(:first_name, nil),
+      other_names: auth.extra.fetch(:raw_info, {}).fetch(:other_names, nil),
       authentication_token: auth.credentials.token,
       expires_at: timestamp,
       role: role,
@@ -58,6 +55,10 @@ class User < ActiveRecord::Base
     }
 
     JWT.encode(claims, ENV['JWT_SECRET_KEY'])
+  end
+
+  def names_for_search
+    ([name] + other_names).map { |n| '"' + n + '"' }.join(" OR ")
   end
 
   private
