@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   devise :omniauthable, :omniauth_providers => [:orcid]
 
   scope :query, ->(query) { where("name like ? OR uid like ?", "%#{query}%", "%#{query}%") }
+  scope :last_x_days, ->(duration) { where("created_at > ?", Time.zone.now.beginning_of_day - duration.days) }
   scope :ordered, -> { order("created_at DESC") }
 
   serialize :other_names, JSON
@@ -23,9 +24,11 @@ class User < ActiveRecord::Base
   end
 
   def orcid
-    if provider == 'orcid'
-      "http://orcid.org/#{uid}"
-    end
+    "http://orcid.org/#{uid}"
+  end
+
+  def credit_name
+    name
   end
 
   def self.get_auth_hash(auth)

@@ -3,13 +3,16 @@
     <div class="container-fluid">
       <%= content_tag :h1, @title || controller.controller_name.humanize, data_tags_for_api %>
       <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "Status", status_index_path %></li>
         <% if can?(:manage, User) %>
           <li><%= link_to "Users", users_path %></li>
         <% end %>
         <% if can?(:manage, Service) %>
           <li><%= link_to "Services", services_path %></li>
         <% end %>
-        <li><%= link_to "Works", works_path %></li>
+        <% if user_signed_in? %>
+          <li><%= link_to "Works", works_path %></li>
+        <% end %>
       </ul>
     </div>
   </div>

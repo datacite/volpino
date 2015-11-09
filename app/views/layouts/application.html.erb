@@ -54,11 +54,7 @@
 
   <body>
     <%= render partial: "layouts/#{ENV['MODE']}/header" -%>
-    <% if user_signed_in? %>
-      <%= render partial: "layouts/navigation" -%>
-    <% else %>
-      <div class="user"></div>
-    <% end %>
+    <%= render partial: "layouts/navigation" -%>
 
     <div class="container-fluid">
       <% @flash = flash -%>

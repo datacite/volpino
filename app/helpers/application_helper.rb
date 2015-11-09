@@ -67,6 +67,14 @@ module ApplicationHelper
     Settings[ENV['MODE']]
   end
 
+  def worker_label(status)
+    case status
+    when "working" then "panel-success"
+    when "waiting" then "panel-default"
+    else "panel-warning"
+    end
+  end
+
   def data_tags_for_api
     data = { per_page: 15, model: controller.controller_name, host: ENV['LAGOTTO_URL'] }
     data[:api_key] = current_user.api_key if current_user

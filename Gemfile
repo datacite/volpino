@@ -12,8 +12,8 @@ gem 'bugsnag', '~> 2.8.6'
 gem "faraday", "~> 0.9.0"
 gem "faraday_middleware", "~> 0.9.1"
 gem 'excon', '~> 0.45.3'
-gem 'draper', '~> 2.1.0'
-gem 'jbuilder', '~> 2.2.12'
+gem 'active_model_serializers', git: 'https://github.com/rails-api/active_model_serializers.git'
+
 gem "haml-rails", "~> 0.9"
 gem "swagger-docs", "~> 0.1.9"
 gem 'swagger-ui_rails', '~> 0.1.7'
