@@ -19,7 +19,7 @@ class Api::V1::UsersController < Api::BaseController
 
   def index
     page = params[:page] || 1
-    @users = User.all.order('family_name, given_names').paginate(page: page, per_page: 1000)
+    @users = User.all.ordered.paginate(page: page, per_page: 1000)
     meta = { total: @users.total_entries, 'total-pages' => @users.total_pages , page: page }
     render json: @users, meta: meta
   end
