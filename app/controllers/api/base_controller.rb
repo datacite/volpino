@@ -2,8 +2,6 @@ class Api::BaseController < ActionController::Base
   # include base controller methods
   include Authenticable
 
-  serialization_scope :view_context
-
   before_filter :default_format_json,
                 :authenticate_user_from_token!,
                 :cors_preflight_check

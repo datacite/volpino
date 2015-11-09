@@ -1,5 +1,6 @@
 class Api::V1::ServicesController < Api::BaseController
   before_filter :authenticate_user_from_token!
+  load_and_authorize_resource
 
   swagger_controller :services, "Services"
 

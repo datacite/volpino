@@ -60,7 +60,11 @@ module Authenticable
       end
 
       respond_to do |format|
-        format.all { render json: { meta: { status: "error", error: message }}, status: status }
+        format.all { render json: { errors: [{ status: status.to_s,
+                                               source: { pointer: "/data" },
+                                               title: message }]
+                                  }
+                   }
       end
     end
   end
