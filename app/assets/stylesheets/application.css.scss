@@ -492,6 +492,7 @@ $bar-color-7: lighten($bar-color-1, 20%);
 @import "github";
 @import "bootstrap-sass/assets/stylesheets/bootstrap-sprockets";
 @import "bootstrap-sass/assets/stylesheets/bootstrap";
+@import "swagger-ui";
 
 // Fix inconsistencies
 // small span.label { vertical-align: bottom; font-size: 66%; margin-left: 0.5em; }
@@ -544,8 +545,8 @@ dt, dd { line-height: 1.5; }
 .exampleOutput { padding-bottom: 10px; }
 // customize swagger-ui formatting
 .swagger-ui-wrap, .swagger-ui-wrap p, form.sandbox table, form.sandbox table .model-signature, .swagger-ui-wrap .container #resources .resource .heading h2, .swagger-ui-wrap .container #resources .resource .heading .options { font-family: $font-family-base; }
-.container .container { padding: 0; }
-.container #swagger-ui-container { margin: 0; }
+.container-fluid .container { padding: 0; }
+.container-fluid #swagger-ui-container { margin: 0 1em; }
 #api_info .info_title { font-size: $font-size-h1; }
 #api_info .info_description { font-size: $font-size-base; line-height: $line-height-base; }
 #api_info .info_description a { color: $link-color; }

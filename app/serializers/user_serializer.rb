@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   cache key: 'user'
-  attributes :given_names, :family_name, :ORCID
+  attributes :given_names, :family_name, :credit_name, :ORCID
 
   def ORCID
     object.orcid
