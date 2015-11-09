@@ -29,6 +29,6 @@ class Api::V1::ServicesController < Api::BaseController
 
   def show
     @service = Service.where(name: params[:id])
-    render json: @service, meta: meta
+    render json: @service
   end
 end

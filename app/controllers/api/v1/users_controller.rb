@@ -14,8 +14,7 @@ class Api::V1::UsersController < Api::BaseController
 
   def show
     @user = current_user
-    meta = { status: 'ok' }
-    render json: @user, meta: meta
+    render json: @user
   end
 
   def index
