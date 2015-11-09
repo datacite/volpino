@@ -6,7 +6,7 @@ Swagger::Docs::Config.register_apis(
     :attributes => {
       :info => {
         "title" => "API",
-        "description" => "This is the live documentation of the Volpino API. The current API is v1, please use <a href='http://#{ENV['SERVERNAME']}/api/'>http://#{ENV['SERVERNAME']}/api/</a> as base URL." }
+        "description" => "This is the live documentation of the Volpino API. The current API is v1, please use <a href='https://#{ENV['SERVERNAME']}/api/'>http://#{ENV['SERVERNAME']}/api/</a> as base URL." }
     }
   }
 )
