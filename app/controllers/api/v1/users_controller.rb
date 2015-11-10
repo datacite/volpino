@@ -1,7 +1,7 @@
 class Api::V1::UsersController < Api::BaseController
   before_filter :authenticate_user_from_token!
   load_and_authorize_resource
-  
+
   swagger_controller :users, "Users"
 
   swagger_api :show do
@@ -19,9 +19,9 @@ class Api::V1::UsersController < Api::BaseController
   end
 
   def index
-    page = params[:page] || 1
-    @users = User.all.ordered.paginate(page: page, per_page: 1000)
-    meta = { total: @users.total_entries, 'total-pages' => @users.total_pages , page: page }
+    page = params[:page] || { number: 1, size: 1000 }
+    @users = User.all.ordered.page(page[:number]).per_page(page[:size])
+    meta = { total: @users.total_entries, 'total-pages' => @users.total_pages , page: page[:number].to_i }
     render json: @users, meta: meta
   end
 end

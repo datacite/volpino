@@ -6,7 +6,8 @@ class Api::V1::ServicesController < Api::BaseController
 
   swagger_api :index do
     summary "Returns service information"
-    param :query, :page, :integer, :optional, "Page number"
+    param :query, 'page[number]', :integer, :optional, "Page number"
+    param :query, 'page[size]', :integer, :optional, "Page size"
     response :ok
     response :unprocessable_entity
     response :not_found
@@ -22,9 +23,9 @@ class Api::V1::ServicesController < Api::BaseController
   end
 
   def index
-    page = params[:page] || 1
-    @services = Service.all.order('name').paginate(page: page, per_page: 1000)
-    meta = { total: @services.total_entries, 'total-pages' => @services.total_pages , page: page }
+    page = params[:page] || { number: 1, size: 1000 }
+    @services = Service.all.order('name').page(page[:number]).per_page(page[:size])
+    meta = { total: @services.total_entries, 'total-pages' => @services.total_pages , page: page[:number].to_i }
     render json: @services, meta: meta
   end
 
