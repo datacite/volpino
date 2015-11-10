@@ -13,6 +13,10 @@ class User < ActiveRecord::Base
     where(provider: auth.provider, uid: auth.uid).first_or_create
   end
 
+  def per_page
+    15
+  end
+
   # Helper method to check for admin user
   def is_admin?
     role == "admin"
@@ -65,8 +69,12 @@ class User < ActiveRecord::Base
     JWT.encode(claims, ENV['JWT_SECRET_KEY'])
   end
 
+  def reversed_name
+    [family_name, given_names].join(', ')
+  end
+
   def names_for_search
-    ([name] + Array(other_names)).map { |n| '"' + n + '"' }.join(" OR ")
+    ([uid, name, reversed_name] + Array(other_names)).map { |n| '"' + n + '"' }.join(" OR ")
   end
 
   private
