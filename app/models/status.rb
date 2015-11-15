@@ -18,7 +18,7 @@ class Status < ActiveRecord::Base
 
   def collect_status_info
     self.users_count = User.count
-    self.users_new_count = User.last_x_days(0).count
+    self.users_new_count = User.where(created_at: Date.today).count
     self.db_size = get_db_size
     self.version = Volpino::VERSION
     self.current_version = get_current_version unless current_version.present?
