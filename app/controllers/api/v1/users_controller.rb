@@ -20,7 +20,11 @@ class Api::V1::UsersController < Api::BaseController
 
   def index
     page = params[:page] || { number: 1, size: 1000 }
-    @users = User.all.ordered.page(page[:number]).per_page(page[:size])
+
+    collection = User
+    collection = collection.last_x_days(params[:recent].to_i) if params[:recent]
+    @users = collection.ordered.page(page[:number]).per_page(page[:size])
+
     meta = { total: @users.total_entries, 'total-pages' => @users.total_pages , page: page[:number].to_i }
     render json: @users, meta: meta
   end
