@@ -46,5 +46,9 @@ module Authorable
         nil
       end
     end
+
+    def get_credit_name(author)
+      [author['given'], author['family']].compact.join(' ')
+    end
   end
 end

@@ -23,7 +23,14 @@ module Dateable
     def get_date_parts_from_parts(year, month = nil, day = nil)
       { 'date-parts' => [[year.to_i, month.to_i, day.to_i].reject { |part| part == 0 }] }
     end
-    
+
+    def get_parts_from_date_parts(date_parts)
+      parts = date_parts.fetch('date-parts', []).first
+      { 'year' => parts[0],
+        'month' => parts[1],
+        'day' => parts[2] }.compact
+    end
+
     def get_iso8601_from_time(time)
       return nil if time.blank?
 

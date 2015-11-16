@@ -22,7 +22,7 @@ FactoryGirl.define do
   end
 
   factory :claim do
-    work_id '10.5281/ZENODO.31780'
+    work_id '10.5061/DRYAD.781PV'
 
     user
     service

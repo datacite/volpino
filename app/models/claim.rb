@@ -13,6 +13,9 @@ class Claim < ActiveRecord::Base
   # include helper module for author name parsing
   include Authorable
 
+  # include helper module for work type
+  include Typeable
+
   belongs_to :user
   belongs_to :service
 
@@ -71,8 +74,36 @@ class Claim < ActiveRecord::Base
     @metadata ||= get_metadata(work_id, 'datacite')
   end
 
+  def doi
+    metadata.fetch('DOI', nil)
+  end
+
+  def contributors
+    Array(metadata.fetch('author', nil)).map do |contributor|
+      { orcid: contributor.fetch('ORCID', nil),
+        credit_name: get_credit_name(contributor),
+        role: nil }
+    end
+  end
+
   def title
-    metadata.fetch(:title, nil)
+    metadata.fetch('title', nil)
+  end
+
+  def container_title
+    metadata.fetch('container-title', nil)
+  end
+
+  def publication_date
+    get_parts_from_date_parts(metadata.fetch('issued', {}))
+  end
+
+  def description
+    metadata.fetch('description', nil)
+  end
+
+  def type
+    orcid_work_type(metadata.fetch('type', nil), metadata.fetch('subtype', nil))
   end
 
   def citation
@@ -118,10 +149,9 @@ class Claim < ActiveRecord::Base
   end
 
   def insert_titles(xml)
-    if title || subtitle
+    if title
       xml.send(:'work-title') do
-        xml.title(title) if title
-        xml.subtitle(subtitle) if subtitle
+        xml.title(title)
       end
     end
 
@@ -144,11 +174,42 @@ class Claim < ActiveRecord::Base
   end
 
   def insert_pub_date(xml)
-    if publication_year
-      xml.send(:'publication-date') do
-        xml.year(publication_year)
-        xml.month(publication_month) if publication_month
-        xml.day(publication_day) if publication_month && publication_day
+    xml.send(:'publication-date') do
+      xml.year(publication_date.fetch('year'))
+      xml.month(publication_date.fetch('month', nil)) if publication_date['month']
+      xml.day(publication_date.fetch('day', nil)) if publication_date['month'] && publication_date['day']
+    end
+  end
+
+  def insert_ids(xml)
+    xml.send(:'work-external-identifiers') do
+      insert_id(xml, 'doi', doi)
+    end
+  end
+
+  def insert_id(xml, type, value)
+    xml.send(:'work-external-identifier') do
+      xml.send(:'work-external-identifier-type', type)
+      xml.send(:'work-external-identifier-id', value)
+    end
+  end
+
+  def insert_contributors(xml)
+    xml.send(:'work-contributors') do
+      contributors.each do |contributor|
+        xml.contributor do
+          insert_contributor(xml, contributor)
+        end
+      end
+    end
+  end
+
+  def insert_contributor(xml, contributor)
+    xml.send(:'contributor-orcid', contributor[:orcid]) if contributor[:orcid]
+    xml.send(:'credit-name', contributor[:credit_name])
+    if contributor[:role]
+      xml.send(:'contributor-attributes') do
+        xml.send(:'contributor-role', contributor[:role])
       end
     end
   end

@@ -22,4 +22,24 @@ describe Claim do
       expect(result).to be_nil
     end
   end
+
+  describe 'get_parts_from_date_parts' do
+    it 'should handle full date' do
+      date_parts = { 'date-parts' => [[2015, 10, 26]] }
+      result = subject.get_parts_from_date_parts(date_parts)
+      expect(result).to eq("year"=>2015, "month"=>10, "day"=>26)
+    end
+
+    it 'should handle year-month only' do
+      date_parts = { 'date-parts' => [[2015, 10]] }
+      result = subject.get_parts_from_date_parts(date_parts)
+      expect(result).to eq("year"=>2015, "month"=>10)
+    end
+
+    it 'should handle year only' do
+      date_parts = { 'date-parts' => [[2015]] }
+      result = subject.get_parts_from_date_parts(date_parts)
+      expect(result).to eq("year"=>2015)
+    end
+  end
 end

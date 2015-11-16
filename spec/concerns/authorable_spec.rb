@@ -61,4 +61,18 @@ describe Claim do
       expect(result).to eq([{"family"=>"Ball", "given"=>"Madeline P."}, {"family"=>"Zaranek", "given"=>"Alexander W."}])
     end
   end
+
+  describe "get_credit_name" do
+    it 'should return the credit name' do
+      author = { 'given' => 'Madeline P.', 'family' => 'Ball' }
+      result = subject.get_credit_name(author)
+      expect(result).to eq("Madeline P. Ball")
+    end
+
+    it 'should understand missing given name' do
+      author = { 'family' => 'Ball' }
+      result = subject.get_credit_name(author)
+      expect(result).to eq("Ball")
+    end
+  end
 end

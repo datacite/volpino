@@ -74,3 +74,27 @@ DATACITE_TYPE_TRANSLATIONS = {
   "Workflow" => nil,
   "Other" => nil
 }
+
+# Map of DataCite work types to the CASRAI-based ORCID type vocabulary
+# https://members.orcid.org/api/supported-work-types
+TYPE_OF_WORK = {
+
+  'Audiovisual' => 'other',
+  'Collection' => 'other',
+  'Dataset' =>  'data-set',
+  'Event' => 'other',
+  'Image' => 'other',
+  'InteractiveResource' => 'online-resource',
+  'Model' => 'other',
+  'PhysicalObject' => 'other',
+  'Service' => 'other',
+  'Software' => 'other',
+  'Sound' => 'other',
+  'Text' => 'other',
+  'Workflow' => 'other',
+  'Other' => 'other',
+
+  # Legacy types from older schema versions
+  'Film' => 'other'
+  # pick up other legacy types as we go along
+}

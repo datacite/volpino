@@ -86,7 +86,7 @@ module Resolvable
       conn = faraday_conn('json', options)
       params = { q: "doi:" + doi,
                  rows: 1,
-                 fl: "doi,creator,title,publisher,publicationYear,resourceTypeGeneral,datacentre,datacentre_symbol,prefix,relatedIdentifier,xml,updated",
+                 fl: "doi,creator,title,publisher,publicationYear,resourceTypeGeneral,description,datacentre,datacentre_symbol,prefix,relatedIdentifier,xml,updated",
                  wt: "json" }
       url = "http://search.datacite.org/api?" + URI.encode_www_form(params)
 
@@ -98,9 +98,6 @@ module Resolvable
         metadata = json.fetch("response", {}).fetch("docs", []).first
 
         return { error: 'Resource not found.', status: 404 } if metadata.blank?
-
-        type = metadata.fetch("resourceTypeGeneral", nil)
-        type = DATACITE_TYPE_TRANSLATIONS.fetch(type, nil) if type
 
         doi = metadata.fetch("doi", nil)
         doi = doi.upcase if doi.present?
@@ -114,10 +111,12 @@ module Resolvable
 
         { "author" => get_hashed_authors(authors),
           "title" => title,
-          "container-title" => metadata.fetch("journal_title", nil),
+          "container-title" => metadata.fetch("publisher", nil),
+          "description" => metadata.fetch("description", nil),
           "issued" => get_date_parts_from_parts(metadata.fetch("publicationYear", nil)),
           "DOI" => doi,
-          "type" => type }
+          "type" => metadata.fetch("resourceTypeGeneral", nil),
+          "subtype" => metadata.fetch("resourceType", nil) }
       else
         { error: 'Resource not found.', status: 404 }
       end
