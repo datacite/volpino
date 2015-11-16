@@ -1,0 +1,25 @@
+language: ruby
+cache: bundler
+sudo: false
+rvm:
+  - 2.2.0
+
+env:
+  - DB=mysql
+
+services:
+  - redis-server
+
+before_script:
+  - memcached -p 11211 &
+  - cp .env.travis .env
+  - mkdir -p tmp/pids tmp/files tmp/reports tmp/snapshots
+  - cd frontend && npm install
+  - cd ../ && npm install -g istanbul codeclimate-test-reporter
+  - bundle exec rake db:setup RAILS_ENV=test
+
+script:
+  - CODECLIMATE_REPO_TOKEN=8c899becf0595e2aeef04e628dc3d9e352f1d7ac9f6ef56b0ca8577c546bac90 bundle exec rspec
+
+notifications:
+  slack: datacite:Wt8En0ALoTA6Kjc5EOKNDWxN

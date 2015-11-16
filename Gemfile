@@ -12,6 +12,7 @@ gem 'bugsnag', '~> 2.8.6'
 gem "faraday", "~> 0.9.0"
 gem "faraday_middleware", "~> 0.9.1"
 gem 'excon', '~> 0.45.3'
+gem "state_machine", "~> 1.2.0", :git => 'https://github.com/fly1tkg/state_machine.git', :branch => 'issue/334'
 gem 'active_model_serializers', git: 'https://github.com/rails-api/active_model_serializers.git'
 
 gem "haml-rails", "~> 0.9"
@@ -52,10 +53,24 @@ group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
   gem 'spring'
+  gem 'teaspoon-jasmine', '~> 2.2.0'
+  gem "brakeman", "~> 2.6.0", :require => false
+  gem 'rubocop', '~> 0.27.0'
 end
 
 group :test do
   gem "factory_girl_rails", "~> 4.5.0", :require => false
   gem "capybara", "~> 2.4.4"
   gem 'capybara-screenshot', '~> 1.0.3'
+  gem "database_cleaner", "~> 1.3.0"
+  gem "launchy", "~> 2.4.2"
+  gem "email_spec", "~> 1.6.0"
+  gem "rack-test", "~> 0.6.2", :require => "rack/test"
+  gem "simplecov", "~> 0.9.1", :require => false
+  gem 'codeclimate-test-reporter', '~> 0.4.1', :require => nil
+  gem "shoulda-matchers", "~> 2.7.0", :require => false
+  gem "webmock", "~> 1.20.0"
+  gem 'vcr', '~> 2.9.3'
+  gem "poltergeist", "~> 1.5.0"
+  gem "with_env", "~> 1.1.0"
 end

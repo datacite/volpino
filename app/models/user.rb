@@ -1,7 +1,12 @@
 require 'jwt'
 
 class User < ActiveRecord::Base
+  has_many :claims
+
   devise :omniauthable, :omniauth_providers => [:orcid]
+
+  validates :uid, presence: true, uniqueness: true
+  validates :provider, presence: true
 
   scope :query, ->(query) { where("name like ? OR uid like ?", "%#{query}%", "%#{query}%") }
   scope :ordered, -> { order("created_at DESC") }

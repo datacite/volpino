@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151109083004) do
+ActiveRecord::Schema.define(version: 20151110083256) do
+
+  create_table "claims", force: :cascade do |t|
+    t.string   "uuid",        limit: 191
+    t.integer  "user_id",     limit: 4,               null: false
+    t.string   "work_id",     limit: 191
+    t.integer  "service_id",  limit: 4
+    t.integer  "state",       limit: 4,   default: 0
+    t.string   "state_event", limit: 255
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
+  add_index "claims", ["created_at"], name: "index_claims_created_at", using: :btree
+  add_index "claims", ["user_id"], name: "index_claims_user_id", using: :btree
 
   create_table "services", force: :cascade do |t|
     t.string   "name",         limit: 255, null: false
@@ -22,14 +36,16 @@ ActiveRecord::Schema.define(version: 20151109083004) do
   end
 
   create_table "status", force: :cascade do |t|
-    t.string   "uuid",            limit: 191
-    t.integer  "users_count",     limit: 4,   default: 0
-    t.integer  "users_new_count", limit: 4,   default: 0
-    t.integer  "db_size",         limit: 8,   default: 0
-    t.string   "version",         limit: 255
-    t.string   "current_version", limit: 255
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.string   "uuid",             limit: 191
+    t.integer  "users_count",      limit: 4,   default: 0
+    t.integer  "users_new_count",  limit: 4,   default: 0
+    t.integer  "db_size",          limit: 8,   default: 0
+    t.string   "version",          limit: 255
+    t.string   "current_version",  limit: 255
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.integer  "claims_count",     limit: 4,   default: 0
+    t.integer  "claims_new_count", limit: 4,   default: 0
   end
 
   add_index "status", ["created_at"], name: "index_status_created_at", using: :btree
@@ -54,4 +70,5 @@ ActiveRecord::Schema.define(version: 20151109083004) do
   add_index "users", ["family_name", "given_names"], name: "index_users_on_family_name_and_given_names", using: :btree
   add_index "users", ["uid"], name: "index_users_on_uid", unique: true, using: :btree
 
+  add_foreign_key "claims", "users", name: "claims_user_id_fk", on_delete: :cascade
 end

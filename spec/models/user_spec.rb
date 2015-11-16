@@ -1,5 +1,11 @@
-require 'rails_helper'
+require "rails_helper"
+require "cancan/matchers"
 
-RSpec.describe User, :type => :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+describe User, type: :model, vcr: true do
+
+  subject { FactoryGirl.create(:user) }
+
+  it { is_expected.to have_many(:claims) }
+  it { is_expected.to validate_uniqueness_of(:uid) }
+  it { is_expected.to validate_presence_of(:provider) }
 end
