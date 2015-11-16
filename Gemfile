@@ -12,6 +12,8 @@ gem 'bugsnag', '~> 2.8.6'
 gem "faraday", "~> 0.9.0"
 gem "faraday_middleware", "~> 0.9.1"
 gem 'excon', '~> 0.45.3'
+gem 'addressable', "~> 2.3.8"
+gem 'postrank-uri', '~> 1.0.18'
 gem "state_machine", "~> 1.2.0", :git => 'https://github.com/fly1tkg/state_machine.git', :branch => 'issue/334'
 gem 'active_model_serializers', git: 'https://github.com/rails-api/active_model_serializers.git'
 
@@ -24,6 +26,8 @@ gem "will_paginate-bootstrap", "~> 1.0.1"
 gem "simple_form", "~> 3.1.0"
 gem "github-markdown", "~> 0.6.3"
 gem "rouge", "~> 1.7.2"
+gem 'hashie', '~> 3.3.2'
+gem 'namae', '~> 0.10.1'
 
 gem 'devise', '~> 3.5', '>= 3.5.2'
 gem "omniauth-orcid", "~> 1.0"

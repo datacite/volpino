@@ -45,35 +45,6 @@ module Networkable
       rescue_faraday_error(url, e, options)
     end
 
-    def save_to_file(url, filename = "tmpdata", options = { content_type: 'xml' })
-      conn = faraday_conn(options[:content_type], options)
-      conn.basic_auth(options[:username], options[:password]) if options[:username]
-      conn.options[:timeout] = options[:timeout] || DEFAULT_TIMEOUT
-      response = conn.get url
-
-      File.open("#{Rails.root}/tmp/files/#{filename}", 'w') { |file| file.write(response.body) }
-      filename
-    rescue *NETWORKABLE_EXCEPTIONS => e
-      rescue_faraday_error(url, e, options)
-    rescue => exception
-      options[:level] = Notification::FATAL
-      create_notification(exception, options)
-    end
-
-    def read_from_file(filename = "tmpdata", options = { content_type: 'xml' })
-      file = File.open("#{Rails.root}/tmp/files/#{filename}", 'r') { |f| f.read }
-      if options[:content_type] == "json"
-        JSON.parse(file)
-      else
-        Hash.from_xml(file)
-      end
-    rescue *NETWORKABLE_EXCEPTIONS => e
-      rescue_faraday_error(url, e, options)
-    rescue => exception
-      options[:level] = Notification::FATAL
-      create_notification(exception, options)
-    end
-
     def faraday_conn(content_type = 'json', options = {})
       content_types = { "html" => 'text/html; charset=UTF-8',
                         "xml" => 'application/xml',
@@ -83,7 +54,7 @@ module Networkable
 
       Faraday.new do |c|
         c.headers['Accept'] = accept_header
-        c.headers['User-Agent'] = "Lagotto - http://#{ENV['SERVERNAME']}"
+        c.headers['User-Agent'] = "Volpino - http://#{ENV['SERVERNAME']}"
         c.use      FaradayMiddleware::FollowRedirects, limit: limit, cookie: :all
         c.request  :multipart
         c.request  :json if accept_header == 'application/json'
@@ -127,16 +98,6 @@ module Networkable
         message = "#{message} for #{url}"
         message = "#{message}. Rate-limit #{get_rate_limit_limit(headers)} exceeded." if class_name == Net::HTTPTooManyRequests
 
-        Notification.where(message: message).where(unresolved: true).first_or_create(
-          exception: exception,
-          class_name: class_name.to_s,
-          details: details,
-          status: status,
-          target_url: url,
-          level: level,
-          work_id: options[:work_id],
-          agent_id: options[:agent_id])
-
         { error: message, status: status }
       end
     end
@@ -152,13 +113,6 @@ module Networkable
         else
           message = "DOI #{work.doi} could not be resolved"
         end
-        Notification.where(message: message).where(unresolved: true).first_or_create(
-          exception: error.exception,
-          class_name: "Net::HTTPNotFound",
-          details: error.response[:body],
-          status: status,
-          work_id: work.id,
-          target_url: url)
         { error: message, status: status }
       else
         if error.response.blank? && error.response[:body].blank?
@@ -226,16 +180,6 @@ module Networkable
       JSON.parse(string)
     rescue JSON::ParserError
       false
-    end
-
-    def create_notification(exception, options = {})
-      Notification.where(message: exception.message).where(unresolved: true).first_or_create(
-        :exception => exception,
-        :class_name => exception.class.to_s,
-        :status => options[:status] || 500,
-        :level => options[:level],
-        :agent_id => options[:agent_id])
-      nil
     end
   end
 end

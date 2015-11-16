@@ -5,7 +5,13 @@ class Claim < ActiveRecord::Base
   include Networkable
 
   # include helper module for DOI resolution
-  # include Resolvable
+  include Resolvable
+
+  # include helper module for date and time calculations
+  include Dateable
+
+  # include helper module for author name parsing
+  include Authorable
 
   belongs_to :user
   belongs_to :service
@@ -59,6 +65,14 @@ class Claim < ActiveRecord::Base
 
   def create_uuid
     write_attribute(:uuid, SecureRandom.uuid) if uuid.blank?
+  end
+
+  def metadata
+    @metadata ||= get_metadata(work_id, 'datacite')
+  end
+
+  def title
+    metadata.fetch(:title, nil)
   end
 
   def citation
