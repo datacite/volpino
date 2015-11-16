@@ -5,7 +5,7 @@ class Claim < ActiveRecord::Base
   include Networkable
 
   # include helper module for DOI resolution
-  include Resolvable
+  # include Resolvable
 
   belongs_to :user
   belongs_to :service
