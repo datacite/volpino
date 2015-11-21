@@ -13,6 +13,9 @@ datacite:
    - name: Homepage
      url: http://www.datacite.org
      icon: globe
+   - name: Link Store
+     url: http://ls.datacite.org
+     icon: link
    - name: MDS
      url: http://mds.datacite.org
      icon: database
