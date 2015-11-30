@@ -1,6 +1,6 @@
 class WorksController < ApplicationController
   before_filter :load_user
-  load_and_authorize_resource
+  #load_and_authorize_resource
 
   def index
     @page = params[:page] || 1

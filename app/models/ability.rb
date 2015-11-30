@@ -13,7 +13,6 @@ class Ability
       can [:update, :show], User, :id => user.id
     elsif user.role == "user"
       can [:update, :show], User, :id => user.id
-    else
     end
   end
 end
