@@ -12,9 +12,6 @@ class Work < ActiveRecord::Base
   # include date methods
   include Dateable
 
-  # include methods for calculating metrics
-  include Measurable
-
   # store blank values as nil
   nilify_blanks
 
