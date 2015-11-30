@@ -1,9 +1,6 @@
 require 'nokogiri'
 
 class Claim < ActiveRecord::Base
-  # include HTTP request helpers
-  include Networkable
-
   # include helper module for DOI resolution
   include Resolvable
 
@@ -15,6 +12,9 @@ class Claim < ActiveRecord::Base
 
   # include helper module for work type
   include Typeable
+
+  # include helper module for orcid oauth
+  include Clientable
 
   belongs_to :user
   belongs_to :service
@@ -107,7 +107,7 @@ class Claim < ActiveRecord::Base
   end
 
   def citation
-    result = get_result("http://doi.org/#{doi}", content_type: "application/x-bibtex")
+    result = Maremma.get "http://doi.org/#{doi}", content_type: "application/x-bibtex"
     return nil unless result.is_a?(String)
 
     without_control(result)

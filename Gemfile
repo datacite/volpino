@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.3'
+gem 'rails', '4.2.5'
 gem 'mysql2', '0.3.18'
 
 gem "dotenv", '~> 1.0.2'
@@ -9,9 +9,7 @@ gem 'sinatra', :require => nil
 gem "config"
 gem "whenever", "~> 0.9.0", require: false
 gem 'bugsnag', '~> 2.8.6'
-gem "faraday", "~> 0.9.0"
-gem "faraday_middleware", "~> 0.9.1"
-gem 'excon', '~> 0.45.3'
+gem "maremma", "~> 1.0.0"
 gem 'addressable', "~> 2.3.8"
 gem 'postrank-uri', '~> 1.0.18'
 gem "state_machine", "~> 1.2.0", :git => 'https://github.com/fly1tkg/state_machine.git', :branch => 'issue/334'

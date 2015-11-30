@@ -1,6 +1,9 @@
 require 'jwt'
 
 class User < ActiveRecord::Base
+  # include helper module for orcid oauth
+  include Clientable
+
   has_many :claims
 
   devise :omniauthable, :omniauth_providers => [:orcid]
@@ -74,7 +77,7 @@ class User < ActiveRecord::Base
   end
 
   def reversed_name
-    [family_name, given_names].join(', ')
+    [family_name.to_s, given_names].join(', ')
   end
 
   def names_for_search

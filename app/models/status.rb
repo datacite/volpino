@@ -27,7 +27,7 @@ class Status < ActiveRecord::Base
   end
 
   def get_current_version
-    result = get_result(RELEASES_URL)
+    result = Maremma.get RELEASES_URL
     result = result.is_a?(Array) ? result.first : nil
     result.to_h.fetch("tag_name", "v.#{version}")[2..-1]
   end

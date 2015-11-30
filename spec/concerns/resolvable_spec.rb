@@ -144,7 +144,7 @@ describe Claim, type: :model, vcr: true do
 
       it "get_orcid_metadata with not found error" do
         response = subject.get_orcid_metadata("#{orcid}x")
-        expect(response).to eq(error: {"message-version"=>"1.2", "orcid-profile"=>nil, "orcid-search-results"=>nil, "error-desc"=>{"value"=>"Not found : No entity found for query"}}, status: 404)
+        expect(response).to eq(:error=>"Resource not found.", :status=>404)
       end
     end
 

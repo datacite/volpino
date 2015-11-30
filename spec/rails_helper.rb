@@ -24,9 +24,7 @@ require "rack/test"
 require "devise"
 require "sidekiq/testing"
 require "colorize"
-
-# include required concerns
-include Networkable
+require "maremma"
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
