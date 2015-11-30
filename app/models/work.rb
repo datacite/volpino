@@ -3,9 +3,6 @@ require 'addressable/uri'
 require "builder"
 
 class Work < ActiveRecord::Base
-  # include HTTP request helpers
-  include Networkable
-
   # include helper module for DOI resolution
   include Resolvable
 

@@ -1,7 +1,4 @@
 class Status < ActiveRecord::Base
-  # include HTTP request helpers
-  include Networkable
-
   RELEASES_URL = "https://api.github.com/repos/datacite/volpino/releases"
 
   before_create :collect_status_info, :create_uuid
