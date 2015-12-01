@@ -81,7 +81,7 @@ class User < ActiveRecord::Base
   end
 
   def names_for_search
-    ([uid, name, reversed_name] + Array(other_names)).map { |n| '"' + n + '"' }.join(" OR ")
+    ([uid, name, reversed_name].compact + Array(other_names)).map { |n| '"' + n + '"' }.join(" OR ")
   end
 
   private
