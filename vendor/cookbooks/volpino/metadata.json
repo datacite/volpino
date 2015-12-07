@@ -3,22 +3,18 @@
   "description": "Configures volpino",
   "long_description": "volpino-cookbook\n================\n\nChef cookbook for installing [volpino](https://github.com/datacite/volpino).\n",
   "maintainer": "Martin Fenner",
-  "maintainer_email": "martin.fenner@datacite.org",
+  "maintainer_email": "mfenner@datacite.org",
   "license": "Apache 2.0",
   "platforms": {
     "ubuntu": ">= 0.0.0"
   },
   "dependencies": {
     "apt": ">= 0.0.0",
-    "redisio": ">= 0.0.0",
     "consul": ">= 0.0.0",
-    "mysql": ">= 0.0.0",
-    "database": "~> 2.3.1",
     "nodejs": ">= 0.0.0",
     "ruby": "~> 0.7.0",
     "dotenv": "~> 0.2.0",
-    "passenger_nginx": "~> 0.5.0",
-    "mysql_rails": "~> 0.3.0",
+    "passenger_nginx": "~> 0.6.0",
     "capistrano": "~> 0.10.0"
   },
   "recommendations": {
@@ -37,7 +33,7 @@
   },
   "recipes": {
   },
-  "version": "1.0.0",
+  "version": "1.1.0",
   "source_url": "",
   "issues_url": ""
 }

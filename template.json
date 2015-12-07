@@ -1,44 +1,53 @@
 {
-  "builders": [
-    {
-      "type": "amazon-ebs",
-      "access_key": "{{user `access_key`}}",
-      "secret_key": "{{user `secret_key`}}",
-      "region": "{{user `region`}}",
-      "source_ami": "{{user `source_ami`}}",
-      "instance_type": "{{user `instance_type`}}",
-      "ssh_username": "ubuntu",
-      "ami_name": "volpino {{timestamp}}"
-    }
-  ],
-  "provisioners": [
-    {
-      "type": "chef-solo",
-      "cookbook_paths": ["vendor/cookbooks"],
-      "run_list": ["recipe[volpino]"],
-      "json": {
-        "ruby": {
-          "deploy_user": "ubuntu",
-          "deploy_group": "ubuntu",
-          "rails_env": "production"
-        },
-        "phantomjs": {
-          "version": "1.9.7",
-          "base_url": "https://bitbucket.org/ariya/phantomjs/downloads" }
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "{{user `access_key`}}",
+    "secret_key": "{{user `secret_key`}}",
+    "region": "{{user `region`}}",
+    "source_ami": "{{user `source_ami`}}",
+    "instance_type": "{{user `instance_type`}}",
+    "ssh_username": "ubuntu",
+    "ami_name": "volpino {{timestamp}}"
+  }],
+  "provisioners": [{
+    "type": "shell",
+    "inline": ["sudo apt-get install -y git", "git clone git@github.com:datacite/volpino.git /var/www/volpino/shared"]
+  },
+  {
+    "type": "file",
+    "source": ".env.production",
+    "destination": "/var/www/volpino/shared/.env"
+  },
+  {
+    "type": "chef-solo",
+    "install_command": "curl -L https://www.chef.io/chef/install.sh | {{if .Sudo}}sudo{{end}} bash -s -- -v {{user `chef_version`}}",
+    "cookbook_paths": ["vendor/cookbooks"],
+    "run_list": ["recipe[volpino]"],
+    "override": {
+      "amazon-ebs": {
+        "json": {
+          "ruby": {
+            "deploy_user": "ubuntu",
+            "deploy_group": "ubuntu",
+            "rails_env": "production"
+          },
+          "phantomjs": {
+            "version": "1.9.7",
+            "base_url": "https://bitbucket.org/ariya/phantomjs/downloads"
+          }
+        }
       }
     }
-  ],
-  "post-processors": [
-    {
-      "type": "atlas",
-      "artifact": "datacite/volpino",
-      "artifact_type": "amazon.ami",
-      "token": "{{user `atlas_token`}}",
-      "metadata": {
-        "created_at": "{{timestamp}}"
-      }
+  }],
+  "post-processors": [{
+    "type": "atlas",
+    "artifact": "datacite/volpino",
+    "artifact_type": "amazon.ami",
+    "token": "{{user `atlas_token`}}",
+    "metadata": {
+      "created_at": "{{timestamp}}"
     }
-  ],
+  }],
   "variables": {
     "compression_level": "6",
     "cpus": "2",
@@ -46,6 +55,8 @@
     "headless": "false",
     "memory": "2048",
     "mirror": "http://releases.ubuntu.com",
+    "version": "0.1",
+    "chef_version": "12.5.1",
     "access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
     "secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
     "region": "{{env `AWS_REGION`}}",
@@ -53,8 +64,11 @@
     "instance_type": "{{env `AWS_INSTANCE_TYPE`}}",
     "atlas_token": "{{env `ATLAS_TOKEN`}}"
   },
-   "push": {
+  "push": {
     "name": "datacite/volpino",
-    "vcs": true
+    "vcs": true,
+    "include": [
+      ".env.production"
+    ]
   }
 }

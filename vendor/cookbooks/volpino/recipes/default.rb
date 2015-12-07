@@ -5,23 +5,6 @@ dotenv node["application"] do
   action          :nothing
 end.run_action(:load)
 
-# install and configure dependencies
-include_recipe "apt"
-include_recipe "redisio"
-include_recipe "redisio::enable"
-include_recipe "nodejs"
-
-# optionall install mysql and create database
-if ENV['RAILS_ENV'] != "production"
-  mysql_rails ENV['DB_NAME'] do
-    username        ENV['DB_USERNAME']
-    password        ENV['DB_PASSWORD']
-    host            ENV['DB_HOST']
-    root_password   ENV['DB_ROOT_PASSWORD']
-    action          :create
-  end
-end
-
 # install nginx and create configuration file and application root
 passenger_nginx node["application"] do
   user            ENV['DEPLOY_USER']

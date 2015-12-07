@@ -10,6 +10,3 @@ cookbook "capistrano",
          :git => "git@github.com:lagotto/capistrano-cookbook.git"
 cookbook "dotenv",
          :git => "git@github.com:lagotto/dotenv-cookbook.git"
-cookbook "mysql",
-         :git => "git@github.com:lagotto/mysql.git"
-cookbook "database", "~> 2.3.1"
