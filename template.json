@@ -11,7 +11,7 @@
   }],
   "provisioners": [{
     "type": "shell",
-    "inline": ["echo pwd", "sudo mkdir -p /var/www/volpino/shared", "sudo cp -r . /var/www/volpino/shared"]
+    "inline": ["echo `pwd`", "mkdir -p /var/www/volpino/shared", "cp -r . /var/www/volpino/shared"]
   },
   {
     "type": "file",
