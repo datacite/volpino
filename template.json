@@ -66,9 +66,6 @@
   },
   "push": {
     "name": "datacite/volpino",
-    "vcs": true,
-    "include": [
-      ".env.production"
-    ]
+    "vcs": false
   }
 }

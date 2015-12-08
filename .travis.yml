@@ -12,7 +12,7 @@ services:
 
 before_script:
   - memcached -p 11211 &
-  - cp .env.example .env
+  - cp .env.travis .env
   - mkdir -p tmp/pids
   - cd frontend && npm install
   - cd ../ && npm install -g istanbul codeclimate-test-reporter
