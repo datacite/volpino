@@ -14,7 +14,7 @@
     "inline": ["sudo apt-get install -y git",
                "sudo mkdir -p /var/www/volpino/shared",
                "sudo chown -R ubuntu:ubuntu /var/www/volpino",
-               "git clone git@github.com:datacite/spinone.git /var/www/spinone/shared"]
+               "git clone git@github.com:datacite/volpino.git /var/www/volpino/shared"]
   },
   {
     "type": "file",
