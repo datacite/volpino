@@ -70,9 +70,15 @@
   "push": {
     "name": "datacite/volpino",
     "vcs": false,
-    "include": [
-      ".env.production",
-      "vendor/cookbooks/*"
+    "exclude": [
+      "frontend/bower_components/*",
+      "frontend/node_modules/*",
+      "vendor/bundle/*",
+      ".DS_Store",
+      ".git/*",
+      ".vagrant/*",
+      "tmp/*",
+      ".bundle/*"
     ]
   }
 }
