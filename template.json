@@ -70,7 +70,11 @@
     "exclude": [
       "frontend/bower_components/*",
       "frontend/node_modules/*",
-      "vendor/bundle/*"
+      "vendor/bundle/*",
+      ".DS_Store",
+      ".git/*",
+      "tmp/*",
+      ".bundle/*"
     ]
   }
 }
