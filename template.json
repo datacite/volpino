@@ -66,6 +66,11 @@
   },
   "push": {
     "name": "datacite/volpino",
-    "vcs": false
+    "vcs": false,
+    "exclude": [
+      "frontend/bower_components/*",
+      "frontend/node_modules/*",
+      "vendor/bundle/*"
+    ]
   }
 }
