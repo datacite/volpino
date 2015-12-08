@@ -71,7 +71,8 @@
     "name": "datacite/volpino",
     "vcs": false,
     "include": [
-      ".env.production"
+      ".env.production",
+      "vendor/cookbooks/*"
     ]
   }
 }
