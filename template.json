@@ -12,14 +12,14 @@
   "provisioners": [{
     "type": "shell",
     "inline": ["sudo apt-get install -y git",
-               "sudo mkdir -p /var/www/volpino/shared",
+               "sudo mkdir -p /var/www/volpino",
                "sudo chown -R ubuntu:ubuntu /var/www/volpino",
-               "git clone https://github.com/datacite/volpino.git /var/www/volpino/shared"]
+               "git clone https://github.com/datacite/volpino.git /var/www/volpino"]
   },
   {
     "type": "file",
     "source": ".env.production",
-    "destination": "/var/www/volpino/shared/.env"
+    "destination": "/var/www/volpino/.env"
   },
   {
     "type": "chef-solo",
