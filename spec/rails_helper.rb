@@ -48,7 +48,7 @@ Capybara.configure do |config|
 end
 
 WebMock.disable_net_connect!(
-  allow: ['codeclimate.com', ENV['PRIVATE_IP'], ENV['HOSTNAME']],
+  allow: ['codeclimate.com:443', ENV['PRIVATE_IP'], ENV['HOSTNAME']],
   allow_localhost: true
 )
 
