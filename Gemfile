@@ -26,12 +26,12 @@ gem "github-markdown", "~> 0.6.3"
 gem "rouge", "~> 1.7.2"
 gem 'hashie', '~> 3.3.2'
 gem 'namae', '~> 0.10.1'
+gem 'lograge', '~> 0.3.5'
 
 gem 'devise', '~> 3.5', '>= 3.5.2'
 gem "omniauth-orcid", "~> 1.0"
 gem 'omniauth', '~> 1.2.2'
 gem 'jwt', '~> 1.5', '>= 1.5.1'
-gem 'httplog'
 gem 'cancancan', '~> 1.9.2'
 
 gem 'sprockets-rails', '~> 2.2.0', :require => 'sprockets/railtie'
