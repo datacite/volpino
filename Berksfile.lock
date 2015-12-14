@@ -1,19 +1,22 @@
 DEPENDENCIES
   capistrano
     git: git@github.com:lagotto/capistrano-cookbook.git
-    revision: 902a9ff223de89d1744361ee4b8599e9300eef11
+    revision: 3c70544db220a8c9734f41341349f25915319076
   dotenv
     git: git@github.com:lagotto/dotenv-cookbook.git
     revision: 0343aaa39aaed6a91b05211cd3a2ae9da95e89ba
   passenger_nginx
     git: git@github.com:lagotto/passenger_nginx-cookbook.git
-    revision: 5ec057f25e1961e52f56b67c2cd9a19aba644372
+    revision: c545d276343f29757a11657ef7910b3561c9c86d
+  rsyslog
+    git: git@github.com:datacite/rsyslog.git
+    revision: cf882466720309af2f57d409e5f51edf301ea12a
   ruby
     git: git@github.com:lagotto/ruby-cookbook.git
     revision: 3926fd9a0a25f2fbf5e25831a681ffd046f5d1a5
   volpino
     git: git@github.com:datacite/volpino-cookbook.git
-    revision: 9920c177cccc1c99f21b9ad57b322de9c7687141
+    revision: b6d59181a659319e9410a6b0a5b0a68f57ef6dc9
 
 GRAPH
   7-zip (1.0.2)
@@ -23,18 +26,21 @@ GRAPH
     7-zip (>= 0.0.0)
     windows (>= 0.0.0)
   build-essential (2.2.4)
-  capistrano (1.0.9)
+  capistrano (1.0.18)
     apt (>= 0.0.0)
+    chef-solo-search (>= 0.0.0)
     consul (>= 0.0.0)
     dotenv (~> 1.0.0)
     nodejs (>= 0.0.0)
-    remote_syslog2 (>= 0.0.0)
+    rsyslog (>= 0.0.0)
     ruby (~> 0.7.0)
+  chef-solo-search (0.5.1)
   chef-sugar (3.2.0)
   chef-vault (1.3.2)
   chef_handler (1.2.0)
   chocolatey (0.6.1)
     windows (~> 1.38)
+  compat_resource (12.5.19)
   consul (1.3.1)
     chef-vault (~> 1.3)
     chocolatey (>= 0.0.0)
@@ -62,26 +68,26 @@ GRAPH
     build-essential (>= 0.0.0)
     homebrew (>= 0.0.0)
     yum-epel (>= 0.0.0)
-  passenger_nginx (1.0.3)
+  passenger_nginx (1.0.9)
     apt (>= 0.0.0)
     nodejs (>= 0.0.0)
     ruby (~> 0.7.0)
   poise (2.4.0)
   poise-service (1.0.3)
     poise (~> 2.0)
-  remote_syslog2 (0.2.3)
+  rsyslog (4.0.1)
+    compat_resource (>= 0.0.0)
   ruby (0.7.6)
     apt (>= 0.0.0)
     build-essential (>= 0.0.0)
   selinux (0.9.0)
-  volpino (1.1.7)
+  volpino (1.1.13)
     apt (>= 0.0.0)
     capistrano (~> 1.0.0)
     consul (>= 0.0.0)
     dotenv (~> 1.0.0)
     nodejs (>= 0.0.0)
     passenger_nginx (~> 1.0.0)
-    remote_syslog2 (>= 0.0.0)
     ruby (~> 0.7.0)
   windows (1.38.4)
     chef_handler (>= 0.0.0)
