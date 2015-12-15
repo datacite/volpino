@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: https://github.com/rails-api/active_model_serializers.git
-  revision: f562449bd439d1295b91b41b01d5b780c793100a
+  revision: 1301b52696263e5f8ac5904a363b0f28f4dbf397
   specs:
     active_model_serializers (0.10.0.rc3)
       actionpack (>= 4.0)
@@ -172,6 +172,7 @@ GEM
       haml (~> 4.0.0)
       nokogiri (~> 1.6.0)
       ruby_parser (~> 3.5)
+    httplog (0.2.13)
     i18n (0.7.0)
     json (1.8.3)
     jwt (1.5.2)
@@ -339,7 +340,7 @@ GEM
       temple (~> 0.6.9)
       tilt (>= 1.3.3, < 2.1)
     slop (3.6.0)
-    spring (1.5.0)
+    spring (1.6.0)
     sprockets (2.12.4)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -418,6 +419,7 @@ DEPENDENCIES
   haml-rails (~> 0.9)
   hashie (~> 3.3.2)
   hologram (~> 1.3.1)
+  httplog
   jwt (~> 1.5, >= 1.5.1)
   launchy (~> 2.4.2)
   lograge (~> 0.3.5)
