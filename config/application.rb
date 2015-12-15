@@ -42,6 +42,9 @@ module Volpino
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    # Configure sensitive parameters which will be filtered from the log file.
+    config.filter_parameters += [:api_key, :jwt]
+
     # compress responses with deflate or gzip
     config.middleware.use Rack::Deflater
 
