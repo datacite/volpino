@@ -19,7 +19,11 @@ before_script:
   - bundle exec rake db:setup RAILS_ENV=test
 
 script:
-  - CODECLIMATE_REPO_TOKEN=8c899becf0595e2aeef04e628dc3d9e352f1d7ac9f6ef56b0ca8577c546bac90 bundle exec rspec
+  - bundle exec rspec
+
+addons:
+  code_climate:
+    repo_token: 8c899becf0595e2aeef04e628dc3d9e352f1d7ac9f6ef56b0ca8577c546bac90
 
 notifications:
   slack: datacite:Wt8En0ALoTA6Kjc5EOKNDWxN
