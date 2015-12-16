@@ -4,7 +4,6 @@ mysql: &mysql
 defaults: &defaults
   pool: <%= ENV['CONCURRENCY'].to_i + 5 %>
   timeout: 5000
-  reconnect: true
   encoding: utf8mb4
   database: <%= ENV['DB_NAME'] %>
   username: <%= ENV['DB_USERNAME'] %>
