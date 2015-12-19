@@ -16,7 +16,7 @@ DEPENDENCIES
     revision: 3926fd9a0a25f2fbf5e25831a681ffd046f5d1a5
   volpino
     git: git@github.com:datacite/volpino-cookbook.git
-    revision: b6d59181a659319e9410a6b0a5b0a68f57ef6dc9
+    revision: 9256aa5e884e86ab3e9ed1e6aecb30ee947dce19
 
 GRAPH
   7-zip (1.0.2)
@@ -85,7 +85,7 @@ GRAPH
     apt (>= 0.0.0)
     build-essential (>= 0.0.0)
   selinux (0.9.0)
-  volpino (1.1.13)
+  volpino (1.1.14)
     apt (>= 0.0.0)
     capistrano (~> 1.0.0)
     consul (>= 0.0.0)
