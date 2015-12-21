@@ -78,7 +78,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # always use SSL
-  config.force_ssl = true
+  # config.force_ssl = true
 
   # use ssl with Devise
   config.to_prepare { Devise::SessionsController.force_ssl }
