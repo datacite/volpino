@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.2.5'
 gem 'mysql2', '0.3.18'
+gem 'ar-octopus', '~> 0.8.5', :require => 'octopus', :git => 'https://github.com/tchandy/octopus.git'
 
 gem "dotenv", '~> 1.0.2'
 gem 'sidekiq', '~> 3.3.0'

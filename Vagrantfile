@@ -36,7 +36,7 @@ Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here.
 
   # Check if required plugins are installed.
-  required_plugins = %w{ vagrant-omnibus vagrant-bindfs vagrant-capistrano-push dotenv }
+  required_plugins = %w{ vagrant-omnibus vagrant-bindfs dotenv }
 
   unless installed_plugins(required_plugins).empty?
     puts "Plugins need to be installed, please install them and rerun vagrant."
