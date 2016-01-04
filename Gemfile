@@ -5,7 +5,7 @@ gem 'mysql2', '0.3.18'
 gem 'ar-octopus', '~> 0.8.5', :require => 'octopus', :git => 'https://github.com/tchandy/octopus.git'
 
 gem "dotenv", '~> 1.0.2'
-gem 'sidekiq', '~> 3.3.0'
+gem 'sidekiq', '~> 4.0', '>= 4.0.1'
 gem 'sinatra', :require => nil
 gem "config"
 gem "whenever", "~> 0.9.0", require: false
