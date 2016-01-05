@@ -10,7 +10,7 @@ gem 'sinatra', :require => nil
 gem "config"
 gem "whenever", "~> 0.9.0", require: false
 gem 'bugsnag', '~> 2.8.6'
-gem "maremma", "~> 1.0.0"
+gem "maremma", "~> 1.1.0"
 gem 'addressable', "~> 2.3.8"
 gem 'postrank-uri', '~> 1.0.18'
 gem "state_machine", "~> 1.2.0", :git => 'https://github.com/fly1tkg/state_machine.git', :branch => 'issue/334'
