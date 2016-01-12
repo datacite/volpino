@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20160112182305) do
     t.datetime "updated_at"
     t.text     "other_names",          limit: 65535
     t.string   "api_key",              limit: 191
-    t.string   "confirmation_token",   limit: 255
+    t.string   "confirmation_token",   limit: 191
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email",    limit: 255
