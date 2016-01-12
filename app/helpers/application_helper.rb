@@ -39,6 +39,16 @@ module ApplicationHelper
     end
   end
 
+  def email_text
+    if current_user.has_email?
+      'success'
+    elsif current_user.has_unconfirmed_email?
+      'info'
+    else
+      'warning'
+    end
+  end
+
   def enabled_text
     if !user_signed_in?
       ''
@@ -49,8 +59,18 @@ module ApplicationHelper
     end
   end
 
+  def subscribed_text
+    if current_user.has_email?
+      '<span class="small pull-right">subscribed</span>'
+    elsif current_user.has_unconfirmed_email?
+      '<span class="small pull-right">pending</span>'
+    else
+      '<span class="small pull-right">not subscribed</span>'
+    end
+  end
+
   def roles
-    %w(user staff admin)
+    %w(user member staff admin)
   end
 
   def settings

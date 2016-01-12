@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151110083256) do
+ActiveRecord::Schema.define(version: 20160112182305) do
 
   create_table "claims", force: :cascade do |t|
     t.string   "uuid",        limit: 191
@@ -65,8 +65,13 @@ ActiveRecord::Schema.define(version: 20151110083256) do
     t.datetime "updated_at"
     t.text     "other_names",          limit: 65535
     t.string   "api_key",              limit: 191
+    t.string   "confirmation_token",   limit: 255
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email",    limit: 255
   end
 
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["family_name", "given_names"], name: "index_users_on_family_name_and_given_names", using: :btree
   add_index "users", ["uid"], name: "index_users_on_uid", unique: true, using: :btree
 

@@ -208,6 +208,7 @@ $component-active-bg:    $brand-primary;
 $btn-font-weight:       normal;
 
 $btn-default-color:     $brand-primary;
+$btn-warning-color:     $brand-primary;
 $btn-default-bg:        $gray;
 $btn-default-border:    $gray;
 $btn-hover-bg:          mix($gray-light, white, 80%);
@@ -387,7 +388,6 @@ $panel-warning-heading-bg:       $brand-warning;
 .panel-heading small { font-weight: normal; margin-top: 3px; }
 .panel-heading .label-report { border: 1px solid white; font-size: $font-size-base; }
 .panel-list { font-weight: normal; }
-.panel-source { min-height: 284px; }
 
 /*doc
 ---
@@ -490,6 +490,7 @@ $bar-color-7: lighten($bar-color-1, 20%);
 
 @import "almviz";
 @import "github";
+@import 'volpino';
 @import "bootstrap-sass/assets/stylesheets/bootstrap-sprockets";
 @import "bootstrap-sass/assets/stylesheets/bootstrap";
 @import "swagger-ui";

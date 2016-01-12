@@ -1,0 +1,50 @@
+<div class="col-md-6">
+  <div class="panel panel-default panel-source">
+    <div class="panel-heading panel-title">
+      <% if @panel != 'account' || (controller.action_name != "edit" && !(controller.action_name == "update" && !@user.errors.empty?)) %>
+        <span class="pull-right">
+           <%= link_to icon("certificate").html_safe, edit_user_path(@user, panel: 'account'), { remote: true, class: 'btn btn-default btn-sm', id: 'edit' } %>
+        </span>
+      <% end %>
+      Your Account
+    </div>
+    <div class="panel-body panel-source">
+      <% if @panel == 'account' && (controller.action_name == "edit" || (controller.action_name == "update" && !@user.errors.empty?)) %>
+        <%= image_tag("orcid_32x32.gif", class: "orcid-logo pull-left") %>
+        <p>We use the token to authenticate with ORCID on your behalf.</p>
+        <dl class="dl-horizontal">
+          <dt>ORCID</dt>
+          <dd><%= link_to @user.orcid, @user.orcid %></dd>
+          <dt>ORCID Token</dt>
+          <dd><%= @user.authentication_token %></dd>
+          <dt>Expires</dt>
+          <dd><%= @user.expires_at.to_date.to_s(:long) %></dd>
+        </dl>
+        <div class="btn-toolbar pull-right">
+          <div class="btn-group btn-group-sm orcid">
+            <%= link_to 'close', user_path(@user, panel: 'account'), { remote: true, class: 'btn btn-default btn-sm' } %>
+          </div>
+        </div>
+      <% else %>
+        <dl class="dl-horizontal">
+          <dt>Name</dt>
+          <dd><%= @user.name %></dd>
+          <% if @user.other_names.present? %>
+            <dt>Other Names</dt>
+            <dd><%= h(@user.other_names.join(', ')) %></dd>
+          <% end %>
+          <dt>API Key</dt>
+          <dd><%= @user.api_key %></dd>
+          <dt>Role</dt>
+          <% if @user.role == "admin" %>
+            <dd>Admin</dd>
+          <% elsif @user.role == "staff" %>
+            <dd>Staff</dd>
+          <% else %>
+            <dd>User</dd>
+          <% end %>
+        </dl>
+      <% end %>
+    </div>
+  </div>
+</div>

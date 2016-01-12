@@ -6,10 +6,11 @@ class User < ActiveRecord::Base
 
   has_many :claims
 
-  devise :omniauthable, :omniauth_providers => [:orcid]
+  devise :confirmable, :omniauthable, :omniauth_providers => [:orcid]
 
   validates :uid, presence: true, uniqueness: true
   validates :provider, presence: true
+  validate :validate_email
 
   scope :query, ->(query) { where("name like ? OR uid like ?", "%#{query}%", "%#{query}%") }
   scope :ordered, -> { order("created_at DESC") }
@@ -34,12 +35,28 @@ class User < ActiveRecord::Base
     ["admin", "staff"].include?(role)
   end
 
+  def has_email?
+    email.present? && errors.empty?
+  end
+
+  def has_unconfirmed_email?
+    unconfirmed_email.present? && errors.empty?
+  end
+
   def orcid
     "http://orcid.org/#{uid}"
   end
 
   def credit_name
     name
+  end
+
+  def validate_email
+    return true if email.blank?
+
+    unless email =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+      errors.add :email, "is not a valid email address"
+    end
   end
 
   def self.get_auth_hash(auth)
@@ -82,6 +99,12 @@ class User < ActiveRecord::Base
 
   def names_for_search
     ([uid, name, reversed_name].compact + Array(other_names).compact).map { |n| '"' + n + '"' }.join(" OR ")
+  end
+
+  protected
+
+  def confirmation_required?
+    false
   end
 
   private
