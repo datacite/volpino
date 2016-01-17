@@ -2,7 +2,7 @@ Swagger::Docs::Config.register_apis(
   "v1" => {
     api_file_path: "public",
     base_api_controller: "Api::BaseController",
-    base_path: "https://#{ENV['SERVERNAME']}",
+    base_path: ENV['SERVER_URL'],
     :attributes => {
       :info => {
         "title" => "API",
