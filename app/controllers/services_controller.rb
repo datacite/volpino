@@ -64,7 +64,7 @@ class ServicesController < ApplicationController
     collection = Service
     collection = collection.query(params[:query]) if params[:query]
 
-    @services = collection.order(:name).paginate(:page => params[:page])
+    @services = collection.order(:title).paginate(:page => params[:page])
   end
 
   def load_user

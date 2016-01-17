@@ -38,5 +38,5 @@
     <%= render partial: "layouts/#{ENV['MODE']}/footer" -%>
   </body>
 
-  <%= javascript_include_tag 'layouts/index' %>
+  <%= javascript_include_tag 'layouts/index' if controller.controller_name != "index" %>
 </html>

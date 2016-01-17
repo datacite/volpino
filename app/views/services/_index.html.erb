@@ -60,7 +60,7 @@
                 </div>
               <% else %>
                 <div class="panel-footer">
-                  <%= link_to service.redirect_uri, "/services/#{service.name}" %>
+                  <%= link_to (icon("external-link") + " " + service.redirect_uri).html_safe, "/services/#{service.name}" %>
                   <span class="pull-right"><%= service.name %></span>
                 </div>
               <% end %>
