@@ -73,11 +73,12 @@ class UsersController < ApplicationController
     collection = User
     if params[:role]
       collection = collection.where(:role => params[:role])
-      @role = params[:role]
+      @role = User.where(role: params[:role]).group(:role).count.first
     end
     collection = collection.query(params[:query]) if params[:query]
     collection = collection.ordered
 
+    @roles = User.group(:role).count
     @users = collection.paginate(:page => params[:page])
   end
 

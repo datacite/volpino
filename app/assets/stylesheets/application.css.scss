@@ -120,7 +120,7 @@ $gray:          lighten($silver, 15%);
 $gray-light:    lighten($silver, 20%);
 $gray-lighter:  lighten($silver, 21%);
 $gray-dark:     lighten($silver, 10%);
-$gray-darker:   lighten($silver, 5%);
+$gray-darker:   darken($silver, 20%);
 $inverse:       white;
 
 $brand-primary:         $wet-asphalt;
@@ -522,7 +522,6 @@ btn.persona { border: 0; }
 legend { color: $brand-primary; font-size: $font-size-h2; font-weight: bold; line-height: 1.4375; padding-top: 23px; }
 .help-block { font-weight: normal; }
 .boolean { padding-left: 5px; padding-right: 5px; }
-select.form-control { width: 190px; }
 .form-user { width: 600px !important; }
 div.work { margin-top: 2em; margin-bottom: 15px; }
 div.work .btn-toolbar { padding-left: 1px; }
@@ -536,7 +535,7 @@ h5, h4.work { margin-bottom: 0; }
 .loading {margin: 1em; color: $gray; }
 td h4 { margin-top: 0; }
 div.search { padding-top: 10px; padding-bottom: 10px; width: 400px; margin-left: auto; margin-right: auto; }
-div.search-wide { padding-top: 20px; padding-bottom: 20px; margin-left: auto; margin-right: auto; }
+div.search-wide { padding-top: 10px; padding-bottom: 20px; margin-bottom: 20px; margin-left: auto; margin-right: auto; }
 div.search-orcid { padding-top: 20px; padding-bottom: 0px; margin-left: auto; margin-right: auto; }
 dt, dd { line-height: 1.5; }
 .border-bottom { border-bottom: 1px solid #eee; }
@@ -691,4 +690,39 @@ html {
 }
 .navbar-static-top {
   border-bottom: 1px solid $gray;
+}
+.facets {
+  color: $gray-darker;
+  font-size: 1em;
+  padding: 0;
+  border: 0 !important;
+  box-shadow: none !important;
+
+  .panel-body {
+    background-color: $gray-light;
+  }
+
+  ul {
+    list-style: none;
+    list-style-position: outside;
+    padding-left: 0;
+  }
+  h4 {
+    font-weight: normal;
+    font-size: 1.25em;
+    border-bottom: 1px solid $gray-darker;
+    padding-bottom: .15em;
+    margin: 0 0 .5em 0;
+  }
+  div {
+    border: 0;
+  }
+  li a, li.active a, li a:hover, li.active a:hover {
+    font-size: 1em;
+    display: inline;
+    color: $gray-darker;
+    background-color: $gray-light;
+    padding: 0 .5em 0 0;
+    margin-left: 0;
+  }
 }
