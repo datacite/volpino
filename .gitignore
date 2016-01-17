@@ -24,9 +24,9 @@ capybara-*.html
 /data/*
 /db/*.sqlite3
 /public/system/*
-/public/api/
-/public/api-docs.json
-/public/assets
+public/api/
+public/api-docs.json
+public/assets
 /coverage/
 /spec/tmp/
 /config/data_bags/*
