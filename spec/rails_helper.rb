@@ -62,24 +62,18 @@ VCR.configure do |c|
 end
 
 RSpec.configure do |config|
-  # config.expect_with :rspec do |expectations|
-  #   expectations.include_chain_clauses_in_custom_matcher_descriptions = true
-  # end
-
-  # config.mock_with :rspec do |mocks|
-  #   mocks.verify_partial_doubles = true
-  # end
-
   OmniAuth.config.test_mode = true
   config.before(:each) do
-    OmniAuth.config.mock_auth[:default] = OmniAuth::AuthHash.new({
-      provider: :orcid,
+    OmniAuth.config.mock_auth[:orcid] = OmniAuth::AuthHash.new({
+      provider: "orcid",
       uid: "0000-0002-1825-0097",
-      info: { "name" => "Josiah Carberry" }
+      info: { "name" => "Josiah Carberry" },
+      extra: {},
+      credentials: { token: "123",
+                     expires_at: Time.zone.now + 20.years }
     })
   end
 
-  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures/"
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your

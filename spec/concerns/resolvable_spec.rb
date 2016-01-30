@@ -27,7 +27,7 @@ describe Claim, type: :model, vcr: true do
 
       it "invalid DOI" do
         doi = "10.1371/xxx"
-        expect(subject.get_doi_ra(doi)).to eq(error: "Invalid DOI", status: 400)
+        expect(subject.get_doi_ra(doi)).to eq("errors"=>[{"title"=>"An error occured", "status"=>400}])
       end
     end
 
@@ -103,7 +103,7 @@ describe Claim, type: :model, vcr: true do
 
       it "get_crossref_metadata with not found error" do
         response = subject.get_crossref_metadata("#{doi}x")
-        expect(response).to eq(error: "Resource not found.", status: 404)
+        expect(response).to eq("errors"=>[{"status"=>404, "title"=>"Not found"}])
       end
     end
 
@@ -124,7 +124,7 @@ describe Claim, type: :model, vcr: true do
 
       it "get_datacite_metadata with not found error" do
         response = subject.get_datacite_metadata("#{doi}x")
-        expect(response).to eq(error: "Resource not found.", status: 404)
+        expect(response).to eq("errors"=>[{"title"=>"Not found.", "status"=>404}])
       end
     end
 
@@ -144,7 +144,7 @@ describe Claim, type: :model, vcr: true do
 
       it "get_orcid_metadata with not found error" do
         response = subject.get_orcid_metadata("#{orcid}x")
-        expect(response).to eq(:error=>"Resource not found.", :status=>404)
+        expect(response).to eq("errors"=>[{"status"=>404, "title"=>"Not found"}])
       end
     end
 

@@ -11,6 +11,6 @@ default["dotenv"] = "default"
 default["application"] = "volpino"
 
 default['nodejs']['repo'] = 'https://deb.nodesource.com/node_0.12'
-default['nodejs']['npm_packages'] = [{ "name" => "phantomjs" },
+default['nodejs']['npm_packages'] = [{ "name" => "phantomjs-prebuilt" },
                                      { "name" => "istanbul"},
                                      { "name" => "codeclimate-test-reporter" }]

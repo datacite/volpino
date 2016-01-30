@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.3.0'
 
 gem 'rails', '4.2.5'
 gem 'mysql2', '0.3.18'
@@ -10,7 +11,7 @@ gem 'sinatra', :require => nil
 gem "config"
 gem "whenever", "~> 0.9.0", require: false
 gem 'bugsnag', '~> 2.8.6'
-gem "maremma", "~> 1.1.0"
+gem "maremma", "~> 2.0"
 gem 'addressable', "~> 2.3.8"
 gem 'postrank-uri', '~> 1.0.18'
 gem "state_machine", "~> 1.2.0", :git => 'https://github.com/fly1tkg/state_machine.git', :branch => 'issue/334'
@@ -46,12 +47,12 @@ group :development do
   gem 'better_errors', '~> 2.0.0'
   gem 'binding_of_caller', '~> 0.7.2'
   gem 'hologram', '~> 1.3.1'
+  gem 'web-console', '~> 2.0'
 end
 
 group :development, :test do
   gem "rspec-rails", "~> 3.1.0"
   gem 'byebug'
-  gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'teaspoon-jasmine', '~> 2.2.0'
   gem "brakeman", "~> 2.6.0", :require => false
@@ -71,6 +72,6 @@ group :test do
   gem "shoulda-matchers", "~> 2.7.0", :require => false
   gem "webmock", "~> 1.20.0"
   gem 'vcr', '~> 2.9.3'
-  gem "poltergeist", "~> 1.5.0"
+  gem "poltergeist", "~> 1.8.1"
   gem "with_env", "~> 1.1.0"
 end

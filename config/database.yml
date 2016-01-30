@@ -17,8 +17,8 @@ development:
   <<: *defaults
 
 test:
-  database: <%= ENV['DB_NAME'] %>_test
   <<: *defaults
+  database: <%= ENV['DB_NAME'] %>_test
 
 production:
   <<: *defaults

@@ -11,21 +11,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160112182305) do
+ActiveRecord::Schema.define(version: 20160129231606) do
 
   create_table "claims", force: :cascade do |t|
     t.string   "uuid",        limit: 191
-    t.integer  "user_id",     limit: 4,               null: false
-    t.string   "work_id",     limit: 191
-    t.integer  "service_id",  limit: 4
+    t.string   "doi",         limit: 191
     t.integer  "state",       limit: 4,   default: 0
     t.string   "state_event", limit: 255
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.string   "uid",         limit: 191
+    t.string   "source_id",   limit: 191
   end
 
   add_index "claims", ["created_at"], name: "index_claims_created_at", using: :btree
-  add_index "claims", ["user_id"], name: "index_claims_user_id", using: :btree
+  add_index "claims", ["source_id"], name: "index_claims_source_id", using: :btree
+  add_index "claims", ["uid"], name: "index_claims_uid", using: :btree
+
+  create_table "deposits", force: :cascade do |t|
+    t.string   "uuid",           limit: 191,                           null: false
+    t.string   "message_type",   limit: 255,                           null: false
+    t.text     "message",        limit: 4294967295
+    t.string   "source_token",   limit: 191
+    t.text     "callback",       limit: 65535
+    t.integer  "state",          limit: 4,          default: 0
+    t.string   "state_event",    limit: 191
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.string   "message_action", limit: 255,        default: "create", null: false
+  end
+
+  add_index "deposits", ["source_token"], name: "index_deposits_on_source_token", using: :btree
+  add_index "deposits", ["updated_at"], name: "index_deposits_on_updated_at", using: :btree
+  add_index "deposits", ["uuid"], name: "index_deposits_on_uuid", using: :btree
 
   create_table "services", force: :cascade do |t|
     t.string   "name",         limit: 255, null: false
@@ -36,16 +54,18 @@ ActiveRecord::Schema.define(version: 20160112182305) do
   end
 
   create_table "status", force: :cascade do |t|
-    t.string   "uuid",             limit: 191
-    t.integer  "users_count",      limit: 4,   default: 0
-    t.integer  "users_new_count",  limit: 4,   default: 0
-    t.integer  "db_size",          limit: 8,   default: 0
-    t.string   "version",          limit: 255
-    t.string   "current_version",  limit: 255
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.integer  "claims_count",     limit: 4,   default: 0
-    t.integer  "claims_new_count", limit: 4,   default: 0
+    t.string   "uuid",                    limit: 191
+    t.integer  "users_count",             limit: 4,   default: 0
+    t.integer  "users_new_count",         limit: 4,   default: 0
+    t.integer  "db_size",                 limit: 8,   default: 0
+    t.string   "version",                 limit: 255
+    t.string   "current_version",         limit: 255
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.integer  "claims_search_count",     limit: 4,   default: 0
+    t.integer  "claims_search_new_count", limit: 4,   default: 0
+    t.integer  "claims_auto_count",       limit: 4,   default: 0
+    t.integer  "claims_auto_new_count",   limit: 4,   default: 0
   end
 
   add_index "status", ["created_at"], name: "index_status_created_at", using: :btree
@@ -75,5 +95,4 @@ ActiveRecord::Schema.define(version: 20160112182305) do
   add_index "users", ["family_name", "given_names"], name: "index_users_on_family_name_and_given_names", using: :btree
   add_index "users", ["uid"], name: "index_users_on_uid", unique: true, using: :btree
 
-  add_foreign_key "claims", "users", name: "claims_user_id_fk", on_delete: :cascade
 end

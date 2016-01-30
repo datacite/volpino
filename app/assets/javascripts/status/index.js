@@ -30,13 +30,15 @@ if (query) {
         .key(function(d) { return d.attributes.timestamp.substr(0,10); })
         .rollup(function(leaves) {
           return { "users_count": d3.max(leaves, function(d) { return d.attributes.users_new_count;}),
-                   "claims_count": d3.max(leaves, function(d) { return d.attributes.claims_new_count;}),
+                   "claims_search_count": d3.max(leaves, function(d) { return d.attributes.claims_search_new_count;}),
+                   "claims_auto_count": d3.max(leaves, function(d) { return d.attributes.claims_auto_new_count;}),
                    "db_size": d3.max(leaves, function(d) { return d.attributes.db_size;}),
                   };})
         .entries(day_data);
 
       barViz(by_day, "#chart_users", "users_count", "days");
-      barViz(by_day, "#chart_claims", "claims_count", "days");
+      barViz(by_day, "#chart_search_claims", "claims_search_count", "days");
+      barViz(by_day, "#chart_auto_claims", "claims_auto_count", "days");
       barViz(by_day, "#chart_db_size", "db_size", "days");
   });
 }

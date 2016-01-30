@@ -4,9 +4,9 @@ describe Claim, type: :model, vcr: true do
 
   subject { FactoryGirl.create(:claim) }
 
-  it { is_expected.to belong_to(:user) }
-  it { is_expected.to validate_presence_of(:work_id) }
-  it { is_expected.to validate_presence_of(:service_id) }
+  it { is_expected.to validate_presence_of(:uid) }
+  it { is_expected.to validate_presence_of(:doi) }
+  it { is_expected.to validate_presence_of(:source_id) }
 
   it 'contributors' do
     expect(subject.contributors).to eq([{:orcid=>nil, :credit_name=>"Heather A. Piwowar", :role=>nil}, {:orcid=>nil, :credit_name=>"Todd J. Vision", :role=>nil}])

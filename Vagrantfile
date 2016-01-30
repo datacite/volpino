@@ -50,7 +50,7 @@ Vagrant.configure("2") do |config|
   config.omnibus.chef_version = "12.5.1"
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "bento/ubuntu-14.04"
+  config.vm.box = "phusion/ubuntu-14.04-amd64"
 
   # Enable provisioning with chef solo
   config.vm.provision :chef_solo do |chef|

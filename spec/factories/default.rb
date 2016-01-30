@@ -1,9 +1,9 @@
 FactoryGirl.define do
   factory :user do
-    sequence(:name) { |n| "Joe Smith#{n}" }
+    sequence(:name) { |n| "Josiah Carberry{n}" }
     sequence(:authentication_token) { |n| "q9pWP8QxzkR24Mvs9BEy#{n}" }
     provider "orcid"
-    sequence(:uid) { |n| "0000-0002-1825-00#{n}" }
+    sequence(:uid) { |n| "0000-0002-1825-000#{n}" }
 
     factory :admin_user do
       role "admin"
@@ -21,10 +21,16 @@ FactoryGirl.define do
     initialize_with { Service.where(name: name).first_or_initialize }
   end
 
-  factory :claim do
-    work_id '10.5061/DRYAD.781PV'
+  factory :deposit do
+    uuid { SecureRandom.uuid }
+    message_type "orcid_update"
+    source_token "123"
+    message { { "contributors" => [{ "pid" => "http://orcid.org/0000-0002-3546-1048" }] } }
+  end
 
-    user
-    service
+  factory :claim do
+    uid "0000-0002-1825-0001"
+    doi "10.5061/DRYAD.781PV"
+    source_id "orcid_update"
   end
 end

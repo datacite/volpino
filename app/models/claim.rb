@@ -16,13 +16,10 @@ class Claim < ActiveRecord::Base
   # include helper module for orcid oauth
   include Clientable
 
-  belongs_to :user
-  belongs_to :service
-
   before_create :create_uuid
-  after_commit :queue_claim_job, :on => :create
+  #after_commit :queue_claim_job, :on => :create
 
-  validates :user_id, :service_id, :work_id, presence: true
+  validates :uid, :doi, :source_id, presence: true
 
   state_machine :initial => :waiting do
     state :waiting, value: 0
@@ -58,6 +55,9 @@ class Claim < ActiveRecord::Base
   scope :done, -> { by_state(3).order_by_date }
   scope :total, ->(duration) { where(updated_at: (Time.zone.now.beginning_of_hour - duration.hours)..Time.zone.now.beginning_of_hour) }
 
+  scope :search_and_link, -> { where(source_id: "orcid_search") }
+  scope :auto_update, -> { where(source_id: "orcid_update") }
+
   def queue_claim_job
     ClaimJob.perform_later(self)
   end
@@ -71,11 +71,7 @@ class Claim < ActiveRecord::Base
   end
 
   def metadata
-    @metadata ||= get_metadata(work_id, 'datacite')
-  end
-
-  def doi
-    metadata.fetch('DOI', nil)
+    @metadata ||= get_metadata(doi, 'datacite')
   end
 
   def contributors
@@ -108,9 +104,9 @@ class Claim < ActiveRecord::Base
 
   def citation
     result = Maremma.get "http://doi.org/#{doi}", content_type: "application/x-bibtex"
-    return nil unless result.is_a?(String)
+    return nil if result["errors"]
 
-    without_control(result)
+    without_control(result["data"])
   end
 
   def root_attributes

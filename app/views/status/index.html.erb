@@ -17,14 +17,26 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="panel <%= @current_status.claims_count > 0 ? 'panel-default' : 'panel-warning' %>">
+      <div class="panel <%= @current_status.claims_search_count > 0 ? 'panel-default' : 'panel-warning' %>">
         <div class="panel-heading">Claims <span class="small pull-right">Search and Link</span></div>
         <div class="panel-body panel-chart">
           <h2 class="graphs">
-            <%= number_with_delimiter(@current_status.claims_count) %>
+            <%= number_with_delimiter(@current_status.claims_search_count) %>
           </h2>
-          <div class="graphs" id="chart_claims"></div>
-          <div class="text-muted" id="chart_claims-loading">Loading … <%= image_tag "spinner.gif" %></div>
+          <div class="graphs" id="chart_search_claims"></div>
+          <div class="text-muted" id="chart_search_claims-loading">Loading … <%= image_tag "spinner.gif" %></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel <%= @current_status.claims_auto_count > 0 ? 'panel-default' : 'panel-warning' %>">
+        <div class="panel-heading">Claims <span class="small pull-right">Auto-Update</span></div>
+        <div class="panel-body panel-chart">
+          <h2 class="graphs">
+            <%= number_with_delimiter(@current_status.claims_auto_count) %>
+          </h2>
+          <div class="graphs" id="chart_auto_claims"></div>
+          <div class="text-muted" id="chart_auto_claims-loading">Loading … <%= image_tag "spinner.gif" %></div>
         </div>
       </div>
     </div>
