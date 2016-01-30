@@ -28,8 +28,7 @@ class Api::V1::DepositsController < Api::BaseController
     authorize! :create, @deposit
 
     if @deposit.save
-      @status = "accepted"
-      render "show", :status => :accepted
+      render json: @deposit, :status => :accepted
     else
       render json: { errors: @deposit.errors.map { |error| { status: 400, title: error } }}, status: :bad_request
     end
