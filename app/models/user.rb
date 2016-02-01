@@ -4,7 +4,12 @@ class User < ActiveRecord::Base
   # include helper module for orcid oauth
   include Clientable
 
-  has_many :claims
+  # include helper module for date and time calculations
+  include Dateable
+
+  after_commit :queue_user_job, :on => :create
+
+  has_many :claims, primary_key: "uid", foreign_key: "uid"
 
   devise :confirmable, :omniauthable, :omniauth_providers => [:orcid]
 
@@ -23,6 +28,10 @@ class User < ActiveRecord::Base
 
   def per_page
     15
+  end
+
+  def queue_user_job
+    UserJob.perform_later(self)
   end
 
   # Helper method to check for admin user
@@ -101,6 +110,43 @@ class User < ActiveRecord::Base
 
   def names_for_search
     ([uid, name, reversed_name].compact + Array(other_names).compact).map { |n| '"' + n + '"' }.join(" OR ")
+  end
+
+  def orcid_url
+    "http://pub.orcid.org/v#{ORCID_VERSION}/#{uid}/orcid-works"
+  end
+
+  def process_data(options={})
+    result = get_data(options)
+    result = parse_data(result, options)
+  end
+
+  def get_data(options={})
+    result = Maremma.get(orcid_url)
+    return result if result["errrors"]
+
+    result.fetch("data", {})
+          .fetch("orcid-profile", {})
+          .fetch("orcid-activities", {})
+          .fetch("orcid-works", {})
+          .fetch("orcid-work", [])
+          .select { |item| item.fetch("source", {}).fetch("source-orcid", {}).fetch("path", nil) == ENV['ORCID_CLIENT_ID'] }
+  end
+
+  def parse_data(items, options={})
+    Array(items).map do |item|
+      doi = item.fetch("work-external-identifiers", {})
+                .fetch("work-external-identifier", [])
+                .find { |item| item.fetch("work-external-identifier-type", nil) == "DOI" }
+                .fetch("work-external-identifier-id", {}).fetch("value", nil)
+      claimed_at = get_iso8601_from_epoch(item.fetch("source", {}).fetch("source-date", {}).fetch("value", nil))
+
+      claim = Claim.where(uid: uid, doi: doi).first_or_create!(
+                          source_id: "orcid_search",
+                          state: 3,
+                          claimed_at: claimed_at)
+      claim.present? ? claim.doi : nil
+    end
   end
 
   protected

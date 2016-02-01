@@ -16,8 +16,10 @@ class Claim < ActiveRecord::Base
   # include helper module for orcid oauth
   include Clientable
 
+  belongs_to :user, primary_key: "uid", foreign_key: "uid"
+
   before_create :create_uuid
-  #after_commit :queue_claim_job, :on => :create
+  after_commit :queue_claim_job, :on => :create
 
   validates :uid, :doi, :source_id, presence: true
 
@@ -26,6 +28,10 @@ class Claim < ActiveRecord::Base
     state :working, value: 1
     state :failed, value: 2
     state :done, value: 3
+
+    after_transition :to => :done do |claim|
+      claim.update_attributes(claimed_at: Time.zone.now)
+    end
 
     after_transition :to => :failed do |claim|
 
@@ -55,8 +61,8 @@ class Claim < ActiveRecord::Base
   scope :done, -> { by_state(3).order_by_date }
   scope :total, ->(duration) { where(updated_at: (Time.zone.now.beginning_of_hour - duration.hours)..Time.zone.now.beginning_of_hour) }
 
-  scope :search_and_link, -> { where(source_id: "orcid_search") }
-  scope :auto_update, -> { where(source_id: "orcid_update") }
+  scope :search_and_link, -> { where(source_id: "orcid_search").where("claimed_at IS NOT NULL") }
+  scope :auto_update, -> { where(source_id: "orcid_update").where("claimed_at IS NOT NULL") }
 
   def queue_claim_job
     ClaimJob.perform_later(self)
@@ -64,6 +70,10 @@ class Claim < ActiveRecord::Base
 
   def to_param  # overridden, use uuid instead of id
     uuid
+  end
+
+  def process_data(options={})
+    # oauth_client_post(data)
   end
 
   def create_uuid
@@ -115,7 +125,7 @@ class Claim < ActiveRecord::Base
       :'xmlns' => 'http://www.orcid.org/ns/orcid' }
   end
 
-  def to_xml
+  def data
     # return nil unless doi && creator && title && publisher && publication_year
 
     Nokogiri::XML::Builder.new do |xml|
@@ -170,10 +180,12 @@ class Claim < ActiveRecord::Base
   end
 
   def insert_pub_date(xml)
-    xml.send(:'publication-date') do
-      xml.year(publication_date.fetch('year'))
-      xml.month(publication_date.fetch('month', nil)) if publication_date['month']
-      xml.day(publication_date.fetch('day', nil)) if publication_date['month'] && publication_date['day']
+    if publication_date['year']
+      xml.send(:'publication-date') do
+        xml.year(publication_date.fetch('year'))
+        xml.month(publication_date.fetch('month', nil)) if publication_date['month']
+        xml.day(publication_date.fetch('day', nil)) if publication_date['month'] && publication_date['day']
+      end
     end
   end
 

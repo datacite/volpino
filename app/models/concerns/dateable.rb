@@ -20,12 +20,14 @@ module Dateable
       [year, month]
     end
 
-    def get_date_parts_from_parts(year, month = nil, day = nil)
+    def get_date_parts_from_parts(year = nil, month = nil, day = nil)
       { 'date-parts' => [[year.to_i, month.to_i, day.to_i].reject { |part| part == 0 }] }
     end
 
     def get_parts_from_date_parts(date_parts)
       parts = date_parts.fetch('date-parts', []).first
+      return { "date_parts" => [[]] } unless parts.present?
+
       { 'year' => parts[0],
         'month' => parts[1],
         'day' => parts[2] }.compact

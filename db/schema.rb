@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160129231606) do
+ActiveRecord::Schema.define(version: 20160201081547) do
 
   create_table "claims", force: :cascade do |t|
     t.string   "uuid",        limit: 191
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20160129231606) do
     t.datetime "updated_at",                          null: false
     t.string   "uid",         limit: 191
     t.string   "source_id",   limit: 191
+    t.datetime "claimed_at"
   end
 
   add_index "claims", ["created_at"], name: "index_claims_created_at", using: :btree

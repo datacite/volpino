@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "claims", type: :feature, js: true do
+describe "claims", type: :feature, js: true, vcr: true do
   it 'users' do
     visit '/status'
     expect(page).to have_css ".panel"

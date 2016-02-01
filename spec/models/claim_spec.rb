@@ -20,8 +20,8 @@ describe Claim, type: :model, vcr: true do
     expect(subject.citation).to eq("@data{33e0b47a-1025-4b53-be59-73261147ee4e,  doi = {10.5061/DRYAD.781PV},  url = {http://dx.doi.org/10.5061/DRYAD.781PV},  author = {Piwowar, Heather A.; Vision, Todd J.; },  publisher = {Dryad Digital Repository},  title = {Data from: Data reuse and the open data citation advantage},  year = {2013}}")
   end
 
-  it 'to_xml' do
+  it 'data' do
     xml = File.read(fixture_path + 'claim.xml')
-    expect(subject.to_xml).to eq(xml)
+    expect(subject.data).to eq(xml)
   end
 end
