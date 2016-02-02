@@ -7,6 +7,9 @@ class User < ActiveRecord::Base
   # include helper module for date and time calculations
   include Dateable
 
+  # include hash helper
+  include Hashie::Extensions::DeepFetch
+
   after_commit :queue_user_job, :on => :create
 
   has_many :claims, primary_key: "uid", foreign_key: "uid"
@@ -123,23 +126,22 @@ class User < ActiveRecord::Base
 
   def get_data(options={})
     result = Maremma.get(orcid_url)
-    return result if result["errrors"]
+    return nil if result["errrors"]
 
-    result.fetch("data", {})
-          .fetch("orcid-profile", {})
-          .fetch("orcid-activities", {})
-          .fetch("orcid-works", {})
-          .fetch("orcid-work", [])
-          .select { |item| item.fetch("source", {}).fetch("source-orcid", {}).fetch("path", nil) == ENV['ORCID_CLIENT_ID'] }
+    # extend hash fetch method to nested hashes
+    result.extend Hashie::Extensions::DeepFetch
+    items = result.deep_fetch('data', 'orcid-profile', 'orcid-activities', 'orcid-works', 'orcid-work') { [] }
+    items.select do |item|
+      item.extend Hashie::Extensions::DeepFetch
+      item.deep_fetch('source', 'source-orcid', 'path') { nil } == ENV['ORCID_CLIENT_ID']
+    end
   end
 
   def parse_data(items, options={})
     Array(items).map do |item|
-      doi = item.fetch("work-external-identifiers", {})
-                .fetch("work-external-identifier", [])
-                .find { |item| item.fetch("work-external-identifier-type", nil) == "DOI" }
-                .fetch("work-external-identifier-id", {}).fetch("value", nil)
-      claimed_at = get_iso8601_from_epoch(item.fetch("source", {}).fetch("source-date", {}).fetch("value", nil))
+      item.extend Hashie::Extensions::DeepFetch
+      doi = item.deep_fetch('work-external-identifiers', 'work-external-identifier', 0, 'work-external-identifier-id', 'value') { nil }
+      claimed_at = get_iso8601_from_epoch(item.deep_fetch('source', 'source-date', 'value') { nil })
 
       claim = Claim.where(uid: uid, doi: doi).first_or_create!(
                           source_id: "orcid_search",
