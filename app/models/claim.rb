@@ -30,7 +30,7 @@ class Claim < ActiveRecord::Base
     state :done, value: 3
 
     after_transition :to => :done do |claim|
-      claim.update_attributes(claimed_at: Time.zone.now)
+      claim.update_attributes(claimed_at: Time.zone.now) if claim.claimed_at.nil?
     end
 
     after_transition :to => :failed do |claim|
@@ -73,7 +73,7 @@ class Claim < ActiveRecord::Base
   end
 
   def process_data(options={})
-    # oauth_client_post(data)
+    oauth_client_post(data) if claimed_at.nil? && user.present?
   end
 
   def create_uuid
