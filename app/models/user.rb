@@ -72,11 +72,10 @@ class User < ActiveRecord::Base
   end
 
   def self.get_auth_hash(auth)
-    if Rails.env.test?
-      role = "admin"
-    elsif User.count > 1
-      role = "user"
+    if User.count > 0 || Rails.env.test?
+      role = auth.extra.raw_info.role || "user"
     else
+      # use admin role for first user
       role = "admin"
     end
 

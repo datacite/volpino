@@ -1,6 +1,6 @@
 module UserAuthMacros
   def sign_in(role = "admin")
-    FactoryGirl.create(:user, uid: "0000-0002-1825-0097", role: role)
+    OmniAuth.config.add_mock(:orcid, { extra: { raw_info: { role: role }}})
     visit "/"
     click_link_or_button "Sign in with ORCID"
   end

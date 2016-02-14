@@ -64,7 +64,7 @@ end
 RSpec.configure do |config|
   OmniAuth.config.test_mode = true
   config.before(:each) do
-    OmniAuth.config.mock_auth[:orcid] = OmniAuth::AuthHash.new({
+    OmniAuth.config.mock_auth[:default] = OmniAuth::AuthHash.new({
       provider: "orcid",
       uid: "0000-0002-1825-0097",
       info: { "name" => "Josiah Carberry" },

@@ -1,4 +1,5 @@
 class Api::V1::UsersController < Api::BaseController
+  prepend_before_filter :load_user, only: [:show]
   before_filter :authenticate_user_from_token!
   load_and_authorize_resource
 
@@ -18,7 +19,6 @@ class Api::V1::UsersController < Api::BaseController
   end
 
   def show
-    @user = current_user
     render json: @user
   end
 
@@ -34,5 +34,13 @@ class Api::V1::UsersController < Api::BaseController
 
     meta = { total: @users.total_entries, 'total-pages' => @users.total_pages, page: page[:number].to_i }
     render json: @users, meta: meta
+  end
+
+  protected
+
+  def load_user
+    @user = User.where(uid: params[:id]).first
+
+    fail ActiveRecord::RecordNotFound unless @user.present?
   end
 end
