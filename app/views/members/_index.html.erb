@@ -19,6 +19,7 @@
             <%= f.input :name %>
             <%= f.input :title %>
             <%= f.input :description, :input_html => { :rows => 8 } %>
+            <%= f.input :member_type, collection: member_types.map { |member_type| [member_type.humanize.titleize, member_type] }, include_blank: false %>
             <%= f.input :region, collection: regions.map { |region| [region.humanize.titleize, region] }, include_blank: false %>
             <%= f.input :country_code, label: "Country" %>
             <%= f.input :year, collection: 2009..Date.today.year %>
@@ -43,6 +44,7 @@
                   <div class="panel-body">
                     <%= simple_form_for member, url: member_path(member), html: { member_type: "form", remote: true } do |f| %>
                       <%= f.input :description, :input_html => { :rows => 8 } %>
+                      <%= f.input :member_type, collection: member_types.map { |member_type| [member_type.humanize.titleize, member_type] }, include_blank: false %>
                       <%= f.input :region, collection: regions.map { |region| [region.humanize.titleize, region] }, include_blank: false %>
                       <%= f.input :country_code, label: "Country" %>
                       <%= f.input :year, collection: 2009..Date.today.year %>
