@@ -4,7 +4,7 @@ DEPENDENCIES
     revision: f42dae835506ff5e7ff6de3e8ff9410a92da744e
   dotenv
     git: git@github.com:lagotto/dotenv-cookbook.git
-    revision: 766a336d399f87c2778efecedf49a775b5519d8a
+    revision: 3760e235c2cf7876119e6e2488c7c2b39319d4c4
   passenger_nginx
     git: git@github.com:lagotto/passenger_nginx-cookbook.git
     revision: 21cd289f8a47283feabd9add7987c7c4d94a2dd7
@@ -16,7 +16,7 @@ DEPENDENCIES
     revision: d40a6dc987080615a0c126101ec041efcaa78dc8
   volpino
     git: git@github.com:datacite/volpino-cookbook.git
-    revision: e2e21a02741785df7a89d43a8acae35d8e4c0ec4
+    revision: 70f042e1cf83198e0565659c6cc9616f71cceb58
 
 GRAPH
   apt (2.9.2)
@@ -47,7 +47,7 @@ GRAPH
     poise (~> 2.2)
     poise-service (~> 1.0)
     yum-epel (>= 0.0.0)
-  dotenv (1.0.1)
+  dotenv (1.0.2)
   firewall (2.4.0)
     chef-sugar (>= 0.0.0)
   golang (1.7.0)
@@ -85,7 +85,7 @@ GRAPH
     build-essential (>= 0.0.0)
   seven_zip (1.0.4)
     windows (>= 1.2.2)
-  volpino (1.1.16)
+  volpino (1.1.17)
     apt (>= 0.0.0)
     capistrano (~> 1.0.0)
     consul (>= 0.0.0)
