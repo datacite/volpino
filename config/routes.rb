@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   root :to => 'index#index'
 
   resources :docs, :only => [:index, :show], :constraints => { :id => /[0-z\-\.\(\)]+/ }
+  resources :members
   resources :services
   resources :status, :only => [:index]
   resources :users
@@ -26,6 +27,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: "json" } do
     scope module: :v1, constraints: ApiConstraint.new(version: 1, default: :true) do
       resources :deposits
+      resources :members
       resources :services
       resources :status, only: [:index]
       resources :users

@@ -39,11 +39,13 @@ function donutViz(data, div, title, subtitle, colors, items) {
     .attr("class", "title")
     .text(title);
 
-  chart.append("text")
-    .attr("dy", 21)
-    .attr("text-anchor", "middle")
-    .attr("class", "subtitle")
-    .text(subtitle);
+  if (typeof subtitle !== "undefined") {
+    chart.append("text")
+      .attr("dy", 21)
+      .attr("text-anchor", "middle")
+      .attr("class", "subtitle")
+      .text(subtitle);
+  }
 
   d3.select(div + "-loading").remove();
 

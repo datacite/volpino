@@ -1,0 +1,188 @@
+<div class="search-wide">
+  <%= form_tag(members_path, :method => "get", :class => "form form-horizontal", :member_type => "form") do %>
+    <div class="input-group">
+      <%= search_field_tag :query, params[:query], :placeholder => "Search", :class => "form-control" %>
+      <div class="input-group-btn">
+        <button type="submit" class="btn btn-primary hidden-xs"><%= icon("search") %></button>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="row">
+  <div class='col-md-9'>
+    <% if can?(:manage, Member) and (controller.action_name == "new" or (controller.action_name == "create" and !@member.errors.empty?)) %>
+      <div class="panel panel-default">
+        <div class="panel-heading panel-title">New member</div>
+        <div class="panel-body">
+          <%= simple_form_for @member, :url => members_path, :html => { :remote => true } do |f| %>
+            <%= f.input :name %>
+            <%= f.input :title %>
+            <%= f.input :description, :input_html => { :rows => 8 } %>
+            <%= f.input :region, collection: regions.map { |region| [region.humanize.titleize, region] }, include_blank: false %>
+            <%= f.input :country_code, label: "Country" %>
+            <%= f.input :year, collection: 2009..Date.today.year %>
+
+            <div class="form-group">
+              <%= f.submit "Save", class: "btn btn-default" %>
+              <%= link_to "Cancel", members_path, { remote: true, class: "btn" } %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <% if @members.size > 0 %>
+        <div class="panel-group" id="member">
+          <% @members.each do |member| %>
+            <div class="panel panel-default">
+              <div class="panel-heading panel-title panel-list">
+                <%= link_to ("#{h(member.title)}<small class='pull-right'>#{member.name}</small>").html_safe, "#member_#{member.id}", :class => "accordion-toggle", :id => "link_#{member.id}", :data => { :toggle => "collapse", :parent => "#member" }, :href => "#member_#{member.id}" %>
+              </div>
+              <% if can?(:manage, member) && @member && @member.id == member.id && (controller.action_name == "edit" or (controller.action_name == "update" and !@member.errors.empty?)) %>
+                <div id="member_<%= member.id %>" class="panel-collapse collapse.in">
+                  <div class="panel-body">
+                    <%= simple_form_for member, url: member_path(member), html: { member_type: "form", remote: true } do |f| %>
+                      <%= f.input :description, :input_html => { :rows => 8 } %>
+                      <%= f.input :region, collection: regions.map { |region| [region.humanize.titleize, region] }, include_blank: false %>
+                      <%= f.input :country_code, label: "Country" %>
+                      <%= f.input :year, collection: 2009..Date.today.year %>
+
+                      <div class="form-group">
+                        <%= f.submit "Save ", class: "btn btn-default" %>
+                        <%= link_to 'Cancel', members_path(query: params[:query], member_type: params[:member_type]), { :remote => true, :class => 'btn' } %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              <% else %>
+                <div id="member_<%= member.id %>" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <% if can?(:manage, member) %>
+                      <div class="btn-toolbar pull-right">
+                        <div class="btn-group btn-group-sm">
+                          <%= link_to icon("pencil").html_safe, edit_member_path(member, query: params[:query], member_type: params[:member_type]), remote: true, class: 'btn btn-default btn-sm', id: "#{member.id}-edit" %>
+                        </div>
+                        <div class="btn-group btn-group-sm">
+                          <%= link_to icon("trash").html_safe, member_path(member, query: params[:query], member_type: params[:member_type]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-default btn-sm', id: "#{member.id}-delete" %>
+                        </div>
+                      </div>
+                    <% end %>
+
+                    <% if member.description.present? %>
+                      <h5>Description</h5>
+                      <%= h(member.description) %>
+                    <% end %>
+
+                    <% if member.region.present? %>
+                      <h5>Region</h5>
+                      <%= member.region.humanize.titleize %>
+                    <% end %>
+
+                    <% if member.country_code.present? %>
+                      <h5>Country</h5>
+                      <%= member.country_name %>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+        <div class="text-center">
+          <%= will_paginate @members, :params => { :controller => members_path }, :renderer => BootstrapPagination::Rails %>
+        </div>
+      <% else %>
+        <div class="alert alert-info">There are currently no members
+          <% unless @member_type.nil? %>
+              with member_type "<%= @member_type.capitalize %>"
+          <% end %>
+          <% unless params[:query].blank? %>
+              with <em><%= params[:query] %></em> in the name or title
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div class='col-md-3'>
+   <% if can?(:manage, Member) %>
+      <div class="panel facets">
+        <div class="panel-body">
+          <h4 class="link"><%= link_to "Add Member", new_member_path, { remote: true, id: "new-member" } %></h4>
+        </div>
+      </div>
+    <% end %>
+    <% if @member_types.size > 0 %>
+      <div class="panel facets">
+        <div class="panel-body">
+          <h4>Member types</h4>
+          <ul>
+            <% if @member_type %>
+              <li class="active">
+                <%= link_to icon('check-square-o').html_safe, members_path %>
+                <%= @member_type.first.humanize %>
+                <span class="number pull-right"><%= number_with_delimiter(@member_type.last) %></span>
+              </li>
+            <% else %>
+              <% @member_types.each do |member_type| %>
+                <li>
+                  <%= link_to icon('square-o').html_safe, members_path(member_type: member_type.first) %>
+                  <%= member_type.first.humanize %>
+                  <span class="number pull-right"><%= number_with_delimiter(member_type.last) %></span>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+    <% if @regions.size > 0 %>
+      <div class="panel facets">
+        <div class="panel-body">
+          <h4>Regions</h4>
+          <ul>
+            <% if @region %>
+              <li class="active">
+                <%= link_to icon('check-square-o').html_safe, members_path %>
+                <%= @region.first.humanize.titleize %>
+                <span class="number pull-right"><%= number_with_delimiter(@region.last) %></span>
+              </li>
+            <% else %>
+              <% @regions.each do |region| %>
+                <li>
+                  <%= link_to icon('square-o').html_safe, members_path(region: region.first) %>
+                  <%= region.first.humanize.titleize %>
+                  <span class="number pull-right"><%= number_with_delimiter(region.last) %></span>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+    <% if @years.size > 0 %>
+      <div class="panel facets">
+        <div class="panel-body">
+          <h4>Year joined</h4>
+          <ul>
+            <% if @year %>
+              <li class="active">
+                <%= link_to icon('check-square-o').html_safe, members_path %>
+                <%= @year.first %>
+                <span class="number pull-right"><%= number_with_delimiter(@year.last) %></span>
+              </li>
+            <% else %>
+              <% @years.each do |year| %>
+                <li>
+                  <%= link_to icon('square-o').html_safe, members_path(year: year.first) %>
+                  <%= year.first %>
+                  <span class="number pull-right"><%= number_with_delimiter(year.last) %></span>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+

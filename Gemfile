@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 ruby '2.3.0'
 
 gem 'rails', '4.2.5'
@@ -11,7 +11,7 @@ gem 'sinatra', :require => nil
 gem "config"
 gem "whenever", "~> 0.9.0", require: false
 gem 'bugsnag', '~> 2.8.6'
-gem "maremma", "~> 2.0"
+gem "maremma", "~> 2.0.1"
 gem 'addressable', "~> 2.3.8"
 gem 'postrank-uri', '~> 1.0.18'
 gem "state_machine", "~> 1.2.0", :git => 'https://github.com/fly1tkg/state_machine.git', :branch => 'issue/334'
@@ -25,6 +25,8 @@ gem "dalli", "~> 2.7.0"
 gem 'will_paginate', '3.0.7'
 gem "will_paginate-bootstrap", "~> 1.0.1"
 gem "simple_form", "~> 3.1.0"
+gem 'country_select', '~> 2.5', '>= 2.5.1'
+gem "nokogiri", "~> 1.6.7"
 gem "github-markdown", "~> 0.6.3"
 gem "rouge", "~> 1.7.2"
 gem 'hashie', '~> 3.3.2'

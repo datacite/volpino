@@ -70,7 +70,15 @@ module ApplicationHelper
   end
 
   def roles
-    %w(user member staff admin)
+    %w(user data_centre member staff admin)
+  end
+
+  def member_types
+    %w(full affiliate)
+  end
+
+  def regions
+    %w(europe north_america asia_pacific other)
   end
 
   def settings

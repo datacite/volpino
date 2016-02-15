@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   after_commit :queue_user_job, :on => :create
 
   has_many :claims, primary_key: "uid", foreign_key: "uid"
+  belongs_to :member
 
   devise :confirmable, :omniauthable, :omniauth_providers => [:orcid]
 

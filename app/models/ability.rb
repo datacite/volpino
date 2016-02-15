@@ -11,6 +11,9 @@ class Ability
     elsif user.role == "staff"
       can :read, :all
       can [:update, :show], User, :id => user.id
+    elsif user.role == "member"
+      can [:update, :show], User, :id => user.id
+      can [:update, :show], Member, :id => user.member_id
     elsif user.role == "user"
       can [:update, :show], User, :id => user.id
     end
