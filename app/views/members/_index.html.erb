@@ -75,6 +75,11 @@
                       <%= h(member.description) %>
                     <% end %>
 
+                    <% if member.member_type.present? %>
+                      <h5>Member type</h5>
+                      <%= member.member_type.humanize.titleize %>
+                    <% end %>
+
                     <% if member.region.present? %>
                       <h5>Region</h5>
                       <%= member.region.humanize.titleize %>
