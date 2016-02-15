@@ -22,7 +22,8 @@
             <%= f.input :member_type, collection: member_types.map { |member_type| [member_type.humanize.titleize, member_type] }, include_blank: false %>
             <%= f.input :region, collection: regions.map { |region| [region.humanize.titleize, region] }, include_blank: false %>
             <%= f.input :country_code, label: "Country" %>
-            <%= f.input :year, collection: 2009..Date.today.year %>
+            <%= f.input :website %>
+            <%= f.input :year, label: "Year joined", collection: 2009..Date.today.year %>
 
             <div class="form-group">
               <%= f.submit "Save", class: "btn btn-default" %>
@@ -47,7 +48,8 @@
                       <%= f.input :member_type, collection: member_types.map { |member_type| [member_type.humanize.titleize, member_type] }, include_blank: false %>
                       <%= f.input :region, collection: regions.map { |region| [region.humanize.titleize, region] }, include_blank: false %>
                       <%= f.input :country_code, label: "Country" %>
-                      <%= f.input :year, collection: 2009..Date.today.year %>
+                      <%= f.input :website %>
+                      <%= f.input :year, label: "Year joined", collection: 2009..Date.today.year %>
 
                       <div class="form-group">
                         <%= f.submit "Save ", class: "btn btn-default" %>
@@ -72,7 +74,7 @@
 
                     <% if member.description.present? %>
                       <h5>Description</h5>
-                      <%= h(member.description) %>
+                      <%= markdown(member.description) %>
                     <% end %>
 
                     <% if member.member_type.present? %>
@@ -88,6 +90,11 @@
                     <% if member.country_code.present? %>
                       <h5>Country</h5>
                       <%= member.country_name %>
+                    <% end %>
+
+                    <% if member.website.present? %>
+                      <h5>Website</h5>
+                      <%= link_to h(member.website), member.website %>
                     <% end %>
                   </div>
                 </div>
