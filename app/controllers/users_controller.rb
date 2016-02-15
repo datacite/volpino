@@ -91,6 +91,7 @@ class UsersController < ApplicationController
                                  :auto_update,
                                  :subscribe,
                                  :role,
+                                 :member_id,
                                  :authentication_token)
   end
 end

@@ -24,6 +24,7 @@
                   <%= simple_form_for user, url: user_path(user), html: { role: "form", remote: true } do |f| %>
                     <%= f.input :api_key, label: "API key", input_html: { class: "form-user" } %>
                     <%= f.input :role, collection: roles.map { |role| [role.humanize, role] }, include_blank: false, input_html: { class: "form-user" } %>
+                    <%= f.association :member %>
 
                     <div class="form-group">
                       <%= f.submit "Save ", class: "btn btn-default" %>
@@ -64,6 +65,11 @@
 
                   <h5>Role</h5>
                   <%= user.role.capitalize %>
+
+                  <% if user.member.present? %>
+                    <h5>Member</h5>
+                    <%= user.member.title %>
+                  <% end %>
 
                   <h5>Account created</h5>
                   <%= user.created_at.to_s(:friendly) %>

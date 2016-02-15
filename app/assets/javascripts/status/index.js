@@ -4,7 +4,7 @@ var endDate = new Date(),
     startDate = d3.time.day.offset(endDate, -29),
     endTime = endDate.setHours(23),
     startTime = d3.time.hour.offset(endTime, -23),
-    colors = d3.scale.ordinal().range(["#1abc9c","#ecf0f1","#f1c40f"]);
+    colors = d3.scale.ordinal().range(["#1abc9c","#1bc5a4","#ecf0f1","#f1c40f"]);
 
 // construct query string
 var params = d3.select("#api_key");
@@ -36,7 +36,7 @@ if (query) {
                   };})
         .entries(day_data);
 
-      var members = d3.entries(data[0].members);
+      var members = d3.entries(data[0].attributes.members_count);
       var members_title = d3.sum(members, function(g) { return g.value; });
 
       barViz(by_day, "#chart_users", "users_count", "days");
