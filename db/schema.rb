@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160201081547) do
+ActiveRecord::Schema.define(version: 20160215071648) do
 
   create_table "claims", force: :cascade do |t|
     t.string   "uuid",        limit: 191
@@ -46,6 +46,22 @@ ActiveRecord::Schema.define(version: 20160201081547) do
   add_index "deposits", ["updated_at"], name: "index_deposits_on_updated_at", using: :btree
   add_index "deposits", ["uuid"], name: "index_deposits_on_uuid", using: :btree
 
+  create_table "members", force: :cascade do |t|
+    t.string   "name",         limit: 191,                    null: false
+    t.string   "title",        limit: 255,                    null: false
+    t.text     "description",  limit: 65535
+    t.string   "member_type",  limit: 191,   default: "full"
+    t.integer  "year",         limit: 4
+    t.string   "region",       limit: 255
+    t.string   "country_code", limit: 255
+    t.string   "logo",         limit: 255
+    t.string   "email",        limit: 255
+    t.string   "website",      limit: 255
+    t.string   "phone",        limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "services", force: :cascade do |t|
     t.string   "name",         limit: 255, null: false
     t.string   "title",        limit: 255, null: false
@@ -55,18 +71,22 @@ ActiveRecord::Schema.define(version: 20160201081547) do
   end
 
   create_table "status", force: :cascade do |t|
-    t.string   "uuid",                    limit: 191
-    t.integer  "users_count",             limit: 4,   default: 0
-    t.integer  "users_new_count",         limit: 4,   default: 0
-    t.integer  "db_size",                 limit: 8,   default: 0
-    t.string   "version",                 limit: 255
-    t.string   "current_version",         limit: 255
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.integer  "claims_search_count",     limit: 4,   default: 0
-    t.integer  "claims_search_new_count", limit: 4,   default: 0
-    t.integer  "claims_auto_count",       limit: 4,   default: 0
-    t.integer  "claims_auto_new_count",   limit: 4,   default: 0
+    t.string   "uuid",                        limit: 191
+    t.integer  "users_count",                 limit: 4,   default: 0
+    t.integer  "users_new_count",             limit: 4,   default: 0
+    t.integer  "db_size",                     limit: 8,   default: 0
+    t.string   "version",                     limit: 255
+    t.string   "current_version",             limit: 255
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+    t.integer  "claims_search_count",         limit: 4,   default: 0
+    t.integer  "claims_search_new_count",     limit: 4,   default: 0
+    t.integer  "claims_auto_count",           limit: 4,   default: 0
+    t.integer  "claims_auto_new_count",       limit: 4,   default: 0
+    t.integer  "members_europe_count",        limit: 4,   default: 0
+    t.integer  "members_north_america_count", limit: 4,   default: 0
+    t.integer  "members_asia_pacific_count",  limit: 4,   default: 0
+    t.integer  "members_other_count",         limit: 4,   default: 0
   end
 
   add_index "status", ["created_at"], name: "index_status_created_at", using: :btree
@@ -90,6 +110,7 @@ ActiveRecord::Schema.define(version: 20160201081547) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email",    limit: 255
+    t.integer  "member_id",            limit: 4
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
