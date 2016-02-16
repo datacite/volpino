@@ -33,18 +33,24 @@ function donutViz(data, div, title, subtitle, colors, items) {
     function(d){ $(this).tooltip({title: formatFixed(d.data.value) + " " + items + " " + d.data.key.replace("_", " "), container: "body"});
   });
 
-  chart.append("text")
-    .attr("dy", 0)
-    .attr("text-anchor", "middle")
-    .attr("class", "title")
-    .text(title);
+  if (subtitle !== null) {
+    chart.append("text")
+      .attr("dy", 0)
+      .attr("text-anchor", "middle")
+      .attr("class", "title")
+      .text(title);
 
-  if (typeof subtitle !== "undefined") {
     chart.append("text")
       .attr("dy", 21)
       .attr("text-anchor", "middle")
       .attr("class", "subtitle")
       .text(subtitle);
+  } else {
+    chart.append("text")
+      .attr("dy", 8)
+      .attr("text-anchor", "middle")
+      .attr("class", "title-only")
+      .text(title);
   }
 
   d3.select(div + "-loading").remove();

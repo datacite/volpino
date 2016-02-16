@@ -79,7 +79,7 @@ module ApplicationHelper
 
   def regions
     { "AMER" => "Americas",
-      "APAC" => "Asia and Pacific",
+      "APAC" => "Asia Pacific",
       "EMEA" => "EMEA" }
   end
 

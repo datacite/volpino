@@ -43,6 +43,8 @@
                 <div id="member_<%= member.id %>" class="panel-collapse collapse.in">
                   <div class="panel-body">
                     <%= simple_form_for member, url: member_path(member), html: { member_type: "form", remote: true } do |f| %>
+                      <%= f.input :name %>
+                      <%= f.input :title %>
                       <%= f.input :description, :input_html => { :rows => 8 } %>
                       <%= f.input :member_type, collection: member_types.map { |member_type| [member_type.humanize.titleize, member_type] }, include_blank: false %>
                       <%= f.input :country_code, label: "Country" %>
@@ -130,14 +132,14 @@
           <ul>
             <% if @member_type %>
               <li class="active">
-                <%= link_to icon('check-square-o').html_safe, members_path %>
+                <%= link_to icon('check-square-o').html_safe, members_path(region: params[:region], year: params[:year]) %>
                 <%= @member_type.first.humanize %>
                 <span class="number pull-right"><%= number_with_delimiter(@member_type.last) %></span>
               </li>
             <% else %>
               <% @member_types.each do |member_type| %>
                 <li>
-                  <%= link_to icon('square-o').html_safe, members_path(member_type: member_type.first) %>
+                  <%= link_to icon('square-o').html_safe, members_path(member_type: member_type.first, region: params[:region], year: params[:year]) %>
                   <%= member_type.first.humanize %>
                   <span class="number pull-right"><%= number_with_delimiter(member_type.last) %></span>
                 </li>
@@ -154,14 +156,14 @@
           <ul>
             <% if @region %>
               <li class="active">
-                <%= link_to icon('check-square-o').html_safe, members_path %>
+                <%= link_to icon('check-square-o').html_safe, members_path(member_type: params[:member_type], year: params[:year]) %>
                 <%= regions[@region.first] %>
                 <span class="number pull-right"><%= number_with_delimiter(@region.last) %></span>
               </li>
             <% else %>
               <% @regions.each do |region| %>
                 <li>
-                  <%= link_to icon('square-o').html_safe, members_path(region: region.first) %>
+                  <%= link_to icon('square-o').html_safe, members_path(region: region.first, member_type: params[:member_type], year: params[:year]) %>
                   <%= regions[region.first] %>
                   <span class="number pull-right"><%= number_with_delimiter(region.last) %></span>
                 </li>
@@ -178,14 +180,14 @@
           <ul>
             <% if @year %>
               <li class="active">
-                <%= link_to icon('check-square-o').html_safe, members_path %>
+                <%= link_to icon('check-square-o').html_safe, members_path(member_type: params[:member_type], region: params[:region]) %>
                 <%= @year.first %>
                 <span class="number pull-right"><%= number_with_delimiter(@year.last) %></span>
               </li>
             <% else %>
               <% @years.each do |year| %>
                 <li>
-                  <%= link_to icon('square-o').html_safe, members_path(year: year.first) %>
+                  <%= link_to icon('square-o').html_safe, members_path(year: year.first, member_type: params[:member_type], region: params[:region]) %>
                   <%= year.first %>
                   <span class="number pull-right"><%= number_with_delimiter(year.last) %></span>
                 </li>

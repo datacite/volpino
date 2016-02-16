@@ -19,4 +19,14 @@ class Member < ActiveRecord::Base
   def set_region
     write_attribute(:region, ISO3166::Country[country_code].world_region)
   end
+
+  def regions
+    { "AMER" => "Americas",
+      "APAC" => "Asia Pacific",
+      "EMEA" => "EMEA" }
+  end
+
+  def region_human_name
+    regions[region]
+  end
 end

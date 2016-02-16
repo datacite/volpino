@@ -1,6 +1,4 @@
 class MemberSerializer < ActiveModel::Serializer
-  require 'active_support/core_ext/string'
-
   cache key: 'member'
   attributes :id, :title, :description, :region, :country, :year
 
@@ -10,5 +8,13 @@ class MemberSerializer < ActiveModel::Serializer
 
   def country
     object.country_name
+  end
+
+  def region
+    object.region_human_name
+  end
+
+  def description
+    GitHub::Markdown.render_gfm(object.description)
   end
 end
