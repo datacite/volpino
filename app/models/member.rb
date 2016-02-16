@@ -17,7 +17,7 @@ class Member < ActiveRecord::Base
   end
 
   def set_region
-    if country_code.present
+    if country_code.present?
       r = ISO3166::Country[country_code].world_region
     else
       r = nil

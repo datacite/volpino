@@ -92,6 +92,11 @@
                       <%= member.country_name %>
                     <% end %>
 
+                    <% if member.year.present? %>
+                      <h5>Year joined</h5>
+                      <%= member.year %>
+                    <% end %>
+
                     <% if member.website.present? %>
                       <h5>Website</h5>
                       <%= link_to h(member.website), member.website %>
