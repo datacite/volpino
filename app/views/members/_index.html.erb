@@ -42,7 +42,7 @@
               <% if can?(:manage, member) && @member && @member.id == member.id && (controller.action_name == "edit" or (controller.action_name == "update" and !@member.errors.empty?)) %>
                 <div id="member_<%= member.id %>" class="panel-collapse collapse.in">
                   <div class="panel-body">
-                    <%= simple_form_for member, url: member_path(member), html: { member_type: "form", remote: true } do |f| %>
+                    <%= simple_form_for member, url: member_path(member, query: params[:query], member_type: params[:member_type], region: params[:region], year: params[:year]), html: { member_type: "form", remote: true } do |f| %>
                       <%= f.input :name %>
                       <%= f.input :title %>
                       <%= f.input :description, :input_html => { :rows => 8 } %>
@@ -53,7 +53,7 @@
 
                       <div class="form-group">
                         <%= f.submit "Save ", class: "btn btn-default" %>
-                        <%= link_to 'Cancel', members_path(query: params[:query], member_type: params[:member_type]), { :remote => true, :class => 'btn' } %>
+                        <%= link_to 'Cancel', members_path(query: params[:query], member_type: params[:member_type], region: params[:region], year: params[:year]), { :remote => true, :class => 'btn' } %>
                       </div>
                     <% end %>
                   </div>
@@ -64,10 +64,10 @@
                     <% if can?(:manage, member) %>
                       <div class="btn-toolbar pull-right">
                         <div class="btn-group btn-group-sm">
-                          <%= link_to icon("pencil").html_safe, edit_member_path(member, query: params[:query], member_type: params[:member_type]), remote: true, class: 'btn btn-default btn-sm', id: "#{member.id}-edit" %>
+                          <%= link_to icon("pencil").html_safe, edit_member_path(member, query: params[:query], member_type: params[:member_type], region: params[:region], year: params[:year]), remote: true, class: 'btn btn-default btn-sm', id: "#{member.id}-edit" %>
                         </div>
                         <div class="btn-group btn-group-sm">
-                          <%= link_to icon("trash").html_safe, member_path(member, query: params[:query], member_type: params[:member_type]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-default btn-sm', id: "#{member.id}-delete" %>
+                          <%= link_to icon("trash").html_safe, member_path(member, query: params[:query], member_type: params[:member_type], region: params[:region], year: params[:year]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-default btn-sm', id: "#{member.id}-delete" %>
                         </div>
                       </div>
                     <% end %>

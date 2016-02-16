@@ -17,7 +17,12 @@ class Member < ActiveRecord::Base
   end
 
   def set_region
-    write_attribute(:region, ISO3166::Country[country_code].world_region)
+    if country_code.present
+      r = ISO3166::Country[country_code].world_region
+    else
+      r = nil
+    end
+    write_attribute(:region, r)
   end
 
   def regions
