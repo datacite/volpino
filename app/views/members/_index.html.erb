@@ -20,7 +20,6 @@
             <%= f.input :title %>
             <%= f.input :description, :input_html => { :rows => 8 } %>
             <%= f.input :member_type, collection: member_types.map { |member_type| [member_type.humanize.titleize, member_type] }, include_blank: false %>
-            <%= f.input :region, collection: regions.map { |region| [region.humanize.titleize, region] }, include_blank: false %>
             <%= f.input :country_code, label: "Country" %>
             <%= f.input :website %>
             <%= f.input :year, label: "Year joined", collection: 2009..Date.today.year %>
@@ -46,7 +45,6 @@
                     <%= simple_form_for member, url: member_path(member), html: { member_type: "form", remote: true } do |f| %>
                       <%= f.input :description, :input_html => { :rows => 8 } %>
                       <%= f.input :member_type, collection: member_types.map { |member_type| [member_type.humanize.titleize, member_type] }, include_blank: false %>
-                      <%= f.input :region, collection: regions.map { |region| [region.humanize.titleize, region] }, include_blank: false %>
                       <%= f.input :country_code, label: "Country" %>
                       <%= f.input :website %>
                       <%= f.input :year, label: "Year joined", collection: 2009..Date.today.year %>
@@ -84,7 +82,7 @@
 
                     <% if member.region.present? %>
                       <h5>Region</h5>
-                      <%= member.region.humanize.titleize %>
+                      <%= regions[member.region] %>
                     <% end %>
 
                     <% if member.country_code.present? %>
@@ -157,14 +155,14 @@
             <% if @region %>
               <li class="active">
                 <%= link_to icon('check-square-o').html_safe, members_path %>
-                <%= @region.first.humanize.titleize %>
+                <%= regions[@region.first] %>
                 <span class="number pull-right"><%= number_with_delimiter(@region.last) %></span>
               </li>
             <% else %>
               <% @regions.each do |region| %>
                 <li>
                   <%= link_to icon('square-o').html_safe, members_path(region: region.first) %>
-                  <%= region.first.humanize.titleize %>
+                  <%= regions[region.first] %>
                   <span class="number pull-right"><%= number_with_delimiter(region.last) %></span>
                 </li>
               <% end %>

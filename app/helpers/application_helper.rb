@@ -78,7 +78,9 @@ module ApplicationHelper
   end
 
   def regions
-    %w(europe north_america asia_pacific other)
+    { "AMER" => "Americas",
+      "APAC" => "Asia and Pacific",
+      "EMEA" => "EMEA" }
   end
 
   def settings

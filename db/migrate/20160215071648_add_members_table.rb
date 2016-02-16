@@ -17,9 +17,8 @@ class AddMembersTable < ActiveRecord::Migration
     end
 
     add_column :users, :member_id, :integer
-    add_column :status, :members_europe_count, :integer, default: 0
-    add_column :status, :members_north_america_count, :integer, default: 0
-    add_column :status, :members_asia_pacific_count, :integer, default: 0
-    add_column :status, :members_other_count, :integer, default: 0
+    add_column :status, :members_emea_count, :integer, default: 0
+    add_column :status, :members_amer_count, :integer, default: 0
+    add_column :status, :members_apac_count, :integer, default: 0
   end
 end

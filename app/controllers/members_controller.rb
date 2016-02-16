@@ -75,6 +75,6 @@ class MembersController < ApplicationController
   private
 
   def safe_params
-    params.require(:member).permit(:title, :name, :description, :member_type, :region, :country_code, :website, :year, :email, :website, :phone)
+    params.require(:member).permit(:title, :name, :description, :member_type, :country_code, :website, :year, :email, :website, :phone)
   end
 end

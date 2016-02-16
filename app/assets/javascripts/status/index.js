@@ -4,7 +4,7 @@ var endDate = new Date(),
     startDate = d3.time.day.offset(endDate, -29),
     endTime = endDate.setHours(23),
     startTime = d3.time.hour.offset(endTime, -23),
-    colors = d3.scale.ordinal().range(["#1abc9c","#1bc5a4","#ecf0f1","#f1c40f"]);
+    colors = d3.scale.ordinal().range(["#1abc9c","#1bc5a4","#ecf0f1"]);
 
 // construct query string
 var params = d3.select("#api_key");

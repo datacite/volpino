@@ -71,22 +71,21 @@ ActiveRecord::Schema.define(version: 20160215071648) do
   end
 
   create_table "status", force: :cascade do |t|
-    t.string   "uuid",                        limit: 191
-    t.integer  "users_count",                 limit: 4,   default: 0
-    t.integer  "users_new_count",             limit: 4,   default: 0
-    t.integer  "db_size",                     limit: 8,   default: 0
-    t.string   "version",                     limit: 255
-    t.string   "current_version",             limit: 255
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
-    t.integer  "claims_search_count",         limit: 4,   default: 0
-    t.integer  "claims_search_new_count",     limit: 4,   default: 0
-    t.integer  "claims_auto_count",           limit: 4,   default: 0
-    t.integer  "claims_auto_new_count",       limit: 4,   default: 0
-    t.integer  "members_europe_count",        limit: 4,   default: 0
-    t.integer  "members_north_america_count", limit: 4,   default: 0
-    t.integer  "members_asia_pacific_count",  limit: 4,   default: 0
-    t.integer  "members_other_count",         limit: 4,   default: 0
+    t.string   "uuid",                    limit: 191
+    t.integer  "users_count",             limit: 4,   default: 0
+    t.integer  "users_new_count",         limit: 4,   default: 0
+    t.integer  "db_size",                 limit: 8,   default: 0
+    t.string   "version",                 limit: 255
+    t.string   "current_version",         limit: 255
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.integer  "claims_search_count",     limit: 4,   default: 0
+    t.integer  "claims_search_new_count", limit: 4,   default: 0
+    t.integer  "claims_auto_count",       limit: 4,   default: 0
+    t.integer  "claims_auto_new_count",   limit: 4,   default: 0
+    t.integer  "members_emea_count",      limit: 4,   default: 0
+    t.integer  "members_amer_count",      limit: 4,   default: 0
+    t.integer  "members_apac_count",      limit: 4,   default: 0
   end
 
   add_index "status", ["created_at"], name: "index_status_created_at", using: :btree
