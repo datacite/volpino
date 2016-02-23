@@ -1,6 +1,9 @@
 <div class="search-wide">
   <%= form_tag(members_path, :method => "get", :class => "form form-horizontal", :member_type => "form") do %>
     <div class="input-group">
+      <%= hidden_field_tag :member_type, params[:member_type] %>
+      <%= hidden_field_tag :region, params[:region] %>
+      <%= hidden_field_tag :year, params[:year] %>
       <%= search_field_tag :query, params[:query], :placeholder => "Search", :class => "form-control" %>
       <div class="input-group-btn">
         <button type="submit" class="btn btn-primary hidden-xs"><%= icon("search") %></button>
@@ -19,10 +22,10 @@
             <%= f.input :name %>
             <%= f.input :title %>
             <%= f.input :description, :input_html => { :rows => 8 } %>
-            <%= f.input :member_type, collection: member_types.map { |member_type| [member_type.humanize.titleize, member_type] }, include_blank: false %>
-            <%= f.input :country_code, label: "Country" %>
-            <%= f.input :website %>
-            <%= f.input :year, label: "Year joined", collection: 2009..Date.today.year %>
+            <%= f.input :member_type, collection: member_types.map { |member_type| [member_type.humanize.titleize, member_type] }, include_blank: false, input_html: { class: "form-user" } %>
+            <%= f.input :country_code, label: "Country", input_html: { class: "form-user" } %>
+            <%= f.input :website, input_html: { class: "form-user" } %>
+            <%= f.input :year, label: "Year joined", collection: 2009..Date.today.year, input_html: { class: "form-user" } %>
 
             <div class="form-group">
               <%= f.submit "Save", class: "btn btn-default" %>
@@ -46,10 +49,10 @@
                       <%= f.input :name %>
                       <%= f.input :title %>
                       <%= f.input :description, :input_html => { :rows => 8 } %>
-                      <%= f.input :member_type, collection: member_types.map { |member_type| [member_type.humanize.titleize, member_type] }, include_blank: false %>
-                      <%= f.input :country_code, label: "Country" %>
-                      <%= f.input :website %>
-                      <%= f.input :year, label: "Year joined", collection: 2009..Date.today.year %>
+                      <%= f.input :member_type, collection: member_types.map { |member_type| [member_type.humanize.titleize, member_type] }, include_blank: false, input_html: { class: "form-user" } %>
+                      <%= f.input :country_code, label: "Country", input_html: { class: "form-user" } %>
+                      <%= f.input :website, input_html: { class: "form-user" } %>
+                      <%= f.input :year, label: "Year joined", collection: 2009..Date.today.year, input_html: { class: "form-user" } %>
 
                       <div class="form-group">
                         <%= f.submit "Save ", class: "btn btn-default" %>
@@ -137,14 +140,14 @@
           <ul>
             <% if @member_type %>
               <li class="active">
-                <%= link_to icon('check-square-o').html_safe, members_path(region: params[:region], year: params[:year]) %>
+                <%= link_to icon('check-square-o').html_safe, members_path(query: params[:query], region: params[:region], year: params[:year]) %>
                 <%= @member_type.first.humanize %>
                 <span class="number pull-right"><%= number_with_delimiter(@member_type.last) %></span>
               </li>
             <% else %>
               <% @member_types.each do |member_type| %>
                 <li>
-                  <%= link_to icon('square-o').html_safe, members_path(member_type: member_type.first, region: params[:region], year: params[:year]) %>
+                  <%= link_to icon('square-o').html_safe, members_path(query: params[:query], member_type: member_type.first, region: params[:region], year: params[:year]) %>
                   <%= member_type.first.humanize %>
                   <span class="number pull-right"><%= number_with_delimiter(member_type.last) %></span>
                 </li>
@@ -161,14 +164,14 @@
           <ul>
             <% if @region %>
               <li class="active">
-                <%= link_to icon('check-square-o').html_safe, members_path(member_type: params[:member_type], year: params[:year]) %>
+                <%= link_to icon('check-square-o').html_safe, members_path(query: params[:query], member_type: params[:member_type], year: params[:year]) %>
                 <%= regions[@region.first] %>
                 <span class="number pull-right"><%= number_with_delimiter(@region.last) %></span>
               </li>
             <% else %>
               <% @regions.each do |region| %>
                 <li>
-                  <%= link_to icon('square-o').html_safe, members_path(region: region.first, member_type: params[:member_type], year: params[:year]) %>
+                  <%= link_to icon('square-o').html_safe, members_path(query: params[:query], region: region.first, member_type: params[:member_type], year: params[:year]) %>
                   <%= regions[region.first] %>
                   <span class="number pull-right"><%= number_with_delimiter(region.last) %></span>
                 </li>
@@ -185,14 +188,14 @@
           <ul>
             <% if @year %>
               <li class="active">
-                <%= link_to icon('check-square-o').html_safe, members_path(member_type: params[:member_type], region: params[:region]) %>
+                <%= link_to icon('check-square-o').html_safe, members_path(query: params[:query], member_type: params[:member_type], region: params[:region]) %>
                 <%= @year.first %>
                 <span class="number pull-right"><%= number_with_delimiter(@year.last) %></span>
               </li>
             <% else %>
               <% @years.each do |year| %>
                 <li>
-                  <%= link_to icon('square-o').html_safe, members_path(year: year.first, member_type: params[:member_type], region: params[:region]) %>
+                  <%= link_to icon('square-o').html_safe, members_path(query: params[:query], year: year.first, member_type: params[:member_type], region: params[:region]) %>
                   <%= year.first %>
                   <span class="number pull-right"><%= number_with_delimiter(year.last) %></span>
                 </li>

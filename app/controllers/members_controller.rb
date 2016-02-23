@@ -51,15 +51,15 @@ class MembersController < ApplicationController
 
   def load_index
     collection = Member
-    if params[:member_type]
+    if params[:member_type].present?
       collection = collection.where(:member_type => params[:member_type])
       @member_type = Member.where(member_type: params[:member_type]).group(:member_type).count.first
     end
-    if params[:region]
+    if params[:region].present?
       collection = collection.where(:region => params[:region])
       @region = Member.where(region: params[:region]).group(:region).count.first
     end
-    if params[:year]
+    if params[:year].present?
       collection = collection.where(:year => params[:year])
       @year = Member.where(year: params[:year]).group(:year).count.first
     end
