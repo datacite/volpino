@@ -17,8 +17,16 @@ FactoryGirl.define do
     name 'search'
     title 'Search'
     redirect_uri 'http://search.labs.datacite.org/auth/jwt/callback'
+    url 'http://search.labs.datacite.org'
 
     initialize_with { Service.where(name: name).first_or_initialize }
+  end
+
+  factory :tag do
+    name 'search'
+    title 'Search'
+
+    initialize_with { Tag.where(name: name).first_or_initialize }
   end
 
   factory :deposit do

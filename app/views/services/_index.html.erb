@@ -18,7 +18,12 @@
           <%= simple_form_for @service, :url => services_path, :html => { :remote => true } do |f| %>
             <%= f.input :name, input_html: { class: "form-control" } %>
             <%= f.input :title, input_html: { class: "form-control" } %>
+            <%= f.input :url, as: 'string', label: 'URL', input_html: { class: "form-control" } %>
             <%= f.input :redirect_uri, :label => 'Redirect URI', :input_html => { class: "form-control" } %>
+            <%= f.input :logo, input_html: { class: "form-control" } %>
+            <%= f.input :summary, input_html: { class: "form-control" } %>
+            <%= f.input :description, input_html: { class: "form-control", rows: 20 } %>
+            <%= f.association :tags, as: :check_boxes, label_method: :title, value_method: :id %>
 
             <div class="form-group">
               <%= f.submit "Save", class: "btn btn-default" %>
@@ -42,12 +47,17 @@
                   </div>
                 <% end %>
               </div>
-              <% if can?(:manage, @service) && @service && @service.name == service.name && (controller.action_name == "edit" || (controller.action_name == "update" and !@service.errors.empty?)) %>
-                <div id="service_<%= service.id %>" class="panel-body">
+              <div id="service_<%= service.id %>" class="panel-body">
+                <% if can?(:manage, @service) && @service && @service.name == service.name && (controller.action_name == "edit" || (controller.action_name == "update" and !@service.errors.empty?)) %>
                   <%= simple_form_for @service, url: service_path(@service), html: { role: "form", remote: true } do |f| %>
                     <%= f.input :name, input_html: { class: "form-control" } %>
                     <%= f.input :title, input_html: { class: "form-control" } %>
+                    <%= f.input :url, as: 'string', label: 'URL', input_html: { class: "form-control" } %>
                     <%= f.input :redirect_uri, :label => 'Redirect URI', :input_html => { class: "form-control" } %>
+                    <%= f.input :logo, input_html: { class: "form-control" } %>
+                    <%= f.input :summary, input_html: { class: "form-control" } %>
+                    <%= f.input :description, input_html: { class: "form-control", rows: 20 } %>
+                    <%= f.association :tags, as: :check_boxes, label_method: :title, value_method: :id %>
 
                     <div class="form-group">
                       <div class="pull-right">
@@ -57,13 +67,30 @@
                       <%= link_to "Cancel", services_path(query: params[:query]), { :remote => true, :class => 'btn' } %>
                     </div>
                   <% end %>
-                </div>
-              <% else %>
-                <div class="panel-footer">
-                  <%= link_to (icon("external-link") + " " + service.redirect_uri).html_safe, "/services/#{service.name}" %>
-                  <span class="pull-right"><%= service.name %></span>
-                </div>
-              <% end %>
+                <% else %>
+                  <div class="media">
+                    <div class="media-left media-middle">
+                      <% if service.logo.present? %>
+                        <%= icon(service.logo, class: "fa-3x") %>
+                      <% end %>
+                    </div>
+                    <div class="media-body">
+                      <% if service.summary.present? %>
+                        <p><%= markdown(service.summary) %></p>
+                      <% end %>
+                      <% if service.description.present? %>
+                        <p><%= markdown(service.description) %></p>
+                      <% end %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+              <div class="panel-footer">
+                <%= link_to (icon("external-link") + " " + service.url).html_safe, "#{service.url}" %>
+                <% if service.tags.present? %>
+                  <span class="pull-right"><%= icon("tags") %> <%= service.tags.sort_by { |t| t.title }.map {|t| "<a href='/services?tag=#{t.name}'>#{t.title}</a>" }.join(', ').html_safe %></span>
+                <% end %>
+              </div>
             </div>
           <% end %>
         </div>
@@ -73,13 +100,37 @@
       <% else %>
         <div class="alert alert-info">There are currently no services
           <% unless params[:query].blank? %>
-              with <em><%= params[:query] %></em> in the name or title
+              with <em><%= params[:query] %></em> in the name, title or description
           <% end %>
         </div>
       <% end %>
     <% end %>
   </div>
   <div class='col-md-3'>
+    <div class="panel facets">
+      <div class="panel-body">
+        <h4>Tags</h4>
+        <ul>
+          <% if @tag %>
+            <li class="active">
+              <%= link_to icon('check-square-o').html_safe, services_path %>
+              <%= @tag.title %>
+              <span class="number pull-right"><%= @tag.services.count %></span>
+            </li>
+          <% else %>
+            <% unless @tags.blank? %>
+              <% @tags.each do |tag| %>
+                <li>
+                  <%= link_to icon('square-o').html_safe, services_path(tag: tag.name) %>
+                  <%= tag.title %>
+                  <span class="number pull-right"><%= tag.services.count %></span>
+                </li>
+              <% end %>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    </div>
     <% if can?(:manage, Service) %>
       <div class="panel facets">
         <div class="panel-body">

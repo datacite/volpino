@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: https://github.com/rails-api/active_model_serializers.git
-  revision: 2b673634d919e1c8febbad10a4965e86ca615d06
+  revision: 7f25c580d8d61a060d636b959a0fb56d60edc534
   specs:
     active_model_serializers (0.10.0.rc4)
       actionpack (>= 4.0)
@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: https://github.com/tchandy/octopus.git
-  revision: bfce8ce424392682930d01f27aa431394f810b7a
+  revision: 876791acd3419d257435ccbf6c5d5c303747def5
   specs:
     ar-octopus (0.8.5)
       activerecord (>= 3.2.0)
@@ -101,7 +101,7 @@ GEM
     cliver (0.3.2)
     codeclimate-test-reporter (0.4.8)
       simplecov (>= 0.7.1, < 1.0.0)
-    coderay (1.1.0)
+    coderay (1.1.1)
     colorize (0.7.7)
     concurrent-ruby (1.0.0)
     config (1.0.0)
@@ -144,7 +144,7 @@ GEM
       railties (>= 3.0.0)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
-    faraday-encoding (0.0.1)
+    faraday-encoding (0.0.2)
       faraday
     faraday_middleware (0.10.0)
       faraday (>= 0.7.4, < 0.10)
@@ -179,7 +179,7 @@ GEM
     jwt (1.5.1)
     launchy (2.4.3)
       addressable (~> 2.3)
-    lograge (0.3.5)
+    lograge (0.3.6)
       actionpack (>= 3)
       activesupport (>= 3)
       railties (>= 3)
@@ -198,7 +198,7 @@ GEM
       nokogiri (~> 1.6.7)
       oj (~> 2.13.1)
     method_source (0.8.2)
-    mime-types (2.99)
+    mime-types (2.99.1)
     mini_portile2 (2.0.0)
     minitest (5.8.4)
     multi_json (1.11.2)
@@ -206,6 +206,9 @@ GEM
     multipart-post (2.0.0)
     mysql2 (0.3.18)
     namae (0.10.1)
+    nilify_blanks (1.2.1)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     oauth2 (1.1.0)
@@ -314,7 +317,7 @@ GEM
       sass (~> 3.2.2)
       sprockets (~> 2.8, < 3.0)
       sprockets-rails (~> 2.0)
-    sexp_processor (4.6.1)
+    sexp_processor (4.7.0)
     shoulda-matchers (2.7.0)
       activesupport (>= 3.0.0)
     sidekiq (4.1.0)
@@ -427,6 +430,7 @@ DEPENDENCIES
   maremma (~> 2.0.1)
   mysql2 (= 0.3.18)
   namae (~> 0.10.1)
+  nilify_blanks (~> 1.2.0)
   nokogiri (~> 1.6.7)
   omniauth (~> 1.2.2)
   omniauth-orcid (~> 1.0)

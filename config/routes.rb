@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :members
   resources :services
   resources :status, :only => [:index]
+  resources :tags
   resources :users
   resources :works
 
@@ -30,6 +31,7 @@ Rails.application.routes.draw do
       resources :members
       resources :services
       resources :status, only: [:index]
+      resources :tags
       resources :users
     end
   end
