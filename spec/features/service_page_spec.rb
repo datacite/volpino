@@ -15,8 +15,7 @@ describe "services", type: :feature, js: true, vcr: true do
   end
 
   it 'invalid_credentials' do
-    OmniAuth.config.mock_auth[:default] = :invalid_credentials
-    sign_in
+    sign_in(credentials: "invalid")
     visit '/services'
     expect(page).to have_css "#flash_alert", text: "You are not authorized to access this page."
   end

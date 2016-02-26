@@ -15,14 +15,12 @@ describe "tags", type: :feature, js: true, vcr: true do
   end
 
   it 'invalid_credentials' do
-    OmniAuth.config.mock_auth[:default] = :invalid_credentials
-    sign_in
+    sign_in(credentials: "invalid")
     visit '/tags'
     expect(page).to have_css "#flash_alert", text: "You are not authorized to access this page."
   end
 
   it 'role user' do
-    OmniAuth.config.add_mock(:default, { info: { "role" => "user" }})
     sign_in(role: "user")
     visit '/tags'
     expect(page).to have_css "#flash_alert", text: "You are not authorized to access this page."

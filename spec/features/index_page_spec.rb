@@ -18,14 +18,12 @@ describe "index", type: :feature, js: true, vcr: true do
   end
 
   it 'invalid_credentials' do
-    OmniAuth.config.mock_auth[:default] = :invalid_credentials
-    sign_in
+    sign_in(credentials: "invalid")
     visit '/'
     expect(page).not_to have_css ".navbar-nav li a", text: "Services"
   end
 
   it 'role user' do
-    OmniAuth.config.add_mock(:default, { info: { "role" => "user" }})
     sign_in(role: "user")
     visit '/'
     expect(page).not_to have_css ".navbar-nav li a", text: "Services"
