@@ -6,5 +6,5 @@ describe Service, type: :model, vcr: true do
 
   it { is_expected.to validate_uniqueness_of(:name) }
   it { is_expected.to validate_uniqueness_of(:title) }
-  it { is_expected.to validate_uniqueness_of(:redirect_uri) }
+  it { is_expected.to validate_uniqueness_of(:url) }
 end

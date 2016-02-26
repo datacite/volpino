@@ -1,6 +1,6 @@
 class ServiceSerializer < ActiveModel::Serializer
   cache key: 'service'
-  attributes :id, :title, :logo, :summary, :description, :url, :redirect_uri
+  attributes :id, :title, :logo, :summary, :description, :url
 
   has_many :tags
 

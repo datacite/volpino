@@ -8,7 +8,7 @@ class Service < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   validates :title, presence: true, uniqueness: true
   validates :url, presence: true, uniqueness: true, format: { with: URI.regexp }
-  validates :redirect_uri, presence: true, uniqueness: true, format: { with: URI.regexp }
+  validates :redirect_uri, format: { with: URI.regexp }, allow_blank: true
 
   scope :query, ->(query) { where("name like ? OR title like ? or description like ?", "%#{query}%", "%#{query}%", "%#{query}%") }
 

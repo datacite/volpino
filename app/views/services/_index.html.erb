@@ -19,7 +19,7 @@
             <%= f.input :name, input_html: { class: "form-control" } %>
             <%= f.input :title, input_html: { class: "form-control" } %>
             <%= f.input :url, as: 'string', label: 'URL', input_html: { class: "form-control" } %>
-            <%= f.input :redirect_uri, :label => 'Redirect URI', :input_html => { class: "form-control" } %>
+            <%= f.input :redirect_uri, as: 'string', :label => 'Redirect URI', :input_html => { class: "form-control" } %>
             <%= f.input :logo, input_html: { class: "form-control" } %>
             <%= f.input :summary, input_html: { class: "form-control" } %>
             <%= f.input :description, input_html: { class: "form-control", rows: 20 } %>
@@ -53,7 +53,7 @@
                     <%= f.input :name, input_html: { class: "form-control" } %>
                     <%= f.input :title, input_html: { class: "form-control" } %>
                     <%= f.input :url, as: 'string', label: 'URL', input_html: { class: "form-control" } %>
-                    <%= f.input :redirect_uri, :label => 'Redirect URI', :input_html => { class: "form-control" } %>
+                    <%= f.input :redirect_uri, as: 'string', :label => 'Redirect URI', :input_html => { class: "form-control" } %>
                     <%= f.input :logo, input_html: { class: "form-control" } %>
                     <%= f.input :summary, input_html: { class: "form-control" } %>
                     <%= f.input :description, input_html: { class: "form-control", rows: 20 } %>
