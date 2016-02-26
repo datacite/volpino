@@ -3,6 +3,7 @@ FactoryGirl.define do
     sequence(:name) { |n| "Josiah Carberry{n}" }
     sequence(:authentication_token) { |n| "q9pWP8QxzkR24Mvs9BEy#{n}" }
     provider "orcid"
+    role "user"
     sequence(:uid) { |n| "0000-0002-1825-000#{n}" }
 
     factory :admin_user do
