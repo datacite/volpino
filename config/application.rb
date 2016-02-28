@@ -48,7 +48,7 @@ module Volpino
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
-    config.lograge.enabled = true
-    config.logger = Syslog::Logger.new(ENV['APPLICATION'])
+    # parameter keys that are not explicitly permitted will raise error
+    config.action_controller.action_on_unpermitted_parameters = :raise
   end
 end

@@ -17,9 +17,9 @@ module Authenticable
     # looking for header "Authorization: Token token=12345"
     def authenticate_user_from_token!
       authenticate_with_http_token do |token, options|
-        user = token && User.where(api_key: token).first
+        user = token && User.where(authentication_token: token).first
 
-        if user && Devise.secure_compare(user.api_key, token)
+        if user && Devise.secure_compare(user.authentication_token, token)
           sign_in user, store: false
         else
           current_user = false
@@ -47,7 +47,7 @@ module Authenticable
       status = case exception.class.to_s
                when "CanCan::AccessDenied" then 401
                when "ActiveRecord::RecordNotFound" then 404
-               when "ActiveModel::ForbiddenAttributesError", "NoMethodError" then 422
+               when "ActiveModel::ForbiddenAttributesError", "ActionController::UnpermittedParameters", "NoMethodError" then 422
                else 400
                end
 

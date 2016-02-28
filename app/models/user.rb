@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   after_commit :queue_user_job, :on => :create
 
-  has_many :claims, primary_key: "uid", foreign_key: "uid"
+  has_many :claims, primary_key: "uid", foreign_key: "orcid"
   belongs_to :member
 
   devise :confirmable, :omniauthable, :omniauth_providers => [:orcid]
@@ -143,7 +143,7 @@ class User < ActiveRecord::Base
       doi = item.deep_fetch('work-external-identifiers', 'work-external-identifier', 0, 'work-external-identifier-id', 'value') { nil }
       claimed_at = get_iso8601_from_epoch(item.deep_fetch('source', 'source-date', 'value') { nil })
 
-      claim = Claim.where(uid: uid, doi: doi).first_or_create!(
+      claim = Claim.where(orcid: uid, doi: doi).first_or_create!(
                           source_id: "orcid_search",
                           state: 3,
                           claimed_at: claimed_at)

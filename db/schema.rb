@@ -11,40 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160225214743) do
+ActiveRecord::Schema.define(version: 20160226154406) do
 
   create_table "claims", force: :cascade do |t|
-    t.string   "uuid",        limit: 191
-    t.string   "doi",         limit: 191
-    t.integer  "state",       limit: 4,   default: 0
-    t.string   "state_event", limit: 255
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "uid",         limit: 191
-    t.string   "source_id",   limit: 191
+    t.string   "uuid",           limit: 191
+    t.string   "doi",            limit: 191
+    t.integer  "state",          limit: 4,     default: 0
+    t.string   "state_event",    limit: 255
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.string   "orcid",          limit: 191
+    t.string   "source_id",      limit: 191
     t.datetime "claimed_at"
+    t.text     "error_messages", limit: 65535
   end
 
   add_index "claims", ["created_at"], name: "index_claims_created_at", using: :btree
+  add_index "claims", ["orcid"], name: "index_claims_uid", using: :btree
   add_index "claims", ["source_id"], name: "index_claims_source_id", using: :btree
-  add_index "claims", ["uid"], name: "index_claims_uid", using: :btree
-
-  create_table "deposits", force: :cascade do |t|
-    t.string   "uuid",           limit: 191,                           null: false
-    t.string   "message_type",   limit: 255,                           null: false
-    t.text     "message",        limit: 4294967295
-    t.string   "source_token",   limit: 191
-    t.text     "callback",       limit: 65535
-    t.integer  "state",          limit: 4,          default: 0
-    t.string   "state_event",    limit: 191
-    t.datetime "created_at",                                           null: false
-    t.datetime "updated_at",                                           null: false
-    t.string   "message_action", limit: 255,        default: "create", null: false
-  end
-
-  add_index "deposits", ["source_token"], name: "index_deposits_on_source_token", using: :btree
-  add_index "deposits", ["updated_at"], name: "index_deposits_on_updated_at", using: :btree
-  add_index "deposits", ["uuid"], name: "index_deposits_on_uuid", using: :btree
 
   create_table "members", force: :cascade do |t|
     t.string   "name",         limit: 191,                    null: false
@@ -72,6 +56,7 @@ ActiveRecord::Schema.define(version: 20160225214743) do
     t.string   "url",          limit: 255
     t.text     "summary",      limit: 65535
     t.text     "description",  limit: 65535
+    t.integer  "member_id",    limit: 4
   end
 
   create_table "services_tags", id: false, force: :cascade do |t|

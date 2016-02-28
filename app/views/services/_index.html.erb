@@ -23,6 +23,7 @@
             <%= f.input :logo, input_html: { class: "form-control" } %>
             <%= f.input :summary, input_html: { class: "form-control" } %>
             <%= f.input :description, input_html: { class: "form-control", rows: 20 } %>
+            <%= f.association :member, label_method: :title, input_html: { class: "form-control" } %>
             <%= f.association :tags, as: :check_boxes, label_method: :title, value_method: :id %>
 
             <div class="form-group">
@@ -57,6 +58,7 @@
                     <%= f.input :logo, input_html: { class: "form-control" } %>
                     <%= f.input :summary, input_html: { class: "form-control" } %>
                     <%= f.input :description, input_html: { class: "form-control", rows: 20 } %>
+                    <%= f.association :member, label_method: :title, input_html: { class: "form-control" } %>
                     <%= f.association :tags, as: :check_boxes, label_method: :title, value_method: :id %>
 
                     <div class="form-group">

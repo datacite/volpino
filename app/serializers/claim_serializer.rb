@@ -1,8 +1,8 @@
 class ClaimSerializer < ActiveModel::Serializer
   cache key: 'claim'
-  attributes :uid, :doi, :source_id, :state
+  attributes :orcid, :doi, :source_id, :state, :claimed_at
 
-  belongs_to :uid
+  belongs_to :orcid
 
   def id
     object.uuid

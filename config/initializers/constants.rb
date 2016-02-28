@@ -3,6 +3,7 @@ RESCUABLE_EXCEPTIONS = [ActiveRecord::RecordNotFound,
                         JWT::VerificationError,
                         ActionController::ParameterMissing,
                         ActiveModel::ForbiddenAttributesError,
+                        ActionController::UnpermittedParameters,
                         NoMethodError]
 
 # Format used for DOI validation

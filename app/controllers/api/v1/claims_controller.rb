@@ -1,6 +1,7 @@
 class Api::V1::ClaimsController < Api::BaseController
+  prepend_before_filter :load_claim, only: [:show, :destroy]
   before_filter :authenticate_user_from_token!
-  load_and_authorize_resource
+  load_and_authorize_resource :except => [:create]
 
   swagger_controller :claims, "Claims"
 
@@ -14,7 +15,7 @@ class Api::V1::ClaimsController < Api::BaseController
   end
 
   def show
-    @claim = Claim.where(uuid: params[:id])
+    @claim = Claim.where(uuid: params[:id]).first
     render json: @claim
   end
 
@@ -23,5 +24,38 @@ class Api::V1::ClaimsController < Api::BaseController
     @claims = Claim.all.order_by_date.page(page[:number]).per_page(page[:size])
     meta = { total: @claims.total_entries, 'total-pages' => @claims.total_pages , page: page[:number].to_i }
     render json: @claims, meta: meta
+  end
+
+  def create
+    @claim = Claim.new(safe_params)
+    authorize! :create, @claim
+
+    if @claim.save
+      render json: @claim, :status => :accepted
+    else
+      render json: { errors: @claim.errors.to_a.map { |error| { status: 400, title: error } }}, status: :bad_request
+    end
+  end
+
+  def destroy
+    if @claim.destroy
+      render json: { data: {} }, meta: { status: "deleted" }, status: :ok
+    else
+      render json: { errors: [{ status: 400, title: "An error occured." }] }, status: :bad_request
+    end
+  end
+
+  protected
+
+  def load_claim
+    @claim = Claim.where(uuid: params[:id]).first
+
+    fail ActiveRecord::RecordNotFound unless @claim.present?
+  end
+
+  private
+
+  def safe_params
+    params.require(:claim).permit(:uuid, :orcid, :doi, :source_id)
   end
 end

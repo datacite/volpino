@@ -30,15 +30,9 @@ FactoryGirl.define do
     initialize_with { Tag.where(name: name).first_or_initialize }
   end
 
-  factory :deposit do
-    uuid { SecureRandom.uuid }
-    message_type "orcid_update"
-    source_token "123"
-    message { { "contributors" => [{ "pid" => "http://orcid.org/0000-0002-3546-1048" }] } }
-  end
-
   factory :claim do
-    uid "0000-0002-1825-0001"
+    uuid { SecureRandom.uuid }
+    orcid "0000-0002-1825-0001"
     doi "10.5061/DRYAD.781PV"
     source_id "orcid_update"
   end

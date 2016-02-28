@@ -16,12 +16,12 @@ class Claim < ActiveRecord::Base
   # include helper module for orcid oauth
   include Clientable
 
-  belongs_to :user, primary_key: "uid", foreign_key: "uid"
+  belongs_to :user, primary_key: "orcid", foreign_key: "uid"
 
   before_create :create_uuid
   after_commit :queue_claim_job, :on => :create
 
-  validates :uid, :doi, :source_id, presence: true
+  validates :orcid, :doi, :source_id, presence: true
 
   state_machine :initial => :waiting do
     state :waiting, value: 0
@@ -31,10 +31,6 @@ class Claim < ActiveRecord::Base
 
     after_transition :to => :done do |claim|
       claim.update_attributes(claimed_at: Time.zone.now) if claim.claimed_at.nil?
-    end
-
-    after_transition :to => :failed do |claim|
-
     end
 
     event :start do
@@ -73,6 +69,16 @@ class Claim < ActiveRecord::Base
   end
 
   def process_data(options={})
+    self.start
+    if collect_data[:errors].present?
+      write_attribute(:error_messages, collect_data[:errors])
+      self.error
+    else
+      self.finish
+    end
+  end
+
+  def collect_data(options={})
     oauth_client_post(data) if claimed_at.nil? && user.present?
   end
 

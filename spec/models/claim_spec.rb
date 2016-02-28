@@ -4,7 +4,7 @@ describe Claim, type: :model, vcr: true do
 
   subject { FactoryGirl.create(:claim) }
 
-  it { is_expected.to validate_presence_of(:uid) }
+  it { is_expected.to validate_presence_of(:orcid) }
   it { is_expected.to validate_presence_of(:doi) }
   it { is_expected.to validate_presence_of(:source_id) }
 
