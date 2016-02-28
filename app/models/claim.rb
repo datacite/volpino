@@ -57,6 +57,7 @@ class Claim < ActiveRecord::Base
   scope :done, -> { by_state(3).order_by_date }
   scope :total, ->(duration) { where(updated_at: (Time.zone.now.beginning_of_hour - duration.hours)..Time.zone.now.beginning_of_hour) }
 
+  scope :query, ->(query) { where("doi like ?", "%#{query}%") }
   scope :search_and_link, -> { where(source_id: "orcid_search").where("claimed_at IS NOT NULL") }
   scope :auto_update, -> { where(source_id: "orcid_update").where("claimed_at IS NOT NULL") }
 

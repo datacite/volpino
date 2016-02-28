@@ -5,6 +5,16 @@ class Api::V1::ClaimsController < Api::BaseController
 
   swagger_controller :claims, "Claims"
 
+  swagger_api :index do
+    summary "Returns claim information"
+    param :query, :query, :string, :optional, "Query for claims"
+    param :query, 'page[number]', :integer, :optional, "Page number"
+    param :query, 'page[size]', :integer, :optional, "Page size"
+    response :ok
+    response :unprocessable_entity
+    response :not_found
+  end
+
   swagger_api :show do
     summary "Show a claim"
     param :path, :id, :string, :required, "claim ID"
@@ -21,7 +31,9 @@ class Api::V1::ClaimsController < Api::BaseController
 
   def index
     page = params[:page] || { number: 1, size: 1000 }
-    @claims = Claim.all.order_by_date.page(page[:number]).per_page(page[:size])
+    collection = Claim.all
+    collection = collection.query(params[:query]) if params[:query]
+    @claims = collection.order_by_date.page(page[:number]).per_page(page[:size])
     meta = { total: @claims.total_entries, 'total-pages' => @claims.total_pages , page: page[:number].to_i }
     render json: @claims, meta: meta
   end

@@ -15,13 +15,13 @@ Rails.application.routes.draw do
 
   root :to => 'index#index'
 
+  resources :claims
   resources :docs, :only => [:index, :show], :constraints => { :id => /[0-z\-\.\(\)]+/ }
   resources :members
   resources :services
   resources :status, :only => [:index]
   resources :tags
   resources :users
-  resources :works
 
   get "/api", to: "api/index#index"
 

@@ -11,8 +11,7 @@ describe "/api/v1/claims", :type => :api do
                                     "doi"=>claim.doi,
                                     "source_id"=>claim.source_id,
                                     "state"=>"waiting",
-                                    "claimed_at"=>nil},
-                    "relationships"=>{"orcid"=>{"data"=>"0000-0002-1825-0001"}} }}
+                                    "claimed_at"=>nil} }}
   let(:user) { FactoryGirl.create(:admin_user) }
   let(:uuid) { SecureRandom.uuid }
   let(:headers) do
