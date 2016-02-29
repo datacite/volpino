@@ -106,7 +106,7 @@ module ApplicationHelper
     data = { per_page: 15, model: controller.controller_name, host: ENV['LAGOTTO_URL'] }
     data[:api_key] = current_user.api_key if current_user
     data[:page] = @page if @page.present?
-    data[:source_id] = @source.name if @source.present?
+    data[:source_id] = @source.name if @source.present? && !@source.is_a?(Array)
     data[:contributor_id] = current_user.orcid if current_user.present?
     data[:sort] = @sort.name if @sort.present?
 
