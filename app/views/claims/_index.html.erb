@@ -17,30 +17,17 @@
           <div class="panel panel-default">
             <% if claim.claimed_at.present? %>
               <div class="panel-heading panel-title panel-list">
-                <%= link_to ("#{h(claim.doi)}<small class='pull-right'>#{claim.claimed_at.to_s(:short)}</small>").html_safe, "#claim_#{claim.id}", :class => "accordion-toggle", :id => "link_#{claim.id}", :data => { :toggle => "collapse", :parent => "#claim" }, :href => "#claim_#{claim.id}" %>
+                <%= h(claim.doi) %><small class="pull-right"><%= claim.claimed_at.to_s(:short) %></small>
               </div>
             <% else %>
               <div class="panel-heading panel-title panel-list">
-                <%= link_to ("#{h(claim.doi)}<small class='pull-right'>not claimed</small>").html_safe, "#claim_#{claim.id}", :class => "accordion-toggle", :id => "link_#{claim.id}", :data => { :toggle => "collapse", :parent => "#claim" }, :href => "#claim_#{claim.id}" %>
+                <%= h(claim.doi) %><small class="pull-right">not claimed</small>
               </div>
             <% end %>
-            <% if can?(:manage, claim) && (controller.action_name == "edit" or (controller.action_name == "update" and !@claim.errors.empty?)) %>
-              <div id="claim_<%= claim.id %>" class="panel-collapse collapse.in">
-                <div class="panel-body">
-
-                </div>
-              </div>
-            <% else %>
-              <div id="claim_<%= claim.id %>" class="panel-collapse collapse">
-                <div class="panel-body">
-                  <h5>State</h5>
-                  <%= claim.human_state_name %>
-
-                  <h5>Source</h5>
-                  <%= claim.source_id.humanize.titleize %>
-                </div>
-              </div>
-            <% end %>
+            <div class="panel-footer">
+              <%= claim.source_id.humanize.titleize %>
+              <span class="pull-right"><%= claim.human_state_name %></span>
+            </div>
           </div>
         <% end %>
       </div>
@@ -78,19 +65,19 @@
         </ul>
       </div>
       <div class="panel-body">
-        <h4>States</h4>
+        <h4>Status</h4>
         <ul>
           <% if @state %>
             <li class="active">
               <%= link_to icon('check-square-o').html_safe, claims_path %>
-              <%= @state.first %>
+              <%= state_names[@state.first].humanize %>
               <span class="number pull-right"><%= number_with_delimiter(@state.last) %></span>
             </li>
           <% else %>
             <% @states.each do |state| %>
               <li>
                 <%= link_to icon('square-o').html_safe, claims_path(state: state.first) %>
-                <%= state.first %>
+                <%= state_names[state.first].humanize %>
                 <span class="number pull-right"><%= number_with_delimiter(state.last) %></span>
               </li>
             <% end %>

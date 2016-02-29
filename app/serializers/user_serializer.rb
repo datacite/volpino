@@ -10,4 +10,21 @@ class UserSerializer < ActiveModel::Serializer
   def id
     object.orcid
   end
+
+  class ClaimSerializer < ActiveModel::Serializer
+    cache key: 'claim'
+    attributes :orcid, :doi, :source_id, :state, :claimed_at
+
+    def id
+      "http://doi.org/#{object.doi}"
+    end
+
+    def claimed_at
+      object.claimed_at.iso8601
+    end
+
+    def state
+      object.human_state_name
+    end
+  end
 end

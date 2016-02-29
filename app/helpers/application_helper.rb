@@ -83,6 +83,13 @@ module ApplicationHelper
       "EMEA" => "EMEA" }
   end
 
+  def state_names
+    { 0 => "waiting",
+      1 => "working",
+      2 => "failed",
+      3 => "done" }
+  end
+
   def settings
     Settings[ENV['MODE']]
   end
