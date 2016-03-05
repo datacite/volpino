@@ -71,7 +71,7 @@ class Claim < ActiveRecord::Base
 
   def process_data(options={})
     self.start
-    if collect_data[:errors].present?
+    if collect_data.present? && collect_data[:errors].present?
       write_attribute(:error_messages, collect_data[:errors])
       self.error
     else

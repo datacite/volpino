@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 ruby '2.3.0'
 
-gem 'rails', '4.2.5'
+gem 'rails', '~> 4.2', '>= 4.2.5.2'
 gem 'mysql2', '0.3.18'
 gem 'ar-octopus', '~> 0.8.5', :require => 'octopus', :git => 'https://github.com/tchandy/octopus.git'
 
@@ -11,7 +11,7 @@ gem 'sinatra', :require => nil
 gem "config"
 gem "whenever", "~> 0.9.0", require: false
 gem 'bugsnag', '~> 2.8.6'
-gem "maremma", "~> 2.0.1"
+gem 'maremma', '~> 2.1', '>= 2.1.1'
 gem 'addressable', "~> 2.3.8"
 gem 'postrank-uri', '~> 1.0.18'
 gem 'nilify_blanks', '~> 1.2.0'
