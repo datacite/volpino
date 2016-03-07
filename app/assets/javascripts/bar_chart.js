@@ -35,17 +35,19 @@ function barViz(data, div, count, format) {
     .append("svg:g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+  var timeStamp = null;
+
   var bar = chart.selectAll(".bar")
     .data(data)
     .enter().append("rect")
     .attr("class", function(d) {
       if (format === "days") {
-        var timestamp = Date.parse(d.key + 'T12:00:00Z');
-        var weekNumber = formatWeek(new Date(timestamp));
+        timeStamp = Date.parse(d.key + 'T12:00:00Z');
+        var weekNumber = formatWeek(new Date(timeStamp));
         return (weekNumber % 2 === 0) ? "bar viewed" : "bar viewed-alt";
       } else {
-        var timestamp = Date.parse(d.key + ':00:01Z');
-        var hour = formatHour(new Date(timestamp));
+        timeStamp = Date.parse(d.key + ':00:01Z');
+        var hour = formatHour(new Date(timeStamp));
         return (hour >= 11 && hour <= 22) ? "bar viewed-alt" : "bar viewed";
       }})
     .attr("x", function(d) {
