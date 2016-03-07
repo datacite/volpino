@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: https://github.com/rails-api/active_model_serializers.git
-  revision: df815c48ba996c681ab318a18d302362eaa2b855
+  revision: 6b4c8df6fb6bc142ee6a74da51bb26c42a025b3c
   specs:
     active_model_serializers (0.10.0.rc4)
       actionpack (>= 4.0)
@@ -16,9 +16,9 @@ GIT
 
 GIT
   remote: https://github.com/tchandy/octopus.git
-  revision: 177634b4b74c0ae3f81ed7bc6330e59ca482f1aa
+  revision: a138b936316351a109534dec75de31659888b78d
   specs:
-    ar-octopus (0.8.5)
+    ar-octopus (0.8.6)
       activerecord (>= 3.2.0)
       activesupport (>= 3.2.0)
 
@@ -65,7 +65,7 @@ GEM
     ast (2.2.0)
     astrolabe (1.3.1)
       parser (~> 2.2)
-    bcrypt (3.1.10)
+    bcrypt (3.1.11)
     better_errors (2.0.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -431,7 +431,7 @@ DEPENDENCIES
   mysql2 (= 0.3.18)
   namae (~> 0.10.1)
   nilify_blanks (~> 1.2.0)
-  nokogiri (~> 1.6.7)
+  nokogiri (~> 1.6, >= 1.6.7.2)
   omniauth (~> 1.2.2)
   omniauth-orcid (~> 1.0)
   poltergeist (~> 1.8.1)
