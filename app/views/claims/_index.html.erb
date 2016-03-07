@@ -49,14 +49,14 @@
         <ul>
           <% if @source %>
             <li class="active">
-              <%= link_to icon('check-square-o').html_safe, claims_path %>
+              <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], state: params[:state]) %>
               <%= sources[@source.first] %>
               <span class="number pull-right"><%= number_with_delimiter(@source.last) %></span>
             </li>
           <% else %>
             <% @sources.each do |source| %>
               <li>
-                <%= link_to icon('square-o').html_safe, claims_path(source: source.first) %>
+                <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], source: source.first, state: params[:state]) %>
                 <%= sources[source.first] %>
                 <span class="number pull-right"><%= number_with_delimiter(source.last) %></span>
               </li>
@@ -69,14 +69,14 @@
         <ul>
           <% if @state %>
             <li class="active">
-              <%= link_to icon('check-square-o').html_safe, claims_path %>
+              <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], source: params[:source]) %>
               <%= state_names[@state.first].humanize %>
               <span class="number pull-right"><%= number_with_delimiter(@state.last) %></span>
             </li>
           <% else %>
             <% @states.each do |state| %>
               <li>
-                <%= link_to icon('square-o').html_safe, claims_path(state: state.first) %>
+                <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], source: params[:source], state: state.first) %>
                 <%= state_names[state.first].humanize %>
                 <span class="number pull-right"><%= number_with_delimiter(state.last) %></span>
               </li>
