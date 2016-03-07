@@ -3,7 +3,7 @@ require "rails_helper"
 describe "/api/v1/claims", :type => :api do
   before(:each) { allow(Time.zone).to receive(:now).and_return(Time.mktime(2015, 4, 8)) }
 
-  let(:claim) { FactoryGirl.build(:claim) }
+  let(:claim) { FactoryGirl.build(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58") }
   let(:error) { { "errors" => [{"status"=>"401", "title"=>"You are not authorized to access this page."}] } }
   let(:success) { { "id"=>claim.uuid,
                     "type"=>"claims",
@@ -173,8 +173,96 @@ describe "/api/v1/claims", :type => :api do
     end
   end
 
+  context "index" do
+    let!(:claim) { FactoryGirl.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58") }
+    let(:uri) { "/api/claims" }
+
+    context "as admin user" do
+      it "JSON" do
+        get uri, nil, headers
+        expect(last_response.status).to eq(200)
+
+        response = JSON.parse(last_response.body)
+        expect(response["errors"]).to be_nil
+        item = response["data"].first
+        expect(item['attributes']).to eq("orcid"=>"0000-0002-1825-0001", "doi"=>"10.5061/DRYAD.781PV", "source_id"=>"orcid_update", "state"=>"waiting", "claimed_at"=>nil)
+      end
+    end
+
+    context "as staff user" do
+      let(:user) { FactoryGirl.create(:user, role: "staff") }
+
+      it "JSON" do
+        get uri, nil, headers
+        expect(last_response.status).to eq(200)
+
+        response = JSON.parse(last_response.body)
+        expect(response["errors"]).to be_nil
+        item = response["data"].first
+        expect(item['attributes']).to eq("orcid"=>"0000-0002-1825-0001", "doi"=>"10.5061/DRYAD.781PV", "source_id"=>"orcid_update", "state"=>"waiting", "claimed_at"=>nil)
+      end
+    end
+
+    context "as regular user" do
+      let(:user) { FactoryGirl.create(:user, role: "user") }
+
+      it "JSON" do
+        get uri, nil, headers
+        expect(last_response.status).to eq(401)
+
+        response = JSON.parse(last_response.body)
+        expect(response).to eq (error)
+      end
+    end
+
+    context "with wrong API key" do
+      let(:headers) do
+        { "HTTP_ACCEPT" => "application/json; version=1",
+          "HTTP_AUTHORIZATION" => "Token token=12345678" }
+      end
+
+      it "JSON" do
+        get uri, nil, headers
+        expect(last_response.status).to eq(401)
+
+        response = JSON.parse(last_response.body)
+        expect(response).to eq(error)
+      end
+    end
+
+    context "with query for dois" do
+      let(:doi) { "10.5061/DRYAD.781PV" }
+      let(:uri) { "/api/claims?dois=#{doi}" }
+
+      it "JSON" do
+        get uri, nil, headers
+        expect(last_response.status).to eq(200)
+
+        response = JSON.parse(last_response.body)
+        expect(response["errors"]).to be_nil
+        item = response["data"].first
+        expect(item['attributes']).to eq("orcid"=>"0000-0002-1825-0001", "doi"=>"10.5061/DRYAD.781PV", "source_id"=>"orcid_update", "state"=>"waiting", "claimed_at"=>nil)
+      end
+    end
+
+    context "with query for missing dois" do
+      let(:doi) { "10.5061/DRYAD.781PVx" }
+      let(:uri) { "/api/claims?dois=#{doi}" }
+
+      it "JSON" do
+        get uri, nil, headers
+        expect(last_response.status).to eq(200)
+
+        response = JSON.parse(last_response.body)
+        expect(response["errors"]).to be_nil
+        expect(response["data"]).to be_empty
+        expect(response["meta"]).to eq("total"=>0, "total-pages"=>1, "page"=>1)
+      end
+    end
+  end
+
   context "show" do
-    let(:claim) { FactoryGirl.create(:claim) }
+    let(:claim) { FactoryGirl.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58") }
     let(:uri) { "/api/claims/#{claim.uuid}" }
 
     context "as admin user" do

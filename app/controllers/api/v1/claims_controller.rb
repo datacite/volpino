@@ -1,5 +1,6 @@
 class Api::V1::ClaimsController < Api::BaseController
   prepend_before_filter :load_claim, only: [:show, :destroy]
+  prepend_before_filter :load_user, only: [:index]
   before_filter :authenticate_user_from_token!
   load_and_authorize_resource :except => [:create]
 
@@ -8,6 +9,7 @@ class Api::V1::ClaimsController < Api::BaseController
   swagger_api :index do
     summary "Returns claim information"
     param :query, :query, :string, :optional, "Query for claims"
+    param :query, :dois, :string, :optional, "Query for dois"
     param :query, 'page[number]', :integer, :optional, "Page number"
     param :query, 'page[size]', :integer, :optional, "Page size"
     response :ok
@@ -30,12 +32,21 @@ class Api::V1::ClaimsController < Api::BaseController
   end
 
   def index
-    page = params[:page] || { number: 1, size: 1000 }
-    collection = Claim.all
+    if @user
+      collection = @user.claims
+    else
+      collection = Claim
+    end
+
     collection = collection.query(params[:query]) if params[:query]
+
+    # check whether a list of dois has been claimed
+    collection = collection.where(doi: params[:dois].split(',')) if params[:dois]
+
+    page = params[:page] || { number: 1, size: 1000 }
     @claims = collection.order_by_date.page(page[:number]).per_page(page[:size])
     meta = { total: @claims.total_entries, 'total-pages' => @claims.total_pages , page: page[:number].to_i }
-    render json: @claims, meta: meta
+    render(json: @claims, meta: meta)
   end
 
   def create
@@ -63,6 +74,14 @@ class Api::V1::ClaimsController < Api::BaseController
     @claim = Claim.where(uuid: params[:id]).first
 
     fail ActiveRecord::RecordNotFound unless @claim.present?
+  end
+
+  def load_user
+    return nil unless params[:user_id].present?
+
+    @user = User.where(uid: params[:user_id]).first
+
+    fail ActiveRecord::RecordNotFound unless @user.present?
   end
 
   private
