@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: https://github.com/rails-api/active_model_serializers.git
-  revision: 6b4c8df6fb6bc142ee6a74da51bb26c42a025b3c
+  revision: 1a312bc2d392ff2fa0c7f565517497fd97ea7a09
   specs:
     active_model_serializers (0.10.0.rc4)
       actionpack (>= 4.0)
@@ -23,7 +23,7 @@ GIT
       activesupport (>= 3.2.0)
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     actionmailer (4.2.5.2)
       actionpack (= 4.2.5.2)
