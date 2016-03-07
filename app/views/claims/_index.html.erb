@@ -17,7 +17,7 @@
           <div class="panel panel-default">
             <% if claim.claimed_at.present? %>
               <div class="panel-heading panel-title panel-list">
-                <%= h(claim.doi) %><small class="pull-right"><%= claim.claimed_at.to_s(:short) %></small>
+                <%= h(claim.doi) %><small class="pull-right"><%= l claim.claimed_at.to_date, format: :medium %></small>
               </div>
             <% else %>
               <div class="panel-heading panel-title panel-list">

@@ -6,6 +6,7 @@ en:
     formats:
       default: "%Y/%m/%d"
       short: "%b %d"
+      medium: "%d %b %Y"
       long: "%B %d, %Y"
       month: "%B %Y"
       year: "%Y"
