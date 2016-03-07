@@ -35,5 +35,7 @@ FactoryGirl.define do
     orcid "0000-0002-1825-0001"
     doi "10.5061/DRYAD.781PV"
     source_id "orcid_update"
+
+    initialize_with { Claim.where(orcid: orcid).where(doi: doi).first_or_initialize }
   end
 end

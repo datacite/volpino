@@ -5,13 +5,11 @@ describe "/api/v1/claims", :type => :api do
 
   let(:claim) { FactoryGirl.build(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58") }
   let(:error) { { "errors" => [{"status"=>"401", "title"=>"You are not authorized to access this page."}] } }
-  let(:success) { { "id"=>claim.uuid,
-                    "type"=>"claims",
-                    "attributes"=>{ "orcid"=>claim.orcid,
-                                    "doi"=>claim.doi,
-                                    "source_id"=>claim.source_id,
-                                    "state"=>"waiting",
-                                    "claimed_at"=>nil} }}
+  let(:success) { { "orcid"=>claim.orcid,
+                    "doi"=>claim.doi,
+                    "source_id"=>claim.source_id,
+                    "state"=>"waiting",
+                    "claimed_at"=>nil }}
   let(:user) { FactoryGirl.create(:admin_user) }
   let(:uuid) { SecureRandom.uuid }
   let(:headers) do
@@ -35,7 +33,7 @@ describe "/api/v1/claims", :type => :api do
 
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
-        expect(response["data"]).to eq(success)
+        expect(response["data"]["attributes"]).to eq(success)
       end
     end
 
@@ -272,7 +270,7 @@ describe "/api/v1/claims", :type => :api do
 
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
-        expect(response["data"]).to eq(success)
+        expect(response["data"]["attributes"]).to eq(success)
       end
     end
 
@@ -285,7 +283,7 @@ describe "/api/v1/claims", :type => :api do
 
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
-        expect(response["data"]).to eq(success)
+        expect(response["data"]["attributes"]).to eq(success)
       end
     end
 

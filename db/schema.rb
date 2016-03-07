@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160226154406) do
+ActiveRecord::Schema.define(version: 20160307185718) do
 
   create_table "claims", force: :cascade do |t|
     t.string   "uuid",           limit: 191
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20160226154406) do
   end
 
   add_index "claims", ["created_at"], name: "index_claims_created_at", using: :btree
+  add_index "claims", ["orcid", "doi"], name: "index_claims_on_orcid_and_doi", unique: true, using: :btree
   add_index "claims", ["orcid"], name: "index_claims_uid", using: :btree
   add_index "claims", ["source_id"], name: "index_claims_source_id", using: :btree
 
