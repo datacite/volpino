@@ -56,7 +56,6 @@ ActiveRecord::Schema.define(version: 20160226154406) do
     t.string   "url",          limit: 255
     t.text     "summary",      limit: 65535
     t.text     "description",  limit: 65535
-    t.integer  "member_id",    limit: 4
   end
 
   create_table "services_tags", id: false, force: :cascade do |t|

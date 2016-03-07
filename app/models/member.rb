@@ -1,5 +1,4 @@
 class Member < ActiveRecord::Base
-  has_many :services
   has_many :users
 
   validates :name, presence: true, uniqueness: true

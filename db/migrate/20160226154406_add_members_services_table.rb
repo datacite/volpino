@@ -1,7 +1,5 @@
 class AddMembersServicesTable < ActiveRecord::Migration
   def up
-    add_column :services, :member_id, :integer
-
     add_column :claims, :error_messages, :text
     rename_column :claims, :uid, :orcid
 
@@ -9,8 +7,6 @@ class AddMembersServicesTable < ActiveRecord::Migration
   end
 
   def down
-    remove_column :services, :member_id
-
     remove_column :claims, :error_messages
     rename_column :claims, :orcid, :uid
 
