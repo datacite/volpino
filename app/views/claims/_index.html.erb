@@ -50,14 +50,14 @@
           <% if @source %>
             <li class="active">
               <%= link_to icon('check-square-o').html_safe, claims_path %>
-              <%= @source.first.humanize %>
+              <%= sources[@source.first] %>
               <span class="number pull-right"><%= number_with_delimiter(@source.last) %></span>
             </li>
           <% else %>
             <% @sources.each do |source| %>
               <li>
                 <%= link_to icon('square-o').html_safe, claims_path(source: source.first) %>
-                <%= source.first.humanize.titleize %>
+                <%= sources[source.first] %>
                 <span class="number pull-right"><%= number_with_delimiter(source.last) %></span>
               </li>
             <% end %>

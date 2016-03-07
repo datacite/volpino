@@ -83,6 +83,11 @@ module ApplicationHelper
       "EMEA" => "EMEA" }
   end
 
+  def sources
+    { "orcid_search" => "ORCID Search and Link",
+      "orcid_update" => "ORCID Auto-Update" }
+  end
+
   def state_names
     { 0 => "waiting",
       1 => "working",
