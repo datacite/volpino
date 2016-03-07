@@ -25,7 +25,7 @@
               </div>
             <% end %>
             <div class="panel-footer">
-              <%= claim.source_id.humanize.titleize %>
+              <%= sources[claim.source_id] %>
               <span class="pull-right"><%= claim.human_state_name %></span>
             </div>
           </div>
