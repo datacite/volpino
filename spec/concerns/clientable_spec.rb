@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe User, type: :model, vcr: true do
-  subject { FactoryGirl.create(:user, uid: '0000-0002-1825-0097') }
+  subject { FactoryGirl.create(:user, uid: '0000-0002-1825-0097', authentication_token: "abcde") }
 
   describe 'access_token' do
     it 'should return the access_token' do

@@ -1,17 +1,17 @@
 FactoryGirl.define do
   factory :user do
     sequence(:name) { |n| "Josiah Carberry{n}" }
-    sequence(:authentication_token) { |n| "q9pWP8QxzkR24Mvs9BEy#{n}" }
+    sequence(:api_key) { |n| "q9pWP8QxzkR24Mvs9BEy#{n}" }
     provider "orcid"
     role "user"
     sequence(:uid) { |n| "0000-0002-1825-000#{n}" }
 
     factory :admin_user do
       role "admin"
-      authentication_token "12345"
+      api_key "12345"
     end
 
-    initialize_with { User.where(authentication_token: authentication_token).first_or_initialize }
+    initialize_with { User.where(api_key: api_key).first_or_initialize }
   end
 
   factory :service do

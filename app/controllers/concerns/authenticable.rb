@@ -9,9 +9,9 @@ module Authenticable
     # looking for header "Authorization: Token token=12345"
     def authenticate_user_from_token!
       authenticate_with_http_token do |token, options|
-        user = token && User.where(authentication_token: token).first
+        user = token && User.where(api_key: token).first
 
-        if user && Devise.secure_compare(user.authentication_token, token)
+        if user && Devise.secure_compare(user.api_key, token)
           sign_in user, store: false
         else
           current_user = false

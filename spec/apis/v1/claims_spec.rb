@@ -16,7 +16,7 @@ describe "/api/v1/claims", :type => :api do
   let(:uuid) { SecureRandom.uuid }
   let(:headers) do
     { "HTTP_ACCEPT" => "application/json; version=1",
-      "HTTP_AUTHORIZATION" => "Token token=#{user.authentication_token}" }
+      "HTTP_AUTHORIZATION" => "Token token=#{user.api_key}" }
   end
 
   context "create" do

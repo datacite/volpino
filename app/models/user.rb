@@ -90,13 +90,13 @@ class User < ActiveRecord::Base
       authentication_token: auth.credentials.token,
       expires_at: timestamp,
       role: role,
-      api_key: generate_authentication_token }
+      api_key: generate_api_key }
   end
 
   def jwt_payload
     claims = {
       uid: uid,
-      authentication_token: authentication_token,
+      api_key: api_key,
       expires_at: expires_at,
       name: name,
       email: email,
@@ -159,10 +159,10 @@ class User < ActiveRecord::Base
 
   private
 
-  def self.generate_authentication_token
+  def self.generate_api_key
     loop do
       token = Devise.friendly_token
-      break token unless User.where(authentication_token: token).first
+      break token unless User.where(api_key: token).first
     end
   end
 end
