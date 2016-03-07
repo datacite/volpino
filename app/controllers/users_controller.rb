@@ -35,6 +35,7 @@ class UsersController < ApplicationController
       if params[:user][:unsubscribe]
         params[:user][:email] = nil
         params[:user][:unconfirmed_email] = nil
+        params[:user] = params[:user].except(:unsubscribe)
         @panel = "notification"
       end
 
@@ -63,7 +64,9 @@ class UsersController < ApplicationController
   def load_user
     if user_signed_in?
       @user = current_user
-      @panel = params[:panel] || "auto"
+
+      panels = %w(account auto notification search)
+      @panel = panels.find { |p| p == params[:panel] } || "auto"
     else
       fail CanCan::AccessDenied.new("Please sign in first.", :read, User)
     end
@@ -89,7 +92,6 @@ class UsersController < ApplicationController
                                  :email,
                                  :unconfirmed_email,
                                  :auto_update,
-                                 :subscribe,
                                  :role,
                                  :member_id,
                                  :authentication_token)
