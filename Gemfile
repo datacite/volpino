@@ -43,7 +43,7 @@ gem 'cancancan', '~> 1.9.2'
 
 gem 'sprockets-rails', '~> 2.2.0', :require => 'sprockets/railtie'
 gem 'sass-rails', '~> 4.0.4'
-gem "uglifier", "~> 2.5.3"
+gem 'uglifier', '~> 2.7', '>= 2.7.2'
 
 group :development do
   gem 'pry-rails', '~> 0.3.2'

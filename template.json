@@ -16,7 +16,7 @@
   "provisioners": [{
     "type": "shell",
     "inline": ["sudo apt-get update -y",
-               "sudo apt-get install -y git",
+               "sudo apt-get install -fy git",
                "sudo mkdir -p /var/www/volpino",
                "sudo chown -R ubuntu:ubuntu /var/www/volpino",
                "git clone https://github.com/datacite/volpino.git /var/www/volpino"]
