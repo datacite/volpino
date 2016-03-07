@@ -6,14 +6,6 @@ module Authenticable
       request.format = :json if request.format.html?
     end
 
-    # from https://github.com/spree/spree/blob/master/api/app/controllers/spree/api/base_controller.rb
-    def set_jsonp_format
-      if params[:callback] && request.get?
-        self.response_body = "#{params[:callback]}(#{response.body})"
-        headers["Content-Type"] = 'application/javascript'
-      end
-    end
-
     # looking for header "Authorization: Token token=12345"
     def authenticate_user_from_token!
       authenticate_with_http_token do |token, options|
@@ -24,22 +16,6 @@ module Authenticable
         else
           current_user = false
         end
-      end
-    end
-
-    def cors_set_access_control_headers
-      headers['Access-Control-Allow-Origin'] = '*'
-      headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-      headers['Access-Control-Max-Age'] = "1728000"
-    end
-
-    def cors_preflight_check
-      if request.method == :options
-        headers['Access-Control-Allow-Origin'] = '*'
-        headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-        headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version'
-        headers['Access-Control-Max-Age'] = '1728000'
-        render :text => '', :content_type => 'text/plain'
       end
     end
 
