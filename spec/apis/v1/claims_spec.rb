@@ -137,25 +137,7 @@ describe "/api/v1/claims", :type => :api do
         expect(last_response.status).to eq(400)
 
         response = JSON.parse(last_response.body)
-        expect(response).to eq("errors"=>[{"status"=>"400", "title"=>"param is missing or the value is empty: claim"}])
-      end
-    end
-
-    context "with unpermitted params" do
-      let(:params) do
-        { "claim" => { "uuid" => claim.uuid,
-                       "orcid" => claim.orcid,
-                       "doi" => claim.doi,
-                       "source_id" => claim.source_id,
-                       "foo" => "bar" } }
-      end
-
-      it "JSON" do
-        post uri, params, headers
-        expect(last_response.status).to eq(422)
-
-        response = JSON.parse(last_response.body)
-        expect(response).to eq("errors"=>[{"status"=>"422", "title"=>"found unpermitted parameter: foo"}])
+        expect(response).to eq("errors"=>[{"status"=>400, "title"=>"Orcid can't be blank"}, {"status"=>400, "title"=>"Doi can't be blank"}, {"status"=>400, "title"=>"Source can't be blank"}])
       end
     end
 

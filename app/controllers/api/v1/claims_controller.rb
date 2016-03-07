@@ -50,8 +50,8 @@ class Api::V1::ClaimsController < Api::BaseController
   end
 
   def create
-    @claim = Claim.where(orcid: params.fetch(:claim, {}).fetch(:orcid, nil))
-                  .where(doi: params.fetch(:claim, {}).fetch(:doi, nil))
+    @claim = Claim.where(orcid: params.fetch(:claim, {}).fetch(:orcid, nil),
+                         doi: params.fetch(:claim, {}).fetch(:doi, nil))
                   .first_or_initialize(source_id: params.fetch(:claim, {}).fetch(:source_id, nil))
 
     authorize! :create, @claim
