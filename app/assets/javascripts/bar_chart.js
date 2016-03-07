@@ -12,21 +12,15 @@ var width = 250,
 
 // bar chart
 function barViz(data, div, count, format) {
-  if (format === "days") {
-    var x = d3.time.scale.utc()
-      .domain([startDate, endDate])
-      .rangeRound([0, width]);
-    var y = d3.scale.linear()
-      .domain([0, d3.max(data, function(d) { return d.values[count]; })])
-      .rangeRound([height, 0]);
-  } else {
-    var x = d3.time.scale.utc()
-      .domain([startTime, endDate])
-      .rangeRound([0, width]);
-    var y = d3.scale.linear()
-      .domain([0, d3.max(data, function(d) { return d.values[count]; })])
-      .rangeRound([height, 0]);
-  }
+  var domain = (format === "days") ? [startDate, endDate] : [startTime, endTime];
+
+  var x = d3.time.scale.utc()
+    .domain(domain)
+    .rangeRound([0, width]);
+
+  var y = d3.scale.linear()
+    .domain([0, d3.max(data, function(d) { return d.values[count]; })])
+    .rangeRound([height, 0]);
 
   var xAxis = d3.svg.axis()
     .scale(x)
@@ -71,20 +65,24 @@ function barViz(data, div, count, format) {
 
   chart.selectAll("rect").each(
     function(d) {
-      if (count == "db_size") {
-        var title = numberToHumanSize(d.values[count]);
+      var title = null,
+          dateStamp = null,
+          dateString = null;
+
+      if (count === "db_size") {
+        title = numberToHumanSize(d.values[count]);
       } else if (count === "requests_average") {
-        var title = formatFixed(d.values[count]) + " ms";
+        title = formatFixed(d.values[count]) + " ms";
       } else {
-        var title = formatFixed(d.values[count]);
+        title = formatFixed(d.values[count]);
       }
 
       if (format === "days") {
-        var timestamp = Date.parse(d.key + 'T12:00:00Z');
-        var dateString = " on " + formatDate(new Date(timestamp));
+        dateStamp = Date.parse(d.key + 'T12:00:00Z');
+        dateString = " on " + formatDate(new Date(dateStamp));
       } else {
-        var timestamp = Date.parse(d.key + ':00:00Z');
-        var dateString = " at " + formatTime(new Date(timestamp));
+        dateStamp = Date.parse(d.key + ':00:00Z');
+        dateString = " at " + formatTime(new Date(dateStamp));
       }
 
       $(this).tooltip({ title: title + dateString, container: "body"});
@@ -105,9 +103,6 @@ function hBarViz(data, name) {
     return;
   }
 
-  // remove source not needed for the following visualizations
-  data = data.filter(function(d) { return d.id !== "relativemetric"; });
-
   // Works tab
   var chart = d3.select("div#" + name + "-body").append("svg")
     .attr("width", w + l + r)
@@ -116,12 +111,14 @@ function hBarViz(data, name) {
     .append("g")
     .attr("transform", "translate(" + l + "," + h + ")");
 
+  var x = null;
+
   if (name === "work") {
-    var x = d3.scale.linear()
+    x = d3.scale.linear()
       .domain([0, d3.max(data, function(d) { return d[name + "_count"]; })])
       .range([0, w]);
   } else {
-    var x = d3.scale.log()
+    x = d3.scale.log()
       .domain([0.1, d3.max(data, function(d) { return d[name + "_count"]; })])
       .range([1, w]);
   }
@@ -140,6 +137,7 @@ function hBarViz(data, name) {
     .attr("dx", 0 - l) // padding-right
     .attr("dy", ".18em") // vertical-align: middle
     .text(function(d) { return d.title; });
+
   chart.selectAll("rect")
     .data(data)
     .enter().append("rect")
@@ -147,6 +145,7 @@ function hBarViz(data, name) {
     .attr("y", function(d) { return y(d.title); })
     .attr("height", h)
     .attr("width", function(d) { return x(d[name + "_count"]); });
+
   chart.selectAll("text.values")
     .data(data)
     .enter().append("text")
