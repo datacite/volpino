@@ -1,4 +1,6 @@
 require 'nokogiri'
+require 'bibtex'
+require 'oauth2'
 
 class Claim < ActiveRecord::Base
   # include helper module for DOI resolution
@@ -13,10 +15,7 @@ class Claim < ActiveRecord::Base
   # include helper module for work type
   include Typeable
 
-  # include helper module for orcid oauth
-  include Clientable
-
-  belongs_to :user, primary_key: "orcid", foreign_key: "uid"
+  belongs_to :user, foreign_key: "orcid", primary_key: "uid", inverse_of: :claims
 
   before_create :create_uuid
   after_commit :queue_claim_job, :on => :create
@@ -28,10 +27,7 @@ class Claim < ActiveRecord::Base
     state :working, value: 1
     state :failed, value: 2
     state :done, value: 3
-
-    after_transition :to => :done do |claim|
-      claim.update_attributes(claimed_at: Time.zone.now) if claim.claimed_at.nil?
-    end
+    state :ignored, value: 4
 
     event :start do
       transition [:waiting] => :working
@@ -45,6 +41,10 @@ class Claim < ActiveRecord::Base
 
     event :error do
       transition any => :failed
+    end
+
+    event :skip do
+      transition any => :ignored
     end
   end
 
@@ -69,18 +69,63 @@ class Claim < ActiveRecord::Base
     uuid
   end
 
+  def access_token
+    client = OAuth2::Client.new(ENV['ORCID_CLIENT_ID'],
+                                ENV['ORCID_CLIENT_SECRET'],
+                                site: ENV['ORCID_API_URL'])
+    OAuth2::AccessToken.new(client, user.authentication_token)
+  end
+
+  def oauth_client_get
+    response = access_token.get "#{ENV['ORCID_API_URL']}/v#{ORCID_VERSION}/#{user.uid}/orcid-works" do |get|
+      get.headers['Accept'] = 'application/json'
+    end
+
+    return { "data" => JSON.parse(response.body) } if response.status == 200
+
+    { "errors" => [{ "title" => "Error fetching ORCID record" }] }
+  rescue OAuth2::Error => e
+    { "errors" => [{ "title" => e.message }] }
+  end
+
+  def oauth_client_post(data)
+    response = access_token.post("#{ENV['ORCID_API_URL']}/v#{ORCID_VERSION}/#{user.uid}/orcid-works") do |post|
+      post.headers['Content-Type'] = 'application/orcid+xml'
+      post.body = data
+    end
+
+    return { "data" => Hash.from_xml(data) } if response.status == 201
+
+    { "errors" => [{ "title" => "Error depositing claim" }] }
+  rescue OAuth2::Error => e
+    { "errors" => [{ "title" => e.message }] }
+  end
+
   def process_data(options={})
     self.start
-    if collect_data.present? && collect_data[:errors].present?
-      write_attribute(:error_messages, collect_data[:errors])
+    if collect_data["errors"]
+      write_attribute(:error_messages, collect_data["errors"])
       self.error
-    else
+    elsif collect_data["data"]
+      update_attributes(claimed_at: Time.zone.now) unless claimed_at.present?
       self.finish
+    else
+      self.skip
     end
   end
 
-  def collect_data(options={})
-    oauth_client_post(data) if claimed_at.nil? && user.present?
+  def collect_data
+    # already claimed
+    return { "data" => data } if claimed_at.present?
+
+    # user has not given permission for auto-update
+    return {} if source_id == "orcid_update" && user && !user.auto_update
+
+    # missing data raise errors
+    return { "errors" => [{ "title" => "Missing user" }] } if user.nil?
+    return { "errors" => [{ "title" => "Missing data" }] } if data.nil?
+
+    oauth_client_post(data)
   end
 
   def create_uuid
@@ -97,6 +142,12 @@ class Claim < ActiveRecord::Base
         credit_name: get_credit_name(contributor),
         role: nil }
     end
+  end
+
+  def author_string
+    Array(metadata.fetch('author', nil)).map do |contributor|
+      get_full_name(contributor)
+    end.join(" and ")
   end
 
   def title
@@ -120,10 +171,22 @@ class Claim < ActiveRecord::Base
   end
 
   def citation
-    result = Maremma.get "http://doi.org/#{doi}", content_type: "application/x-bibtex"
-    return nil if result["errors"]
+    url = "http://doi.org/#{doi}"
 
-    without_control(result["data"])
+    # generate citation in bibtex format. Don't use DOI content negotiation as
+    # author name formatting is broken. Use the url as bibtex key.
+    # TODO set correct bibtex type
+
+    BibTeX::Entry.new({
+      bibtex_type: :data,
+      bibtex_key: url,
+      author: author_string,
+      title: title,
+      publisher: container_title,
+      doi: doi,
+      url: url,
+      year: publication_date['year']
+    }).to_s.gsub("\n",'').gsub(/\s+/, ' ')
   end
 
   def root_attributes
@@ -133,7 +196,7 @@ class Claim < ActiveRecord::Base
   end
 
   def data
-    # return nil unless doi && creator && title && publisher && publication_year
+    return nil unless doi && contributors && title && publication_date
 
     Nokogiri::XML::Builder.new do |xml|
       xml.send(:'orcid-message', root_attributes) do

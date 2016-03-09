@@ -1,9 +1,6 @@
 require 'jwt'
 
 class User < ActiveRecord::Base
-  # include helper module for orcid oauth
-  include Clientable
-
   # include helper module for date and time calculations
   include Dateable
 
@@ -12,7 +9,7 @@ class User < ActiveRecord::Base
 
   after_commit :queue_user_job, :on => :create
 
-  has_many :claims, primary_key: "uid", foreign_key: "orcid"
+  has_many :claims, primary_key: "uid", foreign_key: "orcid", inverse_of: :user
   belongs_to :member
 
   devise :confirmable, :omniauthable, :omniauth_providers => [:orcid]
@@ -126,7 +123,7 @@ class User < ActiveRecord::Base
 
   def get_data(options={})
     result = Maremma.get(orcid_url)
-    return nil if result["errrors"]
+    return nil if result["errors"]
 
     # extend hash fetch method to nested hashes
     result.extend Hashie::Extensions::DeepFetch

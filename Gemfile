@@ -9,6 +9,7 @@ gem "dotenv", '~> 1.0.2'
 gem 'sidekiq', '~> 4.0', '>= 4.0.1'
 gem 'sinatra', :require => nil
 gem "config"
+gem 'rake', '~> 10.5'
 gem "whenever", "~> 0.9.0", require: false
 gem 'bugsnag', '~> 2.8.6'
 gem 'maremma', '~> 2.1', '>= 2.1.1'
@@ -31,6 +32,7 @@ gem 'nokogiri', '~> 1.6', '>= 1.6.7.2'
 gem "github-markdown", "~> 0.6.3"
 gem "rouge", "~> 1.7.2"
 gem 'hashie', '~> 3.3.2'
+gem 'bibtex-ruby', '~> 4.2'
 gem 'namae', '~> 0.10.1'
 gem 'httplog'
 gem 'lograge', '~> 0.3.5'

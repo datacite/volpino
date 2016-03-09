@@ -12,7 +12,7 @@
           <short-description/>
           <work-citation>
             <work-citation-type>bibtex</work-citation-type>
-            <citation>@data{88e28086-a612-4e03-abfe-12058e5eb129,  doi = {10.5061/DRYAD.781PV},  url = {http://dx.doi.org/10.5061/DRYAD.781PV},  author = {Piwowar, Heather A.; Vision, Todd J.; },  publisher = {Dryad Digital Repository},  title = {Data from: Data reuse and the open data citation advantage},  year = {2013}}</citation>
+            <citation>@data{http://doi.org/10.5061/DRYAD.781PV, author = {Piwowar, Heather A. and Vision, Todd J.}, title = {Data from: Data reuse and the open data citation advantage}, publisher = {Dryad Digital Repository}, doi = {10.5061/DRYAD.781PV}, url = {http://doi.org/10.5061/DRYAD.781PV}, year = {2013}}</citation>
           </work-citation>
           <work-type>data-set</work-type>
           <publication-date>

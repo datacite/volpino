@@ -29,7 +29,7 @@ http_interactions:
       Server:
       - http-kit
       Date:
-      - Fri, 26 Feb 2016 09:08:39 GMT
+      - Wed, 09 Mar 2016 10:44:36 GMT
       Connection:
       - close
     body:
@@ -54,5 +54,5 @@ http_interactions:
         Type","name":"content_type","value":"article"},{"label":"Copyright","name":"copyright","value":"Copyright
         \u00a9 2015 Elsevier B.V. All rights reserved."}]}}'
     http_version: 
-  recorded_at: Fri, 26 Feb 2016 09:08:39 GMT
+  recorded_at: Wed, 09 Mar 2016 10:44:36 GMT
 recorded_with: VCR 2.9.3

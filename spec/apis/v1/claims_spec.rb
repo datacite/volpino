@@ -165,7 +165,7 @@ describe "/api/v1/claims", :type => :api do
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
         item = response["data"].first
-        expect(item['attributes']).to eq("orcid"=>"0000-0002-1825-0001", "doi"=>"10.5061/DRYAD.781PV", "source_id"=>"orcid_update", "state"=>"waiting", "claimed_at"=>nil)
+        expect(item['attributes']).to eq("orcid"=>claim.orcid, "doi"=>"10.5061/DRYAD.781PV", "source_id"=>"orcid_update", "state"=>"waiting", "claimed_at"=>nil)
       end
     end
 
@@ -179,7 +179,7 @@ describe "/api/v1/claims", :type => :api do
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
         item = response["data"].first
-        expect(item['attributes']).to eq("orcid"=>"0000-0002-1825-0001", "doi"=>"10.5061/DRYAD.781PV", "source_id"=>"orcid_update", "state"=>"waiting", "claimed_at"=>nil)
+        expect(item['attributes']).to eq("orcid"=>claim.orcid, "doi"=>"10.5061/DRYAD.781PV", "source_id"=>"orcid_update", "state"=>"waiting", "claimed_at"=>nil)
       end
     end
 
@@ -221,7 +221,7 @@ describe "/api/v1/claims", :type => :api do
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
         item = response["data"].first
-        expect(item['attributes']).to eq("orcid"=>"0000-0002-1825-0001", "doi"=>"10.5061/DRYAD.781PV", "source_id"=>"orcid_update", "state"=>"waiting", "claimed_at"=>nil)
+        expect(item['attributes']).to eq("orcid"=>claim.orcid, "doi"=>"10.5061/DRYAD.781PV", "source_id"=>"orcid_update", "state"=>"waiting", "claimed_at"=>nil)
       end
     end
 

@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: https://github.com/rails-api/active_model_serializers.git
-  revision: 1aa64f2ac3f2ccd16e7da9163bb70f79cf1cbd44
+  revision: 7ab39bed858f49e1cc1a5350c878e43e67898643
   specs:
     active_model_serializers (0.10.0.rc4)
       actionpack (>= 4.0)
@@ -70,6 +70,8 @@ GEM
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
       rack (>= 0.9.0)
+    bibtex-ruby (4.2.0)
+      latex-decode (~> 0.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     brakeman (2.6.3)
@@ -177,6 +179,8 @@ GEM
     i18n_data (0.7.0)
     json (1.8.3)
     jwt (1.5.1)
+    latex-decode (0.2.2)
+      unicode (~> 0.4)
     launchy (2.4.3)
       addressable (~> 2.3)
     lograge (0.3.6)
@@ -370,6 +374,7 @@ GEM
     uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    unicode (0.4.4.2)
     unicode_utils (1.4.0)
     vcr (2.9.3)
     warden (1.2.6)
@@ -402,6 +407,7 @@ DEPENDENCIES
   addressable (~> 2.3.8)
   ar-octopus (~> 0.8.5)!
   better_errors (~> 2.0.0)
+  bibtex-ruby (~> 4.2)
   binding_of_caller (~> 0.7.2)
   brakeman (~> 2.6.0)
   bugsnag (~> 2.8.6)
@@ -439,6 +445,7 @@ DEPENDENCIES
   pry-rails (~> 0.3.2)
   rack-test (~> 0.6.2)
   rails (~> 4.2, >= 4.2.6)
+  rake (~> 10.5)
   rouge (~> 1.7.2)
   rspec-rails (~> 3.1.0)
   rubocop (~> 0.27.0)

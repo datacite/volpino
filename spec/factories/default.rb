@@ -11,7 +11,12 @@ FactoryGirl.define do
       api_key "12345"
     end
 
-    initialize_with { User.where(api_key: api_key).first_or_initialize }
+    factory :valid_user do
+      uid '0000-0003-1419-2405'
+      authentication_token ENV['ORCID_AUTHENTICATION_TOKEN']
+    end
+
+    initialize_with { User.where(uid: uid).first_or_initialize }
   end
 
   factory :service do
@@ -35,6 +40,8 @@ FactoryGirl.define do
     orcid "0000-0002-1825-0001"
     doi "10.5061/DRYAD.781PV"
     source_id "orcid_update"
+
+    association :user, factory: :user
 
     initialize_with { Claim.where(orcid: orcid).where(doi: doi).first_or_initialize }
   end
