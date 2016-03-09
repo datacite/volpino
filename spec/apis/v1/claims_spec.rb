@@ -188,10 +188,12 @@ describe "/api/v1/claims", :type => :api do
 
       it "JSON" do
         get uri, nil, headers
-        expect(last_response.status).to eq(401)
+        expect(last_response.status).to eq(200)
 
         response = JSON.parse(last_response.body)
-        expect(response).to eq (error)
+        expect(response["errors"]).to be_nil
+        item = response["data"].first
+        expect(item['attributes']).to eq("orcid"=>claim.orcid, "doi"=>"10.5061/DRYAD.781PV", "source_id"=>"orcid_update", "state"=>"waiting", "claimed_at"=>nil)
       end
     end
 
@@ -274,10 +276,11 @@ describe "/api/v1/claims", :type => :api do
 
       it "JSON" do
         get uri, nil, headers
-        expect(last_response.status).to eq(401)
+        expect(last_response.status).to eq(200)
 
         response = JSON.parse(last_response.body)
-        expect(response).to eq (error)
+        expect(response["errors"]).to be_nil
+        expect(response["data"]["attributes"]).to eq(success)
       end
     end
 
