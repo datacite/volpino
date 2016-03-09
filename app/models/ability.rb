@@ -15,6 +15,8 @@ class Ability
       can [:update, :show], User, :id => user.id
       can [:update, :show], Member, :id => user.member_id
     elsif user.role == "user"
+      can [:read], Claim
+      can [:manage], Claim, :orcid => user.uid
       can [:update, :show], User, :id => user.id
     end
   end
