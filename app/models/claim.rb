@@ -120,11 +120,14 @@ class Claim < ActiveRecord::Base
     # already claimed
     return { "data" => data } if claimed_at.present?
 
+    # user has not signed up yet
+    return {} if user.nil?
+
     # user has not given permission for auto-update
     return {} if source_id == "orcid_update" && user && !user.auto_update
 
     # missing data raise errors
-    return { "errors" => [{ "title" => "Missing user" }] } if user.nil?
+    return {} if user.nil?
     return { "errors" => [{ "title" => "Missing data" }] } if data.nil?
 
     oauth_client_post(data)
