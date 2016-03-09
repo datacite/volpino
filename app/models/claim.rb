@@ -61,6 +61,8 @@ class Claim < ActiveRecord::Base
   scope :search_and_link, -> { where(source_id: "orcid_search").where("claimed_at IS NOT NULL") }
   scope :auto_update, -> { where(source_id: "orcid_update").where("claimed_at IS NOT NULL") }
 
+  serialize :error_messages, JSON
+
   def queue_claim_job
     ClaimJob.perform_later(self)
   end
@@ -283,7 +285,7 @@ class Claim < ActiveRecord::Base
   end
 
   def insert_contributor(xml, contributor)
-    xml.send(:'contributor-orcid', contributor[:orcid]) if contributor[:orcid]
+    #xml.send(:'contributor-orcid', contributor[:orcid]) if contributor[:orcid]
     xml.send(:'credit-name', contributor[:credit_name])
     if contributor[:role]
       xml.send(:'contributor-attributes') do

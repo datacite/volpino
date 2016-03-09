@@ -24,6 +24,11 @@
                 <%= h(claim.doi) %><small class="pull-right">not claimed</small>
               </div>
             <% end %>
+            <% if claim.error_messages.present? %>
+              <div class="panel-body">
+                <%= h(claim.error_messages.first["title"]) %>
+              </div>
+            <% end %>
             <div class="panel-footer">
               <%= sources[claim.source_id] %>
               <span class="pull-right"><%= claim.human_state_name %></span>
