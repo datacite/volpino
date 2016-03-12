@@ -92,7 +92,8 @@ module ApplicationHelper
     { 0 => "waiting",
       1 => "working",
       2 => "failed",
-      3 => "done" }
+      3 => "done",
+      4 => "ignored" }
   end
 
   def settings
