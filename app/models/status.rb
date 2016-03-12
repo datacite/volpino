@@ -17,9 +17,9 @@ class Status < ActiveRecord::Base
     self.users_count = User.count
     self.users_new_count = User.where("created_at >= ?", Time.zone.now.beginning_of_day).count
     self.claims_search_count = Claim.search_and_link.count
-    self.claims_search_new_count = Claim.search_and_link.where("created_at >= ?", Time.zone.now.beginning_of_day).count
+    self.claims_search_new_count = Claim.search_and_link.where("claimed_at >= ?", Time.zone.now.beginning_of_day).count
     self.claims_auto_count = Claim.auto_update.count
-    self.claims_auto_new_count = Claim.auto_update.where("created_at >= ?", Time.zone.now.beginning_of_day).count
+    self.claims_auto_new_count = Claim.auto_update.where("claimed_at >= ?", Time.zone.now.beginning_of_day).count
     self.members_emea_count = Member.where(region: "EMEA").count
     self.members_amer_count = Member.where(region: "AMER").count
     self.members_apac_count = Member.where(region: "APAC").count
