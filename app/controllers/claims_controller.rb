@@ -1,16 +1,38 @@
 class ClaimsController < ApplicationController
-  before_filter :load_user
+  before_filter :load_user, only: [:index, :update]
+  before_filter :load_claim, only: [:update]
   load_and_authorize_resource
 
   def index
+    load_index
+  end
+
+  def update
+    if params[:claim][:resolve]
+      params[:claim][:state] = 0
+      params[:claim][:error_messages] = nil
+      params[:claim] = params[:claim].except(:resolve)
+    end
+
+    @claim.update_attributes(safe_params)
+
+    load_index
+
+    render :index
+  end
+
+  protected
+
+  def load_index
     if !@user.is_admin_or_staff?
       collection = @user.claims
     elsif params[:user_id]
       collection = Claim.where(orcid: params[:user_id])
-      @my_claim_count = collection.count
+      @claim_count = collection.count
+      @my_claim_count = Claim.where(orcid: current_user.uid).count
     else
       collection = Claim
-      @my_claim_count = Claim.where(orcid: params[:user_id]).count
+      @my_claim_count = Claim.where(orcid: current_user.uid).count
     end
     collection = collection.query(params[:query]) if params[:query]
     if params[:source].present?
@@ -27,13 +49,23 @@ class ClaimsController < ApplicationController
     @page = params[:page] || 1
   end
 
-  protected
-
   def load_user
     if user_signed_in?
       @user = current_user
     else
       fail CanCan::AccessDenied.new("Please sign in first.", :read, User)
     end
+  end
+
+  def load_claim
+    @claim = Claim.where(uuid: params[:id]).first
+    fail ActiveRecord::RecordNotFound unless @claim.present?
+  end
+
+  private
+
+  def safe_params
+    params.require(:claim).permit(:state,
+                                  :error_messages)
   end
 end
