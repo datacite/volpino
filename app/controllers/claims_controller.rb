@@ -6,11 +6,11 @@ class ClaimsController < ApplicationController
     if !@user.is_admin_or_staff?
       collection = @user.claims
     elsif params[:user_id]
-      collection = Claim.where(orcid: @user.uid)
+      collection = Claim.where(orcid: params[:user_id])
       @my_claim_count = collection.count
     else
       collection = Claim
-      @my_claim_count = Claim.where(orcid: @user.uid).count
+      @my_claim_count = Claim.where(orcid: params[:user_id]).count
     end
     collection = collection.query(params[:query]) if params[:query]
     if params[:source].present?
