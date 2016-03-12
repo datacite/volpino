@@ -22,7 +22,10 @@
         </dl>
         <div class="btn-toolbar pull-right">
           <div class="btn-group btn-group-sm orcid">
-            <%= link_to 'close', user_path(@user, panel: 'account'), { remote: true, class: 'btn btn-default btn-sm' } %>
+            <%= link_to 'cancel', user_path(@user, panel: 'account'), { remote: true, class: 'btn btn-default' } %>
+          </div>
+          <div class="btn-group btn-group-sm orcid">
+            <%= link_to 'expire token', user_path(@user, user: { expires_at: Time.zone.now }, panel: 'account'), { method: :put, remote: true, class: 'btn btn-warning' } %>
           </div>
         </div>
       <% else %>

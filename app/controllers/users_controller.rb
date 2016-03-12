@@ -94,6 +94,7 @@ class UsersController < ApplicationController
                                  :auto_update,
                                  :role,
                                  :member_id,
+                                 :expires_at,
                                  :authentication_token)
   end
 end
