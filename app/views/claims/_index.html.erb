@@ -24,9 +24,18 @@
                 <%= h(claim.doi) %><small class="pull-right">not claimed</small>
               </div>
             <% end %>
-            <% if claim.error_messages.present? %>
+            <% if claim.error_messages.present? || current_user.is_admin_or_staff? %>
               <div class="panel-body">
-                <%= h(claim.error_messages.first["title"]) %>
+                <%= link_to h(claim.orcid), claims_path(query: params[:query], source: params[:source], state: params[:state], user_id: claim.orcid) %>
+                <% if claim.user %>
+                  <span class="pull-right"><%= link_to h(claim.user.credit_name), users_path(query: claim.orcid) %></span>
+                <% end %>
+                <% if claim.error_messages.present? %>
+                  <% if current_user.is_admin_or_staff? %>
+                    <br/><br/>
+                  <% end %>
+                  <%= h(claim.error_messages.first["title"]) %>
+                <% end %>
               </div>
             <% end %>
             <div class="panel-footer">
@@ -47,48 +56,71 @@
       </div>
     <% end %>
   </div>
-  <div class='col-md-3'>
-    <div class="panel facets">
-      <div class="panel-body">
-        <h4>Sources</h4>
-        <ul>
-          <% if @source %>
-            <li class="active">
-              <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], state: params[:state]) %>
-              <%= sources[@source.first] %>
-              <span class="number pull-right"><%= number_with_delimiter(@source.last) %></span>
-            </li>
-          <% else %>
-            <% @sources.each do |source| %>
+  <% if @claims.size > 0 %>
+    <div class='col-md-3'>
+      <div class="panel facets">
+      <% if current_user.is_admin_or_staff? %>
+        <div class="panel-body">
+          <h4>My Claims</h4>
+          <ul>
+            <% if params[:user_id] == current_user.uid %>
               <li>
-                <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], source: source.first, state: params[:state]) %>
-                <%= sources[source.first] %>
-                <span class="number pull-right"><%= number_with_delimiter(source.last) %></span>
+                  <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], source: params[:source], state: params[:state]) %>
+                  <%= current_user.uid %>
+                  <span class="number pull-right"><%= number_with_delimiter(@my_claim_count) %></span>
+                </li>
+            <% else %>
+              <li class="active">
+                <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], source: params[:source], state: params[:state], user_id: current_user.uid) %>
+                <%= current_user.uid %>
+                <span class="number pull-right"><%= number_with_delimiter(@my_claim_count) %></span>
               </li>
             <% end %>
-          <% end %>
-        </ul>
-      </div>
-      <div class="panel-body">
-        <h4>Status</h4>
-        <ul>
-          <% if @state %>
-            <li class="active">
-              <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], source: params[:source]) %>
-              <%= state_names[@state.first].humanize %>
-              <span class="number pull-right"><%= number_with_delimiter(@state.last) %></span>
-            </li>
-          <% else %>
-            <% @states.each do |state| %>
-              <li>
-                <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], source: params[:source], state: state.first) %>
-                <%= state_names[state.first].humanize %>
-                <span class="number pull-right"><%= number_with_delimiter(state.last) %></span>
+          </ul>
+        </div>
+      <% end %>
+        <div class="panel-body">
+          <h4>Sources</h4>
+          <ul>
+            <% if @source %>
+              <li class="active">
+                <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], state: params[:state]) %>
+                <%= sources[@source.first] %>
+                <span class="number pull-right"><%= number_with_delimiter(@source.last) %></span>
               </li>
+            <% else %>
+              <% @sources.each do |source| %>
+                <li>
+                  <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], source: source.first, state: params[:state]) %>
+                  <%= sources[source.first] %>
+                  <span class="number pull-right"><%= number_with_delimiter(source.last) %></span>
+                </li>
+              <% end %>
             <% end %>
-          <% end %>
-        </ul>
+          </ul>
+        </div>
+        <div class="panel-body">
+          <h4>Status</h4>
+          <ul>
+            <% if @state %>
+              <li class="active">
+                <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], source: params[:source]) %>
+                <%= state_names[@state.first].humanize %>
+                <span class="number pull-right"><%= number_with_delimiter(@state.last) %></span>
+              </li>
+            <% else %>
+              <% @states.each do |state| %>
+                <li>
+                  <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], source: params[:source], state: state.first) %>
+                  <%= state_names[state.first].humanize %>
+                  <span class="number pull-right"><%= number_with_delimiter(state.last) %></span>
+                </li>
+              <% end %>
+            <% end %>
+
+          </ul>
+        </div>
       </div>
-    </div>
+  <% end %>
   </div>
 </div>

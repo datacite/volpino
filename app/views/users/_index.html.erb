@@ -68,7 +68,7 @@
 
                   <% if user.member.present? %>
                     <h5>Member</h5>
-                    <%= user.member.title %>
+                    <%= link_to h(user.member.title), members_path(id: user.member.name) %>
                   <% end %>
 
                   <h5>Account created</h5>

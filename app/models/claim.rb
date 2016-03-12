@@ -18,7 +18,7 @@ class Claim < ActiveRecord::Base
   belongs_to :user, foreign_key: "orcid", primary_key: "uid", inverse_of: :claims
 
   before_create :create_uuid
-  after_commit :queue_claim_job, :on => :create
+  after_commit :queue_claim_job, on: [:create, :update], if: Proc.new { |claim| claim.waiting? }
 
   validates :orcid, :doi, :source_id, presence: true
 
@@ -107,6 +107,12 @@ class Claim < ActiveRecord::Base
     self.start
     if collect_data["errors"]
       write_attribute(:error_messages, collect_data["errors"])
+
+      # send notification to Bugsnag
+      if ENV['BUGSNAG_KEY']
+        Bugsnag.notify(RuntimeError.new(collect_data["errors"].first["title"]))
+      end
+
       self.error
     elsif collect_data["data"]
       update_attributes(claimed_at: Time.zone.now) unless claimed_at.present?

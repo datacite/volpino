@@ -3,10 +3,18 @@ class ClaimsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    collection = @user.claims
+    if !@user.is_admin_or_staff?
+      collection = @user.claims
+    elsif params[:user_id]
+      collection = Claim.where(orcid: @user.uid)
+      @my_claim_count = collection.count
+    else
+      collection = Claim
+      @my_claim_count = Claim.where(orcid: @user.uid).count
+    end
     collection = collection.query(params[:query]) if params[:query]
     if params[:source].present?
-      collection = collection.where(:source_id => params[:source])
+      collection = collection.where(source_id: params[:source])
       @source = collection.group(:source_id).count.first
     end
     if params[:state].present?
