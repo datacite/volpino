@@ -2,6 +2,49 @@
 http_interactions:
 - request:
     method: get
+    uri: http://search.datacite.org/api?fl=doi,creator,title,publisher,publicationYear,resourceTypeGeneral,description,datacentre,datacentre_symbol,prefix,relatedIdentifier,xml,updated&q=doi:10.5281/ZENODO.21429&rows=1&wt=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Maremma - http://profiles.local
+      Accept:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Sun, 13 Mar 2016 09:20:15 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - Content-Type,Accept,Accept-Encoding,Origin,User-Agent,Cache-Control,Keep-Alive
+    body:
+      encoding: UTF-8
+      string: '{"responseHeader":{"status":0,"QTime":1},"response":{"numFound":1,"start":0,"docs":[{"datacentre_symbol":"CERN.ZENODO","xml":"PHJlc291cmNlIHhtbG5zPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyBodHRwOi8vc2NoZW1hLmRhdGFjaXRlLm9yZy9tZXRhL2tlcm5lbC0zL21ldGFkYXRhLnhzZCI+CiAgPGlkZW50aWZpZXIgaWRlbnRpZmllclR5cGU9IkRPSSI+MTAuNTI4MS96ZW5vZG8uMjE0Mjk8L2lkZW50aWZpZXI+CiAgPGNyZWF0b3JzPgogICAgPGNyZWF0b3I+CiAgICAgIDxjcmVhdG9yTmFtZT5HdWRtdW5kdXIgQS4gVGhvcmlzc29uPC9jcmVhdG9yTmFtZT4KICAgICAgPGFmZmlsaWF0aW9uPk9SQ0lEIEVVPC9hZmZpbGlhdGlvbj4KICAgIDwvY3JlYXRvcj4KICAgIDxjcmVhdG9yPgogICAgICA8Y3JlYXRvck5hbWU+TWFydGluIEZlbm5lcjwvY3JlYXRvck5hbWU+CiAgICAgIDxhZmZpbGlhdGlvbj5PUkNJRCBFVTwvYWZmaWxpYXRpb24+CiAgICA8L2NyZWF0b3I+CiAgPC9jcmVhdG9ycz4KICA8dGl0bGVzPgogICAgPHRpdGxlPm9tbmlhdXRoLW9yY2lkOiB2LjEuMDwvdGl0bGU+CiAgPC90aXRsZXM+CiAgPHB1Ymxpc2hlcj5aZW5vZG88L3B1Ymxpc2hlcj4KICA8cHVibGljYXRpb25ZZWFyPjIwMTU8L3B1YmxpY2F0aW9uWWVhcj4KICA8c3ViamVjdHM+CiAgICA8c3ViamVjdD5vcmNpZDwvc3ViamVjdD4KICAgIDxzdWJqZWN0Pm9hdXRoMjwvc3ViamVjdD4KICAgIDxzdWJqZWN0Pm9tbmlhdXRoPC9zdWJqZWN0PgogICAgPHN1YmplY3Q+cnVieTwvc3ViamVjdD4KICAgIDxzdWJqZWN0PnJhaWxzPC9zdWJqZWN0PgogIDwvc3ViamVjdHM+CiAgPGNvbnRyaWJ1dG9ycz4KICAgIDxjb250cmlidXRvciBjb250cmlidXRvclR5cGU9IkZ1bmRlciI+CiAgICAgIDxjb250cmlidXRvck5hbWU+RXVyb3BlYW4gQ29tbWlzc2lvbjwvY29udHJpYnV0b3JOYW1lPgogICAgICA8bmFtZUlkZW50aWZpZXIgbmFtZUlkZW50aWZpZXJTY2hlbWU9ImluZm8iPmluZm86ZXUtcmVwby9ncmFudEFncmVlbWVudC9FQy9GUDcvMzEyNzg4PC9uYW1lSWRlbnRpZmllcj4KICAgIDwvY29udHJpYnV0b3I+CiAgPC9jb250cmlidXRvcnM+CiAgPGRhdGVzPgogICAgPGRhdGUgZGF0ZVR5cGU9Iklzc3VlZCI+MjAxNS0wNy0yNTwvZGF0ZT4KICA8L2RhdGVzPgogIDxyZXNvdXJjZVR5cGUgcmVzb3VyY2VUeXBlR2VuZXJhbD0iU29mdHdhcmUiLz4KICA8YWx0ZXJuYXRlSWRlbnRpZmllcnM+CiAgICA8YWx0ZXJuYXRlSWRlbnRpZmllciBhbHRlcm5hdGVJZGVudGlmaWVyVHlwZT0iVVJMIj5odHRwOi8vemVub2RvLm9yZy9yZWNvcmQvMjE0Mjk8L2FsdGVybmF0ZUlkZW50aWZpZXI+CiAgPC9hbHRlcm5hdGVJZGVudGlmaWVycz4KICA8cmVsYXRlZElkZW50aWZpZXJzPgogICAgPHJlbGF0ZWRJZGVudGlmaWVyIHJlbGF0aW9uVHlwZT0iSXNTdXBwbGVtZW50VG8iIHJlbGF0ZWRJZGVudGlmaWVyVHlwZT0iVVJMIj5odHRwczovL2dpdGh1Yi5jb20vZGF0YWNpdGUvb21uaWF1dGgtb3JjaWQvdHJlZS92LjEuMDwvcmVsYXRlZElkZW50aWZpZXI+CiAgPC9yZWxhdGVkSWRlbnRpZmllcnM+CiAgPHJpZ2h0c0xpc3Q+CiAgICA8cmlnaHRzIHJpZ2h0c1VSST0iaW5mbzpldS1yZXBvL3NlbWFudGljcy9vcGVuQWNjZXNzIj5PcGVuIEFjY2VzczwvcmlnaHRzPgogICAgPHJpZ2h0cyByaWdodHNVUkk9Imh0dHA6Ly93d3cub3BlbnNvdXJjZS5vcmcvbGljZW5zZXMvbWl0LWxpY2Vuc2UucGhwIj5NSVQgbGljZW5zZTwvcmlnaHRzPgogIDwvcmlnaHRzTGlzdD4KICA8ZGVzY3JpcHRpb25zPgogICAgPGRlc2NyaXB0aW9uIGRlc2NyaXB0aW9uVHlwZT0iQWJzdHJhY3QiPiZsdDtwJmd0O29tbmlhdXRoLW9yY2lkIGlzIGEgUnVieSBnZW0gdGhhdCBlbmFibGVzIGF1dGhlbnRpY2F0aW9uIHdpdGggdGhlIE9SQ0lEIHJlZ2lzdHJ5IHZpYSBvYXV0aDIuJmFtcDtuYnNwO29ubWlhdXRoLW9yY2lkIDEuMCB3YXMgcmVsZWFzZWQgb24gSnVseSAyNSwgMjAxNSB3aXRoIHRoZSBmb2xsb3dpbmcgY2hhbmdlczombHQ7L3AmZ3Q7CgombHQ7dWwmZ3Q7CgkmbHQ7bGkmZ3Q7Y2hhbmdlZCBkZWZhdWx0IHNjb3BlIHRvIGF1dGhlbnRpY2F0ZSwgYW5kIHVzZSB0aGUgcHVibGljIEFQSSBodHRwczovL3B1Yi5vcmNpZC5vcmcgYnkgZGVmYXVsdC4gVGhlc2Ugc2V0dGluZ3Mgd29yayBmb3Igbm9uLW1lbWJlcnMuJmx0Oy9saSZndDsKCSZsdDtsaSZndDthZGRlZCBuYW1lIGFuZCBlbWFpbCB0byB0aGUgaW5mbyBoYXNoIHJldHVybmVkIGJ5IG9tbmlhdXRoIChlbWFpbCB3aWxsIGJlIGVtcHR5IGluIGFsbW9zdCBhbGwgY2FzZXMpJmx0Oy9saSZndDsKCSZsdDtsaSZndDtjbGVhbmVkIHVwIGRvY3VtZW50YXRpb24gaW4gUkVBRE1FLm1kJmx0Oy9saSZndDsKJmx0Oy91bCZndDs8L2Rlc2NyaXB0aW9uPgogIDwvZGVzY3JpcHRpb25zPgo8L3Jlc291cmNlPgo=","datacentre":"CERN.ZENODO
+        - ZENODO - Research. Shared.","updated":"2015-07-25T16:32:04Z","prefix":"10.5281","doi":"10.5281/ZENODO.21429","publisher":"Zenodo","creator":["Gudmundur
+        A. Thorisson","Martin Fenner"],"title":["omniauth-orcid: v.1.0"],"description":["<p>omniauth-orcid
+        is a Ruby gem that enables authentication with the ORCID registry via oauth2.&nbsp;onmiauth-orcid
+        1.0 was released on July 25, 2015 with the following changes:</p>\n\n<ul>\n\t<li>changed
+        default scope to authenticate, and use the public API https://pub.orcid.org
+        by default. These settings work for non-members.</li>\n\t<li>added name and
+        email to the info hash returned by omniauth (email will be empty in almost
+        all cases)</li>\n\t<li>cleaned up documentation in README.md</li>\n</ul>"],"resourceTypeGeneral":"Software","relatedIdentifier":["IsSupplementTo:URL:https://github.com/datacite/omniauth-orcid/tree/v.1.0"],"publicationYear":"2015"}]}}
+
+'
+    http_version: 
+  recorded_at: Sun, 13 Mar 2016 09:19:14 GMT
+- request:
+    method: get
     uri: https://raw.githubusercontent.com/ORCID/ORCID-Source/master/orcid-model/src/main/resources/orcid-message-1.2.xsd
     body:
       encoding: US-ASCII
@@ -35,19 +78,19 @@ http_interactions:
       Cache-Control:
       - max-age=300
       X-Github-Request-Id:
-      - B91F1114:3EEA:4F12F46:56E50BDE
+      - 17EB2B14:0FB6:3FB1BD0:56E5308D
       Content-Length:
       - '14182'
       Accept-Ranges:
       - bytes
       Date:
-      - Sun, 13 Mar 2016 06:42:40 GMT
+      - Sun, 13 Mar 2016 09:19:14 GMT
       Via:
       - 1.1 varnish
       Connection:
       - keep-alive
       X-Served-By:
-      - cache-fra1246-FRA
+      - cache-ams4145-AMS
       X-Cache:
       - HIT
       X-Cache-Hits:
@@ -57,11 +100,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Fastly-Request-Id:
-      - d851fbc75918977f0d0cccb626603180e3d16062
+      - 81f2a563de60d5d7714acbbfbb78d4a52f9cd840
       Expires:
-      - Sun, 13 Mar 2016 06:47:40 GMT
+      - Sun, 13 Mar 2016 09:24:14 GMT
       Source-Age:
-      - '1'
+      - '5'
     body:
       encoding: UTF-8
       string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"\n\txmlns:sch=\"http://purl.oclc.org/dsdl/schematron\"
@@ -1252,53 +1295,10 @@ http_interactions:
         base=\"orcid:non-empty-string\">\n\t\t\t\t<xs:attribute name=\"language-code\"
         type=\"orcid:language-code\" use=\"required\"/>\n\t\t\t</xs:extension>\n\t\t</xs:simpleContent>\n\t</xs:complexType>\n</xs:schema>\n"
     http_version: 
-  recorded_at: Sun, 13 Mar 2016 06:42:40 GMT
-- request:
-    method: get
-    uri: http://search.datacite.org/api?fl=doi,creator,title,publisher,publicationYear,resourceTypeGeneral,description,datacentre,datacentre_symbol,prefix,relatedIdentifier,xml,updated&q=doi:10.5281/ZENODO.21429&rows=1&wt=json
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Maremma - http://profiles.local
-      Accept:
-      - application/json
-  response:
-    status:
-      code: 200
-      message: ''
-    headers:
-      Server:
-      - nginx/1.1.19
-      Date:
-      - Sun, 13 Mar 2016 06:43:41 GMT
-      Content-Type:
-      - application/json;charset=UTF-8
-      Connection:
-      - keep-alive
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Allow-Headers:
-      - Content-Type,Accept,Accept-Encoding,Origin,User-Agent,Cache-Control,Keep-Alive
-    body:
-      encoding: UTF-8
-      string: '{"responseHeader":{"status":0,"QTime":1},"response":{"numFound":1,"start":0,"docs":[{"datacentre_symbol":"CERN.ZENODO","xml":"PHJlc291cmNlIHhtbG5zPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyBodHRwOi8vc2NoZW1hLmRhdGFjaXRlLm9yZy9tZXRhL2tlcm5lbC0zL21ldGFkYXRhLnhzZCI+CiAgPGlkZW50aWZpZXIgaWRlbnRpZmllclR5cGU9IkRPSSI+MTAuNTI4MS96ZW5vZG8uMjE0Mjk8L2lkZW50aWZpZXI+CiAgPGNyZWF0b3JzPgogICAgPGNyZWF0b3I+CiAgICAgIDxjcmVhdG9yTmFtZT5HdWRtdW5kdXIgQS4gVGhvcmlzc29uPC9jcmVhdG9yTmFtZT4KICAgICAgPGFmZmlsaWF0aW9uPk9SQ0lEIEVVPC9hZmZpbGlhdGlvbj4KICAgIDwvY3JlYXRvcj4KICAgIDxjcmVhdG9yPgogICAgICA8Y3JlYXRvck5hbWU+TWFydGluIEZlbm5lcjwvY3JlYXRvck5hbWU+CiAgICAgIDxhZmZpbGlhdGlvbj5PUkNJRCBFVTwvYWZmaWxpYXRpb24+CiAgICA8L2NyZWF0b3I+CiAgPC9jcmVhdG9ycz4KICA8dGl0bGVzPgogICAgPHRpdGxlPm9tbmlhdXRoLW9yY2lkOiB2LjEuMDwvdGl0bGU+CiAgPC90aXRsZXM+CiAgPHB1Ymxpc2hlcj5aZW5vZG88L3B1Ymxpc2hlcj4KICA8cHVibGljYXRpb25ZZWFyPjIwMTU8L3B1YmxpY2F0aW9uWWVhcj4KICA8c3ViamVjdHM+CiAgICA8c3ViamVjdD5vcmNpZDwvc3ViamVjdD4KICAgIDxzdWJqZWN0Pm9hdXRoMjwvc3ViamVjdD4KICAgIDxzdWJqZWN0Pm9tbmlhdXRoPC9zdWJqZWN0PgogICAgPHN1YmplY3Q+cnVieTwvc3ViamVjdD4KICAgIDxzdWJqZWN0PnJhaWxzPC9zdWJqZWN0PgogIDwvc3ViamVjdHM+CiAgPGNvbnRyaWJ1dG9ycz4KICAgIDxjb250cmlidXRvciBjb250cmlidXRvclR5cGU9IkZ1bmRlciI+CiAgICAgIDxjb250cmlidXRvck5hbWU+RXVyb3BlYW4gQ29tbWlzc2lvbjwvY29udHJpYnV0b3JOYW1lPgogICAgICA8bmFtZUlkZW50aWZpZXIgbmFtZUlkZW50aWZpZXJTY2hlbWU9ImluZm8iPmluZm86ZXUtcmVwby9ncmFudEFncmVlbWVudC9FQy9GUDcvMzEyNzg4PC9uYW1lSWRlbnRpZmllcj4KICAgIDwvY29udHJpYnV0b3I+CiAgPC9jb250cmlidXRvcnM+CiAgPGRhdGVzPgogICAgPGRhdGUgZGF0ZVR5cGU9Iklzc3VlZCI+MjAxNS0wNy0yNTwvZGF0ZT4KICA8L2RhdGVzPgogIDxyZXNvdXJjZVR5cGUgcmVzb3VyY2VUeXBlR2VuZXJhbD0iU29mdHdhcmUiLz4KICA8YWx0ZXJuYXRlSWRlbnRpZmllcnM+CiAgICA8YWx0ZXJuYXRlSWRlbnRpZmllciBhbHRlcm5hdGVJZGVudGlmaWVyVHlwZT0iVVJMIj5odHRwOi8vemVub2RvLm9yZy9yZWNvcmQvMjE0Mjk8L2FsdGVybmF0ZUlkZW50aWZpZXI+CiAgPC9hbHRlcm5hdGVJZGVudGlmaWVycz4KICA8cmVsYXRlZElkZW50aWZpZXJzPgogICAgPHJlbGF0ZWRJZGVudGlmaWVyIHJlbGF0aW9uVHlwZT0iSXNTdXBwbGVtZW50VG8iIHJlbGF0ZWRJZGVudGlmaWVyVHlwZT0iVVJMIj5odHRwczovL2dpdGh1Yi5jb20vZGF0YWNpdGUvb21uaWF1dGgtb3JjaWQvdHJlZS92LjEuMDwvcmVsYXRlZElkZW50aWZpZXI+CiAgPC9yZWxhdGVkSWRlbnRpZmllcnM+CiAgPHJpZ2h0c0xpc3Q+CiAgICA8cmlnaHRzIHJpZ2h0c1VSST0iaW5mbzpldS1yZXBvL3NlbWFudGljcy9vcGVuQWNjZXNzIj5PcGVuIEFjY2VzczwvcmlnaHRzPgogICAgPHJpZ2h0cyByaWdodHNVUkk9Imh0dHA6Ly93d3cub3BlbnNvdXJjZS5vcmcvbGljZW5zZXMvbWl0LWxpY2Vuc2UucGhwIj5NSVQgbGljZW5zZTwvcmlnaHRzPgogIDwvcmlnaHRzTGlzdD4KICA8ZGVzY3JpcHRpb25zPgogICAgPGRlc2NyaXB0aW9uIGRlc2NyaXB0aW9uVHlwZT0iQWJzdHJhY3QiPiZsdDtwJmd0O29tbmlhdXRoLW9yY2lkIGlzIGEgUnVieSBnZW0gdGhhdCBlbmFibGVzIGF1dGhlbnRpY2F0aW9uIHdpdGggdGhlIE9SQ0lEIHJlZ2lzdHJ5IHZpYSBvYXV0aDIuJmFtcDtuYnNwO29ubWlhdXRoLW9yY2lkIDEuMCB3YXMgcmVsZWFzZWQgb24gSnVseSAyNSwgMjAxNSB3aXRoIHRoZSBmb2xsb3dpbmcgY2hhbmdlczombHQ7L3AmZ3Q7CgombHQ7dWwmZ3Q7CgkmbHQ7bGkmZ3Q7Y2hhbmdlZCBkZWZhdWx0IHNjb3BlIHRvIGF1dGhlbnRpY2F0ZSwgYW5kIHVzZSB0aGUgcHVibGljIEFQSSBodHRwczovL3B1Yi5vcmNpZC5vcmcgYnkgZGVmYXVsdC4gVGhlc2Ugc2V0dGluZ3Mgd29yayBmb3Igbm9uLW1lbWJlcnMuJmx0Oy9saSZndDsKCSZsdDtsaSZndDthZGRlZCBuYW1lIGFuZCBlbWFpbCB0byB0aGUgaW5mbyBoYXNoIHJldHVybmVkIGJ5IG9tbmlhdXRoIChlbWFpbCB3aWxsIGJlIGVtcHR5IGluIGFsbW9zdCBhbGwgY2FzZXMpJmx0Oy9saSZndDsKCSZsdDtsaSZndDtjbGVhbmVkIHVwIGRvY3VtZW50YXRpb24gaW4gUkVBRE1FLm1kJmx0Oy9saSZndDsKJmx0Oy91bCZndDs8L2Rlc2NyaXB0aW9uPgogIDwvZGVzY3JpcHRpb25zPgo8L3Jlc291cmNlPgo=","datacentre":"CERN.ZENODO
-        - ZENODO - Research. Shared.","updated":"2015-07-25T16:32:04Z","prefix":"10.5281","doi":"10.5281/ZENODO.21429","publisher":"Zenodo","creator":["Gudmundur
-        A. Thorisson","Martin Fenner"],"title":["omniauth-orcid: v.1.0"],"description":["<p>omniauth-orcid
-        is a Ruby gem that enables authentication with the ORCID registry via oauth2.&nbsp;onmiauth-orcid
-        1.0 was released on July 25, 2015 with the following changes:</p>\n\n<ul>\n\t<li>changed
-        default scope to authenticate, and use the public API https://pub.orcid.org
-        by default. These settings work for non-members.</li>\n\t<li>added name and
-        email to the info hash returned by omniauth (email will be empty in almost
-        all cases)</li>\n\t<li>cleaned up documentation in README.md</li>\n</ul>"],"resourceTypeGeneral":"Software","relatedIdentifier":["IsSupplementTo:URL:https://github.com/datacite/omniauth-orcid/tree/v.1.0"],"publicationYear":"2015"}]}}
-
-'
-    http_version: 
-  recorded_at: Sun, 13 Mar 2016 06:42:40 GMT
+  recorded_at: Sun, 13 Mar 2016 09:19:14 GMT
 - request:
     method: post
-    uri: http://api.orcid.org/v1.2/0000-0003-1419-240x/orcid-works
+    uri: https://api.orcid.org/v1.2/0000-0003-1419-240x/orcid-works
     body:
       encoding: UTF-8
       string: |
@@ -1359,20 +1359,18 @@ http_interactions:
     headers:
       Server:
       - nginx/1.4.6 (Ubuntu)
+      Date:
+      - Sun, 13 Mar 2016 09:19:15 GMT
       Content-Type:
       - text/html;charset=utf-8
-      Date:
-      - Sun, 13 Mar 2016 06:42:40 GMT
       Transfer-Encoding:
       - chunked
-      Content-Language:
-      - en
+      Connection:
+      - keep-alive
       Access-Control-Allow-Origin:
       - "*"
-      Connection:
-      - close
-      Set-Cookie:
-      - X-Mapping-fjhppofk=3E288A8A9163A35D8B4A76F3AB560882; path=/
+      Content-Language:
+      - en
     body:
       encoding: UTF-8
       string: "<!DOCTYPE html><html><head><title>Apache Tomcat/8.0.21 - Error report</title><style
@@ -1389,17 +1387,17 @@ http_interactions:
         <u>Attempt to retrieve a OrcidOauth2TokenDetail with a null or empty token
         value</u></p><p><b>description</b> <u>The server encountered an internal error
         that prevented it from fulfilling this request.</u></p><p><b>exception</b></p><pre>java.lang.IllegalArgumentException:
-        Attempt to retrieve a OrcidOauth2TokenDetail with a null or empty token value\n\torg.springframework.util.Assert.hasText(Assert.java:162)\n\torg.orcid.persistence.dao.impl.OrcidOauth2TokenDetailDaoImpl.findNonDisabledByTokenValue(OrcidOauth2TokenDetailDaoImpl.java:56)\n\tsun.reflect.GeneratedMethodAccessor3100.invoke(Unknown
+        Attempt to retrieve a OrcidOauth2TokenDetail with a null or empty token value\n\torg.springframework.util.Assert.hasText(Assert.java:162)\n\torg.orcid.persistence.dao.impl.OrcidOauth2TokenDetailDaoImpl.findNonDisabledByTokenValue(OrcidOauth2TokenDetailDaoImpl.java:56)\n\tsun.reflect.GeneratedMethodAccessor4137.invoke(Unknown
         Source)\n\tsun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tjava.lang.reflect.Method.invoke(Method.java:498)\n\torg.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)\n\torg.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)\n\torg.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)\n\tcom.sun.proxy.$Proxy481.findNonDisabledByTokenValue(Unknown
-        Source)\n\torg.orcid.core.oauth.service.OrcidOauth2TokenDetailServiceImpl.findNonDisabledByTokenValue(OrcidOauth2TokenDetailServiceImpl.java:46)\n\tsun.reflect.GeneratedMethodAccessor3099.invoke(Unknown
+        Source)\n\torg.orcid.core.oauth.service.OrcidOauth2TokenDetailServiceImpl.findNonDisabledByTokenValue(OrcidOauth2TokenDetailServiceImpl.java:46)\n\tsun.reflect.GeneratedMethodAccessor4136.invoke(Unknown
         Source)\n\tsun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tjava.lang.reflect.Method.invoke(Method.java:498)\n\torg.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)\n\torg.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:201)\n\tcom.sun.proxy.$Proxy511.findNonDisabledByTokenValue(Unknown
-        Source)\n\torg.orcid.core.oauth.service.OrcidTokenStoreServiceImpl.readAccessToken(OrcidTokenStoreServiceImpl.java:124)\n\tsun.reflect.GeneratedMethodAccessor3817.invoke(Unknown
+        Source)\n\torg.orcid.core.oauth.service.OrcidTokenStoreServiceImpl.readAccessToken(OrcidTokenStoreServiceImpl.java:124)\n\tsun.reflect.GeneratedMethodAccessor4223.invoke(Unknown
         Source)\n\tsun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tjava.lang.reflect.Method.invoke(Method.java:498)\n\torg.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)\n\torg.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:201)\n\tcom.sun.proxy.$Proxy528.readAccessToken(Unknown
-        Source)\n\torg.orcid.core.oauth.service.OrcidRandomValueTokenServicesImpl.loadAuthentication(OrcidRandomValueTokenServicesImpl.java:183)\n\tsun.reflect.GeneratedMethodAccessor3816.invoke(Unknown
+        Source)\n\torg.orcid.core.oauth.service.OrcidRandomValueTokenServicesImpl.loadAuthentication(OrcidRandomValueTokenServicesImpl.java:183)\n\tsun.reflect.GeneratedMethodAccessor4222.invoke(Unknown
         Source)\n\tsun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tjava.lang.reflect.Method.invoke(Method.java:498)\n\torg.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)\n\torg.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)\n\torg.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:281)\n\torg.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)\n\torg.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)\n\tcom.sun.proxy.$Proxy529.loadAuthentication(Unknown
         Source)\n\torg.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager.authenticate(OAuth2AuthenticationManager.java:80)\n\torg.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter.doFilter(OAuth2AuthenticationProcessingFilter.java:117)\n\torg.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)\n\torg.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter.doFilter(AbstractPreAuthenticatedProcessingFilter.java:94)\n\torg.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)\n\torg.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:50)\n\torg.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\n\torg.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)\n\torg.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:87)\n\torg.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)\n\torg.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:192)\n\torg.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:160)\n\torg.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:344)\n\torg.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:261)\n\torg.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)\n\torg.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\n\torg.orcid.core.web.filters.CorsFilter.doFilterInternal(CorsFilter.java:49)\n\torg.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\n\torg.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:344)\n\torg.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:261)\n\torg.orcid.core.web.filters.ApiVersionFilter.doFilterInternal(ApiVersionFilter.java:52)\n\torg.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\n\torg.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:344)\n\torg.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:261)\n\torg.orcid.core.web.filters.JsonpCallbackFilter.doFilterInternal(JsonpCallbackFilter.java:70)\n\torg.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\n\torg.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:344)\n\torg.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:261)\n\torg.orcid.core.web.filters.AcceptFilter.doFilterInternal(AcceptFilter.java:60)\n\torg.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\n\torg.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:344)\n\torg.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:261)\n</pre><p><b>note</b>
         <u>The full stack trace of the root cause is available in the Apache Tomcat/8.0.21
         logs.</u></p><hr class=\"line\"><h3>Apache Tomcat/8.0.21</h3></body></html>"
     http_version: 
-  recorded_at: Sun, 13 Mar 2016 06:42:40 GMT
+  recorded_at: Sun, 13 Mar 2016 09:19:15 GMT
 recorded_with: VCR 2.9.3

@@ -71,15 +71,24 @@ class Claim < ActiveRecord::Base
     uuid
   end
 
-  def access_token
-    client = OAuth2::Client.new(ENV['ORCID_CLIENT_ID'],
-                                ENV['ORCID_CLIENT_SECRET'],
-                                site: ENV['ORCID_API_URL'])
-    OAuth2::AccessToken.new(client, user.authentication_token)
+  def oauth_client
+    OAuth2::Client.new(ENV['ORCID_CLIENT_ID'],
+                       ENV['ORCID_CLIENT_SECRET'],
+                       site: ENV['ORCID_API_URL'])
+  end
+
+  def user_token
+    if user.present?
+      OAuth2::AccessToken.new(oauth_client, user.authentication_token)
+    end
+  end
+
+  def application_token
+    @application_token ||= oauth_client.client_credentials.get_token(scope: "/read-public")
   end
 
   def oauth_client_get
-    response = access_token.get "#{ENV['ORCID_API_URL']}/v#{ORCID_VERSION}/#{user.uid}/orcid-works" do |get|
+    response = application_token.get "#{ENV['ORCID_API_URL']}/v#{ORCID_VERSION}/#{user.uid}/orcid-works" do |get|
       get.headers['Accept'] = 'application/json'
     end
 
@@ -91,7 +100,7 @@ class Claim < ActiveRecord::Base
   end
 
   def oauth_client_post(data)
-    response = access_token.post("#{ENV['ORCID_API_URL']}/v#{ORCID_VERSION}/#{user.uid}/orcid-works") do |post|
+    response = user_token.post("#{ENV['ORCID_API_URL']}/v#{ORCID_VERSION}/#{user.uid}/orcid-works") do |post|
       post.headers['Content-Type'] = 'application/orcid+xml'
       post.body = data
     end

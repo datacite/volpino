@@ -19,7 +19,7 @@ http_interactions:
       Server:
       - nginx/1.1.19
       Date:
-      - Wed, 09 Mar 2016 10:42:24 GMT
+      - Sun, 13 Mar 2016 09:20:15 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Connection:
@@ -42,10 +42,10 @@ http_interactions:
 
 '
     http_version: 
-  recorded_at: Wed, 09 Mar 2016 10:41:28 GMT
+  recorded_at: Sun, 13 Mar 2016 09:19:13 GMT
 - request:
     method: post
-    uri: http://api.orcid.org/v1.2/0000-0003-1419-240x/orcid-works
+    uri: https://api.orcid.org/v1.2/0000-0003-1419-240x/orcid-works
     body:
       encoding: UTF-8
       string: |
@@ -106,20 +106,18 @@ http_interactions:
     headers:
       Server:
       - nginx/1.4.6 (Ubuntu)
+      Date:
+      - Sun, 13 Mar 2016 09:19:14 GMT
       Content-Type:
       - text/html;charset=utf-8
-      Date:
-      - Wed, 09 Mar 2016 10:41:29 GMT
       Transfer-Encoding:
       - chunked
-      Content-Language:
-      - en
+      Connection:
+      - keep-alive
       Access-Control-Allow-Origin:
       - "*"
-      Connection:
-      - close
-      Set-Cookie:
-      - X-Mapping-fjhppofk=D459F23F5133FB71CC7F8622664A24B4; path=/
+      Content-Language:
+      - en
     body:
       encoding: UTF-8
       string: "<!DOCTYPE html><html><head><title>Apache Tomcat/8.0.21 - Error report</title><style
@@ -136,17 +134,17 @@ http_interactions:
         <u>Attempt to retrieve a OrcidOauth2TokenDetail with a null or empty token
         value</u></p><p><b>description</b> <u>The server encountered an internal error
         that prevented it from fulfilling this request.</u></p><p><b>exception</b></p><pre>java.lang.IllegalArgumentException:
-        Attempt to retrieve a OrcidOauth2TokenDetail with a null or empty token value\n\torg.springframework.util.Assert.hasText(Assert.java:162)\n\torg.orcid.persistence.dao.impl.OrcidOauth2TokenDetailDaoImpl.findNonDisabledByTokenValue(OrcidOauth2TokenDetailDaoImpl.java:56)\n\tsun.reflect.GeneratedMethodAccessor3734.invoke(Unknown
+        Attempt to retrieve a OrcidOauth2TokenDetail with a null or empty token value\n\torg.springframework.util.Assert.hasText(Assert.java:162)\n\torg.orcid.persistence.dao.impl.OrcidOauth2TokenDetailDaoImpl.findNonDisabledByTokenValue(OrcidOauth2TokenDetailDaoImpl.java:56)\n\tsun.reflect.GeneratedMethodAccessor4137.invoke(Unknown
         Source)\n\tsun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tjava.lang.reflect.Method.invoke(Method.java:498)\n\torg.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)\n\torg.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)\n\torg.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)\n\tcom.sun.proxy.$Proxy481.findNonDisabledByTokenValue(Unknown
-        Source)\n\torg.orcid.core.oauth.service.OrcidOauth2TokenDetailServiceImpl.findNonDisabledByTokenValue(OrcidOauth2TokenDetailServiceImpl.java:46)\n\tsun.reflect.GeneratedMethodAccessor3733.invoke(Unknown
+        Source)\n\torg.orcid.core.oauth.service.OrcidOauth2TokenDetailServiceImpl.findNonDisabledByTokenValue(OrcidOauth2TokenDetailServiceImpl.java:46)\n\tsun.reflect.GeneratedMethodAccessor4136.invoke(Unknown
         Source)\n\tsun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tjava.lang.reflect.Method.invoke(Method.java:498)\n\torg.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)\n\torg.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:201)\n\tcom.sun.proxy.$Proxy511.findNonDisabledByTokenValue(Unknown
-        Source)\n\torg.orcid.core.oauth.service.OrcidTokenStoreServiceImpl.readAccessToken(OrcidTokenStoreServiceImpl.java:124)\n\tsun.reflect.GeneratedMethodAccessor3951.invoke(Unknown
+        Source)\n\torg.orcid.core.oauth.service.OrcidTokenStoreServiceImpl.readAccessToken(OrcidTokenStoreServiceImpl.java:124)\n\tsun.reflect.GeneratedMethodAccessor4223.invoke(Unknown
         Source)\n\tsun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tjava.lang.reflect.Method.invoke(Method.java:498)\n\torg.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)\n\torg.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:201)\n\tcom.sun.proxy.$Proxy528.readAccessToken(Unknown
-        Source)\n\torg.orcid.core.oauth.service.OrcidRandomValueTokenServicesImpl.loadAuthentication(OrcidRandomValueTokenServicesImpl.java:183)\n\tsun.reflect.GeneratedMethodAccessor3950.invoke(Unknown
+        Source)\n\torg.orcid.core.oauth.service.OrcidRandomValueTokenServicesImpl.loadAuthentication(OrcidRandomValueTokenServicesImpl.java:183)\n\tsun.reflect.GeneratedMethodAccessor4222.invoke(Unknown
         Source)\n\tsun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tjava.lang.reflect.Method.invoke(Method.java:498)\n\torg.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)\n\torg.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)\n\torg.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:281)\n\torg.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)\n\torg.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)\n\tcom.sun.proxy.$Proxy529.loadAuthentication(Unknown
         Source)\n\torg.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager.authenticate(OAuth2AuthenticationManager.java:80)\n\torg.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter.doFilter(OAuth2AuthenticationProcessingFilter.java:117)\n\torg.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)\n\torg.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter.doFilter(AbstractPreAuthenticatedProcessingFilter.java:94)\n\torg.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)\n\torg.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:50)\n\torg.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\n\torg.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)\n\torg.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:87)\n\torg.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)\n\torg.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:192)\n\torg.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:160)\n\torg.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:344)\n\torg.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:261)\n\torg.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)\n\torg.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\n\torg.orcid.core.web.filters.CorsFilter.doFilterInternal(CorsFilter.java:49)\n\torg.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\n\torg.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:344)\n\torg.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:261)\n\torg.orcid.core.web.filters.ApiVersionFilter.doFilterInternal(ApiVersionFilter.java:52)\n\torg.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\n\torg.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:344)\n\torg.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:261)\n\torg.orcid.core.web.filters.JsonpCallbackFilter.doFilterInternal(JsonpCallbackFilter.java:70)\n\torg.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\n\torg.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:344)\n\torg.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:261)\n\torg.orcid.core.web.filters.AcceptFilter.doFilterInternal(AcceptFilter.java:60)\n\torg.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\n\torg.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:344)\n\torg.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:261)\n</pre><p><b>note</b>
         <u>The full stack trace of the root cause is available in the Apache Tomcat/8.0.21
         logs.</u></p><hr class=\"line\"><h3>Apache Tomcat/8.0.21</h3></body></html>"
     http_version: 
-  recorded_at: Wed, 09 Mar 2016 10:41:29 GMT
+  recorded_at: Sun, 13 Mar 2016 09:19:14 GMT
 recorded_with: VCR 2.9.3

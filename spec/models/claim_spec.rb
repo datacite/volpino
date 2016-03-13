@@ -13,9 +13,13 @@ describe Claim, type: :model, vcr: true do
     let(:user) { FactoryGirl.create(:valid_user) }
     subject { FactoryGirl.create(:claim, user: user, orcid: "0000-0003-1419-2405", doi: "10.5281/ZENODO.21429") }
 
-    describe 'access_token' do
-      it 'should return the access_token' do
-        expect(subject.access_token.client.site).to eq("http://api.orcid.org")
+    describe 'token' do
+      it 'should return the user_token' do
+        expect(subject.user_token.client.site).to eq("https://api.orcid.org")
+      end
+
+      it 'should return the application_token' do
+        expect(subject.application_token.client.site).to eq("https://api.orcid.org")
       end
     end
 
@@ -26,7 +30,7 @@ describe Claim, type: :model, vcr: true do
                                  .fetch("orcid-activities", {})
                                  .fetch("orcid-works", {})
                                  .fetch("orcid-work", [])
-        expect(claims.length).to eq(94)
+        expect(claims.length).to eq(111)
         claim = claims.first
         expect(claim).to eq("put-code"=>"11649252", "work-title"=>{"title"=>{"value"=>"What Can Article-Level Metrics Do for You?"}, "subtitle"=>{"value"=>"PLoS Biology"}, "translated-title"=>nil}, "journal-title"=>nil, "short-description"=>nil, "work-citation"=>{"work-citation-type"=>"BIBTEX", "citation"=>"@article{Fenner_2013, title={What Can Article-Level Metrics Do for You?}, volume={11}, url={http://dx.doi.org/10.1371/journal.pbio.1001687}, DOI={10.1371/journal.pbio.1001687}, number={10}, journal={PLoS Biology}, publisher={Public Library of Science}, author={Fenner, Martin}, year={2013}, month={Oct}, pages={e1001687}}"}, "work-type"=>"JOURNAL_ARTICLE", "publication-date"=>{"year"=>{"value"=>"2013"}, "month"=>nil, "day"=>nil, "media-type"=>nil}, "work-external-identifiers"=>{"work-external-identifier"=>[{"work-external-identifier-type"=>"DOI", "work-external-identifier-id"=>{"value"=>"10.1371/journal.pbio.1001687"}}, {"work-external-identifier-type"=>"ISSN", "work-external-identifier-id"=>{"value"=>"1545-7885"}}], "scope"=>nil}, "url"=>nil, "work-contributors"=>nil, "work-source"=>nil, "source"=>{"source-orcid"=>{"value"=>nil, "uri"=>"http://orcid.org/0000-0002-3054-1567", "path"=>"0000-0002-3054-1567", "host"=>"orcid.org"}, "source-client-id"=>nil, "source-name"=>{"value"=>"CrossRef Metadata Search"}, "source-date"=>{"value"=>1390657436308}}, "created-date"=>{"value"=>1390657436308}, "last-modified-date"=>{"value"=>1437425776076}, "language-code"=>nil, "country"=>nil, "visibility"=>"PUBLIC")
       end
