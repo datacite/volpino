@@ -35,33 +35,33 @@ http_interactions:
       Cache-Control:
       - max-age=300
       X-Github-Request-Id:
-      - B91F1114:3EEA:4F12F46:56E50BDE
+      - B91F1114:0FB6:3BFE30C:56E50913
       Content-Length:
       - '14182'
       Accept-Ranges:
       - bytes
       Date:
-      - Sun, 13 Mar 2016 06:42:38 GMT
+      - Sun, 13 Mar 2016 06:35:41 GMT
       Via:
       - 1.1 varnish
       Connection:
       - keep-alive
       X-Served-By:
-      - cache-fra1228-FRA
+      - cache-fra1240-FRA
       X-Cache:
-      - MISS
+      - HIT
       X-Cache-Hits:
-      - '0'
+      - '1'
       Vary:
       - Authorization,Accept-Encoding
       Access-Control-Allow-Origin:
       - "*"
       X-Fastly-Request-Id:
-      - 0e2d348065f1cf242fa8562f47bfc9dc330312c8
+      - 6e10960d25bc2279810f54ffbfce2f19217a517c
       Expires:
-      - Sun, 13 Mar 2016 06:47:38 GMT
+      - Sun, 13 Mar 2016 06:40:41 GMT
       Source-Age:
-      - '0'
+      - '296'
     body:
       encoding: UTF-8
       string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"\n\txmlns:sch=\"http://purl.oclc.org/dsdl/schematron\"
@@ -1252,130 +1252,5 @@ http_interactions:
         base=\"orcid:non-empty-string\">\n\t\t\t\t<xs:attribute name=\"language-code\"
         type=\"orcid:language-code\" use=\"required\"/>\n\t\t\t</xs:extension>\n\t\t</xs:simpleContent>\n\t</xs:complexType>\n</xs:schema>\n"
     http_version: 
-  recorded_at: Sun, 13 Mar 2016 06:42:38 GMT
-- request:
-    method: get
-    uri: http://search.datacite.org/api?fl=doi,creator,title,publisher,publicationYear,resourceTypeGeneral,description,datacentre,datacentre_symbol,prefix,relatedIdentifier,xml,updated&q=doi:10.5281/ZENODO.21429&rows=1&wt=json
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Maremma - http://profiles.local
-      Accept:
-      - application/json
-  response:
-    status:
-      code: 200
-      message: ''
-    headers:
-      Server:
-      - nginx/1.1.19
-      Date:
-      - Sun, 13 Mar 2016 06:43:40 GMT
-      Content-Type:
-      - application/json;charset=UTF-8
-      Connection:
-      - keep-alive
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Allow-Headers:
-      - Content-Type,Accept,Accept-Encoding,Origin,User-Agent,Cache-Control,Keep-Alive
-    body:
-      encoding: UTF-8
-      string: '{"responseHeader":{"status":0,"QTime":0},"response":{"numFound":1,"start":0,"docs":[{"datacentre_symbol":"CERN.ZENODO","xml":"PHJlc291cmNlIHhtbG5zPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyBodHRwOi8vc2NoZW1hLmRhdGFjaXRlLm9yZy9tZXRhL2tlcm5lbC0zL21ldGFkYXRhLnhzZCI+CiAgPGlkZW50aWZpZXIgaWRlbnRpZmllclR5cGU9IkRPSSI+MTAuNTI4MS96ZW5vZG8uMjE0Mjk8L2lkZW50aWZpZXI+CiAgPGNyZWF0b3JzPgogICAgPGNyZWF0b3I+CiAgICAgIDxjcmVhdG9yTmFtZT5HdWRtdW5kdXIgQS4gVGhvcmlzc29uPC9jcmVhdG9yTmFtZT4KICAgICAgPGFmZmlsaWF0aW9uPk9SQ0lEIEVVPC9hZmZpbGlhdGlvbj4KICAgIDwvY3JlYXRvcj4KICAgIDxjcmVhdG9yPgogICAgICA8Y3JlYXRvck5hbWU+TWFydGluIEZlbm5lcjwvY3JlYXRvck5hbWU+CiAgICAgIDxhZmZpbGlhdGlvbj5PUkNJRCBFVTwvYWZmaWxpYXRpb24+CiAgICA8L2NyZWF0b3I+CiAgPC9jcmVhdG9ycz4KICA8dGl0bGVzPgogICAgPHRpdGxlPm9tbmlhdXRoLW9yY2lkOiB2LjEuMDwvdGl0bGU+CiAgPC90aXRsZXM+CiAgPHB1Ymxpc2hlcj5aZW5vZG88L3B1Ymxpc2hlcj4KICA8cHVibGljYXRpb25ZZWFyPjIwMTU8L3B1YmxpY2F0aW9uWWVhcj4KICA8c3ViamVjdHM+CiAgICA8c3ViamVjdD5vcmNpZDwvc3ViamVjdD4KICAgIDxzdWJqZWN0Pm9hdXRoMjwvc3ViamVjdD4KICAgIDxzdWJqZWN0Pm9tbmlhdXRoPC9zdWJqZWN0PgogICAgPHN1YmplY3Q+cnVieTwvc3ViamVjdD4KICAgIDxzdWJqZWN0PnJhaWxzPC9zdWJqZWN0PgogIDwvc3ViamVjdHM+CiAgPGNvbnRyaWJ1dG9ycz4KICAgIDxjb250cmlidXRvciBjb250cmlidXRvclR5cGU9IkZ1bmRlciI+CiAgICAgIDxjb250cmlidXRvck5hbWU+RXVyb3BlYW4gQ29tbWlzc2lvbjwvY29udHJpYnV0b3JOYW1lPgogICAgICA8bmFtZUlkZW50aWZpZXIgbmFtZUlkZW50aWZpZXJTY2hlbWU9ImluZm8iPmluZm86ZXUtcmVwby9ncmFudEFncmVlbWVudC9FQy9GUDcvMzEyNzg4PC9uYW1lSWRlbnRpZmllcj4KICAgIDwvY29udHJpYnV0b3I+CiAgPC9jb250cmlidXRvcnM+CiAgPGRhdGVzPgogICAgPGRhdGUgZGF0ZVR5cGU9Iklzc3VlZCI+MjAxNS0wNy0yNTwvZGF0ZT4KICA8L2RhdGVzPgogIDxyZXNvdXJjZVR5cGUgcmVzb3VyY2VUeXBlR2VuZXJhbD0iU29mdHdhcmUiLz4KICA8YWx0ZXJuYXRlSWRlbnRpZmllcnM+CiAgICA8YWx0ZXJuYXRlSWRlbnRpZmllciBhbHRlcm5hdGVJZGVudGlmaWVyVHlwZT0iVVJMIj5odHRwOi8vemVub2RvLm9yZy9yZWNvcmQvMjE0Mjk8L2FsdGVybmF0ZUlkZW50aWZpZXI+CiAgPC9hbHRlcm5hdGVJZGVudGlmaWVycz4KICA8cmVsYXRlZElkZW50aWZpZXJzPgogICAgPHJlbGF0ZWRJZGVudGlmaWVyIHJlbGF0aW9uVHlwZT0iSXNTdXBwbGVtZW50VG8iIHJlbGF0ZWRJZGVudGlmaWVyVHlwZT0iVVJMIj5odHRwczovL2dpdGh1Yi5jb20vZGF0YWNpdGUvb21uaWF1dGgtb3JjaWQvdHJlZS92LjEuMDwvcmVsYXRlZElkZW50aWZpZXI+CiAgPC9yZWxhdGVkSWRlbnRpZmllcnM+CiAgPHJpZ2h0c0xpc3Q+CiAgICA8cmlnaHRzIHJpZ2h0c1VSST0iaW5mbzpldS1yZXBvL3NlbWFudGljcy9vcGVuQWNjZXNzIj5PcGVuIEFjY2VzczwvcmlnaHRzPgogICAgPHJpZ2h0cyByaWdodHNVUkk9Imh0dHA6Ly93d3cub3BlbnNvdXJjZS5vcmcvbGljZW5zZXMvbWl0LWxpY2Vuc2UucGhwIj5NSVQgbGljZW5zZTwvcmlnaHRzPgogIDwvcmlnaHRzTGlzdD4KICA8ZGVzY3JpcHRpb25zPgogICAgPGRlc2NyaXB0aW9uIGRlc2NyaXB0aW9uVHlwZT0iQWJzdHJhY3QiPiZsdDtwJmd0O29tbmlhdXRoLW9yY2lkIGlzIGEgUnVieSBnZW0gdGhhdCBlbmFibGVzIGF1dGhlbnRpY2F0aW9uIHdpdGggdGhlIE9SQ0lEIHJlZ2lzdHJ5IHZpYSBvYXV0aDIuJmFtcDtuYnNwO29ubWlhdXRoLW9yY2lkIDEuMCB3YXMgcmVsZWFzZWQgb24gSnVseSAyNSwgMjAxNSB3aXRoIHRoZSBmb2xsb3dpbmcgY2hhbmdlczombHQ7L3AmZ3Q7CgombHQ7dWwmZ3Q7CgkmbHQ7bGkmZ3Q7Y2hhbmdlZCBkZWZhdWx0IHNjb3BlIHRvIGF1dGhlbnRpY2F0ZSwgYW5kIHVzZSB0aGUgcHVibGljIEFQSSBodHRwczovL3B1Yi5vcmNpZC5vcmcgYnkgZGVmYXVsdC4gVGhlc2Ugc2V0dGluZ3Mgd29yayBmb3Igbm9uLW1lbWJlcnMuJmx0Oy9saSZndDsKCSZsdDtsaSZndDthZGRlZCBuYW1lIGFuZCBlbWFpbCB0byB0aGUgaW5mbyBoYXNoIHJldHVybmVkIGJ5IG9tbmlhdXRoIChlbWFpbCB3aWxsIGJlIGVtcHR5IGluIGFsbW9zdCBhbGwgY2FzZXMpJmx0Oy9saSZndDsKCSZsdDtsaSZndDtjbGVhbmVkIHVwIGRvY3VtZW50YXRpb24gaW4gUkVBRE1FLm1kJmx0Oy9saSZndDsKJmx0Oy91bCZndDs8L2Rlc2NyaXB0aW9uPgogIDwvZGVzY3JpcHRpb25zPgo8L3Jlc291cmNlPgo=","datacentre":"CERN.ZENODO
-        - ZENODO - Research. Shared.","updated":"2015-07-25T16:32:04Z","prefix":"10.5281","doi":"10.5281/ZENODO.21429","publisher":"Zenodo","creator":["Gudmundur
-        A. Thorisson","Martin Fenner"],"title":["omniauth-orcid: v.1.0"],"description":["<p>omniauth-orcid
-        is a Ruby gem that enables authentication with the ORCID registry via oauth2.&nbsp;onmiauth-orcid
-        1.0 was released on July 25, 2015 with the following changes:</p>\n\n<ul>\n\t<li>changed
-        default scope to authenticate, and use the public API https://pub.orcid.org
-        by default. These settings work for non-members.</li>\n\t<li>added name and
-        email to the info hash returned by omniauth (email will be empty in almost
-        all cases)</li>\n\t<li>cleaned up documentation in README.md</li>\n</ul>"],"resourceTypeGeneral":"Software","relatedIdentifier":["IsSupplementTo:URL:https://github.com/datacite/omniauth-orcid/tree/v.1.0"],"publicationYear":"2015"}]}}
-
-'
-    http_version: 
-  recorded_at: Sun, 13 Mar 2016 06:42:39 GMT
-- request:
-    method: post
-    uri: http://api.orcid.org/v1.2/0000-0003-1419-2405/orcid-works
-    body:
-      encoding: UTF-8
-      string: |
-        <?xml version="1.0"?>
-        <orcid-message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.orcid.org/ns/orcid" xsi:schemaLocation="http://www.orcid.org/ns/orcid https://raw.github.com/ORCID/ORCID-Source/master/orcid-model/src/main/resources/orcid-message-1.2.xsd">
-          <message-version>1.2</message-version>
-          <orcid-profile>
-            <orcid-activities>
-              <orcid-works>
-                <orcid-work>
-                  <work-title>
-                    <title>omniauth-orcid: v.1.0</title>
-                  </work-title>
-                  <journal-title>Zenodo</journal-title>
-                  <short-description>["&lt;p&gt;omniauth-orcid is a Ruby gem that enables authentication with the ORCID registry via oauth2.&amp;nbsp;onmiauth-orcid 1.0 was released on July 25, 2015 with the following changes:&lt;/p&gt;\n\n&lt;ul&gt;\n\t&lt;li&gt;changed default scope to authenticate, and use the public API https://pub.orcid.org by default. These settings work for non-members.&lt;/li&gt;\n\t&lt;li&gt;added name and email to the info hash returned by omniauth (email will be empty in almost all cases)&lt;/li&gt;\n\t&lt;li&gt;cleaned up documentation in README.md&lt;/li&gt;\n&lt;/ul&gt;"]</short-description>
-                  <work-citation>
-                    <work-citation-type>bibtex</work-citation-type>
-                    <citation>@data{http://doi.org/10.5281/ZENODO.21429, author = {Thorisson, Gudmundur A. and Fenner, Martin}, title = {omniauth-orcid: v.1.0}, publisher = {Zenodo}, doi = {10.5281/ZENODO.21429}, url = {http://doi.org/10.5281/ZENODO.21429}, year = {2015}}</citation>
-                  </work-citation>
-                  <work-type>other</work-type>
-                  <publication-date>
-                    <year>2015</year>
-                  </publication-date>
-                  <work-external-identifiers>
-                    <work-external-identifier>
-                      <work-external-identifier-type>doi</work-external-identifier-type>
-                      <work-external-identifier-id>10.5281/ZENODO.21429</work-external-identifier-id>
-                    </work-external-identifier>
-                  </work-external-identifiers>
-                  <work-contributors>
-                    <contributor>
-                      <credit-name>Gudmundur A. Thorisson</credit-name>
-                    </contributor>
-                    <contributor>
-                      <credit-name>Martin Fenner</credit-name>
-                    </contributor>
-                  </work-contributors>
-                </orcid-work>
-              </orcid-works>
-            </orcid-activities>
-          </orcid-profile>
-        </orcid-message>
-    headers:
-      User-Agent:
-      - Faraday v0.9.2
-      Authorization:
-      - Bearer <ORCID_AUTHENTICATION_TOKEN>
-      Content-Type:
-      - application/orcid+xml
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 201
-      message: Created
-    headers:
-      Server:
-      - nginx/1.4.6 (Ubuntu)
-      Content-Type:
-      - application/orcid+xml; qs=3;charset=UTF-8
-      Date:
-      - Sun, 13 Mar 2016 06:42:40 GMT
-      Location:
-      - http://api.orcid.org/0000-0003-1419-2405/orcid-works
-      Access-Control-Allow-Origin:
-      - "*"
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - X-Mapping-fjhppofk=D459F23F5133FB71CC7F8622664A24B4; path=/
-      Content-Length:
-      - '0'
-    body:
-      encoding: UTF-8
-      string: ''
-    http_version: 
-  recorded_at: Sun, 13 Mar 2016 06:42:40 GMT
+  recorded_at: Sun, 13 Mar 2016 06:35:41 GMT
 recorded_with: VCR 2.9.3

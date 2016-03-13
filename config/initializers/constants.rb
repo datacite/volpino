@@ -19,6 +19,9 @@ QUEUE_OPTIONS = ["high", "default", "low"]
 # Version of ORCID API
 ORCID_VERSION = '1.2'
 
+# ORCID schema
+ORCID_SCHEMA = 'https://raw.githubusercontent.com/ORCID/ORCID-Source/master/orcid-model/src/main/resources/orcid-message-1.2.xsd'
+
 # CrossRef types from http://api.crossref.org/types
 CROSSREF_TYPE_TRANSLATIONS = {
   "proceedings" => nil,

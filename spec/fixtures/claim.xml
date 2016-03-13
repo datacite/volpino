@@ -9,7 +9,6 @@
             <title>Data from: Data reuse and the open data citation advantage</title>
           </work-title>
           <journal-title>Dryad Digital Repository</journal-title>
-          <short-description/>
           <work-citation>
             <work-citation-type>bibtex</work-citation-type>
             <citation>@data{http://doi.org/10.5061/DRYAD.781PV, author = {Piwowar, Heather A. and Vision, Todd J.}, title = {Data from: Data reuse and the open data citation advantage}, publisher = {Dryad Digital Repository}, doi = {10.5061/DRYAD.781PV}, url = {http://doi.org/10.5061/DRYAD.781PV}, year = {2013}}</citation>

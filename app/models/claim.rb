@@ -133,14 +133,24 @@ class Claim < ActiveRecord::Base
     return {} if source_id == "orcid_update" && user && !user.auto_update
 
     # missing data raise errors
-    return {} if user.nil?
     return { "errors" => [{ "title" => "Missing data" }] } if data.nil?
+
+    # validate data
+    return { "errors" => validation_errors.map { |error| { "title" => error } }} if validation_errors.present?
 
     oauth_client_post(data)
   end
 
   def create_uuid
     write_attribute(:uuid, SecureRandom.uuid) if uuid.blank?
+  end
+
+  def schema
+    Nokogiri::XML::Schema(open(ORCID_SCHEMA))
+  end
+
+  def validation_errors
+    @validation_errors ||= schema.validate(Nokogiri::XML(data)).map { |error| error.to_s }
   end
 
   def metadata
@@ -182,6 +192,8 @@ class Claim < ActiveRecord::Base
   end
 
   def citation
+    return nil unless contributors && title && container_title && publication_date
+
     url = "http://doi.org/#{doi}"
 
     # generate citation in bibtex format. Don't use DOI content negotiation as
@@ -207,7 +219,8 @@ class Claim < ActiveRecord::Base
   end
 
   def data
-    return nil unless doi && contributors && title && publication_date
+    # check for DataCite required metadata
+    return nil unless doi && contributors && title && container_title && publication_date
 
     Nokogiri::XML::Builder.new do |xml|
       xml.send(:'orcid-message', root_attributes) do
@@ -246,10 +259,14 @@ class Claim < ActiveRecord::Base
   end
 
   def insert_description(xml)
+    return nil unless description.present?
+
     xml.send(:'short-description', description)
   end
 
   def insert_citation(xml)
+    return nil unless citation.present?
+
     xml.send(:'work-citation') do
       xml.send(:'work-citation-type', 'bibtex')
       xml.citation(citation)
@@ -276,14 +293,16 @@ class Claim < ActiveRecord::Base
     end
   end
 
-  def insert_id(xml, type, value)
+  def insert_id(xml, id_type, value)
     xml.send(:'work-external-identifier') do
-      xml.send(:'work-external-identifier-type', type)
+      xml.send(:'work-external-identifier-type', id_type)
       xml.send(:'work-external-identifier-id', value)
     end
   end
 
   def insert_contributors(xml)
+    return nil unless contributors.present?
+
     xml.send(:'work-contributors') do
       contributors.each do |contributor|
         xml.contributor do

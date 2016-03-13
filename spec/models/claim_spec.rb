@@ -66,6 +66,14 @@ describe Claim, type: :model, vcr: true do
       end
     end
 
+    describe 'collect_data invalid data' do
+      it 'it errors' do
+        allow(subject).to receive(:metadata) { {} }
+        response = subject.collect_data
+        expect(response["errors"]).to eq([{"title"=>"Missing data"}])
+      end
+    end
+
     describe 'collect_data no permission for auto-update' do
       let(:user) { FactoryGirl.create(:valid_user, auto_update: false) }
       subject { FactoryGirl.create(:claim, user: user, orcid: "0000-0003-1419-2405", doi: "10.5281/ZENODO.21429", source_id: "orcid_update") }
@@ -83,6 +91,21 @@ describe Claim, type: :model, vcr: true do
         response = subject.collect_data
         expect(response["errors"].first["title"]).to include("Attempt to retrieve a OrcidOauth2TokenDetail with a null or empty token value")
       end
+    end
+  end
+
+  describe 'schema' do
+    it 'exists' do
+      expect(subject.schema.errors).to be_empty
+    end
+
+    it 'validates data' do
+      expect(subject.validation_errors).to be_empty
+    end
+
+    it 'validates data with errors' do
+      allow(subject).to receive(:metadata) { {} }
+      expect(subject.validation_errors).to eq(["The document has no document element."])
     end
   end
 
