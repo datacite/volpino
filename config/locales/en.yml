@@ -13,6 +13,7 @@ en:
   time:
     formats:
       short: "%d %b %H:%M UTC"
+      medium: "%d %b %Y %H:%M UTC"
       long: "%B %d, %Y %H:%M UTC"
       long_date: "%B %d, %Y"
   will_paginate:
