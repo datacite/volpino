@@ -3,7 +3,7 @@ require "rails_helper"
 describe "/api/v1/claims", :type => :api do
   before(:each) { allow(Time.zone).to receive(:now).and_return(Time.mktime(2015, 4, 8)) }
 
-  let(:claim) { FactoryGirl.build(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58") }
+  let(:claim) { FactoryGirl.build(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: "0000-0002-1825-0097") }
   let(:error) { { "errors" => [{"status"=>"401", "title"=>"You are not authorized to access this page."}] } }
   let(:success) { { "orcid"=>claim.orcid,
                     "doi"=>claim.doi,

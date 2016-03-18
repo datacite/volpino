@@ -62,6 +62,8 @@ class Api::V1::ClaimsController < Api::BaseController
     else
       render json: { errors: @claim.errors.to_a.map { |error| { status: 400, title: error } }}, status: :bad_request
     end
+  rescue ActiveRecord::RecordNotUnique
+    render json: @claim, :status => :ok
   end
 
   def destroy
