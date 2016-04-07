@@ -48,7 +48,7 @@ module Authorable
     end
 
     def get_credit_name(author)
-      [author['given'], author['family']].compact.join(' ')
+      [author['given'], author['family']].compact.join(' ').presence || author['literal']
     end
 
     def get_full_name(author)

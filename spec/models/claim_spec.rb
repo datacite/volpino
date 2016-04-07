@@ -113,8 +113,22 @@ describe Claim, type: :model, vcr: true do
     end
   end
 
-  it 'contributors' do
-    expect(subject.contributors).to eq([{:orcid=>nil, :credit_name=>"Heather A. Piwowar", :role=>nil}, {:orcid=>nil, :credit_name=>"Todd J. Vision", :role=>nil}])
+  describe 'contributors' do
+    let(:user) { FactoryGirl.create(:valid_user) }
+
+    it 'valid' do
+      expect(subject.contributors).to eq([{:orcid=>nil, :credit_name=>"Heather A. Piwowar", :role=>nil}, {:orcid=>nil, :credit_name=>"Todd J. Vision", :role=>nil}])
+    end
+
+    it 'literal' do
+      subject = FactoryGirl.create(:claim, user: user, orcid: "0000-0003-3235-5933", doi: "10.1594/PANGAEA.745083")
+      expect(subject.contributors).to eq([{:orcid=>nil, :credit_name=>"EPOCA Arctic experiment 2009 team", :role=>nil}])
+    end
+
+    it 'multiple titles' do
+      subject = FactoryGirl.create(:claim, user: user, orcid: "0000-0003-0811-2536", doi: "10.6084/M9.FIGSHARE.1537331.V1")
+      expect(subject.contributors).to eq([{:orcid=>nil, :credit_name=>"Iosr journals", :role=>nil}, {:orcid=>nil, :credit_name=>"Dr. Rohit Arora, MDS", :role=>nil}, {:orcid=>nil, :credit_name=>"Shalya Raj*.MDS", :role=>nil}])
+    end
   end
 
   it 'publication_date' do

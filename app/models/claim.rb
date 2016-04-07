@@ -3,6 +3,9 @@ require 'bibtex'
 require 'oauth2'
 
 class Claim < ActiveRecord::Base
+  # include view helpers
+  include ActionView::Helpers::TextHelper
+
   # include helper module for DOI resolution
   include Resolvable
 
@@ -193,7 +196,7 @@ class Claim < ActiveRecord::Base
   end
 
   def description
-    metadata.fetch('description', nil)
+    Array(metadata.fetch('description', nil)).first
   end
 
   def type
@@ -270,7 +273,7 @@ class Claim < ActiveRecord::Base
   def insert_description(xml)
     return nil unless description.present?
 
-    xml.send(:'short-description', description)
+    xml.send(:'short-description', truncate(description, length: 2500, separator: ' '))
   end
 
   def insert_citation(xml)
