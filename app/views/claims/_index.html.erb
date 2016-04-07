@@ -10,49 +10,47 @@
 </div>
 
 <div class="row">
-  <div class='col-md-9'>
+  <div class='col-md-9' id="content">
     <% if @claims.size > 0 %>
-      <div class="panel-group" id="claim">
-        <% @claims.each do |claim| %>
-          <div class="panel panel-default">
-            <% if claim.claimed_at.present? %>
-              <div class="panel-heading panel-title panel-list">
-                <%= h(claim.doi) %><small class="pull-right"><%= l claim.claimed_at, format: :medium %></small>
-              </div>
-            <% else %>
-              <div class="panel-heading panel-title panel-list">
-                <%= h(claim.doi) %><small class="pull-right">not claimed</small>
-              </div>
-            <% end %>
-            <% if claim.error_messages.present? || current_user.is_admin_or_staff? %>
-              <div class="panel-body">
-                <%= link_to h(claim.orcid), claims_path(query: params[:query], source: params[:source], state: params[:state], user_id: claim.orcid) %>
-                <% if claim.user %>
-                  <span class="pull-right"><%= link_to h(claim.user.credit_name), users_path(query: claim.orcid) %></span>
+      <% @claims.each do |claim| %>
+        <div class="panel panel-default">
+          <% if claim.claimed_at.present? %>
+            <div class="panel-heading panel-title panel-list">
+              <%= h(claim.doi) %><small class="pull-right"><%= l claim.claimed_at, format: :medium %></small>
+            </div>
+          <% else %>
+            <div class="panel-heading panel-title panel-list">
+              <%= h(claim.doi) %><small class="pull-right">not claimed</small>
+            </div>
+          <% end %>
+          <% if claim.error_messages.present? || current_user.is_admin_or_staff? %>
+            <div class="panel-body">
+              <%= link_to h(claim.orcid), claims_path(query: params[:query], source: params[:source], state: params[:state], user_id: claim.orcid) %>
+              <% if claim.user %>
+                <span class="pull-right"><%= link_to h(claim.user.credit_name), users_path(query: claim.orcid) %></span>
+              <% end %>
+              <% if claim.error_messages.present? %>
+                <% if current_user.is_admin_or_staff? %>
+                  <br/><br/>
                 <% end %>
-                <% if claim.error_messages.present? %>
-                  <% if current_user.is_admin_or_staff? %>
-                    <br/><br/>
-                  <% end %>
-                  <%= h(claim.error_messages.first["title"]) %>
+                <%= h(claim.error_messages.first["title"]) %>
+              <% end %>
+            </div>
+          <% end %>
+          <div class="panel-footer">
+            <%= sources[claim.source_id] %>
+            <div class="btn-toolbar pull-right">
+              <div class="btn-group btn-group-sm">
+                <% if claim.failed? %>
+                  <%= link_to claim.human_state_name, claim_path(claim, :claim => { :resolve => true }, state: params[:state], source: params[:source]), :method => :put, :remote => true %>
+                <% else %>
+                  <%= claim.human_state_name %>
                 <% end %>
-              </div>
-            <% end %>
-            <div class="panel-footer">
-              <%= sources[claim.source_id] %>
-              <div class="btn-toolbar pull-right">
-                <div class="btn-group btn-group-sm">
-                  <% if claim.failed? %>
-                    <%= link_to claim.human_state_name, claim_path(claim, :claim => { :resolve => true }, state: params[:state], source: params[:source]), :method => :put, :remote => true %>
-                  <% else %>
-                    <%= claim.human_state_name %>
-                  <% end %>
-                </div>
               </div>
             </div>
           </div>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
       <div class="text-center">
         <%= will_paginate @claims, :params => { :controller => claims_path }, :renderer => BootstrapPagination::Rails %>
       </div>
