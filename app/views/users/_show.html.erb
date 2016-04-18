@@ -1,17 +1,32 @@
 <div class="row">
-  <div id="account">
-    <%= render :partial => 'account' %>
-  </div>
-  <div id="notification">
-    <%= render :partial => 'notification' %>
-  </div>
-</div>
+  <div class='col-md-9' id="content">
+    <ul class="nav nav-pills">
+      <li class="active"><a href="#account" data-toggle="tab">Your Account</a></li>
+      <li><a href="#notification" data-toggle="tab">Mailing List</a></li>
+      <li><a href="#orcid" data-toggle="tab">ORCID Integration</a></li>
+      <li role="presentation" class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+          Other Services <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="#impactstory" data-toggle="tab">ImpactStory</a></li>
+        </ul>
+      </li>
+    </ul>
 
-<div class="row">
-  <div id="search">
-    <%= render :partial => 'search' %>
-  </div>
-  <div id="auto">
-    <%= render :partial => 'auto' %>
+    <div class="tab-content">
+      <div class="tab-pane active" id="account">
+        <%= render :partial => 'account' %>
+      </div>
+      <div class="tab-pane" id="notification">
+        <%= render :partial => 'notification' %>
+      </div>
+      <div class="tab-pane" id="orcid">
+        <%= render :partial => 'orcid' %>
+      </div>
+      <div class="tab-pane" id="impactstory">
+        <%= render :partial => 'impactstory' %>
+      </div>
+    </div>
   </div>
 </div>

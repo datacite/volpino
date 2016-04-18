@@ -1,21 +1,19 @@
-<div class="col-md-6">
-  <div class="panel panel-default">
-    <div class="panel-heading panel-title">
-      ORCID Search and Link
-    </div>
-    <div class="panel-body">
-      <%= icon("search", class: "fa-2x fa-pull-left") %>
-      <p>Add works you find via DataCite Search to your ORCID record.</p>
-      <div class="search-orcid orcid">
-        <%= form_tag('/services/search/?origin=', :method => "get", :class => "inline", :role => "form") do %>
-          <div class="input-group">
-            <%= search_field_tag :q, current_user.names_for_search, :placeholder => "Search", :class => "form-control" %>
-            <div class="input-group-btn">
-              <button class="btn btn-primary" type="submit"><%= icon("search") %></button>
-            </div>
+<div class="panel panel-default">
+  <div class="panel-heading panel-title">
+    ORCID Search and Link
+  </div>
+  <div class="panel-body">
+    <%= icon("search", class: "fa-2x fa-pull-left") %>
+    <p>Add works you find via DataCite Search to your ORCID record.</p>
+    <div class="search-orcid orcid">
+      <%= form_tag('/services/search/?origin=', :method => "get", :class => "inline", :role => "form") do %>
+        <div class="input-group">
+          <%= search_field_tag :q, current_user.names_for_search, :placeholder => "Search", :class => "form-control" %>
+          <div class="input-group-btn">
+            <button class="btn btn-primary" type="submit"><%= icon("search") %></button>
           </div>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
