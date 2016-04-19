@@ -1,9 +1,22 @@
-<div class="panel panel-default">
-  <div class="panel-heading panel-title">
-    ImpactStory
-  </div>
-  <div class="panel-body" id="impactstory">
-    <div class="text-muted" id="impactstory-loading">Coming soon…</div>
+<div class="row">
+  <div class="col-md-9 panel-list" id="content-impactstory">
+    <div class="panel panel-default">
+      <div class="panel-body impactstory">
+        <div class="media">
+          <div class="media-left media-badge">
+            <%= image_tag("impactstory.png", size: "64") %>
+          </div>
+          <div class="media-body">
+            Impactstory is an open-source website that helps researchers explore and share the the online impact of their research.
+            <div class="btn-toolbar pull-right">
+              <div class="btn-group btn-group-sm impactstory">
+                <%= link_to 'more information'.html_safe, "https://impactstory.org", class: 'btn btn-default btn-sm', id: "impactstory-link" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
