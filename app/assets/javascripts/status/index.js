@@ -29,14 +29,14 @@ if (query) {
       var by_day = d3.nest()
         .key(function(d) { return d.attributes.timestamp.substr(0,10); })
         .rollup(function(leaves) {
-          return { "users_count": d3.max(leaves, function(d) { return d.attributes.users_new_count;}),
-                   "claims_search_count": d3.max(leaves, function(d) { return d.attributes.claims_search_new_count;}),
-                   "claims_auto_count": d3.max(leaves, function(d) { return d.attributes.claims_auto_new_count;}),
-                   "db_size": d3.max(leaves, function(d) { return d.attributes.db_size;}),
+          return { "users_count": d3.max(leaves, function(d) { return d.attributes["users-new-count"];}),
+                   "claims_search_count": d3.max(leaves, function(d) { return d.attributes["claims-search-new-count"];}),
+                   "claims_auto_count": d3.max(leaves, function(d) { return d.attributes["claims-auto-new-count"];}),
+                   "db_size": d3.max(leaves, function(d) { return d.attributes["db-size"];}),
                   };})
         .entries(day_data);
 
-      var members = d3.entries(data[0].attributes.members_count);
+      var members = d3.entries(data[0].attributes["members-count"]);
       var members_title = d3.sum(members, function(g) { return g.value; });
 
       barViz(by_day, "#chart_users", "users_count", "days");
