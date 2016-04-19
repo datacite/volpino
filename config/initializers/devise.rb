@@ -58,7 +58,7 @@ Devise.setup do |config|
   # config.http_authenticatable = true
 
   # If http headers should be returned for AJAX requests. True by default.
-  # config.http_authenticatable_on_xhr = true
+  config.http_authenticatable_on_xhr = false
 
   # The realm used in Http Basic Authentication. "Application" by default.
   # config.http_authentication_realm = "Application"
@@ -208,7 +208,7 @@ Devise.setup do |config|
   # should add them to the navigational formats lists.
   #
   # The "*/*" below is required to match Internet Explorer requests.
-  config.navigational_formats = ["*/*", :html]
+  config.navigational_formats = ["*/*", :html, :json]
 
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
@@ -217,6 +217,9 @@ Devise.setup do |config|
                           ENV['ORCID_CLIENT_SECRET'],
                           member: ENV['ORCID_MEMBER'],
                           sandbox: ENV['ORCID_SANDBOX']
+
+  config.omniauth :github, ENV['GITHUB_CLIENT_ID'],
+                           ENV['GITHUB_CLIENT_SECRET']
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

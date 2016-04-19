@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   has_many :claims, primary_key: "uid", foreign_key: "orcid", inverse_of: :user
   belongs_to :member
 
-  devise :confirmable, :omniauthable, :omniauth_providers => [:orcid]
+  devise :confirmable, :omniauthable, :omniauth_providers => [:orcid, :github]
 
   validates :uid, presence: true, uniqueness: true
   validates :provider, presence: true

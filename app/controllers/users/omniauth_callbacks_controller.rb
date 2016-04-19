@@ -8,6 +8,18 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     redirect_to root_path
   end
 
+  def github
+    auth = request.env["omniauth.auth"]
+
+    @user = current_user
+    @user.update_attributes(github: auth.info.nickname,
+                               github_uid: auth.uid,
+                               github_token: auth.credentials.token)
+
+    flash[:notice] = "Account successfully linked with Github account."
+    redirect_to user_path("me")
+  end
+
   # generic handler for all omniauth providers
   def action_missing(provider)
     auth = request.env["omniauth.auth"]

@@ -12,10 +12,12 @@ class Ability
       can :read, :all
       can [:update, :show], User, :id => user.id
     elsif user.role == "member"
+      can [:read], User
       can [:update, :show], User, :id => user.id
       can [:update, :show], Member, :id => user.member_id
     elsif user.role == "user"
       can [:read], Claim
+      can [:read], User
       can [:manage], Claim, :orcid => user.uid
       can [:update, :show], User, :id => user.id
     end

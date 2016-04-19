@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160307185718) do
+ActiveRecord::Schema.define(version: 20160419145456) do
 
   create_table "claims", force: :cascade do |t|
     t.string   "uuid",           limit: 191
@@ -113,10 +113,14 @@ ActiveRecord::Schema.define(version: 20160307185718) do
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email",    limit: 255
     t.integer  "member_id",            limit: 4
+    t.string   "github",               limit: 191
+    t.string   "github_uid",           limit: 191
+    t.string   "github_token",         limit: 191
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["family_name", "given_names"], name: "index_users_on_family_name_and_given_names", using: :btree
+  add_index "users", ["github"], name: "index_users_on_github", unique: true, using: :btree
   add_index "users", ["uid"], name: "index_users_on_uid", unique: true, using: :btree
 
 end
