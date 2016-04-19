@@ -16,7 +16,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                                github_uid: auth.uid,
                                github_token: auth.credentials.token)
 
-    flash[:notice] = "Account successfully linked with Github account."
+    flash[:notice] = "Account successfully linked with GitHub account."
     redirect_to user_path("me")
   end
 
