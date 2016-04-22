@@ -98,6 +98,25 @@ describe Claim, type: :model, vcr: true do
     end
   end
 
+  describe 'push to ORCID' do
+    let(:user) { FactoryGirl.create(:valid_user) }
+    subject { FactoryGirl.create(:claim, user: user, orcid: "0000-0003-1419-2405", doi: "10.5281/ZENODO.21429") }
+
+    describe 'lagotto_post' do
+      it 'should post' do
+        response = subject.lagotto_post
+        meta = response["data"]['meta']
+        deposit = response["data"]['deposit']
+        expect(meta).to eq("status"=>"accepted", "message-type"=>"deposit", "message-version"=>"v7")
+        expect(deposit['state']).to eq("waiting")
+        expect(deposit['message_type']).to eq("contribution")
+        expect(deposit['subj_id']).to eq("http://orcid.org/0000-0003-1419-2405")
+        expect(deposit['obj_id']).to eq("http://doi.org/10.5281/ZENODO.21429")
+        expect(deposit['source_id']).to eq("datacite_search_link")
+      end
+    end
+  end
+
   describe 'schema' do
     it 'exists' do
       expect(subject.schema.errors).to be_empty
