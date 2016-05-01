@@ -10,7 +10,7 @@
         </button>
       </div>
       <a class="navbar-brand hidden-xs" href="/">
-        <%= image_tag('datacite/logo.png', class: 'logo') %>
+        <img src="<%= asset_path('datacite.png', host: ENV['CDN_HOST']) %>" class="logo">
         <span class="logo">Data</span><span>Cite <%= ENV['SITENAME'] %></span>
       </a>
       <div class="navbar-collapse collapse">
@@ -26,7 +26,7 @@
                     <li><%= link_to "#{icon('external-link')} ORCID Record".html_safe, current_user.orcid %></li>
                     <li class="divider"></li>
                   <% end %>
-                  <li><%= link_to "#{icon('sign-out')} Sign Out".html_safe, destroy_user_session_path, :method => :delete, :id => "sign_out" %></li>
+                  <li><%= link_to "#{icon('sign-out')} Sign Out".html_safe, destroy_user_session_path, :id => "sign_out" %></li>
                 </ul>
               </li>
             <% else %>

@@ -19,7 +19,7 @@ http_interactions:
       Server:
       - nginx/1.1.19
       Date:
-      - Sun, 13 Mar 2016 09:20:15 GMT
+      - Wed, 27 Apr 2016 19:40:12 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Connection:
@@ -42,7 +42,7 @@ http_interactions:
 
 '
     http_version: 
-  recorded_at: Sun, 13 Mar 2016 09:19:14 GMT
+  recorded_at: Wed, 27 Apr 2016 19:38:09 GMT
 - request:
     method: get
     uri: https://raw.githubusercontent.com/ORCID/ORCID-Source/master/orcid-model/src/main/resources/orcid-message-1.2.xsd
@@ -78,19 +78,19 @@ http_interactions:
       Cache-Control:
       - max-age=300
       X-Github-Request-Id:
-      - 17EB2B14:0FB6:3FB1BD0:56E5308D
+      - 17EB2B14:087A:3784C45:57211516
       Content-Length:
       - '14182'
       Accept-Ranges:
       - bytes
       Date:
-      - Sun, 13 Mar 2016 09:19:14 GMT
+      - Wed, 27 Apr 2016 19:38:09 GMT
       Via:
       - 1.1 varnish
       Connection:
       - keep-alive
       X-Served-By:
-      - cache-ams4145-AMS
+      - cache-ams4149-AMS
       X-Cache:
       - HIT
       X-Cache-Hits:
@@ -100,11 +100,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Fastly-Request-Id:
-      - 81f2a563de60d5d7714acbbfbb78d4a52f9cd840
+      - 6a783641a2579b70c00f6427cd78435bbb6a3a86
       Expires:
-      - Sun, 13 Mar 2016 09:24:14 GMT
+      - Wed, 27 Apr 2016 19:43:09 GMT
       Source-Age:
-      - '5'
+      - '10'
     body:
       encoding: UTF-8
       string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"\n\txmlns:sch=\"http://purl.oclc.org/dsdl/schematron\"
@@ -1295,52 +1295,41 @@ http_interactions:
         base=\"orcid:non-empty-string\">\n\t\t\t\t<xs:attribute name=\"language-code\"
         type=\"orcid:language-code\" use=\"required\"/>\n\t\t\t</xs:extension>\n\t\t</xs:simpleContent>\n\t</xs:complexType>\n</xs:schema>\n"
     http_version: 
-  recorded_at: Sun, 13 Mar 2016 09:19:14 GMT
+  recorded_at: Wed, 27 Apr 2016 19:38:09 GMT
 - request:
     method: post
     uri: https://api.orcid.org/v1.2/0000-0003-1419-240x/orcid-works
     body:
       encoding: UTF-8
-      string: |
-        <?xml version="1.0"?>
-        <orcid-message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.orcid.org/ns/orcid" xsi:schemaLocation="http://www.orcid.org/ns/orcid https://raw.github.com/ORCID/ORCID-Source/master/orcid-model/src/main/resources/orcid-message-1.2.xsd">
-          <message-version>1.2</message-version>
-          <orcid-profile>
-            <orcid-activities>
-              <orcid-works>
-                <orcid-work>
-                  <work-title>
-                    <title>omniauth-orcid: v.1.0</title>
-                  </work-title>
-                  <journal-title>Zenodo</journal-title>
-                  <short-description>["&lt;p&gt;omniauth-orcid is a Ruby gem that enables authentication with the ORCID registry via oauth2.&amp;nbsp;onmiauth-orcid 1.0 was released on July 25, 2015 with the following changes:&lt;/p&gt;\n\n&lt;ul&gt;\n\t&lt;li&gt;changed default scope to authenticate, and use the public API https://pub.orcid.org by default. These settings work for non-members.&lt;/li&gt;\n\t&lt;li&gt;added name and email to the info hash returned by omniauth (email will be empty in almost all cases)&lt;/li&gt;\n\t&lt;li&gt;cleaned up documentation in README.md&lt;/li&gt;\n&lt;/ul&gt;"]</short-description>
-                  <work-citation>
-                    <work-citation-type>bibtex</work-citation-type>
-                    <citation>@data{http://doi.org/10.5281/ZENODO.21429, author = {Thorisson, Gudmundur A. and Fenner, Martin}, title = {omniauth-orcid: v.1.0}, publisher = {Zenodo}, doi = {10.5281/ZENODO.21429}, url = {http://doi.org/10.5281/ZENODO.21429}, year = {2015}}</citation>
-                  </work-citation>
-                  <work-type>other</work-type>
-                  <publication-date>
-                    <year>2015</year>
-                  </publication-date>
-                  <work-external-identifiers>
-                    <work-external-identifier>
-                      <work-external-identifier-type>doi</work-external-identifier-type>
-                      <work-external-identifier-id>10.5281/ZENODO.21429</work-external-identifier-id>
-                    </work-external-identifier>
-                  </work-external-identifiers>
-                  <work-contributors>
-                    <contributor>
-                      <credit-name>Gudmundur A. Thorisson</credit-name>
-                    </contributor>
-                    <contributor>
-                      <credit-name>Martin Fenner</credit-name>
-                    </contributor>
-                  </work-contributors>
-                </orcid-work>
-              </orcid-works>
-            </orcid-activities>
-          </orcid-profile>
-        </orcid-message>
+      string: "<?xml version=\"1.0\"?>\n<orcid-message xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+        xmlns=\"http://www.orcid.org/ns/orcid\" xsi:schemaLocation=\"http://www.orcid.org/ns/orcid
+        https://raw.github.com/ORCID/ORCID-Source/master/orcid-model/src/main/resources/orcid-message-1.2.xsd\">\n
+        \ <message-version>1.2</message-version>\n  <orcid-profile>\n    <orcid-activities>\n
+        \     <orcid-works>\n        <orcid-work>\n          <work-title>\n            <title>omniauth-orcid:
+        v.1.0</title>\n          </work-title>\n          <journal-title>Zenodo</journal-title>\n
+        \         <short-description>&amp;lt;p&amp;gt;omniauth-orcid is a Ruby gem
+        that enables authentication with the ORCID registry via oauth2.&amp;amp;nbsp;onmiauth-orcid
+        1.0 was released on July 25, 2015 with the following changes:&amp;lt;/p&amp;gt;\n\n&amp;lt;ul&amp;gt;\n\t&amp;lt;li&amp;gt;changed
+        default scope to authenticate, and use the public API https://pub.orcid.org
+        by default. These settings work for non-members.&amp;lt;/li&amp;gt;\n\t&amp;lt;li&amp;gt;added
+        name and email to the info hash returned by omniauth (email will be empty
+        in almost all cases)&amp;lt;/li&amp;gt;\n\t&amp;lt;li&amp;gt;cleaned up documentation
+        in README.md&amp;lt;/li&amp;gt;\n&amp;lt;/ul&amp;gt;</short-description>\n
+        \         <work-citation>\n            <work-citation-type>bibtex</work-citation-type>\n
+        \           <citation>@data{http://doi.org/10.5281/ZENODO.21429, author =
+        {Thorisson, Gudmundur A. and Fenner, Martin}, title = {omniauth-orcid: v.1.0},
+        publisher = {Zenodo}, doi = {10.5281/ZENODO.21429}, url = {http://doi.org/10.5281/ZENODO.21429},
+        year = {2015}}</citation>\n          </work-citation>\n          <work-type>other</work-type>\n
+        \         <publication-date>\n            <year>2015</year>\n          </publication-date>\n
+        \         <work-external-identifiers>\n            <work-external-identifier>\n
+        \             <work-external-identifier-type>doi</work-external-identifier-type>\n
+        \             <work-external-identifier-id>10.5281/ZENODO.21429</work-external-identifier-id>\n
+        \           </work-external-identifier>\n          </work-external-identifiers>\n
+        \         <work-contributors>\n            <contributor>\n              <credit-name>Gudmundur
+        A. Thorisson</credit-name>\n            </contributor>\n            <contributor>\n
+        \             <credit-name>Martin Fenner</credit-name>\n            </contributor>\n
+        \         </work-contributors>\n        </orcid-work>\n      </orcid-works>\n
+        \   </orcid-activities>\n  </orcid-profile>\n</orcid-message>\n"
     headers:
       User-Agent:
       - Faraday v0.9.2
@@ -1360,7 +1349,7 @@ http_interactions:
       Server:
       - nginx/1.4.6 (Ubuntu)
       Date:
-      - Sun, 13 Mar 2016 09:19:15 GMT
+      - Wed, 27 Apr 2016 19:38:10 GMT
       Content-Type:
       - text/html;charset=utf-8
       Transfer-Encoding:
@@ -1387,17 +1376,78 @@ http_interactions:
         <u>Attempt to retrieve a OrcidOauth2TokenDetail with a null or empty token
         value</u></p><p><b>description</b> <u>The server encountered an internal error
         that prevented it from fulfilling this request.</u></p><p><b>exception</b></p><pre>java.lang.IllegalArgumentException:
-        Attempt to retrieve a OrcidOauth2TokenDetail with a null or empty token value\n\torg.springframework.util.Assert.hasText(Assert.java:162)\n\torg.orcid.persistence.dao.impl.OrcidOauth2TokenDetailDaoImpl.findNonDisabledByTokenValue(OrcidOauth2TokenDetailDaoImpl.java:56)\n\tsun.reflect.GeneratedMethodAccessor4137.invoke(Unknown
-        Source)\n\tsun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tjava.lang.reflect.Method.invoke(Method.java:498)\n\torg.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)\n\torg.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)\n\torg.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)\n\tcom.sun.proxy.$Proxy481.findNonDisabledByTokenValue(Unknown
-        Source)\n\torg.orcid.core.oauth.service.OrcidOauth2TokenDetailServiceImpl.findNonDisabledByTokenValue(OrcidOauth2TokenDetailServiceImpl.java:46)\n\tsun.reflect.GeneratedMethodAccessor4136.invoke(Unknown
-        Source)\n\tsun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tjava.lang.reflect.Method.invoke(Method.java:498)\n\torg.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)\n\torg.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:201)\n\tcom.sun.proxy.$Proxy511.findNonDisabledByTokenValue(Unknown
-        Source)\n\torg.orcid.core.oauth.service.OrcidTokenStoreServiceImpl.readAccessToken(OrcidTokenStoreServiceImpl.java:124)\n\tsun.reflect.GeneratedMethodAccessor4223.invoke(Unknown
-        Source)\n\tsun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tjava.lang.reflect.Method.invoke(Method.java:498)\n\torg.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)\n\torg.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:201)\n\tcom.sun.proxy.$Proxy528.readAccessToken(Unknown
-        Source)\n\torg.orcid.core.oauth.service.OrcidRandomValueTokenServicesImpl.loadAuthentication(OrcidRandomValueTokenServicesImpl.java:183)\n\tsun.reflect.GeneratedMethodAccessor4222.invoke(Unknown
-        Source)\n\tsun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tjava.lang.reflect.Method.invoke(Method.java:498)\n\torg.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)\n\torg.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)\n\torg.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:281)\n\torg.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)\n\torg.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)\n\tcom.sun.proxy.$Proxy529.loadAuthentication(Unknown
+        Attempt to retrieve a OrcidOauth2TokenDetail with a null or empty token value\n\torg.springframework.util.Assert.hasText(Assert.java:162)\n\torg.orcid.persistence.dao.impl.OrcidOauth2TokenDetailDaoImpl.findNonDisabledByTokenValue(OrcidOauth2TokenDetailDaoImpl.java:56)\n\tsun.reflect.GeneratedMethodAccessor3081.invoke(Unknown
+        Source)\n\tsun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tjava.lang.reflect.Method.invoke(Method.java:498)\n\torg.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)\n\torg.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)\n\torg.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)\n\tcom.sun.proxy.$Proxy491.findNonDisabledByTokenValue(Unknown
+        Source)\n\torg.orcid.core.oauth.service.OrcidOauth2TokenDetailServiceImpl.findNonDisabledByTokenValue(OrcidOauth2TokenDetailServiceImpl.java:47)\n\tsun.reflect.GeneratedMethodAccessor3080.invoke(Unknown
+        Source)\n\tsun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tjava.lang.reflect.Method.invoke(Method.java:498)\n\torg.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)\n\torg.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:201)\n\tcom.sun.proxy.$Proxy525.findNonDisabledByTokenValue(Unknown
+        Source)\n\torg.orcid.core.oauth.service.OrcidTokenStoreServiceImpl.readAccessToken(OrcidTokenStoreServiceImpl.java:124)\n\tsun.reflect.GeneratedMethodAccessor3894.invoke(Unknown
+        Source)\n\tsun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tjava.lang.reflect.Method.invoke(Method.java:498)\n\torg.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)\n\torg.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:201)\n\tcom.sun.proxy.$Proxy542.readAccessToken(Unknown
+        Source)\n\torg.orcid.core.oauth.service.OrcidRandomValueTokenServicesImpl.loadAuthentication(OrcidRandomValueTokenServicesImpl.java:183)\n\tsun.reflect.GeneratedMethodAccessor3893.invoke(Unknown
+        Source)\n\tsun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tjava.lang.reflect.Method.invoke(Method.java:498)\n\torg.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)\n\torg.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)\n\torg.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:281)\n\torg.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)\n\torg.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)\n\torg.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)\n\tcom.sun.proxy.$Proxy543.loadAuthentication(Unknown
         Source)\n\torg.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager.authenticate(OAuth2AuthenticationManager.java:80)\n\torg.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter.doFilter(OAuth2AuthenticationProcessingFilter.java:117)\n\torg.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)\n\torg.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter.doFilter(AbstractPreAuthenticatedProcessingFilter.java:94)\n\torg.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)\n\torg.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:50)\n\torg.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\n\torg.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)\n\torg.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:87)\n\torg.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)\n\torg.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:192)\n\torg.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:160)\n\torg.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:344)\n\torg.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:261)\n\torg.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)\n\torg.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\n\torg.orcid.core.web.filters.CorsFilter.doFilterInternal(CorsFilter.java:49)\n\torg.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\n\torg.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:344)\n\torg.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:261)\n\torg.orcid.core.web.filters.ApiVersionFilter.doFilterInternal(ApiVersionFilter.java:52)\n\torg.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\n\torg.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:344)\n\torg.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:261)\n\torg.orcid.core.web.filters.JsonpCallbackFilter.doFilterInternal(JsonpCallbackFilter.java:70)\n\torg.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\n\torg.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:344)\n\torg.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:261)\n\torg.orcid.core.web.filters.AcceptFilter.doFilterInternal(AcceptFilter.java:60)\n\torg.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)\n\torg.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:344)\n\torg.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:261)\n</pre><p><b>note</b>
         <u>The full stack trace of the root cause is available in the Apache Tomcat/8.0.21
         logs.</u></p><hr class=\"line\"><h3>Apache Tomcat/8.0.21</h3></body></html>"
     http_version: 
-  recorded_at: Sun, 13 Mar 2016 09:19:15 GMT
+  recorded_at: Wed, 27 Apr 2016 19:38:10 GMT
+- request:
+    method: post
+    uri: http://10.2.2.6/api/deposits
+    body:
+      encoding: UTF-8
+      string: '{"deposit":{"subj_id":"http://orcid.org/0000-0003-1419-240x","obj_id":"http://doi.org/10.5281/ZENODO.21429","source_id":"datacite_search_link","message_type":"contribution","prefix":"10.5281","source_token":"c61085e0-ffe2-4eb0-8c53-da0def5bfd6d"}}'
+    headers:
+      User-Agent:
+      - Maremma - http://profiles.local
+      Accept:
+      - application/json
+      Authorization:
+      - Token token=8897f9349100728d66d64d56bc21254bb346a9ed21954933
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 202
+      message: ''
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Connection:
+      - keep-alive
+      Status:
+      - 202 Accepted
+      Cache-Control:
+      - no-store, must-revalidate, private, max-age=0
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - Accept-Encoding
+      X-Miniprofiler-Ids:
+      - '["tpkyfzlaakkkss2818c2","va1utz6fb1kwad4omyyd","8uk22iu2j6s3jckfz4ph"]'
+      Access-Control-Max-Age:
+      - '1728000'
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 14ac94b7-32aa-4077-9d1e-050c56b6e378
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      X-Runtime:
+      - '0.767436'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Wed, 27 Apr 2016 19:38:10 GMT
+      Set-Cookie:
+      - __profilin=p%3Dt; path=/, __profilin=p%3Dt; path=/, __profilin=p%3Dt; path=/
+      X-Powered-By:
+      - Phusion Passenger 5.0.27
+      Server:
+      - nginx/1.8.1 + Phusion Passenger 5.0.27
+    body:
+      encoding: UTF-8
+      string: '{"meta":{"status":"accepted","message-type":"deposit","message-version":"v7"},"deposit":{"id":"643ebd6a-3de0-42ee-894c-fba892fc0894","state":"waiting","message_type":"contribution","message_action":"create","source_token":"c61085e0-ffe2-4eb0-8c53-da0def5bfd6d","prefix":"10.5281","subj_id":"http://orcid.org/0000-0003-1419-240x","obj_id":"http://doi.org/10.5281/ZENODO.21429","relation_type_id":"references","source_id":"datacite_search_link","total":1,"occurred_at":"2016-04-27T19:38:10Z","timestamp":"2016-04-27T19:38:10Z","subj":{},"obj":{}}}'
+    http_version: 
+  recorded_at: Wed, 27 Apr 2016 19:38:11 GMT
 recorded_with: VCR 2.9.3

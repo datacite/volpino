@@ -4,6 +4,12 @@ class User < ActiveRecord::Base
   # include helper module for date and time calculations
   include Dateable
 
+  # include helper module for DOI resolution
+  include Resolvable
+
+  # include helper module for ORCID claims
+  include Orcidable
+
   # include hash helper
   include Hashie::Extensions::DeepFetch
 
@@ -116,7 +122,7 @@ class User < ActiveRecord::Base
     "http://pub.orcid.org/v#{ORCID_VERSION}/#{uid}/orcid-works"
   end
 
-  def process_data(options={})
+  def collect_data(options={})
     result = get_data(options)
     result = parse_data(result, options)
   end
@@ -145,6 +151,52 @@ class User < ActiveRecord::Base
                           state: 3,
                           claimed_at: claimed_at)
       claim.present? ? claim.doi : nil
+    end
+  end
+
+  def process_data(options={})
+    push_data
+  end
+
+  def push_data
+    # user has not linked github username
+    return {} if github.blank?
+
+    # missing data raise errors
+    return { "errors" => [{ "title" => "Missing data" }] } if data.nil?
+
+    # validate data
+    return { "errors" => validation_errors.map { |error| { "title" => error } }} if validation_errors.present?
+
+    #oauth_client_post(data, endpoint: "orcid-bio/external-identifiers")
+  end
+
+  def user_token
+    OAuth2::AccessToken.new(oauth_client, authentication_token)
+  end
+
+  def data
+    return nil unless github.present?
+
+    Nokogiri::XML::Builder.new do |xml|
+      xml.send(:'orcid-message', root_attributes) do
+        xml.send(:'message-version', ORCID_VERSION)
+        xml.send(:'orcid-profile') do
+          xml.send(:'orcid-bio') do
+            xml.send(:'external-identifiers') do
+              insert_external_identifier(xml)
+            end
+          end
+        end
+      end
+    end.to_xml
+  end
+
+  def insert_external_identifier(xml)
+    xml.send(:'external-identifier') do
+      xml.send(:'external-id-common-name', "GitHub")
+      xml.send(:'external-id-reference', github)
+      xml.send(:'external-id-url', github_as_url(github))
     end
   end
 

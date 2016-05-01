@@ -1,9 +1,11 @@
 class ServicesController < ApplicationController
-  before_filter :load_service, only: [:show, :edit, :update, :destroy]
-  before_filter :load_index, only: [:index]
-  before_filter :new_service, only: [:create]
-  before_action :authenticate_user!, :only => [:show]
-  before_filter :load_user, only: [:show]
+  prepend_before_action :authenticate_user!, :only => [:show]
+
+  before_action :store_location, :only => [:show]
+  before_action :load_service, only: [:show, :edit, :update, :destroy]
+  before_action :load_index, only: [:index]
+  before_action :new_service, only: [:create]
+
   load_and_authorize_resource :except => [:show]
 
   def show
@@ -12,7 +14,7 @@ class ServicesController < ApplicationController
     origin = params[:q].present? ? "/?q=#{params[:q]}" : params[:origin]
 
     redirect_to url +  URI.encode_www_form({
-      jwt: @user.jwt_payload,
+      jwt: current_user.jwt_payload,
       origin: origin }.compact)
   end
 
@@ -75,12 +77,8 @@ class ServicesController < ApplicationController
     @tags = Tag.joins(:services).distinct.order(:title)
   end
 
-  def load_user
-    if user_signed_in?
-      @user = current_user
-    else
-      store_location_for(:user, services_path(params[:id]))
-    end
+  def store_location
+    store_location_for(:user, service_path(params[:id]))
   end
 
   private

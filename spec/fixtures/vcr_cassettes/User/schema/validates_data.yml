@@ -35,33 +35,33 @@ http_interactions:
       Cache-Control:
       - max-age=300
       X-Github-Request-Id:
-      - B91F1114:4A24:3B32003:56E504F9
+      - 17EB2F14:4D60:13495A3D:571A4AE4
       Content-Length:
       - '14182'
       Accept-Ranges:
       - bytes
       Date:
-      - Sun, 13 Mar 2016 06:17:40 GMT
+      - Fri, 22 Apr 2016 16:01:40 GMT
       Via:
       - 1.1 varnish
       Connection:
       - keep-alive
       X-Served-By:
-      - cache-fra1225-FRA
+      - cache-sjc3128-SJC
       X-Cache:
-      - HIT
+      - MISS
       X-Cache-Hits:
-      - '1'
+      - '0'
       Vary:
       - Authorization,Accept-Encoding
       Access-Control-Allow-Origin:
       - "*"
       X-Fastly-Request-Id:
-      - 78f860f10abe0e59d9c2fc9ae481ecef543b3823
+      - 9a4021be48bbd6af6ce367a519349a2e316e03b4
       Expires:
-      - Sun, 13 Mar 2016 06:22:40 GMT
+      - Fri, 22 Apr 2016 16:06:40 GMT
       Source-Age:
-      - '267'
+      - '0'
     body:
       encoding: UTF-8
       string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"\n\txmlns:sch=\"http://purl.oclc.org/dsdl/schematron\"
@@ -1252,5 +1252,5 @@ http_interactions:
         base=\"orcid:non-empty-string\">\n\t\t\t\t<xs:attribute name=\"language-code\"
         type=\"orcid:language-code\" use=\"required\"/>\n\t\t\t</xs:extension>\n\t\t</xs:simpleContent>\n\t</xs:complexType>\n</xs:schema>\n"
     http_version: 
-  recorded_at: Sun, 13 Mar 2016 06:17:40 GMT
+  recorded_at: Fri, 22 Apr 2016 16:01:40 GMT
 recorded_with: VCR 2.9.3

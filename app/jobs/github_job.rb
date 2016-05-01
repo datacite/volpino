@@ -1,9 +1,9 @@
-class UserJob < ActiveJob::Base
-  queue_as :high
+class GithubJob < ActiveJob::Base
+  queue_as :default
 
   def perform(user)
     ActiveRecord::Base.connection_pool.with_connection do
-      user.collect_data
+      user.process_data
     end
   rescue => error
     # send error message to bugsnag with problematic uid

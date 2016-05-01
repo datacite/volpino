@@ -1,5 +1,5 @@
 namespace :deposit do
-  desc "Import works for all users"
+  desc "Deposit works for all users"
   task :all => :environment do
     Claim.search_and_link.each do |claim|
       DepositJob.perform_later(claim)

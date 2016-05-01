@@ -21,6 +21,10 @@ module Resolvable
       "http://orcid.org/#{orcid}" if orcid.present?
     end
 
+    def github_as_url(github)
+      "https://github.com/#{github}" if github.present?
+    end
+
     def get_doi_from_id(id)
       if /(http|https):\/\/(dx\.)?doi\.org\/(\w+)/.match(id)
         uri = Addressable::URI.parse(id)

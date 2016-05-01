@@ -13,8 +13,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     @user = current_user
     @user.update_attributes(github: auth.info.nickname,
-                               github_uid: auth.uid,
-                               github_token: auth.credentials.token)
+                            github_uid: auth.uid,
+                            github_token: auth.credentials.token)
 
     flash[:notice] = "Account successfully linked with GitHub account."
     redirect_to user_path("me")
@@ -25,13 +25,14 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     auth = request.env["omniauth.auth"]
 
     @user = User.from_omniauth(auth)
-    if Time.now > (@user.expires_at || 1.day.ago)
+    if Time.zone.now > @user.expires_at
       auth_hash = User.get_auth_hash(auth)
       @user.update_attributes(auth_hash)
     end
 
     if @user.persisted?
-      sign_in_and_redirect @user, :event => :authentication
+      sign_in @user
+      redirect_to stored_location_for(:user) || root_path
     else
       session["devise.#{provider}_data"] = request.env["omniauth.auth"]
       flash[:alert] = @user.errors.map { |k,v| "#{k}: #{v}" }.join("<br />").html_safe || "Error signing in with #{provider}"
