@@ -45,6 +45,7 @@ gem 'jwt', '~> 1.5', '>= 1.5.1'
 gem 'cancancan', '~> 1.9.2'
 
 gem 'sprockets-rails', '~> 2.2.0', :require => 'sprockets/railtie'
+gem 'coffee-rails', '~> 4.1', '>= 4.1.1'
 gem 'sass-rails', '~> 4.0.4'
 gem 'uglifier', '~> 2.7', '>= 2.7.2'
 
