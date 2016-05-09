@@ -4,18 +4,11 @@
 # http://en.wikipedia.org/wiki/Cron
 
 begin
-  # make sure DOTENV is set
-  ENV["DOTENV"] ||= "default"
-
-  # load ENV variables from file specified by DOTENV
-  # use .env with DOTENV=default
-  filename = ENV["DOTENV"] == "default" ? ".env" : ".env.#{ENV['DOTENV']}"
-
-  fail Errno::ENOENT unless File.exist?(File.expand_path("../../#{filename}", __FILE__))
+  fail Errno::ENOENT unless File.exist?(File.expand_path("../../.env", __FILE__))
 
   # load ENV variables from file specified by APP_ENV, fallback to .env
   require "dotenv"
-  Dotenv.load! filename
+  Dotenv.load! ".env"
 rescue Errno::ENOENT
   $stderr.puts "Please create file .env in the Rails root folder"
   exit

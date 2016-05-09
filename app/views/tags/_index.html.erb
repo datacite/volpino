@@ -1,9 +1,9 @@
 <div class="search-wide">
   <%= form_tag(tags_path, :method => "get", :class => "form form-horizontal", :role => "form") do %>
     <div class="input-group">
-      <%= search_field_tag :query, params[:query], :placeholder => "Search", :class => "form-control" %>
+      <%= search_field_tag :query, params[:query], :placeholder => "Search tag", :class => "form-control" %>
       <div class="input-group-btn">
-        <button type="submit" class="btn btn-primary hidden-xs"><%= icon("search") %></button>
+        <button type="submit" class="btn btn-primary hidden-xs">Search</button>
       </div>
     </div>
   <% end %>

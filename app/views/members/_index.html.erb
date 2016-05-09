@@ -4,9 +4,9 @@
       <%= hidden_field_tag :member_type, params[:member_type] %>
       <%= hidden_field_tag :region, params[:region] %>
       <%= hidden_field_tag :year, params[:year] %>
-      <%= search_field_tag :query, params[:query], :placeholder => "Search", :class => "form-control" %>
+      <%= search_field_tag :query, params[:query], :placeholder => "Search member", :class => "form-control" %>
       <div class="input-group-btn">
-        <button type="submit" class="btn btn-primary hidden-xs"><%= icon("search") %></button>
+        <button type="submit" class="btn btn-primary hidden-xs">Search</button>
       </div>
     </div>
   <% end %>
