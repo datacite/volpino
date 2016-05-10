@@ -1,15 +1,19 @@
-<div class="search-wide">
-  <%= form_tag(members_path, :method => "get", :class => "form form-horizontal", :member_type => "form") do %>
-    <div class="input-group">
-      <%= hidden_field_tag :member_type, params[:member_type] %>
-      <%= hidden_field_tag :region, params[:region] %>
-      <%= hidden_field_tag :year, params[:year] %>
-      <%= search_field_tag :query, params[:query], :placeholder => "Search member", :class => "form-control" %>
-      <div class="input-group-btn">
-        <button type="submit" class="btn btn-primary hidden-xs">Search</button>
-      </div>
+<div class="row">
+  <div class='col-md-9'>
+    <div class="search-wide">
+      <%= form_tag(members_path, :method => "get", :class => "form form-horizontal", :member_type => "form") do %>
+        <div class="input-group">
+          <%= hidden_field_tag :member_type, params[:member_type] %>
+          <%= hidden_field_tag :region, params[:region] %>
+          <%= hidden_field_tag :year, params[:year] %>
+          <%= search_field_tag :query, params[:query], :placeholder => "Search member", :class => "form-control" %>
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-primary hidden-xs">Search</button>
+          </div>
+        </div>
+      <% end %>
     </div>
-  <% end %>
+  </div>
 </div>
 
 <div class="row">
@@ -63,7 +67,7 @@
                 </div>
               <% else %>
                 <div id="member_<%= member.id %>" class="panel-collapse collapse">
-                  <div class="panel-body">
+                  <div class="panel-body user-list">
                     <% if can?(:manage, member) %>
                       <div class="btn-toolbar pull-right">
                         <div class="btn-group btn-group-sm">

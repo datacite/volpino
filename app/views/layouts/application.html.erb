@@ -14,7 +14,7 @@
 
     <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,400italic,600italic|Source+Code+Pro:400,600' rel='stylesheet' type='text/css'>
     <link href='//maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
-    <link href="//<%= ENV['CDN_HOST'] %>/assets/profiles.css" rel='stylesheet' type='text/css'>
+    <link href="//<%= ENV['CDN_HOST'] %>/assets/default.css" rel='stylesheet' type='text/css'>
     <%= javascript_include_tag "application" %>
     <% if ENV['BUGSNAG_JS_KEY'] %>
       <script
@@ -36,6 +36,4 @@
     <%= render partial: "layouts/analytics" -%>
     <%= render partial: "layouts/#{ENV['MODE']}/footer" -%>
   </body>
-
-  <%= javascript_include_tag 'layouts/index' if controller.controller_name != "index" %>
 </html>
