@@ -23,7 +23,7 @@ http_interactions:
       Server:
       - nginx/1.4.6 (Ubuntu)
       Date:
-      - Thu, 28 Apr 2016 22:13:39 GMT
+      - Wed, 11 May 2016 20:33:00 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Transfer-Encoding:
@@ -38,9 +38,9 @@ http_interactions:
       - no-cache
     body:
       encoding: UTF-8
-      string: '{"access_token":"43cda466-b766-42b3-a945-c6215ba3dcfa","token_type":"bearer","refresh_token":"30f6395e-eacf-41be-b0f1-498821de34b1","expires_in":631138518,"scope":"/read-public","orcid":null}'
+      string: '{"access_token":"92058f5d-100f-4c0b-a7b7-ec59d3296bfa","token_type":"bearer","refresh_token":"e3965753-1578-4a54-900a-1509d4e7ebac","expires_in":631138518,"scope":"/read-public","orcid":null}'
     http_version: 
-  recorded_at: Thu, 28 Apr 2016 22:13:39 GMT
+  recorded_at: Wed, 11 May 2016 20:33:00 GMT
 - request:
     method: get
     uri: https://api.orcid.org/v1.2/0000-0003-1419-2405/orcid-works
@@ -51,7 +51,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Authorization:
-      - Bearer 43cda466-b766-42b3-a945-c6215ba3dcfa
+      - Bearer 92058f5d-100f-4c0b-a7b7-ec59d3296bfa
       Accept:
       - application/json
       Accept-Encoding:
@@ -64,7 +64,7 @@ http_interactions:
       Server:
       - nginx/1.4.6 (Ubuntu)
       Date:
-      - Thu, 28 Apr 2016 22:13:40 GMT
+      - Wed, 11 May 2016 20:33:02 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Transfer-Encoding:
@@ -75,7 +75,7 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: "{\"message-version\":\"1.2\",\"orcid-profile\":{\"orcid\":null,\"orcid-id\":null,\"orcid-identifier\":{\"value\":null,\"uri\":\"http://orcid.org/0000-0003-1419-2405\",\"path\":\"0000-0003-1419-2405\",\"host\":\"orcid.org\"},\"orcid-deprecated\":null,\"orcid-preferences\":{\"locale\":\"EN\"},\"orcid-history\":{\"creation-method\":\"WEBSITE\",\"completion-date\":{\"value\":1349732964340},\"submission-date\":{\"value\":1349729360270},\"last-modified-date\":{\"value\":1461794876695},\"claimed\":{\"value\":true},\"source\":null,\"deactivation-date\":null,\"verified-email\":{\"value\":true},\"verified-primary-email\":{\"value\":true},\"visibility\":null},\"orcid-bio\":null,\"orcid-activities\":{\"affiliations\":null,\"orcid-works\":{\"orcid-work\":[{\"put-code\":\"11649252\",\"work-title\":{\"title\":{\"value\":\"What
+      string: "{\"message-version\":\"1.2\",\"orcid-profile\":{\"orcid\":null,\"orcid-id\":null,\"orcid-identifier\":{\"value\":null,\"uri\":\"http://orcid.org/0000-0003-1419-2405\",\"path\":\"0000-0003-1419-2405\",\"host\":\"orcid.org\"},\"orcid-deprecated\":null,\"orcid-preferences\":{\"locale\":\"EN\"},\"orcid-history\":{\"creation-method\":\"WEBSITE\",\"completion-date\":{\"value\":1349732964340},\"submission-date\":{\"value\":1349729360270},\"last-modified-date\":{\"value\":1462905368074},\"claimed\":{\"value\":true},\"source\":null,\"deactivation-date\":null,\"verified-email\":{\"value\":true},\"verified-primary-email\":{\"value\":true},\"visibility\":null},\"orcid-bio\":null,\"orcid-activities\":{\"affiliations\":null,\"orcid-works\":{\"orcid-work\":[{\"put-code\":\"11649252\",\"work-title\":{\"title\":{\"value\":\"What
         Can Article-Level Metrics Do for You?\"},\"subtitle\":{\"value\":\"PLoS Biology\"},\"translated-title\":null},\"journal-title\":null,\"short-description\":null,\"work-citation\":{\"work-citation-type\":\"BIBTEX\",\"citation\":\"@article{Fenner_2013,
         title={What Can Article-Level Metrics Do for You?}, volume={11}, url={http://dx.doi.org/10.1371/journal.pbio.1001687},
         DOI={10.1371/journal.pbio.1001687}, number={10}, journal={PLoS Biology}, publisher={Public
@@ -1691,5 +1691,5 @@ http_interactions:
         H.\",\"visibility\":\"PUBLIC\"},\"contributor-email\":null,\"contributor-attributes\":null}]},\"work-source\":null,\"source\":{\"source-orcid\":{\"value\":null,\"uri\":\"http://orcid.org/0000-0002-5982-8983\",\"path\":\"0000-0002-5982-8983\",\"host\":\"orcid.org\"},\"source-client-id\":null,\"source-name\":{\"value\":\"Scopus
         to ORCID\"},\"source-date\":{\"value\":1406836441364}},\"created-date\":{\"value\":1406836441364},\"last-modified-date\":{\"value\":1437587330722},\"language-code\":null,\"country\":null,\"visibility\":\"PUBLIC\"}],\"scope\":null},\"funding-list\":null},\"orcid-internal\":null,\"type\":\"USER\",\"group-type\":null,\"client-type\":null},\"orcid-search-results\":null,\"error-desc\":null}"
     http_version: 
-  recorded_at: Thu, 28 Apr 2016 22:13:40 GMT
+  recorded_at: Wed, 11 May 2016 20:33:02 GMT
 recorded_with: VCR 2.9.3
