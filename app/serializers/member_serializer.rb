@@ -1,6 +1,6 @@
 class MemberSerializer < ActiveModel::Serializer
   cache key: 'member'
-  attributes :id, :title, :description, :region, :country, :year
+  attributes :id, :title, :description, :member_type, :region, :country, :year
 
   def id
     object.name
