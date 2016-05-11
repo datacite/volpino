@@ -154,6 +154,10 @@ class Claim < ActiveRecord::Base
     metadata.fetch('container-title', nil)
   end
 
+  def publisher_id
+    metadata.fetch('publisher_id', nil)
+  end
+
   def publication_date
     get_parts_from_date_parts(metadata.fetch('issued', {}))
   end
@@ -211,6 +215,7 @@ class Claim < ActiveRecord::Base
     { "deposit" => { "subj_id" => orcid_as_url(orcid),
                      "obj_id" => doi_as_url(doi),
                      "source_id" => "datacite_search_link",
+                     "publisher_id" => publisher_id,
                      "message_type" => "contribution",
                      "prefix" => doi[/^10\.\d{4,5}/],
                      "source_token" => ENV['ORCID_UPDATE_UUID'] } }

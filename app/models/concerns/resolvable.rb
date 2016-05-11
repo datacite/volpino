@@ -86,7 +86,7 @@ module Resolvable
 
       params = { q: "doi:" + doi,
                  rows: 1,
-                 fl: "doi,creator,title,publisher,publicationYear,resourceTypeGeneral,description,datacentre,datacentre_symbol,prefix,relatedIdentifier,xml,updated",
+                 fl: "doi,creator,title,publisher,publicationYear,resourceTypeGeneral,description,datacentre,datacentre_symbol,prefix,relatedIdentifier,xml,minted,updated",
                  wt: "json" }
       url = "http://search.datacite.org/api?" + URI.encode_www_form(params)
       response = Maremma.get(url, options)
@@ -109,10 +109,12 @@ module Resolvable
         "title" => title,
         "container-title" => metadata.fetch("publisher", nil),
         "description" => metadata.fetch("description", nil),
-        "issued" => get_date_parts_from_parts(metadata.fetch("publicationYear", nil)),
+        "published" => metadata.fetch("publicationYear", nil),
+        "issued" => metadata.fetch("minted", nil),
         "DOI" => doi,
         "type" => metadata.fetch("resourceTypeGeneral", nil),
-        "subtype" => metadata.fetch("resourceType", nil) }
+        "subtype" => metadata.fetch("resourceType", nil),
+        "publisher_id" => metadata.fetch("datacentre_symbol", nil) }
     end
 
     def get_orcid_metadata(orcid, options = {})
