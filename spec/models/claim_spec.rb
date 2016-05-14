@@ -39,11 +39,12 @@ describe Claim, type: :model, vcr: true do
     describe 'oauth_client_post' do
       it 'should post' do
         response = subject.oauth_client_post(subject.data)
-        claim = response["data"].fetch("orcid_message", {})
-                                .fetch("orcid_profile", {})
-                                .fetch("orcid_activities", {})
-                                .fetch("orcid_works", {})
-                                .fetch("orcid_work", {})
+        claim = response.fetch("data", {})
+                        .fetch("orcid_message", {})
+                        .fetch("orcid_profile", {})
+                        .fetch("orcid_activities", {})
+                        .fetch("orcid_works", {})
+                        .fetch("orcid_work", {})
         expect(claim["work_title"]).to eq("title"=>"omniauth-orcid: v.1.0")
       end
     end

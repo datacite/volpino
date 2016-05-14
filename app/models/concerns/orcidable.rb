@@ -18,8 +18,8 @@ module Orcidable
 
     def oauth_client_get(options={})
       options[:endpoint] ||= "orcid-works"
-      response = application_token.get "#{ENV['ORCID_API_URL']}/v#{ORCID_VERSION}/#{uid}/#{options[:endpoint]}" do |get|
-        get.headers['Accept'] = 'application/json'
+      response = application_token.get "#{ENV['ORCID_API_URL']}/v#{ORCID_VERSION}/#{uid}/#{options[:endpoint]}" do |request|
+        request.headers['Accept'] = 'application/json'
       end
 
       return { "data" => JSON.parse(response.body) } if response.status == 200
@@ -31,9 +31,9 @@ module Orcidable
 
     def oauth_client_post(data, options={})
       options[:endpoint] ||= "orcid-works"
-      response = user_token.post("#{ENV['ORCID_API_URL']}/v#{ORCID_VERSION}/#{uid}/#{options[:endpoint]}") do |post|
-        post.headers['Content-Type'] = 'application/orcid+xml'
-        post.body = data
+      response = user_token.post("#{ENV['ORCID_API_URL']}/v#{ORCID_VERSION}/#{uid}/#{options[:endpoint]}") do |request|
+        request.headers['Content-Type'] = 'application/orcid+xml'
+        request.body = data
       end
 
       return { "data" => Hash.from_xml(data) } if response.status == 201

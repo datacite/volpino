@@ -28,6 +28,13 @@ FactoryGirl.define do
     initialize_with { Service.where(name: name).first_or_initialize }
   end
 
+  factory :member do
+    name 'ANDS'
+    title 'Australian National Data Service (ANDS)'
+
+    initialize_with { Member.where(name: name).first_or_initialize }
+  end
+
   factory :tag do
     name 'search'
     title 'Search'

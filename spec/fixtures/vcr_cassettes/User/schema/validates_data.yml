@@ -35,19 +35,19 @@ http_interactions:
       Cache-Control:
       - max-age=300
       X-Github-Request-Id:
-      - 17EB2F14:4D60:13495A3D:571A4AE4
+      - B91F1114:5B7D:A7386:5736DA06
       Content-Length:
       - '14182'
       Accept-Ranges:
       - bytes
       Date:
-      - Fri, 22 Apr 2016 16:01:40 GMT
+      - Sat, 14 May 2016 07:55:51 GMT
       Via:
       - 1.1 varnish
       Connection:
       - keep-alive
       X-Served-By:
-      - cache-sjc3128-SJC
+      - cache-fra1239-FRA
       X-Cache:
       - MISS
       X-Cache-Hits:
@@ -57,9 +57,9 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Fastly-Request-Id:
-      - 9a4021be48bbd6af6ce367a519349a2e316e03b4
+      - 364a1f41b101588141775dcd054796f211defd14
       Expires:
-      - Fri, 22 Apr 2016 16:06:40 GMT
+      - Sat, 14 May 2016 08:00:51 GMT
       Source-Age:
       - '0'
     body:
@@ -1252,5 +1252,5 @@ http_interactions:
         base=\"orcid:non-empty-string\">\n\t\t\t\t<xs:attribute name=\"language-code\"
         type=\"orcid:language-code\" use=\"required\"/>\n\t\t\t</xs:extension>\n\t\t</xs:simpleContent>\n\t</xs:complexType>\n</xs:schema>\n"
     http_version: 
-  recorded_at: Fri, 22 Apr 2016 16:01:40 GMT
+  recorded_at: Sat, 14 May 2016 07:55:51 GMT
 recorded_with: VCR 2.9.3

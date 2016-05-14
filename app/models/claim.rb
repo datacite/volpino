@@ -159,7 +159,7 @@ class Claim < ActiveRecord::Base
   end
 
   def publication_date
-    get_parts_from_date_parts(metadata.fetch('issued', {}))
+    get_year_month_day(metadata.fetch('published', nil))
   end
 
   def description

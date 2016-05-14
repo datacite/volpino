@@ -52,7 +52,8 @@ describe Claim, type: :model, vcr: true do
         expect(response["title"]).to eq("Uncovering Impact - Moving beyond the journal article and beyond the impact factor")
         expect(response["container-title"]).to eq("Figshare")
         expect(response["author"]).to eq([{"family"=>"Trends", "given"=>"Research"}, {"family"=>"Piwowar", "given"=>"Heather", "ORCID"=>"http://orcid.org/0000-0003-1613-5981"}])
-        expect(response["issued"]).to eq("date-parts"=>[[2013]])
+        expect(response["published"]).to eq("2013")
+        expect(response["issued"]).to eq("2013-02-13T14:46:00Z")
         expect(response["type"]).to eq("Dataset")
       end
 
@@ -118,7 +119,8 @@ describe Claim, type: :model, vcr: true do
         expect(response["title"]).to eq("Data from: A new malaria agent in African hominids")
         expect(response["container-title"]).to eq("Dryad Digital Repository")
         expect(response["author"]).to eq([{"family"=>"Ollomo", "given"=>"Benjamin"}, {"family"=>"Durand", "given"=>"Patrick"}, {"family"=>"Prugnolle", "given"=>"Franck"}, {"family"=>"Douzery", "given"=>"Emmanuel J. P."}, {"family"=>"Arnathau", "given"=>"Céline"}, {"family"=>"Nkoghe", "given"=>"Dieudonné"}, {"family"=>"Leroy", "given"=>"Eric"}, {"family"=>"Renaud", "given"=>"François"}])
-        expect(response["issued"]).to eq("date-parts"=>[[2011]])
+        expect(response["published"]).to eq("2011")
+        expect(response["issued"]).to eq("2011-02-01T17:32:02Z")
         expect(response["type"]).to eq("Dataset")
       end
 

@@ -160,7 +160,7 @@ class User < ActiveRecord::Base
 
   def push_data
     # user has not linked github username
-    return {} if github.blank?
+    return {} unless github.present?
 
     # missing data raise errors
     return { "errors" => [{ "title" => "Missing data" }] } if data.nil?
@@ -168,7 +168,7 @@ class User < ActiveRecord::Base
     # validate data
     return { "errors" => validation_errors.map { |error| { "title" => error } }} if validation_errors.present?
 
-    #oauth_client_post(data, endpoint: "orcid-bio/external-identifiers")
+    oauth_client_post(data, endpoint: "orcid-bio/external-identifiers")
   end
 
   def user_token

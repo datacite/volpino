@@ -33,6 +33,18 @@ module Dateable
         'day' => parts[2] }.compact
     end
 
+    def get_year_month_day(iso8601_time)
+      return [] if iso8601_time.nil?
+
+      year = iso8601_time[0..3]
+      month = iso8601_time[5..6]
+      day = iso8601_time[8..9]
+
+      { 'year' => year.to_i,
+        'month' => month.to_i,
+        'day' => day.to_i }.delete_if { |key, value| value == 0 }
+    end
+
     def get_iso8601_from_time(time)
       return nil if time.blank?
 

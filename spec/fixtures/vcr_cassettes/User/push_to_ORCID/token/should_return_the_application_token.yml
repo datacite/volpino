@@ -23,7 +23,7 @@ http_interactions:
       Server:
       - nginx/1.4.6 (Ubuntu)
       Date:
-      - Fri, 22 Apr 2016 15:48:47 GMT
+      - Sat, 14 May 2016 09:29:44 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Transfer-Encoding:
@@ -38,7 +38,7 @@ http_interactions:
       - no-cache
     body:
       encoding: UTF-8
-      string: '{"access_token":"bd212fbe-d620-4174-99d7-aa00b35c5182","token_type":"bearer","refresh_token":"94c46132-1581-408b-9fbe-f076e933c1fe","expires_in":631138518,"scope":"/read-public","orcid":null}'
+      string: '{"access_token":"0511a1f7-6dda-4d5c-9218-1c9acde0e84d","token_type":"bearer","refresh_token":"d638ce62-9555-43f7-b206-0370ac7593a9","expires_in":631138518,"scope":"/read-public","orcid":null}'
     http_version: 
-  recorded_at: Fri, 22 Apr 2016 15:48:47 GMT
+  recorded_at: Sat, 14 May 2016 09:29:44 GMT
 recorded_with: VCR 2.9.3

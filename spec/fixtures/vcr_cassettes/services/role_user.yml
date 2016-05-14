@@ -21,29 +21,29 @@ http_interactions:
       Content-Type:
       - application/json;charset=UTF-8
       Date:
-      - Fri, 26 Feb 2016 09:15:26 GMT
+      - Sat, 14 May 2016 06:56:11 GMT
       Access-Control-Allow-Origin:
       - "*"
       Connection:
       - keep-alive
       Set-Cookie:
-      - X-Mapping-fjhppofk=C09163FCAE41D74539C91CB2476C0D71; path=/
+      - X-Mapping-fjhppofk=BB082610361E703B21115ED5EB3CF586; path=/
     body:
       encoding: UTF-8
-      string: '{"message-version":"1.2","orcid-profile":{"orcid":null,"orcid-id":null,"orcid-identifier":{"value":null,"uri":"http://orcid.org/0000-0002-1825-0097","path":"0000-0002-1825-0097","host":"orcid.org"},"orcid-deprecated":null,"orcid-preferences":{"locale":"EN"},"orcid-history":{"creation-method":"WEBSITE","completion-date":{"value":1352727077585},"submission-date":{"value":1352723476658},"last-modified-date":{"value":1456422974842},"claimed":{"value":true},"source":null,"deactivation-date":null,"verified-email":{"value":true},"verified-primary-email":{"value":true},"visibility":null},"orcid-bio":null,"orcid-activities":{"affiliations":null,"orcid-works":{"orcid-work":[{"put-code":"9543020","work-title":{"title":{"value":"A
+      string: '{"message-version":"1.2","orcid-profile":{"orcid":null,"orcid-id":null,"orcid-identifier":{"value":null,"uri":"http://orcid.org/0000-0002-1825-0097","path":"0000-0002-1825-0097","host":"orcid.org"},"orcid-deprecated":null,"orcid-preferences":{"locale":"EN"},"orcid-history":{"creation-method":"WEBSITE","completion-date":{"value":1352727077585},"submission-date":{"value":1352723476658},"last-modified-date":{"value":1462475693885},"claimed":{"value":true},"source":null,"deactivation-date":null,"verified-email":{"value":true},"verified-primary-email":{"value":true},"visibility":null},"orcid-bio":null,"orcid-activities":{"affiliations":null,"orcid-works":{"orcid-work":[{"put-code":"9543020","work-title":{"title":{"value":"A
         Methodology for the Emulation of Architecture"},"subtitle":{"value":"Journal
         of Psychoceramics"},"translated-title":null},"journal-title":null,"short-description":null,"work-citation":{"work-citation-type":"BIBTEX","citation":"@article{Carberry_2012,
-        title={A Methodology for the Emulation of Architecture}, volume={5}, url={http://dx.doi.org/10.5555/<API_KEY>680},
-        DOI={10.5555/<API_KEY>680}, number={11}, journal={Journal of Psychoceramics},
+        title={A Methodology for the Emulation of Architecture}, volume={5}, url={http://dx.doi.org/10.5555/12345680},
+        DOI={10.5555/12345680}, number={11}, journal={Journal of Psychoceramics},
         publisher={CrossRef test user}, author={Carberry, Josiah}, year={2012}, month={Feb},
-        pages={1-3}}"},"work-type":"JOURNAL_ARTICLE","publication-date":{"year":{"value":"2012"},"month":null,"day":null,"media-type":null},"work-external-identifiers":{"work-external-identifier":[{"work-external-identifier-type":"ISSN","work-external-identifier-id":{"value":"0264-3561"}},{"work-external-identifier-type":"DOI","work-external-identifier-id":{"value":"10.5555/<API_KEY>680"}}],"scope":null},"url":null,"work-contributors":null,"work-source":null,"source":{"source-orcid":{"value":null,"uri":"http://orcid.org/0000-0002-3054-1567","path":"0000-0002-3054-1567","host":"orcid.org"},"source-client-id":null,"source-name":{"value":"CrossRef
+        pages={1-3}}"},"work-type":"JOURNAL_ARTICLE","publication-date":{"year":{"value":"2012"},"month":null,"day":null,"media-type":null},"work-external-identifiers":{"work-external-identifier":[{"work-external-identifier-type":"ISSN","work-external-identifier-id":{"value":"0264-3561"}},{"work-external-identifier-type":"DOI","work-external-identifier-id":{"value":"10.5555/12345680"}}],"scope":null},"url":null,"work-contributors":null,"work-source":null,"source":{"source-orcid":{"value":null,"uri":"http://orcid.org/0000-0002-3054-1567","path":"0000-0002-3054-1567","host":"orcid.org"},"source-client-id":null,"source-name":{"value":"CrossRef
         Metadata Search"},"source-date":{"value":1375526492206}},"created-date":{"value":1375526492206},"last-modified-date":{"value":1446663147002},"language-code":null,"country":null,"visibility":"PUBLIC"},{"put-code":"18777963","work-title":{"title":{"value":"A
         Methodology for the Emulation of Architecture"},"subtitle":{"value":"Journal
         of Psychoceramics"},"translated-title":null},"journal-title":null,"short-description":null,"work-citation":{"work-citation-type":"BIBTEX","citation":"@article{Carberry_2012,
-        title={A Methodology for the Emulation of Architecture}, volume={5}, url={http://dx.doi.org/10.5555/<API_KEY>680},
-        DOI={10.5555/<API_KEY>680}, number={11}, journal={Journal of Psychoceramics},
+        title={A Methodology for the Emulation of Architecture}, volume={5}, url={http://dx.doi.org/10.5555/12345680},
+        DOI={10.5555/12345680}, number={11}, journal={Journal of Psychoceramics},
         publisher={CrossRef test user}, author={Carberry, Josiah}, year={2012}, month={Feb},
-        pages={1-3}}"},"work-type":"JOURNAL_ARTICLE","publication-date":{"year":{"value":"2012"},"month":null,"day":null,"media-type":null},"work-external-identifiers":{"work-external-identifier":[{"work-external-identifier-type":"DOI","work-external-identifier-id":{"value":"10.5555/<API_KEY>680"}}],"scope":null},"url":null,"work-contributors":null,"work-source":null,"source":{"source-orcid":{"value":null,"uri":"http://orcid.org/0000-0002-1825-0097","path":"0000-0002-1825-0097","host":"orcid.org"},"source-client-id":null,"source-name":{"value":"Josiah
+        pages={1-3}}"},"work-type":"JOURNAL_ARTICLE","publication-date":{"year":{"value":"2012"},"month":null,"day":null,"media-type":null},"work-external-identifiers":{"work-external-identifier":[{"work-external-identifier-type":"DOI","work-external-identifier-id":{"value":"10.5555/12345680"}}],"scope":null},"url":null,"work-contributors":null,"work-source":null,"source":{"source-orcid":{"value":null,"uri":"http://orcid.org/0000-0002-1825-0097","path":"0000-0002-1825-0097","host":"orcid.org"},"source-client-id":null,"source-name":{"value":"Josiah
         Carberry"},"source-date":{"value":1375497097656}},"created-date":{"value":1375497097656},"last-modified-date":{"value":1446663147002},"language-code":null,"country":null,"visibility":"PUBLIC"},{"put-code":"4562455","work-title":{"title":{"value":"The
         Memory Bus Considered Harmful"},"subtitle":{"value":"Journal of Psychoceramics"},"translated-title":null},"journal-title":null,"short-description":null,"work-citation":{"work-citation-type":"BIBTEX","citation":"@article{Carberry_2012,
         title={The Memory Bus Considered Harmful}, volume={9}, url={http://dx.doi.org/10.5555/666655554444},
@@ -73,16 +73,16 @@ http_interactions:
         a Unified Theory of High-Energy Metaphysics: Silly String Theory"},"subtitle":{"value":"Journal
         of Psychoceramics"},"translated-title":null},"journal-title":null,"short-description":null,"work-citation":{"work-citation-type":"BIBTEX","citation":"@article{Carberry_2008,
         title={Toward a Unified Theory of High-Energy Metaphysics: Silly String Theory},
-        volume={5}, url={http://dx.doi.org/10.5555/<API_KEY>678}, DOI={10.5555/<API_KEY>678},
+        volume={5}, url={http://dx.doi.org/10.5555/12345678}, DOI={10.5555/12345678},
         number={11}, journal={Journal of Psychoceramics}, publisher={CrossRef test
-        user}, author={Carberry, Josiah}, year={2008}, month={Aug}, pages={1-3}}"},"work-type":"JOURNAL_ARTICLE","publication-date":{"year":{"value":"2008"},"month":null,"day":null,"media-type":null},"work-external-identifiers":{"work-external-identifier":[{"work-external-identifier-type":"ISSN","work-external-identifier-id":{"value":"0264-3561"}},{"work-external-identifier-type":"DOI","work-external-identifier-id":{"value":"10.5555/<API_KEY>678"}}],"scope":null},"url":null,"work-contributors":null,"work-source":null,"source":{"source-orcid":{"value":null,"uri":"http://orcid.org/0000-0002-1825-0097","path":"0000-0002-1825-0097","host":"orcid.org"},"source-client-id":null,"source-name":{"value":"Josiah
+        user}, author={Carberry, Josiah}, year={2008}, month={Aug}, pages={1-3}}"},"work-type":"JOURNAL_ARTICLE","publication-date":{"year":{"value":"2008"},"month":null,"day":null,"media-type":null},"work-external-identifiers":{"work-external-identifier":[{"work-external-identifier-type":"ISSN","work-external-identifier-id":{"value":"0264-3561"}},{"work-external-identifier-type":"DOI","work-external-identifier-id":{"value":"10.5555/12345678"}}],"scope":null},"url":null,"work-contributors":null,"work-source":null,"source":{"source-orcid":{"value":null,"uri":"http://orcid.org/0000-0002-1825-0097","path":"0000-0002-1825-0097","host":"orcid.org"},"source-client-id":null,"source-name":{"value":"Josiah
         Carberry"},"source-date":{"value":1361131256560}},"created-date":{"value":1361131256560},"last-modified-date":{"value":1446663147002},"language-code":null,"country":null,"visibility":"PUBLIC"},{"put-code":"4562453","work-title":{"title":{"value":"Developing
         Thin Clients Using Amphibious Epistemologies"},"subtitle":{"value":"Journal
         of Psychoceramics"},"translated-title":null},"journal-title":null,"short-description":null,"work-citation":{"work-citation-type":"BIBTEX","citation":"@article{Carberry_2008,
         title={Developing Thin Clients Using Amphibious Epistemologies}, volume={5},
-        url={http://dx.doi.org/10.5555/<API_KEY>679}, DOI={10.5555/<API_KEY>679},
-        number={11}, journal={Journal of Psychoceramics}, publisher={CrossRef test
-        user}, author={Carberry, Josiah}, year={2008}, month={Feb}, pages={1-3}}"},"work-type":"JOURNAL_ARTICLE","publication-date":{"year":{"value":"2008"},"month":null,"day":null,"media-type":null},"work-external-identifiers":{"work-external-identifier":[{"work-external-identifier-type":"ISSN","work-external-identifier-id":{"value":"0264-3561"}},{"work-external-identifier-type":"DOI","work-external-identifier-id":{"value":"10.5555/<API_KEY>679"}}],"scope":null},"url":null,"work-contributors":null,"work-source":null,"source":{"source-orcid":{"value":null,"uri":"http://orcid.org/0000-0002-1825-0097","path":"0000-0002-1825-0097","host":"orcid.org"},"source-client-id":null,"source-name":{"value":"Josiah
+        url={http://dx.doi.org/10.5555/12345679}, DOI={10.5555/12345679}, number={11},
+        journal={Journal of Psychoceramics}, publisher={CrossRef test user}, author={Carberry,
+        Josiah}, year={2008}, month={Feb}, pages={1-3}}"},"work-type":"JOURNAL_ARTICLE","publication-date":{"year":{"value":"2008"},"month":null,"day":null,"media-type":null},"work-external-identifiers":{"work-external-identifier":[{"work-external-identifier-type":"ISSN","work-external-identifier-id":{"value":"0264-3561"}},{"work-external-identifier-type":"DOI","work-external-identifier-id":{"value":"10.5555/12345679"}}],"scope":null},"url":null,"work-contributors":null,"work-source":null,"source":{"source-orcid":{"value":null,"uri":"http://orcid.org/0000-0002-1825-0097","path":"0000-0002-1825-0097","host":"orcid.org"},"source-client-id":null,"source-name":{"value":"Josiah
         Carberry"},"source-date":{"value":1361131256538}},"created-date":{"value":1361131256538},"last-modified-date":{"value":1446663147002},"language-code":null,"country":null,"visibility":"PUBLIC"},{"put-code":"19980729","work-title":{"title":{"value":"Bulk
         and surface plasmons in artificially structured materials"},"subtitle":null,"translated-title":null},"journal-title":{"value":"IEEE
         Transactions on Plasma Science"},"short-description":null,"work-citation":{"work-citation-type":"BIBTEX","citation":"@article
@@ -99,5 +99,5 @@ http_interactions:
         pat","visibility":"PUBLIC"},"contributor-email":null,"contributor-attributes":{"contributor-sequence":null,"contributor-role":"AUTHOR"}}]},"work-source":null,"source":{"source-orcid":{"value":null,"uri":"http://orcid.org/0000-0002-3054-1567","path":"0000-0002-3054-1567","host":"orcid.org"},"source-client-id":null,"source-name":{"value":"CrossRef
         Metadata Search"},"source-date":{"value":1443541848745}},"created-date":{"value":1443541848745},"last-modified-date":{"value":1446663147002},"language-code":null,"country":null,"visibility":"PUBLIC"}],"scope":null},"funding-list":null},"orcid-internal":null,"type":"USER","group-type":null,"client-type":null},"orcid-search-results":null,"error-desc":null}'
     http_version: 
-  recorded_at: Fri, 26 Feb 2016 09:15:26 GMT
+  recorded_at: Sat, 14 May 2016 06:56:11 GMT
 recorded_with: VCR 2.9.3
