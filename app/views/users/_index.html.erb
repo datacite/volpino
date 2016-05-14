@@ -77,6 +77,12 @@
 
                   <h5>Account created</h5>
                   <%= l user.created_at, format: :medium %>
+
+                  <div class="btn-toolbar pull-right">
+                    <div class="btn-group btn-group-sm orcid">
+                      <%= link_to 'expire token', user_path(user, user: { expires_at: Time.zone.now }), { method: :put, remote: true, class: 'btn btn-warning' } %>
+                    </div>
+                  </div>
                 </div>
               </div>
             <% end %>
