@@ -65,7 +65,7 @@ class Claim < ActiveRecord::Base
   scope :failed, -> { by_state(2).order_by_date }
   scope :done, -> { by_state(3).order_by_date }
   scope :ignored, -> { by_state(4).order_by_date }
-  scope :stale, -> { where("state < 2", state).order_by_date }
+  scope :stale, -> { where("state < 2").order_by_date }
   scope :total, ->(duration) { where(updated_at: (Time.zone.now.beginning_of_hour - duration.hours)..Time.zone.now.beginning_of_hour) }
 
   scope :query, ->(query) { where("doi like ?", "%#{query}%") }
