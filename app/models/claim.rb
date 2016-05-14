@@ -111,8 +111,8 @@ class Claim < ActiveRecord::Base
     # already claimed
     return { "data" => data } if claimed_at.present?
 
-    # user has not signed up yet
-    return {} unless user.present?
+    # user has not signed up yet or authentication_token is missing
+    return {} unless user.present? && user.authentication_token.present?
 
     # user has not given permission for auto-update
     return {} if source_id == "orcid_update" && user && !user.auto_update
