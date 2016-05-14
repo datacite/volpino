@@ -64,6 +64,8 @@ class Claim < ActiveRecord::Base
   scope :working, -> { by_state(1).order_by_date }
   scope :failed, -> { by_state(2).order_by_date }
   scope :done, -> { by_state(3).order_by_date }
+  scope :ignored, -> { by_state(4).order_by_date }
+  scope :stale, -> { where("state < 2", state).order_by_date }
   scope :total, ->(duration) { where(updated_at: (Time.zone.now.beginning_of_hour - duration.hours)..Time.zone.now.beginning_of_hour) }
 
   scope :query, ->(query) { where("doi like ?", "%#{query}%") }
@@ -110,7 +112,7 @@ class Claim < ActiveRecord::Base
     return { "data" => data } if claimed_at.present?
 
     # user has not signed up yet
-    return {} if user.nil?
+    return {} unless user.present?
 
     # user has not given permission for auto-update
     return {} if source_id == "orcid_update" && user && !user.auto_update
