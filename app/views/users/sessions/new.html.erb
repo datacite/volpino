@@ -3,8 +3,10 @@
     <div class="col-md-4 col-md-offset-4">
       <div class="panel panel-default panel-source">
         <div class="panel-body">
-          <%= link_to "#{icon('orcid')} Sign in with ORCID".html_safe, user_omniauth_authorize_path(:orcid), class: 'btn btn-social btn-orcid' %>
-          <%= link_to "#{icon('github')} Sign in with GitHub".html_safe, user_omniauth_authorize_path(:github), class: 'btn btn-social btn-github' %>
+          <div class="btn-group-vertical social-signin" role="group">
+            <%= link_to "#{icon('orcid')} Sign in with ORCID".html_safe, user_omniauth_authorize_path(:orcid), class: 'btn btn-social btn-orcid' %>
+            <%= link_to "#{icon('github')} Sign in with GitHub".html_safe, user_omniauth_authorize_path(:github), class: 'btn btn-social btn-github' %>
+          </div>
         </div>
       </div>
     </div>
