@@ -11,13 +11,24 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def github
     auth = request.env["omniauth.auth"]
 
-    @user = current_user
-    @user.update_attributes(github: auth.info.nickname,
-                            github_uid: auth.uid,
-                            github_token: auth.credentials.token)
+    if current_user.present?
+      @user = current_user
+      @user.update_attributes(github: auth.info.nickname,
+                              github_uid: auth.uid,
+                              github_token: auth.credentials.token)
+      flash[:notice] = "Account successfully linked with GitHub account."
+    else
+      @user =  User.where(github_uid: auth.uid).first
+      sign_in @user if @user
+    end
 
-    flash[:notice] = "Account successfully linked with GitHub account."
-    redirect_to user_path("me")
+    if @user.present?
+      redirect_to user_path("me")
+    else
+      session["devise.github_data"] = request.env["omniauth.auth"]
+      flash[:alert] = "Error signing in with GitHub."
+      redirect_to root_path
+    end
   end
 
   # generic handler for all omniauth providers
