@@ -38,7 +38,7 @@ gem 'httplog'
 gem 'lograge', '~> 0.3.5'
 
 gem 'devise', '~> 3.5', '>= 3.5.2'
-gem "omniauth-orcid", "~> 1.0"
+gem "omniauth-orcid", "1.1.1"
 gem 'omniauth-github', '~> 1.1.2'
 gem 'omniauth', '~> 1.2.2'
 gem 'jwt', '~> 1.5', '>= 1.5.1'
