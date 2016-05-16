@@ -12,6 +12,10 @@ class Member < ActiveRecord::Base
     name
   end
 
+  def per_page
+    100
+  end
+
   def country_name
     ISO3166::Country[country_code].name
   end
