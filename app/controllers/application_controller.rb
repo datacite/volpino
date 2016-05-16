@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
     if resource.created_at > 1.minute.ago
       '/users/me'
     else
-      request.env['omniauth.origin'].presence || stored_location_for(resource) || '/users/me'
+      request.env['omniauth.origin'].presence || stored_location_for(resource) || root_path
     end
   end
 
