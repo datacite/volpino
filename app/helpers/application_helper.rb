@@ -74,7 +74,7 @@ module ApplicationHelper
   end
 
   def member_types
-    %w(full affiliate)
+    %w(allocating non-allocating)
   end
 
   def regions
