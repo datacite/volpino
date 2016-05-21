@@ -8,4 +8,8 @@ Rails.application.config.assets.version = '1.0'
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-Rails.application.config.assets.precompile += %W( api/*.js status/*.js users/*.js works/*.js #{ENV['MODE']}.css )
+if ENV['CDN_HOST'].present?
+  Rails.application.config.assets.precompile += %W( api/*.js status/*.js users/*.js works/*.js )
+else
+  Rails.application.config.assets.precompile += %W( api/*.js status/*.js users/*.js works/*.js #{ENV['MODE']}.css )
+end

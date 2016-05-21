@@ -11,7 +11,7 @@
       </div>
       <div class="panel-body">
         <% if @panel == 'account' && (controller.action_name == "edit" || (controller.action_name == "update" && !@user.errors.empty?)) %>
-          <img src="<%= asset_path('orcid_32x32.gif', host: ENV['CDN_HOST']) %>" class="orcid-logo pull-left">
+          <img src="<%= asset_path('/images/orcid_32x32.gif', host: ENV['CDN_HOST']) %>" class="orcid-logo pull-left">
           <p>We use the token to authenticate with ORCID on your behalf.</p>
           <dl class="dl-horizontal">
             <dt>ORCID</dt>
