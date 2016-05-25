@@ -1,6 +1,6 @@
 class MemberSerializer < ActiveModel::Serializer
   cache key: 'member'
-  attributes :id, :title, :description, :member_type, :region, :country, :year
+  attributes :id, :title, :description, :member_type, :region, :country, :year, :updated
 
   def id
     object.name
@@ -16,5 +16,9 @@ class MemberSerializer < ActiveModel::Serializer
 
   def description
     GitHub::Markdown.render_gfm(object.description)
+  end
+
+  def updated
+    object.updated_at
   end
 end
