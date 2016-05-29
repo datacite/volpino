@@ -40,7 +40,6 @@ class Api::V1::UsersController < Api::BaseController
 
   def load_user
     @user = User.where(uid: params[:id]).first
-
     fail ActiveRecord::RecordNotFound unless @user.present?
   end
 end

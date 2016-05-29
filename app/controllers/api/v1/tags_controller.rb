@@ -33,6 +33,8 @@ class Api::V1::TagsController < Api::BaseController
 
   def show
     @tag = Tag.where(name: params[:id]).first
+    fail ActiveRecord::RecordNotFound unless @tag.present?
+
     render json: @tag
   end
 end

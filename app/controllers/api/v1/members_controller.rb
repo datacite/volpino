@@ -71,6 +71,8 @@ class Api::V1::MembersController < Api::BaseController
 
   def show
     @member = Member.where(name: params[:id]).first
+    fail ActiveRecord::RecordNotFound unless @member.present?
+
     render json: @member
   end
 end

@@ -34,6 +34,8 @@ class Api::V1::ServicesController < Api::BaseController
 
   def show
     @service = Service.where(name: params[:id]).first
+    fail ActiveRecord::RecordNotFound unless @service.present?
+
     render json: @service
   end
 end
