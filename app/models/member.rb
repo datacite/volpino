@@ -6,6 +6,8 @@ class Member < ActiveRecord::Base
 
   before_validation :set_region
 
+  nilify_blanks
+
   scope :query, ->(query) { where("name like ? OR title like ?", "%#{query}%", "%#{query}%") }
 
   def to_param
