@@ -95,6 +95,7 @@ class UsersController < ApplicationController
                                  :role,
                                  :member_id,
                                  :expires_at,
+                                 :api_key,
                                  :authentication_token)
   end
 end
