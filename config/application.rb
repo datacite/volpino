@@ -22,6 +22,11 @@ if File.exist?(env_json_file)
   env_vars.each { |k, v| ENV[k] = v }
 end
 
+# default values for some ENV variables
+ENV['APPLICATION'] ||= "volpino"
+ENV['SITENAMELONG'] ||= "DataCite Profiles"
+ENV['TRUSTED_IP'] ||= "10.0.10.1"
+
 module Volpino
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -46,6 +51,10 @@ module Volpino
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:api_key, :jwt]
+
+    # Use a different logger for distributed setups
+    config.lograge.enabled = true
+    config.logger = Syslog::Logger.new(ENV['APPLICATION'])
 
     # compress responses with deflate or gzip
     config.middleware.use Rack::Deflater

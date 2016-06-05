@@ -51,10 +51,6 @@ Rails.application.configure do
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
 
-  # Use a different logger for distributed setups
-  config.lograge.enabled = true
-  config.logger = Syslog::Logger.new(ENV['APPLICATION'])
-
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
