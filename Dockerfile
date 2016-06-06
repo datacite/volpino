@@ -27,32 +27,40 @@ COPY vendor/docker/cors.conf /etc/nginx/conf.d/cors.conf
 # Enable the memcached service
 RUN rm -f /etc/service/memcached/down
 
-# Prepare shared folder
-RUN mkdir -p /home/app/webapp/shared
-COPY vendor /home/app/webapp/shared/vendor
-RUN chown -R app:app /home/app/webapp/shared && \
-    chmod -R 755 /home/app/webapp/shared
+# Prepare tmp folder for installation of Ruby gems and npm modules
+RUN mkdir -p /home/app/tmp
+COPY vendor /home/app/tmp
+RUN chown -R app:app /home/app/tmp && \
+    chmod -R 755 /home/app/tmp
 
 # Install npm and bower packages
-WORKDIR /home/app/webapp/shared/vendor
+WORKDIR /home/app/tmp/vendor
 RUN sudo -u app npm install
 
 # Install Ruby gems
-COPY Gemfile /home/app/webapp/shared/Gemfile
-COPY Gemfile.lock /home/app/webapp/shared/Gemfile.lock
-WORKDIR /home/app/webapp/shared
-RUN gem install bundler
-RUN sudo -u app bundle install --path vendor/bundle
+COPY Gemfile /home/app/tmp/Gemfile
+COPY Gemfile.lock /home/app/tmp/Gemfile.lock
+WORKDIR /home/app/tmp
+RUN gem install bundler && \
+    mkdir -p /home/app/tmp/vendor/bundle && \
+    chown -R app:app /home/app/tmp/vendor/bundle && \
+    chmod -R 755 /home/app/tmp/vendor/bundle && \
+    sudo -u app bundle install --path vendor/bundle
 
 # Copy webapp folder
-ADD . /home/app/webapp/current
-WORKDIR /home/app/webapp/current
-RUN chown -R app:app /home/app/webapp/current && \
-    chmod -R 755 /home/app/webapp/current
+ADD . /home/app/webapp
+WORKDIR /home/app/webapp
+RUN mkdir -p /home/app/webapp/tmp/pids && \
+    chown -R app:app /home/app/webapp && \
+    chmod -R 755 /home/app/webapp
+
+# Add Runit script for sidekiq workers
+RUN mkdir /etc/service/sidekiq
+ADD vendor/docker/sidekiq.sh /etc/service/sidekiq/run
 
 # Run additional scripts during container startup (i.e. not at build time)
 RUN mkdir -p /etc/my_init.d
-COPY vendor/docker/70_symlink.sh /etc/my_init.d/70_symlink.sh
+COPY vendor/docker/70_install.sh /etc/my_init.d/70_install.sh
 COPY vendor/docker/80_cron.sh /etc/my_init.d/80_cron.sh
 COPY vendor/docker/90_migrate.sh /etc/my_init.d/90_migrate.sh
 
