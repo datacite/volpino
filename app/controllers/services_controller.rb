@@ -59,8 +59,9 @@ class ServicesController < ApplicationController
 
   def load_service
     @service = Service.where(name: params[:id]).first
-    @tags = @service.tags.all
     fail ActiveRecord::RecordNotFound unless @service.present?
+
+    @tags = @service.tags.all
   end
 
   def load_index

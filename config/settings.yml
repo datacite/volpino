@@ -9,6 +9,9 @@ datacite:
    - name: Blog
      url: http://localhost:8030
      icon: rss
+   - name: Event Data
+     url: http://localhost:8050
+     icon: link
    - name: Profiles
      url: http://localhost:8080
      icon: user
@@ -41,9 +44,6 @@ datacite:
    - name: Homepage
      url: https://www.datacite.org
      icon: globe
-   - name: Event Data
-     url: https://eventdata.datacite.org
-     icon: link
    - name: MDS
      url: https://mds.datacite.org
      icon: database

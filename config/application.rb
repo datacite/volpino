@@ -34,7 +34,7 @@ module Volpino
     # -- all .rb files in that directory are automatically loaded.
 
     # add assets installed via bower
-    config.assets.paths << "#{Rails.root}/frontend/bower_components"
+    config.assets.paths << "#{Rails.root}/vendor/bower_components"
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
