@@ -1,8 +1,6 @@
 # Volpino
 
-[![Build Status](https://travis-ci.org/datacite/volpino.svg)](https://travis-ci.org/datacite/volpino)
-[![Code Climate](https://codeclimate.com/github/datacite/volpino/badges/gpa.svg)](https://codeclimate.com/github/datacite/volpino)
-[![Test Coverage](https://codeclimate.com/github/datacite/volpino/badges/coverage.svg)](https://codeclimate.com/github/datacite/volpino/coverage)
+[![Build Status](https://travis-ci.org/datacite/volpino.svg)](https://travis-ci.org/datacite/volpino) [![Code Climate](https://codeclimate.com/github/datacite/volpino/badges/gpa.svg)](https://codeclimate.com/github/datacite/volpino) [![Test Coverage](https://codeclimate.com/github/datacite/volpino/badges/coverage.svg)](https://codeclimate.com/github/datacite/volpino/coverage)
 
 The DataCite service for user accounts. Users are authenticated via ORCID Oauth. Single-sign to various DataCite services via JWT.
 
