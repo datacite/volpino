@@ -11,7 +11,7 @@ The DataCite service for user accounts. Users are authenticated via ORCID Oauth.
 Using Docker.
 
 ```
-docker run -p 8080:80 datacite1/volpino
+docker run -p 8080:80 datacite/volpino
 ```
 
 You can now point your browser to `http://localhost:8080` and use the application.

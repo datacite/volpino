@@ -6,7 +6,7 @@ version: '2'
 services:
   web:
     env_file: .env
-    image: datacite1/spinone
+    image: datacite/volpino
     ports:
       - "8080:80"
   db:
