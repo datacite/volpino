@@ -1,7 +1,7 @@
 class DepositJob < ActiveJob::Base
   queue_as :default
 
-  rescue_from ActiveJob::DeserializationError, ActiveRecord::ConnectionTimeoutError do
+  rescue_from ActiveJob::DeserializationError, ActiveRecord::ConnectionTimeoutError, Faraday::TimeoutError do
     retry_job wait: 5.minutes, queue: :default
   end
 
