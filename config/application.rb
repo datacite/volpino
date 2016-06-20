@@ -54,6 +54,10 @@ module Volpino
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:api_key, :jwt]
 
+    # See everything in the log (default is :info)
+    log_level = ENV["LOG_LEVEL"] ? ENV["LOG_LEVEL"].to_sym : :info
+    config.log_level = log_level
+
     # Use a different logger for distributed setups
     config.lograge.enabled = true
     config.logger = Syslog::Logger.new(ENV['APPLICATION'])
