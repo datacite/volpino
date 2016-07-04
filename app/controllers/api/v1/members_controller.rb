@@ -21,7 +21,7 @@ class Api::V1::MembersController < Api::BaseController
 
   def index
     collection = Member
-    collection = collection.query(params[:q]) if params[:q]
+    collection = collection.query(params[:query]) if params[:query]
 
     if params[:id].present?
       collection = collection.where(name: params[:id])

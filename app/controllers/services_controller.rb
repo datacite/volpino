@@ -9,9 +9,9 @@ class ServicesController < ApplicationController
   load_and_authorize_resource :except => [:show]
 
   def show
-    # use optional :origin and :q parameters to redirect to specific page
+    # use optional :origin and :query parameters to redirect to specific page
     url = @service.redirect_uri + '?'
-    origin = params[:q].present? ? "/?q=#{params[:q]}" : params[:origin]
+    origin = params[:query].present? ? "/works?query=#{params[:query]}" : params[:origin]
 
     redirect_to url +  URI.encode_www_form({
       jwt: current_user.jwt_payload,

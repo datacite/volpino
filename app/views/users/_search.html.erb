@@ -8,7 +8,7 @@
     <div class="search-orcid orcid">
       <%= form_tag('/services/search/?origin=', :method => "get", :class => "inline", :role => "form") do %>
         <div class="input-group">
-          <%= search_field_tag :q, current_user.names_for_search, :placeholder => "Search", :class => "form-control" %>
+          <%= search_field_tag :query, current_user.names_for_search, :placeholder => "Search", :class => "form-control" %>
           <div class="input-group-btn">
             <button class="btn btn-primary" type="submit"><%= icon("search") %></button>
           </div>
