@@ -212,15 +212,17 @@
             <% if @year %>
               <li class="active">
                 <%= link_to icon('check-square-o').html_safe, members_path(query: params[:query], member_type: params[:member_type], region: params[:region]) %>
-                <%= @year.first %>
+                <div class="facet-title"><%= @year.first %></div>
                 <span class="number pull-right"><%= number_with_delimiter(@year.last) %></span>
+                <div class="clearfix"/>
               </li>
             <% else %>
               <% @years.each do |year| %>
                 <li>
                   <%= link_to icon('square-o').html_safe, members_path(query: params[:query], year: year.first, member_type: params[:member_type], region: params[:region]) %>
-                  <%= year.first %>
+                  <div class="facet-title"><%= year.first %></div>
                   <span class="number pull-right"><%= number_with_delimiter(year.last) %></span>
+                  <div class="clearfix"/>
                 </li>
               <% end %>
             <% end %>

@@ -111,15 +111,17 @@
           <% if @role %>
             <li class="active">
               <%= link_to icon('check-square-o').html_safe, users_path %>
-              <%= @role.first.humanize %>
+              <div class="facet-title"><%= @role.first.humanize %></div>
               <span class="number pull-right"><%= number_with_delimiter(@role.last) %></span>
+              <div class="clearfix"/>
             </li>
           <% else %>
             <% @roles.each do |role| %>
               <li>
                 <%= link_to icon('square-o').html_safe, users_path(role: role.first) %>
-                <%= role.first.humanize %>
+                <div class="facet-title"><%= role.first.humanize %></div>
                 <span class="number pull-right"><%= number_with_delimiter(role.last) %></span>
+                <div class="clearfix"/>
               </li>
             <% end %>
           <% end %>

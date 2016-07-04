@@ -118,16 +118,18 @@
           <% if @tag %>
             <li class="active">
               <%= link_to icon('check-square-o').html_safe, services_path %>
-              <%= @tag.title %>
+              <div class="facet-title"><%= @tag.title %></div>
               <span class="number pull-right"><%= @tag.services.count %></span>
+              <div class="clearfix"/>
             </li>
           <% else %>
-            <% unless @tags.blank? %>
+            <% if @tags.present? %>
               <% @tags.each do |tag| %>
                 <li>
                   <%= link_to icon('square-o').html_safe, services_path(tag: tag.name) %>
-                  <%= tag.title %>
+                  <div class="facet-title"><%= tag.title %></div>
                   <span class="number pull-right"><%= tag.services.count %></span>
+                  <div class="clearfix"/>
                 </li>
               <% end %>
             <% end %>

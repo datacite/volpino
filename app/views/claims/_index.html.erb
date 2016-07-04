@@ -76,21 +76,24 @@
             <% if params[:user_id] == current_user.uid %>
               <li>
                 <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], source: params[:source], state: params[:state]) %>
-                <%= current_user.uid %>
+                <div class="facet-title"><%= current_user.uid %></div>
                 <span class="number pull-right"><%= number_with_delimiter(@my_claim_count) %></span>
+                <div class="clearfix"/>
               </li>
             <% else %>
               <li class="active">
                 <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], source: params[:source], state: params[:state], user_id: current_user.uid) %>
-                <%= current_user.uid %>
+                <div class="facet-title"><%= current_user.uid %></div>
                 <span class="number pull-right"><%= number_with_delimiter(@my_claim_count) %></span>
+                <div class="clearfix"/>
               </li>
             <% end %>
             <% if params[:user_id].present? && params[:user_id] != current_user.uid %>
               <li>
                 <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], source: params[:source], state: params[:state], user_id: params[:user_id]) %>
-                <%= params[:user_id] %>
+                <div class="facet-title"><%= params[:user_id] %></div>
                 <span class="number pull-right"><%= number_with_delimiter(@claim_count) %></span>
+                <div class="clearfix"/>
               </li>
             <% end %>
           </ul>
@@ -102,15 +105,17 @@
             <% if @source %>
               <li class="active">
                 <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], state: params[:state]) %>
-                <%= sources[@source.first] %>
+                <div class="facet-title"><%= sources[@source.first] %></div>
                 <span class="number pull-right"><%= number_with_delimiter(@source.last) %></span>
+                <div class="clearfix"/>
               </li>
             <% else %>
               <% @sources.each do |source| %>
                 <li>
                   <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], source: source.first, state: params[:state]) %>
-                  <%= sources[source.first] %>
+                  <div class="facet-title"><%= sources[source.first] %></div>
                   <span class="number pull-right"><%= number_with_delimiter(source.last) %></span>
+                  <div class="clearfix"/>
                 </li>
               <% end %>
             <% end %>
@@ -122,15 +127,17 @@
             <% if @state %>
               <li class="active">
                 <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], source: params[:source]) %>
-                <%= state_names[@state.first].humanize %>
+                <div class="facet-title"><%= state_names[@state.first].humanize %></div>
                 <span class="number pull-right"><%= number_with_delimiter(@state.last) %></span>
+                <div class="clearfix"/>
               </li>
             <% else %>
               <% @states.each do |state| %>
                 <li>
                   <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], source: params[:source], state: state.first) %>
-                  <%= state_names[state.first].humanize %>
+                  <div class="facet-title"><%= state_names[state.first].humanize %></div>
                   <span class="number pull-right"><%= number_with_delimiter(state.last) %></span>
+                  <div class="clearfix"/>
                 </li>
               <% end %>
             <% end %>
