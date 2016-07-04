@@ -3,21 +3,6 @@ class Api::V1::UsersController < Api::BaseController
   before_filter :authenticate_user_from_token!
   load_and_authorize_resource
 
-  swagger_controller :users, "Users"
-
-  swagger_api :show do
-    summary "Show a user"
-    param :path, :id, :string, :required, "me"
-    param :query, 'from-created-date', :integer, :optional, "Created on or after specified date in ISO 8601 format"
-    param :query, 'until-created-date', :integer, :optional, "Created not later than specified date in ISO 8601 format"
-    param :query, 'page[number]', :integer, :optional, "Page number"
-    param :query, 'page[size]', :integer, :optional, "Results per page (1-1000), defaults to 1000"
-    response :ok
-    response :unprocessable_entity
-    response :not_found
-    response :internal_server_error
-  end
-
   def show
     render json: @user
   end

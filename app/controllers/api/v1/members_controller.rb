@@ -1,24 +1,4 @@
 class Api::V1::MembersController < Api::BaseController
-  swagger_controller :members, "Members"
-
-  swagger_api :index do
-    summary "Returns member information"
-    param :query, 'page[number]', :integer, :optional, "Page number"
-    param :query, 'page[size]', :integer, :optional, "Page size"
-    response :ok
-    response :unprocessable_entity
-    response :not_found
-  end
-
-  swagger_api :show do
-    summary "Show a member"
-    param :path, :id, :string, :required, "Member name"
-    response :ok
-    response :unprocessable_entity
-    response :not_found
-    response :internal_server_error
-  end
-
   def index
     collection = Member
     collection = collection.query(params[:query]) if params[:query]

@@ -1,26 +1,4 @@
 class Api::V1::ServicesController < Api::BaseController
-
-  swagger_controller :services, "Services"
-
-  swagger_api :index do
-    summary "Returns service information"
-    param :query, :query, :string, :optional, "Query for services"
-    param :query, 'page[number]', :integer, :optional, "Page number"
-    param :query, 'page[size]', :integer, :optional, "Page size"
-    response :ok
-    response :unprocessable_entity
-    response :not_found
-  end
-
-  swagger_api :show do
-    summary "Show a service"
-    param :path, :id, :string, :required, "Service name"
-    response :ok
-    response :unprocessable_entity
-    response :not_found
-    response :internal_server_error
-  end
-
   def index
     page = params[:page] || { number: 1, size: 1000 }
     collection = Service

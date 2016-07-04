@@ -4,28 +4,6 @@ class Api::V1::ClaimsController < Api::BaseController
   before_filter :authenticate_user_from_token!
   load_and_authorize_resource :except => [:create]
 
-  swagger_controller :claims, "Claims"
-
-  swagger_api :index do
-    summary "Returns claim information"
-    param :query, :query, :string, :optional, "Query for claims"
-    param :query, :dois, :string, :optional, "Query for dois"
-    param :query, 'page[number]', :integer, :optional, "Page number"
-    param :query, 'page[size]', :integer, :optional, "Page size"
-    response :ok
-    response :unprocessable_entity
-    response :not_found
-  end
-
-  swagger_api :show do
-    summary "Show a claim"
-    param :path, :id, :string, :required, "claim ID"
-    response :ok
-    response :unprocessable_entity
-    response :not_found
-    response :internal_server_error
-  end
-
   def show
     @claim = Claim.where(uuid: params[:id]).first
     render json: @claim
