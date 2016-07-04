@@ -116,6 +116,6 @@ module ApplicationHelper
     data[:contributor_id] = current_user.orcid if current_user.present?
     data[:sort] = @sort.name if @sort.present?
 
-    { class: "navbar-text", id: "api_key", data: data }
+    { class: "logo", id: "api_key", data: data }
   end
 end
