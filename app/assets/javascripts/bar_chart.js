@@ -44,11 +44,11 @@ function barViz(data, div, count, format) {
       if (format === "days") {
         timeStamp = Date.parse(d.key + 'T12:00:00Z');
         var weekNumber = formatWeek(new Date(timeStamp));
-        return (weekNumber % 2 === 0) ? "bar viewed" : "bar viewed-alt";
+        return (weekNumber % 2 === 0) ? "bar relations" : "bar relations-alt";
       } else {
         timeStamp = Date.parse(d.key + ':00:01Z');
         var hour = formatHour(new Date(timeStamp));
-        return (hour >= 11 && hour <= 22) ? "bar viewed-alt" : "bar viewed";
+        return (hour >= 11 && hour <= 22) ? "bar relations-alt" : "bar relations";
       }})
     .attr("x", function(d) {
       if (format === "days") {
