@@ -1,7 +1,7 @@
 {
   "name": "vendor",
   "version": "0.0.0",
-  "description": "volpino",
+  "description": "vendor",
   "private": true,
   "directories": {
     "doc": "doc",
