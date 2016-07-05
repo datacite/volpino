@@ -3,6 +3,9 @@ class Member < ActiveRecord::Base
 
   validates :name, presence: true, uniqueness: true
   validates :title, presence: true
+  validates :member_type, presence: true
+  validates :country_code, presence: true
+  validates :year, presence: true
 
   before_validation :set_region
 

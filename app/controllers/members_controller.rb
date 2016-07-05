@@ -8,6 +8,10 @@ class MembersController < ApplicationController
   def index
   end
 
+  def show
+
+  end
+
   def new
     @member = Member.new
     load_index
@@ -22,20 +26,17 @@ class MembersController < ApplicationController
   end
 
   def edit
-    load_index
-    render :index
+    render :show
   end
 
   def update
     @member.update_attributes(safe_params)
-    load_index
-    render :index
+    render :show
   end
 
   def destroy
     @member.destroy
-    load_index
-    render :index
+    redirect_to members_path
   end
 
   protected

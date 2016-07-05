@@ -17,7 +17,7 @@
 </div>
 
 <div class="row">
-  <div class='col-md-9'>
+  <div class='col-md-9' id="content">
     <% if can?(:manage, Member) and (controller.action_name == "new" or (controller.action_name == "create" and !@member.errors.empty?)) %>
       <div class="panel panel-default">
         <div class="panel-heading panel-title">New member</div>
@@ -42,97 +42,18 @@
       </div>
     <% else %>
       <% if @members.size > 0 %>
-        <div class="panel-group" id="member">
-          <% @members.each do |member| %>
-            <div class="panel panel-default">
-              <div class="panel-heading panel-title panel-list">
-                <%= link_to ("#{h(member.title)}<small class='pull-right'>#{member.name}</small>").html_safe, "#member_#{member.id}", :class => "accordion-toggle", :id => "link_#{member.id}", :data => { :toggle => "collapse", :parent => "#member" }, :href => "#member_#{member.id}" %>
-              </div>
-              <% if can?(:manage, member) && @member && @member.id == member.id && (controller.action_name == "edit" or (controller.action_name == "update" and !@member.errors.empty?)) %>
-                <div id="member_<%= member.id %>" class="panel-collapse collapse.in">
-                  <div class="panel-body">
-                    <%= simple_form_for member, url: member_path(member, query: params[:query], member_type: params[:member_type], region: params[:region], year: params[:year]), html: { member_type: "form", remote: true } do |f| %>
-                      <%= f.input :name %>
-                      <%= f.input :title %>
-                      <%= f.input :description, :input_html => { :rows => 8 } %>
-                      <%= f.input :member_type, collection: member_types.map { |member_type| [member_type.humanize.titleize, member_type] }, include_blank: false, input_html: { class: "form-user" } %>
-                      <%= f.input :country_code, label: "Country", input_html: { class: "form-user" } %>
-                      <%= f.input :logo, input_html: { class: "form-user" } %>
-                      <%= f.input :website, input_html: { class: "form-user" } %>
-                      <%= f.input :email, input_html: { class: "form-user" } %>
-                      <%= f.input :phone, input_html: { class: "form-user" } %>
-                      <%= f.input :year, label: "Year joined", collection: 2009..Date.today.year, input_html: { class: "form-user" } %>
-
-                      <div class="form-group">
-                        <%= f.submit "Save ", class: "btn btn-default" %>
-                        <%= link_to 'Cancel', members_path(query: params[:query], member_type: params[:member_type], region: params[:region], year: params[:year]), { :remote => true, :class => 'btn' } %>
-                      </div>
-                    <% end %>
-                  </div>
-                </div>
-              <% else %>
-                <div id="member_<%= member.id %>" class="panel-collapse collapse">
-                  <div class="panel-body user-list">
-                    <% if can?(:manage, member) %>
-                      <div class="btn-toolbar pull-right">
-                        <div class="btn-group btn-group-sm">
-                          <%= link_to icon("pencil").html_safe, edit_member_path(member, query: params[:query], member_type: params[:member_type], region: params[:region], year: params[:year]), remote: true, class: 'btn btn-default btn-sm', id: "#{member.id}-edit" %>
-                        </div>
-                        <div class="btn-group btn-group-sm">
-                          <%= link_to icon("trash").html_safe, member_path(member, query: params[:query], member_type: params[:member_type], region: params[:region], year: params[:year]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-default btn-sm', id: "#{member.id}-delete" %>
-                        </div>
-                      </div>
-                    <% end %>
-
-                    <% if member.logo.present? %>
-                      <img src="<%= asset_path "/images/members/#{member.logo}", host: ENV['CDN_HOST'] %>">
-                    <% end %>
-
-                    <% if member.description.present? %>
-                      <h5>Description</h5>
-                      <%= markdown(member.description) %>
-                    <% end %>
-
-                    <% if member.member_type.present? %>
-                      <h5>Member type</h5>
-                      <%= member.member_type.humanize.titleize %>
-                    <% end %>
-
-                    <% if member.region.present? %>
-                      <h5>Region</h5>
-                      <%= regions[member.region] %>
-                    <% end %>
-
-                    <% if member.country_code.present? %>
-                      <h5>Country</h5>
-                      <%= member.country_name %>
-                    <% end %>
-
-                    <% if member.year.present? %>
-                      <h5>Year joined</h5>
-                      <%= member.year %>
-                    <% end %>
-
-                    <% if member.website.present? %>
-                      <h5>Website</h5>
-                      <%= link_to h(member.website), member.website %>
-                    <% end %>
-
-                    <% if member.email.present? %>
-                      <h5>Email</h5>
-                      <%= link_to h(member.email), "mailto:#{member.email}" %>
-                    <% end %>
-
-                    <% if member.phone.present? %>
-                      <h5>Phone</h5>
-                      <%= h(member.phone) %>
-                    <% end %>
-                  </div>
-                </div>
-              <% end %>
+        <% @members.each do |member| %>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h3 class="work"><%= link_to h(member.title), member_path(member.name) %></h3>
+              <div class="country"><%= h(member.country_name) %></div>
             </div>
-          <% end %>
-        </div>
+            <div class="panel-footer">
+              <%= icon("info-circle") %><%= member.name %>
+              <span class="pull-right"><%= member.member_type + " member" %></span>
+            </div>
+          </div>
+        <% end %>
         <div class="text-center">
           <%= will_paginate @members, :params => { :controller => members_path }, :renderer => BootstrapPagination::Rails %>
         </div>

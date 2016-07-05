@@ -43,10 +43,10 @@
                   <% if can?(:manage, user) && user.id != current_user.id %>
                     <div class="btn-toolbar pull-right">
                       <div class="btn-group btn-group-sm">
-                        <%= link_to icon("pencil").html_safe, edit_user_path(user, query: params[:query], role: params[:role]), remote: true, class: 'btn btn-default btn-sm', id: "#{user.id}-edit" %>
+                        <%= link_to icon("pencil").html_safe, edit_user_path(user, query: params[:query], role: params[:role], page: params[:page]), remote: true, class: 'btn btn-default btn-sm', id: "#{user.id}-edit" %>
                       </div>
                       <div class="btn-group btn-group-sm">
-                        <%= link_to icon("trash").html_safe, user_path(user, query: params[:query], role: params[:role]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-default btn-sm', id: "#{user.id}-delete" %>
+                        <%= link_to icon("trash").html_safe, user_path(user, query: params[:query], role: params[:role], page: params[:page]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-default btn-sm', id: "#{user.id}-delete" %>
                       </div>
                     </div>
                   <% end %>
@@ -72,7 +72,7 @@
 
                   <% if user.member.present? %>
                     <h5>Member</h5>
-                    <%= link_to h(user.member.title), members_path(id: user.member.name) %>
+                    <%= link_to h(user.member.title), member_path(user.member.name) %>
                   <% end %>
 
                   <h5>Account created</h5>
