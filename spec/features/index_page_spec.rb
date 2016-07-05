@@ -3,7 +3,7 @@ require 'rails_helper'
 describe "index", type: :feature, js: true, vcr: true do
   it 'show index page' do
     visit '/'
-    expect(page).to have_css ".panel-body", text: "Please register with DataCite Profiles for DataCite services that require authentication. You register by signing in via your ORCID account. The supported services are listed below, other services will be added over time."
+    expect(page).to have_css ".jumbotron p", text: "Please register with DataCite Profiles for DataCite services that require authentication. You register by signing in via your ORCID account. The supported services are listed below, other services will be added over time."
   end
 
   # it 'show link to admin' do
