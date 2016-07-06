@@ -54,7 +54,6 @@
         <%= @member.country_name %>
         <h5>Region</h5>
         <%= regions[@member.region] %>
-
         <% if @member.member_type.present? %>
           <h5>Member type</h5>
           <%= @member.member_type.humanize.titleize %>
