@@ -24,6 +24,7 @@ end
 
 # default values for some ENV variables
 ENV['APPLICATION'] ||= "volpino"
+ENV['SESSION_KEY'] ||= "_#{ENV['APPLICATION']}_session"
 ENV['SITENAMELONG'] ||= "DataCite Profiles"
 ENV['LOG_LEVEL'] ||= "info"
 ENV['GITHUB_URL'] ||= "https://github.com/datacite/volpino"
