@@ -26,6 +26,8 @@ end
 ENV['APPLICATION'] ||= "volpino"
 ENV['SESSION_KEY'] ||= "_#{ENV['APPLICATION']}_session"
 ENV['SESSION_DOMAIN'] ||= ""
+# ENV['SESSION_ENCRYPTED_COOKIE_SALT'] ||= SecureRandom.hex(15)
+# ENV['SESSION_ENCRYPTED_SIGNED_COOKIE_SALT'] ||= SecureRandom.hex(15)
 ENV['SITENAMELONG'] ||= "DataCite Profiles"
 ENV['LOG_LEVEL'] ||= "info"
 ENV['GITHUB_URL'] ||= "https://github.com/datacite/volpino"
