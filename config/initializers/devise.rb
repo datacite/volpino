@@ -110,7 +110,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
-  # config.remember_for = 2.weeks
+  config.remember_for = 2.weeks
 
   # If true, extends the user's remember period when remembered via cookie.
   # config.extend_remember_period = false
@@ -121,7 +121,7 @@ Devise.setup do |config|
 
   # Options to be passed to the created cookie. For instance, you can set
   # :secure => true in order to force SSL only cookies.
-  # config.cookie_options = {}
+  config.cookie_options = { secure: true }
 
   # ==> Configuration for :validatable
   # Range for password length. Default is 6..128.
