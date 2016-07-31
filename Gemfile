@@ -36,6 +36,8 @@ gem 'httplog'
 gem 'lograge', '~> 0.3.5'
 
 gem 'devise', '~> 3.5', '>= 3.5.2'
+gem 'omniauth-google-oauth2', '~> 0.4.1'
+gem 'omniauth-facebook', '~> 3.0'
 gem "omniauth-orcid", "1.1.1"
 gem 'omniauth-github', '~> 1.1.2'
 gem 'omniauth', '~> 1.2.2'
@@ -46,6 +48,10 @@ gem 'sprockets-rails', '~> 2.2.0', :require => 'sprockets/railtie'
 gem 'coffee-rails', '~> 4.1', '>= 4.1.1'
 gem 'sass-rails', '~> 4.0.4'
 gem 'uglifier', '~> 2.7', '>= 2.7.2'
+gem 'carrierwave', '~> 0.11.2'
+gem 'carrierwave-aws', '~> 1.0'
+gem 'mini_magick', '~> 4.5', '>= 4.5.1'
+gem 'remotipart', '~> 1.2'
 
 group :development do
   gem 'pry-rails', '~> 0.3.2'
