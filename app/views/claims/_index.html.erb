@@ -19,12 +19,12 @@
       <% @claims.each do |claim| %>
         <div class="panel panel-default">
           <% if claim.claimed_at.present? %>
-            <div class="panel-heading panel-title panel-list">
-              <%= h(claim.doi) %><small class="pull-right"><%= l claim.claimed_at, format: :medium %></small>
+            <div class="panel-heading panel-list">
+              <%= h(claim.doi) %><span class="small pull-right"><%= l claim.claimed_at, format: :medium %></span>
             </div>
           <% else %>
-            <div class="panel-heading panel-title panel-list">
-              <%= h(claim.doi) %><small class="pull-right">not claimed</small>
+            <div class="panel-heading panel-list">
+              <%= h(claim.doi) %><span class="small pull-right">not claimed</span>
             </div>
           <% end %>
           <% if claim.error_messages.present? || current_user.is_admin_or_staff? %>
@@ -59,10 +59,12 @@
         <%= will_paginate @claims, :params => { :controller => claims_path }, :renderer => BootstrapPagination::Rails %>
       </div>
     <% else %>
-      <div class="alert alert-info">There are currently no claims
-        <% unless params[:query].blank? %>
-            with <em><%= params[:query] %></em> in the DOI
-        <% end %>
+      <div class="alert alert-simple-info">
+          <h5>There are currently no claims
+            <% unless params[:query].blank? %>
+                with <strong><%= params[:query] %></strong> in the DOI
+            <% end %>
+          </h5>
       </div>
     <% end %>
   </div>

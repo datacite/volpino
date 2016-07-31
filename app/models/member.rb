@@ -1,4 +1,6 @@
 class Member < ActiveRecord::Base
+  mount_uploader :image, ImageUploader
+
   has_many :users
 
   validates :name, presence: true, uniqueness: true
@@ -13,12 +15,12 @@ class Member < ActiveRecord::Base
 
   scope :query, ->(query) { where("name like ? OR title like ?", "%#{query}%", "%#{query}%") }
 
-  def to_param
-    name
+  def self.per_page
+    100
   end
 
-  def per_page
-    100
+  def to_param
+    name
   end
 
   def country_name

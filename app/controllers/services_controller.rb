@@ -85,6 +85,6 @@ class ServicesController < ApplicationController
   private
 
   def safe_params
-    params.require(:service).permit(:title, :name, :logo, :summary, :description, :url, :redirect_uri, :member_id, :tag_ids => [])
+    params.require(:service).permit(:title, :name, :logo, :summary, :description, :url, :redirect_uri, :member_id, :image, :image_cache, :tag_ids => [])
   end
 end

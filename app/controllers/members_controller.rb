@@ -9,7 +9,12 @@ class MembersController < ApplicationController
   end
 
   def show
-
+    if params[:user_id].to_i == current_user.id
+      @user = current_user
+      render template: "users/member.js.erb"
+    else
+      render :show
+    end
   end
 
   def new
@@ -26,12 +31,22 @@ class MembersController < ApplicationController
   end
 
   def edit
-    render :show
+    if params[:user_id].to_i == current_user.id
+      @user = current_user
+      render template: "users/member.js.erb"
+    else
+      render :show
+    end
   end
 
   def update
     @member.update_attributes(safe_params)
-    render :show
+    if params[:user_id].to_i == current_user.id
+      @user = current_user
+      render "users/member"
+    else
+      render :show
+    end
   end
 
   def destroy
@@ -79,6 +94,6 @@ class MembersController < ApplicationController
   private
 
   def safe_params
-    params.require(:member).permit(:title, :name, :description, :member_type, :country_code, :website, :year, :email, :phone, :logo)
+    params.fetch(:member, {}).permit(:title, :name, :description, :member_type, :country_code, :website, :year, :email, :phone, :logo, :image, :image_cache)
   end
 end

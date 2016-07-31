@@ -11,63 +11,82 @@
       <% end %>
     </div>
   </div>
+  <div class='col-md-3'>
+    <% if can?(:manage, Tag) && (controller.action_name != "new" && (controller.action_name != "create")) %>
+      <div class="panel facets">
+        <div class="panel-body">
+          <div class="pull-right">
+            <h4 class="link"><%= link_to "#{icon('plus')} Add Tag".html_safe, new_tag_path, { remote: true, id: "new-tag", class: "btn btn-default" } %></h4>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
 
 <div class="row">
   <div class='col-md-9'>
-    <% if can?(:manage, Tag) and (controller.action_name == "new" or (controller.action_name == "create" and !@tag.errors.empty?)) %>
+    <% if can?(:manage, Tag) && (controller.action_name == "new" || (controller.action_name == "create" && !@tag.errors.empty?)) %>
       <div class="panel panel-default">
-        <div class="panel-heading panel-title">New tag</div>
-        <div class="panel-body">
-          <%= simple_form_for @tag, :url => tags_path, :html => { :remote => true } do |f| %>
+        <%= simple_form_for @tag, :url => tags_path, :html => { :remote => true } do |f| %>
+          <div class="panel-body">
             <%= f.input :name, input_html: { class: "form-control" } %>
             <%= f.input :title, input_html: { class: "form-control" } %>
             <%= f.association :services, as: :check_boxes, label_method: :title, value_method: :id %>
-
-            <div class="form-group">
-              <%= f.submit "Save", class: "btn btn-default" %>
-              <%= link_to "Cancel", tags_path, { remote: true, class: "btn" } %>
+          </div>
+          <div class="panel-footer">
+            <div class="form-group submit pull-right">
+              <%= link_to 'Cancel', tags_path, { remote: true, class: "btn btn-sm" } %>
+              <%= f.submit "Save ", class: "btn btn-sm btn-fill" %>
             </div>
-          <% end %>
-        </div>
+            <div class="clearfix"/>
+          </div>
+        <% end %>
       </div>
     <% else %>
       <% if @tags.size > 0 %>
         <div id="tag">
           <% @tags.each do |tag| %>
             <div class="panel panel-default">
-              <div class="panel-heading panel-title panel-list">
-                <%= h(tag.title) %>
-                <% if can?(:manage, tag) && (!@tag || @tag.name != tag.name) %>
-                  <div class="btn-toolbar pull-right">
-                    <div class="btn-group btn-group-sm">
-                      <%= link_to icon("pencil").html_safe, edit_tag_path(tag.name, query: params[:query]), remote: true, class: 'btn btn-default btn-sm', id: "#{tag.name}-edit" %>
-                    </div>
-                  </div>
-                <% end %>
-              </div>
               <% if can?(:manage, @tag) && @tag && @tag.name == tag.name && (controller.action_name == "edit" || (controller.action_name == "update" and !@tag.errors.empty?)) %>
-                <div id="tag_<%= tag.id %>" class="panel-body">
-                  <%= simple_form_for @tag, url: tag_path(@tag), html: { role: "form", remote: true } do |f| %>
+                <%= simple_form_for @tag, url: tag_path(@tag), html: { role: "form", remote: true } do |f| %>
+                  <div id="tag_<%= tag.id %>" class="panel-body">
                     <%= f.input :name, input_html: { class: "form-control" } %>
                     <%= f.input :title, input_html: { class: "form-control" } %>
                     <%= f.association :services, as: :check_boxes, label_method: :title, value_method: :id %>
-
-                    <div class="form-group">
-                      <div class="pull-right">
-                        <%= link_to "Delete Tag", tag_path(tag.name, query: params[:query]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-default btn-sm', id: "#{tag.name}-delete" %>
+                  </div>
+                  <div class="panel-footer">
+                    <div class="btn-toolbar">
+                      <div class="btn-group btn-group-sm pull-right">
+                        <%= f.submit "Save", class: "btn btn-sm btn-fill" %>
                       </div>
-                      <%= f.submit "Save", class: "btn btn-default" %>
-                      <%= link_to "Cancel", tags_path(query: params[:query]), { :remote => true, :class => 'btn' } %>
+                      <div class="btn-group btn-group-sm pull-right">
+                        <%= link_to "Cancel", tags_path(query: params[:query]), { :remote => true, :class => 'btn btn-sm' } %>
+                      </div>
                     </div>
                   <% end %>
                 </div>
               <% else %>
-                <div class="panel-footer">
+                <div id="tag_<%= tag.id %>" class="panel-body">
+                  <h3><%= h(tag.title) %></h3>
                   <% if tag.services.present? %>
-                    &nbsp; <span class="pull-right"><%= icon("server") %> <%= tag.services.sort_by { |t| t.title }.map {|s| "<a href='/tags?service=#{s.name}'>#{s.title}</a>" }.join(', ').html_safe %></span>
+                    <span><%= icon("server") %> <%= tag.services.sort_by { |t| t.title }.map {|s| "<a href='/tags?service=#{s.name}'>#{s.title}</a>" }.join(', ').html_safe %></span>
                   <% else %>
                     No service uses this tag
+                  <% end %>
+                </div>
+                <div class="panel-footer">
+                  <%= icon("info-circle") %>
+                  <%= tag.name %>
+                  <% if can?(:manage, Tag) %>
+                    <div class="btn-toolbar pull-right">
+                      <div class="btn-group btn-group-sm">
+                        <%= link_to icon("trash").html_safe, tag_path(tag), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-neutral btn-fill btn-sm' %>
+                      </div>
+                      <div class="btn-group btn-group-sm">
+                        <%= link_to icon("pencil").html_safe, edit_tag_path(tag.name, query: params[:query]), remote: true, class: 'btn btn-neutral btn-fill btn-sm', id: "#{tag.name}-edit" %>
+                      </div>
+                    </div>
                   <% end %>
                 </div>
               <% end %>
@@ -78,21 +97,15 @@
           <%= will_paginate @tags, :params => { :controller => tags_path, query: params[:query] }, :renderer => BootstrapPagination::Rails %>
         </div>
       <% else %>
-        <div class="alert alert-info">There are currently no tags
-          <% unless params[:query].blank? %>
-              with <em><%= params[:query] %></em> in the name, title or description
-          <% end %>
+        <div class="alert alert-simple-info">
+          <h5>
+            There are currently no tags
+            <% unless params[:query].blank? %>
+                with <em><%= params[:query] %></em> in the name, title or description
+            <% end %>
+          </h5>
         </div>
       <% end %>
-    <% end %>
-  </div>
-  <div class='col-md-3'>
-    <% if can?(:manage, Tag) %>
-      <div class="panel facets">
-        <div class="panel-body">
-          <h4 class="link"><%= link_to "Add Tag", new_tag_path, { remote: true, id: "new-tag" } %></h4>
-        </div>
-      </div>
     <% end %>
   </div>
 </div>
