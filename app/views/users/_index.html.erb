@@ -31,10 +31,11 @@
                     <%= f.association :member, label_method: :title, input_html: { class: "form-user" } %>
                 </div>
                 <div class="panel-footer">
-                  <div class="form-group">
+                  <div class="form-group pull-right">
                     <%= link_to 'Cancel', users_path(query: params[:query], role: params[:role]), { :remote => true, :class => 'btn btn-sm' } %>
                     <%= f.submit "Save ", class: "btn btn-sm btn-fill" %>
                   </div>
+                  <div class="clearfix"/>
                   <% end %>
                 </div>
               </div>
