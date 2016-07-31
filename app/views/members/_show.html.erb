@@ -5,7 +5,10 @@
     <% end %>
   <% else %>
     <div class="panel-body">
-      <h3><%= h(@member.title) %> <span class="label label-default label-<%= @member.member_type %> pull-right"><%= @member.member_type %> member</h3>
+      <h3>
+        <span class="label label-default label-<%= @member.member_type %> pull-right"><%= @member.member_type %> member</span>
+        <%= h(@member.title) %>
+      </h3>
       <% if @member.description.present? %>
         <div class="description"><%= markdown(@member.description) %></div>
       <% end %>

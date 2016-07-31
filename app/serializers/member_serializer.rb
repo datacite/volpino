@@ -19,7 +19,7 @@ class MemberSerializer < ActiveModel::Serializer
   end
 
   def logo_url
-    "https://#{ENV['CDN_HOST']}/images/members/#{object.logo}"
+    object.image_url
   end
 
   def updated

@@ -19,7 +19,7 @@
         <%= f.input :member_type, collection: member_types.map { |member_type| [member_type.humanize.titleize, member_type] }, include_blank: false, input_html: { class: "form-user" } %>
       <% end %>
       <%= f.input :country_code, label: "Country", input_html: { class: "form-user" } %>
-      <%= f.input :year, label: "Year joined", collection: 2009..Date.today.year, selected: Date.today.year, include_blank: false, input_html: { class: "form-user" } %>
+      <%= f.input :year, label: "Year joined", collection: 2009..Date.today.year, selected: @member.year || Date.today.year, include_blank: false, input_html: { class: "form-user" } %>
     </div>
     <div class="tab-pane" id="description">
       <%= f.input :description, label: false, hint: "Use <a href='https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet' target='_blank'>markdown</a> for formatting.".html_safe, :input_html => { :rows => 8 } %>
