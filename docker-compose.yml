@@ -4,11 +4,17 @@ version: '2'
 # and npm modules into the vendor folder
 
 services:
-  web:
+  profiles:
     env_file: .env
     image: datacite/volpino
+    build: .
     ports:
       - "8080:80"
+    volumes:
+      - ./app:/home/app/webapp/app
+      - ./config:/home/app/webapp/config
+      - ./db:/home/app/webapp/db
+      - ./spec:/home/app/webapp/spec
   db:
     env_file: .env
     image: mysql:5.6
