@@ -14,43 +14,39 @@
       <% end %>
     </div>
   </div>
+  <div class='col-md-3'>
+    <% if can?(:manage, Member) and (controller.action_name != "new" && (controller.action_name != "create")) %>
+      <div class="panel facets">
+        <div class="panel-body">
+          <div class="pull-right">
+            <h4 class="link"><%= link_to "#{icon('plus')} Add Member".html_safe, new_member_path, { remote: true, id: "new-member", class: "btn btn-default" } %></h4>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
 
 <div class="row">
   <div class='col-md-9' id="content">
-    <% if can?(:manage, Member) and (controller.action_name == "new" or (controller.action_name == "create" and !@member.errors.empty?)) %>
+    <% if can?(:manage, Member) and (controller.action_name == "new" || (controller.action_name == "create" && !@member.errors.empty?)) %>
       <div class="panel panel-default">
-        <div class="panel-heading panel-title">New member</div>
-        <div class="panel-body">
-          <%= simple_form_for @member, :url => members_path, :html => { :remote => true } do |f| %>
-            <%= f.input :name %>
-            <%= f.input :title %>
-            <%= f.input :description, :input_html => { :rows => 8 } %>
-            <%= f.input :member_type, collection: member_types.map { |member_type| [member_type.humanize.titleize, member_type] }, include_blank: false, input_html: { class: "form-user" } %>
-            <%= f.input :country_code, label: "Country", input_html: { class: "form-user" } %>
-            <%= f.input :website, input_html: { class: "form-user" } %>
-            <%= f.input :email, input_html: { class: "form-user" } %>
-            <%= f.input :phone, input_html: { class: "form-user" } %>
-            <%= f.input :year, label: "Year joined", collection: 2009..Date.today.year, input_html: { class: "form-user" } %>
-
-            <div class="form-group">
-              <%= f.submit "Save", class: "btn btn-default" %>
-              <%= link_to "Cancel", members_path, { remote: true, class: "btn" } %>
-            </div>
-          <% end %>
-        </div>
+        <%= simple_form_for @member, url: members_path, :html => { role: "form", multipart: true, remote: true } do |f| %>
+          <%= render :partial => 'form', locals: { f: f } %>
+        <% end %>
       </div>
     <% else %>
       <% if @members.size > 0 %>
         <% @members.each do |member| %>
           <div class="panel panel-default">
             <div class="panel-body">
-              <h3 class="work"><%= link_to h(member.title), member_path(member.name) %></h3>
+              <h3><%= link_to h(member.title), member_path(member.name) %></h3>
               <div class="country"><%= h(member.country_name) %></div>
             </div>
             <div class="panel-footer">
-              <%= icon("info-circle") %><%= member.name %>
-              <span class="pull-right"><%= member.member_type + " member" %></span>
+              <%= icon("info-circle") %>
+              <%= member.name.upcase %>
+              <span class="label label-default label-<%= member.member_type %> pull-right"><%= member.member_type + " member" %></span>
             </div>
           </div>
         <% end %>
@@ -58,25 +54,20 @@
           <%= will_paginate @members, :params => { :controller => members_path }, :renderer => BootstrapPagination::Rails %>
         </div>
       <% else %>
-        <div class="alert alert-info">There are currently no members
-          <% unless @member_type.nil? %>
-              with member_type "<%= @member_type.capitalize %>"
-          <% end %>
-          <% unless params[:query].blank? %>
-              with <em><%= params[:query] %></em> in the name or title
-          <% end %>
+        <div class="alert alert-simple-info">
+          <h5>There are currently no members
+            <% unless @member_type.nil? %>
+                with member_type "<%= @member_type.capitalize %>"
+            <% end %>
+            <% unless params[:query].blank? %>
+                with <strong><%= params[:query] %></strong> in the name or title
+            <% end %>
+          </h5>
         </div>
       <% end %>
     <% end %>
   </div>
   <div class='col-md-3'>
-   <% if can?(:manage, Member) %>
-      <div class="panel facets">
-        <div class="panel-body">
-          <h4 class="link"><%= link_to "Add Member", new_member_path, { remote: true, id: "new-member" } %></h4>
-        </div>
-      </div>
-    <% end %>
     <% if @member_types.size > 0 %>
       <div class="panel facets">
         <div class="panel-body">

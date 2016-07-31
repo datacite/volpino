@@ -1,84 +1,57 @@
-<div class="row">
-  <div class='col-md-8'>
-    <div class="panel panel-default">
-      <% if can?(:manage, @member) && (controller.action_name == "edit" or (controller.action_name == "update" and !@member.errors.empty?)) %>
-        <div class="panel-body">
-          <%= simple_form_for @member, url: member_path(@member), html: { member_type: "form", remote: true } do |f| %>
-            <%= f.input :name %>
-            <%= f.input :title %>
-            <%= f.input :description, :input_html => { :rows => 8 } %>
-            <%= f.input :member_type, collection: member_types.map { |member_type| [member_type.humanize.titleize, member_type] }, include_blank: false, input_html: { class: "form-user" } %>
-            <%= f.input :country_code, label: "Country", input_html: { class: "form-user" } %>
-            <%= f.input :logo, input_html: { class: "form-user" } %>
-            <%= f.input :website, input_html: { class: "form-user" } %>
-            <%= f.input :email, input_html: { class: "form-user" } %>
-            <%= f.input :phone, input_html: { class: "form-user" } %>
-            <%= f.input :year, label: "Year joined", collection: 2009..Date.today.year, input_html: { class: "form-user" } %>
+<div class="panel panel-default" id="content-member">
+  <% if can?(:update, @member) && (controller.action_name == "edit" || (controller.action_name == "update" && !@member.errors.empty?)) %>
+    <%= simple_form_for @member, url: member_path(@member, user_id: @user), html: { role: "form", multipart: true, remote: true } do |f| %>
+      <%= render :partial => 'form', locals: { f: f } %>
+    <% end %>
+  <% else %>
+    <div class="panel-body">
+      <h3><%= h(@member.title) %> <span class="label label-default label-<%= @member.member_type %> pull-right"><%= @member.member_type %> member</h3>
+      <% if @member.description.present? %>
+        <div class="description"><%= markdown(@member.description) %></div>
+      <% end %>
+      <% if @member.image.present? %>
+        <div class="logo text-center">
+          <img src="<%= @member.image_url %>">
+        </div>
+      <% end %>
+    </div>
+    <div class="panel-body">
+      <dl class="dl-horizontal">
+        <dt>Country</dt>
+        <dd><%= @member.country_name %></dd>
+        <dt>Year joined</dt>
+        <dd><%= @member.year %></dd>
+        <% if @member.website.present? %>
+          <dt>Website</dt>
+          <dd><%= link_to h(@member.website), @member.website %></dd>
+        <% end %>
 
-            <div class="form-group">
-              <%= f.submit "Save ", class: "btn btn-default" %>
-              <%= link_to 'Cancel', member_path(@member), { remote: true, class: "btn" } %>
-            </div>
-          <% end %>
-        </div>
-      <% else %>
-        <div class="panel-body">
-          <h3 class="work"><%= h(@member.title) %></h3>
-          <% if @member.description.present? %>
-            <div class="description"><%= markdown(@member.description) %></div>
-          <% end %>
-          <% if @member.logo.present? %>
-            <img src="<%= asset_path "/images/members/#{@member.logo}", host: ENV['CDN_HOST'] %>">
-          <% end %>
-        </div>
-        <div class="panel-footer">
-          <%= icon("info-circle") %><%= @member.name %>
+        <% if @member.email.present? %>
+          <dt>Email</dt>
+          <dd><%= link_to h(@member.email), "mailto:#{@member.email}" %></dd>
+        <% end %>
+
+        <% if @member.phone.present? %>
+          <dt>Phone</dt>
+          <dd><%= h(@member.phone) %></dd>
+        <% end %>
+      </dl>
+    </div>
+    <div class="panel-footer">
+      <%= icon("info-circle") %>
+      <%= @member.name.upcase %>
+      <% if can?(:update, @member) %>
+        <div class="btn-toolbar pull-right">
+          <div class="btn-group btn-group-sm">
+            <%= link_to icon("pencil").html_safe, edit_member_path(@member, user_id: @user), remote: true, class: 'btn btn-neutral btn-fill btn-sm' %>
+          </div>
           <% if can?(:manage, @member) %>
-            <div class="btn-toolbar pull-right">
-              <div class="btn-group btn-group-sm">
-                <%= link_to icon("pencil").html_safe, edit_member_path(@member), remote: true, class: 'btn btn-default btn-sm' %>
-              </div>
-              <div class="btn-group btn-group-sm">
-                <%= link_to icon("trash").html_safe, member_path(@member), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default btn-sm' %>
-              </div>
+            <div class="btn-group btn-group-sm">
+              <%= link_to icon("trash").html_safe, member_path(@member, user_id: @user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-neutral btn-fill btn-sm' %>
             </div>
           <% end %>
         </div>
       <% end %>
     </div>
-  </div>
-  <div class='col-md-4'>
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <h5>Country</h5>
-        <%= @member.country_name %>
-        <h5>Region</h5>
-        <%= regions[@member.region] %>
-        <% if @member.member_type.present? %>
-          <h5>Member type</h5>
-          <%= @member.member_type.humanize.titleize %>
-        <% end %>
-
-        <% if @member.year.present? %>
-          <h5>Year joined</h5>
-          <%= @member.year %>
-        <% end %>
-
-        <% if @member.website.present? %>
-          <h5>Website</h5>
-          <%= link_to h(@member.website), @member.website %>
-        <% end %>
-
-        <% if @member.email.present? %>
-          <h5>Email</h5>
-          <%= link_to h(@member.email), "mailto:#{@member.email}" %>
-        <% end %>
-
-        <% if @member.phone.present? %>
-          <h5>Phone</h5>
-          <%= h(@member.phone) %>
-        <% end %>
-      </div>
-    </div>
-  </div>
+  <% end %>
 </div>

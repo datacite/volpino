@@ -1,0 +1,57 @@
+<div class="panel-body">
+  <div class="nav-tabs-navigation">
+    <div class="nav-tabs-wrapper">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#basic" data-toggle="tab">Basic Info</a></li>
+        <li><a href="#description" data-toggle="tab">Description</a></li>
+        <li><a href="#logo" data-toggle="tab">Logo</a></li>
+        <li><a href="#contact" data-toggle="tab">Contact Info</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="tab-content">
+    <div class="tab-pane active" id="basic">
+      <% if can?(:manage, @member) %>
+        <%= f.input :name %>
+      <% end %>
+      <%= f.input :title %>
+      <% if can?(:manage, @member) %>
+        <%= f.input :member_type, collection: member_types.map { |member_type| [member_type.humanize.titleize, member_type] }, include_blank: false, input_html: { class: "form-user" } %>
+      <% end %>
+      <%= f.input :country_code, label: "Country", input_html: { class: "form-user" } %>
+      <%= f.input :year, label: "Year joined", collection: 2009..Date.today.year, selected: Date.today.year, include_blank: false, input_html: { class: "form-user" } %>
+    </div>
+    <div class="tab-pane" id="description">
+      <%= f.input :description, label: false, hint: "Use <a href='https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet' target='_blank'>markdown</a> for formatting.".html_safe, :input_html => { :rows => 8 } %>
+    </div>
+    <div class="tab-pane" id="logo">
+      <%= f.hidden_field :image_cache %>
+      <div class="logo text-center">
+        <% if @member.image.present? %>
+          <img src="<%= @member.image.url %>" id="logo_img" />
+        <% else %>
+          <img src="http://placehold.it/500x200/f5f5f5" id="logo_img" />
+        <% end %>
+        <%= f.input :image, as: :file, label: false, input_html: { onchange: "readURL(this)" } %>
+      </div>
+    </div>
+    <div class="tab-pane" id="contact">
+      <%= f.input :website %>
+      <%= f.input :email %>
+      <%= f.input :phone %>
+    </div>
+  </div>
+</div>
+<div class="panel-footer">
+  <div class="form-group submit pull-right">
+    <% if @members.present? %>
+      <%= link_to 'Cancel', members_path, { remote: true, class: "btn btn-sm" } %>
+    <% else %>
+      <%= link_to 'Cancel', member_path(@member, user_id: @user), { remote: true, class: "btn btn-sm" } %>
+    <% end %>
+    <%= f.submit "Save ", class: "btn btn-sm btn-fill" %>
+  </div>
+  <div class="clearfix"/>
+</div>
+
+<%= javascript_include_tag 'members/preview' %>
