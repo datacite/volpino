@@ -43,21 +43,17 @@
             <% else %>
               <div class="panel-body">
                 <h3><%= h(service.title) %></h3>
-                <div class="media">
-                  <div class="media-left media-middle">
-                    <% if service.logo.present? %>
-                      <%= icon(service.logo, class: "fa-3x") %>
-                    <% end %>
+                <% if service.summary.present? %>
+                  <div class="description"><%= markdown(service.summary) %></div>
+                <% end %>
+                <% if service.description.present? %>
+                  <div class="description"><%= markdown(service.description) %></div>
+                <% end %>
+                <% if service.image.present? %>
+                  <div class="logo text-center">
+                    <img src="<%= service.image_url %>">
                   </div>
-                  <div class="media-body">
-                    <% if service.summary.present? %>
-                      <p><%= markdown(service.summary) %></p>
-                    <% end %>
-                    <% if service.description.present? %>
-                      <p><%= markdown(service.description) %></p>
-                    <% end %>
-                  </div>
-                </div>
+                <% end %>
                 <% if service.tags.present? %>
                   <span><%= icon("tags") %> <%= service.tags.sort_by { |t| t.title }.map {|t| "<a href='/services?tag=#{t.name}'>#{t.title}</a>" }.join(', ').html_safe %></span>
                 <% end %>
