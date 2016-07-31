@@ -32,6 +32,6 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   # Override the filename of the uploaded files:
   def filename
-    "#{model.name}.png" if original_filename
+    "#{model.name.downcase}.png" if original_filename
   end
 end
