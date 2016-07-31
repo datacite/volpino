@@ -3,6 +3,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # GET /sign_in
   def new
+    @show_image = true
     super
   end
 
@@ -18,5 +19,15 @@ class Users::SessionsController < Devise::SessionsController
     sign_out current_user
     flash[:notice] = "Signed out successfully." if url.nil?
     redirect_to url || root_path
+  end
+
+  def link_orcid
+    if current_user.present?
+      flash[:warning] = "You are already signed in."
+      redirect_to root_path
+    end
+
+    @show_image = true
+    flash.keep(:omniauth)
   end
 end

@@ -3,17 +3,13 @@
     ORCID Search and Link
   </div>
   <div class="panel-body">
-    <%= icon("search", class: "fa-2x fa-pull-left") %>
-    <p>Add works you find via DataCite Search to your ORCID record.</p>
-    <div class="search-orcid orcid">
-      <%= form_tag('/services/search/?origin=', :method => "get", :class => "inline", :role => "form") do %>
-        <div class="input-group">
-          <%= search_field_tag :query, current_user.names_for_search, :placeholder => "Search", :class => "form-control" %>
-          <div class="input-group-btn">
-            <button class="btn btn-primary" type="submit"><%= icon("search") %></button>
-          </div>
-        </div>
-      <% end %>
+    Add works you find via DataCite Search to your ORCID record.
+  </div>
+  <div class="panel-footer">
+    <div class="btn-toolbar">
+      <div class="btn-group btn-group-sm pull-right">
+        <%= link_to "search", "/services/search/?origin=#{current_user.names_for_search}", class: 'btn btn-default btn-sm' %>
+      </div>
     </div>
   </div>
 </div>

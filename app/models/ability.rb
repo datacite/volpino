@@ -10,14 +10,19 @@ class Ability
       can :manage, :all
     elsif user.role == "staff"
       can :read, :all
-      can [:update, :show], User, :id => user.id
-    elsif user.role == "member"
-      can [:read], User
+      can [:update], User, :id => user.id
+    elsif user.role == "member_admin"
+      can [:read], Claim
+      can [:manage], Claim, :orcid => user.uid
       can [:update, :show], User, :id => user.id
       can [:update, :show], Member, :id => user.member_id
+    elsif user.role == "member"
+      can [:read], Claim
+      can [:manage], Claim, :orcid => user.uid
+      can [:update, :show], User, :id => user.id
+      can [:show], Member, :id => user.member_id
     elsif user.role == "user"
       can [:read], Claim
-      can [:read], User
       can [:manage], Claim, :orcid => user.uid
       can [:update, :show], User, :id => user.id
     end

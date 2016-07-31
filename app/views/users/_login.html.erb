@@ -1,0 +1,28 @@
+<div class="row">
+  <div class='col-md-6 col-md-offset-5'>
+    <div class="panel panel-default">
+      <div class="panel-body panel-register text-center">
+        <% if @user.facebook_uid.present? %>
+           <%= link_to '<span class="fa fa-facebook"></span> Unlink Facebook'.html_safe, user_path(@user, user: { facebook_uid: nil, facebook_token: nil }, panel: 'login'), { method: :put, remote: true, class: 'btn btn-social btn-facebook' } %>
+        <% else %>
+          <%= link_to '<span class="fa fa-facebook"></span> Sign in with Facebook'.html_safe, user_omniauth_authorize_path(:facebook), :id => "sign-in-facebook", class: 'btn btn-social btn-facebook btn-fill' %>
+        <% end %>
+        <% if @user.google_uid.present? %>
+          <%= link_to '<span class="fa fa-google"></span> Unlink Google'.html_safe, user_path(@user, user: { email: nil, google_uid: nil, google_token: nil }, panel: 'login'), { method: :put, remote: true, class: 'btn btn-social btn-google' } %>
+        <% else %>
+          <%= link_to '<span class="fa fa-google"></span> Sign in with Google'.html_safe, user_omniauth_authorize_path(:google_oauth2), :id => "sign-in-google", class: 'btn btn-social btn-google btn-fill' %>
+        <% end %>
+        <% if Time.zone.now < @user.expires_at %>
+          <%= link_to "<span></span> Expire ORCID Token".html_safe, user_path(@user, user: { expires_at: Time.zone.now }, panel: 'login'), { method: :put, remote: true, class: 'btn btn-social btn-orcid' } %>
+        <% else %>
+          <%= link_to "<span></span> Refresh ORCID Token".html_safe, user_omniauth_authorize_path(:orcid), :id => "sign-in-orcid", class: 'btn btn-social btn-orcid btn-fill' %>
+        <% end %>
+        <% if @user.github_uid.present? %>
+          <%= link_to '<span class="fa fa-github"></span> Unlink Github'.html_safe, user_path(@user, user: { github: nil, github_uid: nil, github_token: nil }, panel: 'login'), { method: :put, remote: true, class: 'btn btn-social btn-github' } %>
+        <% else %>
+          <%= link_to '<span class="fa fa-github"></span> Sign in with Github'.html_safe, user_omniauth_authorize_path(:github), :id => "sign-in-github", class: 'btn btn-social btn-github btn-fill' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

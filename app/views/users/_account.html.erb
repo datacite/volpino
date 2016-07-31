@@ -1,55 +1,54 @@
-<div class="row">
-  <div class="col-md-9 panel-list" id="content-account">
-    <div class="panel panel-default panel-source">
-      <div class="panel-heading panel-title">
-        <% if @panel != 'account' || (controller.action_name != "edit" && !(controller.action_name == "update" && !@user.errors.empty?)) %>
-          <span class="pull-right">
-             <%= link_to icon("certificate").html_safe, edit_user_path(@user, panel: 'account'), { remote: true, class: 'btn btn-default btn-sm', id: 'edit' } %>
-          </span>
-        <% end %>
-        Your Account
-      </div>
-      <div class="panel-body">
-        <% if @panel == 'account' && (controller.action_name == "edit" || (controller.action_name == "update" && !@user.errors.empty?)) %>
-          <img src="<%= asset_path('/images/orcid_32x32.gif', host: ENV['CDN_HOST']) %>" class="orcid-logo pull-left">
-          <p>We use the token to authenticate with ORCID on your behalf.</p>
-          <dl class="dl-horizontal">
-            <dt>ORCID</dt>
-            <dd><%= link_to @user.orcid, @user.orcid %></dd>
-            <dt>ORCID Token</dt>
-            <dd><%= @user.authentication_token %></dd>
-            <dt>Expires</dt>
-            <dd><%= @user.expires_at.to_date.to_s(:long) %></dd>
-          </dl>
-          <div class="btn-toolbar pull-right">
-            <div class="btn-group btn-group-sm orcid">
-              <%= link_to 'cancel', user_path(@user, panel: 'account'), { remote: true, class: 'btn btn-default' } %>
-            </div>
-            <div class="btn-group btn-group-sm orcid">
-              <%= link_to 'expire token', user_path(@user, user: { expires_at: Time.zone.now }, panel: 'account'), { method: :put, remote: true, class: 'btn btn-warning' } %>
-            </div>
-          </div>
+<div class="panel panel-default" id="content-account">
+  <div class="panel-body">
+    <dl class="dl-horizontal">
+      <dt>Name</dt>
+      <dd><%= @user.name %></dd>
+      <% if @user.other_names.present? %>
+        <dt>Other Names</dt>
+        <dd><%= h(@user.other_names.join(', ')) %></dd>
+      <% end %>
+      <% if @user.email.present? %>
+        <dt>Email</dt>
+        <dd><%= @user.email %></dd>
+      <% end %>
+      <% if @user.github.present? %>
+        <dt>Github</dt>
+        <dd><%= link_to @user.github, "https://github.com/#{@user.github}" %></dd>
+      <% end %>
+    </dl>
+  </div>
+  <div class="panel-body">
+    <dl class="dl-horizontal">
+      <dt>ORCID</dt>
+      <dd><%= link_to @user.orcid, @user.orcid %></dd>
+      <dt>ORCID Token</dt>
+      <dd><%= @user.authentication_token %></dd>
+      <dt>Token Expires</dt>
+      <dd>
+        <% if @user.expires_at < Time.zone.now %>
+          <span class="danger"><%= @user.expires_at.to_date.to_s(:long) %></span>
         <% else %>
-          <dl class="dl-horizontal">
-            <dt>Name</dt>
-            <dd><%= @user.name %></dd>
-            <% if @user.other_names.present? %>
-              <dt>Other Names</dt>
-              <dd><%= h(@user.other_names.join(', ')) %></dd>
-            <% end %>
-            <dt>API Key</dt>
-            <dd><%= @user.api_key %></dd>
-            <dt>Role</dt>
-            <% if @user.role == "admin" %>
-              <dd>Admin</dd>
-            <% elsif @user.role == "staff" %>
-              <dd>Staff</dd>
-            <% else %>
-              <dd>User</dd>
-            <% end %>
-          </dl>
+          <%= @user.expires_at.to_date.to_s(:long) %>
         <% end %>
-      </div>
-    </div>
+      </dd>
+    </dl>
+  </div>
+  <div class="panel-body">
+    <dl class="dl-horizontal">
+      <dt>API Key</dt>
+      <dd><%= @user.api_key %></dd>
+      <% if @user.member.present? %>
+        <dt>Member</dt>
+        <dd><%= link_to @user.member.title, member_path(@user.member.name) %></dd>
+      <% end %>
+      <dt>Role</dt>
+      <% if @user.role == "admin" %>
+        <dd>Admin</dd>
+      <% elsif @user.role == "staff" %>
+        <dd>Staff</dd>
+      <% else %>
+        <dd>User</dd>
+      <% end %>
+    </dl>
   </div>
 </div>

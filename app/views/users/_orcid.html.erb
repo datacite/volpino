@@ -1,10 +1,39 @@
-<div class="row">
-  <div class="col-md-9 panel-list" id="content-orcid">
-    <div id="search">
-      <%= render :partial => 'users/search' %>
-    </div>
-    <div id="auto">
-      <%= render :partial => 'users/auto' %>
+<div class="panel panel-default">
+  <div class="panel-heading panel-title">
+    ORCID Search and Link
+  </div>
+  <div class="panel-body">
+    Manually add works you find via <%= link_to 'DataCite Search', 'http://search.datacite.org' %> to your ORCID record.
+  </div>
+  <div class="panel-footer">
+    <div class="btn-toolbar">
+      <div class="btn-group btn-group-sm pull-right">
+        <%= link_to "search", "/services/search/?origin=#{current_user.names_for_search}", class: 'btn btn-default btn-sm' %>
+      </div>
     </div>
   </div>
 </div>
+
+<div id="auto">
+  <%= render :partial => 'users/auto' %>
+</div>
+
+<div class="panel <%= claim_text %>">
+  <div class="panel-heading panel-title">
+    Claim Status
+  </div>
+  <div class="panel-body">
+    <p>You have made <%= pluralize(number_with_delimiter(@user.claims.done.count), "successful claim") %>. You have <%= pluralize(@user.claims.stale.count, "queued claim") %> and <%= pluralize(@user.claims.failed.count, "failed claim") %>.</p>
+    <div class="graphs" id="chart_claims"></div>
+    <div class="text-muted" id="chart_claims-loading">Loading … <img src="<%= asset_path('/images/spinner.gif', host: ENV['CDN_HOST']) %>"></div>
+  </div>
+  <div class="panel-footer">
+    <div class="btn-toolbar">
+      <div class="btn-group btn-group-sm pull-right">
+        <%= link_to "more info", claims_path, class: 'btn btn-default btn-sm' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= javascript_include_tag 'users/claims' %>

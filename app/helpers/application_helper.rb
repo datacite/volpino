@@ -1,8 +1,4 @@
 module ApplicationHelper
-  def login_link
-    link_to "Sign in with ORCID", user_omniauth_authorize_path(:orcid), :id => "sign-in", class: 'btn btn-default'
-  end
-
   def icon(icon, text = nil, html_options = {})
     text, html_options = nil, text if text.is_a?(Hash)
 
@@ -42,10 +38,20 @@ module ApplicationHelper
   def email_text
     if current_user.has_email?
       'success'
-    elsif current_user.has_unconfirmed_email?
-      'info'
     else
       'warning'
+    end
+  end
+
+  def claim_text
+    if current_user.claims.failed.count > 0
+      'panel-warning'
+    elsif current_user.claims.done.count > 0
+      'panel-success'
+    elsif current_user.claims.stale.count > 0
+      'panel-info'
+    else
+      'panel-default'
     end
   end
 
@@ -62,15 +68,13 @@ module ApplicationHelper
   def subscribed_text
     if current_user.has_email?
       '<span class="small pull-right">subscribed</span>'
-    elsif current_user.has_unconfirmed_email?
-      '<span class="small pull-right">pending</span>'
     else
       '<span class="small pull-right">not subscribed</span>'
     end
   end
 
   def roles
-    %w(user data_centre member staff admin)
+    %w(user data_centre  data_centre_admin member member_admin staff admin)
   end
 
   def member_types
@@ -113,7 +117,7 @@ module ApplicationHelper
     data[:api_key] = current_user.api_key if current_user
     data[:page] = @page if @page.present?
     data[:source_id] = @source.name if @source.present? && !@source.is_a?(Array)
-    data[:contributor_id] = current_user.orcid if current_user.present?
+    data[:user_id] = current_user.uid if current_user.present?
     data[:sort] = @sort.name if @sort.present?
 
     { class: "logo", id: "api_key", data: data }

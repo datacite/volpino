@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   has_many :claims, primary_key: "uid", foreign_key: "orcid", inverse_of: :user
   belongs_to :member
 
-  devise :confirmable, :omniauthable, :omniauth_providers => [:orcid, :github]
+  devise :omniauthable, :omniauth_providers => [:orcid, :github, :google_oauth2, :facebook]
 
   validates :uid, presence: true, uniqueness: true
   validates :provider, presence: true
@@ -55,10 +55,6 @@ class User < ActiveRecord::Base
     email.present? && errors.empty?
   end
 
-  def has_unconfirmed_email?
-    unconfirmed_email.present? && errors.empty?
-  end
-
   def orcid
     "http://orcid.org/#{uid}"
   end
@@ -75,7 +71,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.get_auth_hash(auth)
+  def self.get_auth_hash(auth, options={})
     if User.count > 0 || Rails.env.test?
       role = auth.extra.raw_info.role || "user"
     else
@@ -83,17 +79,27 @@ class User < ActiveRecord::Base
       role = "admin"
     end
 
-    timestamp = auth.credentials && auth.credentials.expires_at
-    timestamp = Time.at(timestamp).utc if timestamp.present?
-
     { name: auth.info && auth.info.name,
       family_name: auth.info.fetch(:last_name, nil),
       given_names: auth.info.fetch(:first_name, nil),
       other_names: auth.extra.fetch(:raw_info, {}).fetch(:other_names, nil),
       authentication_token: auth.credentials.token,
-      expires_at: timestamp,
+      expires_at: timestamp(auth.credentials),
       role: role,
-      api_key: generate_api_key }
+      api_key: generate_api_key,
+      google_uid: options.fetch("google_uid", nil),
+      google_token: options.fetch("google_token", nil),
+      email: options.fetch("email", nil),
+      facebook_uid: options.fetch("facebook_uid", nil),
+      facebook_token: options.fetch("facebook_token", nil),
+      github: options.fetch("github", nil),
+      github_uid: options.fetch("github_uid", nil),
+      github_token: options.fetch("github_token", nil) }.compact
+  end
+
+  def self.timestamp(credentials)
+    ts = credentials && credentials.expires_at
+    ts = Time.at(ts).utc if ts.present?
   end
 
   def jwt_payload
@@ -198,12 +204,6 @@ class User < ActiveRecord::Base
       xml.send(:'external-id-reference', github)
       xml.send(:'external-id-url', github_as_url(github))
     end
-  end
-
-  protected
-
-  def confirmation_required?
-    false
   end
 
   private

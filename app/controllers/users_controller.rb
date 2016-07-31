@@ -32,13 +32,6 @@ class UsersController < ApplicationController
 
       load_user
 
-      if params[:user][:unsubscribe]
-        params[:user][:email] = nil
-        params[:user][:unconfirmed_email] = nil
-        params[:user] = params[:user].except(:unsubscribe)
-        @panel = "notification"
-      end
-
       sign_in @user, :bypass => true if @user.update_attributes(safe_params)
 
       render @panel
@@ -64,8 +57,9 @@ class UsersController < ApplicationController
   def load_user
     if user_signed_in?
       @user = current_user
+      @member = @user.member
 
-      panels = %w(account auto notification search)
+      panels = %w(account login auto)
       @panel = panels.find { |p| p == params[:panel] } || "auto"
     else
       fail CanCan::AccessDenied.new("Please sign in first.", :read, User)
@@ -95,6 +89,13 @@ class UsersController < ApplicationController
                                  :role,
                                  :member_id,
                                  :expires_at,
+                                 :facebook_uid,
+                                 :facebook_token,
+                                 :google_uid,
+                                 :google_token,
+                                 :github,
+                                 :github_uid,
+                                 :github_token,
                                  :api_key,
                                  :authentication_token)
   end
