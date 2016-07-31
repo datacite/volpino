@@ -1,8 +1,10 @@
 /*global d3 */
 
 var formatDate = d3.time.format.utc("%B %d, %Y"),
+    formatISO = d3.time.format.utc("%Y-%m-%d"),
     formatMonthYear = d3.time.format.utc("%B %Y"),
     formatYear = d3.time.format.utc("%Y"),
+    formatDateTime = d3.time.format.utc("%d %b %Y %H:%M UTC"),
     formatTime = d3.time.format.utc("%H:%M UTC"),
     formatWeek = d3.time.format.utc("%U"),
     formatHour = d3.time.format.utc("%H"),
@@ -50,15 +52,23 @@ function datePartsToDate(date_parts) {
 }
 
 // format date
-function formattedDate(date, len) {
-  switch (len) {
-    case 1:
-      return formatYear(date);
-    case 2:
-      return formatMonthYear(date);
-    case 3:
-      return formatDate(date);
+function formattedDate(date) {
+  var timestamp = new Date(Date.parse(date));
+  switch (date.length) {
+    case 4:
+      return formatYear(timestamp);
+    case 7:
+      return formatMonthYear(timestamp);
+    case 10:
+      return formatDate(timestamp);
+    default:
+      return formatDateTime(timestamp);
   }
+}
+
+// format date in iso8601
+function formattedPastDate(interval) {
+  return formatISO(d3.time.day.offset(new Date(), - interval));
 }
 
 // pagination
@@ -99,8 +109,11 @@ function pathForWork(id) {
   }
 }
 
-function signpostsToString(work, sources, source_id, sort) {
+function signpostsFromWork(work, sources, source_id, sort) {
   var name = "";
+  var signposts = [];
+  var source = "";
+
   if (typeof source_id !== "undefined" && source_id !== "") {
     name = source_id;
   } else if (typeof sort !== "undefined" && sort !== "") {
@@ -108,74 +121,87 @@ function signpostsToString(work, sources, source_id, sort) {
   }
 
   if (name !== "") {
-    var source = sources.filter(function(d) { return d.id === name; })[0];
+    source = sources.filter(function(d) { return d.id === name; })[0];
   }
 
   if (typeof source !== "undefined" && source !== "") {
-    var a = [source.title + ": " + formatFixed(work.events[name])];
-  } else {
-    var a = [];
+    signposts.push(formattedSignpost(source.title, work.results[name], name));
   }
 
-  var b = [],
-      signposts = signpostsFromWork(work);
-
-  if (signposts.viewed > 0) { b.push("Viewed: " + formatFixed(signposts.viewed)); }
-  if (signposts.cited > 0) { b.push("Cited: " + formatFixed(signposts.cited)); }
-  if (signposts.saved > 0) { b.push("Saved: " + formatFixed(signposts.saved)); }
-  if (signposts.discussed > 0) { b.push("Discussed: " + formatFixed(signposts.discussed)); }
-  if (b.length > 0) {
-    a.push(b.join(" • "));
-    return a.join(" | ");
-  } else if (a.length > 0) {
-    return a;
-  } else {
-    return "";
+  for (var key in work.results) {
+    source = sources.filter(function(d) { return d.id === key && d.id !== name; })[0];
+    if (typeof source !== "undefined" && source !== {}) {
+      signposts.push(formattedSignpost(source.title, work.results[key], key));
+    }
   }
+  return signposts;
 }
 
-function signpostsFromWork(work) {
-  var viewed = (work.events.counter || 0) + (work.events.pmc || 0);
-  var cited = work.events.crossref;
-  var saved = (work.events.citeulike || 0) + (work.events.mendeley || 0);
-  var discussed = (work.events.facebook || 0) + (work.events.twitter || 0) + (work.events.twitter_search || 0);
-
-  return { "viewed": viewed, "cited": cited, "saved": saved, "discussed": discussed };
+function formattedSignpost(title, count, name) {
+  return { "title": title,
+           "count": count,
+           "name": name };
 }
 
 function relationToString(work, sources, relation_types) {
   var source = sources.filter(function(d) { return d.id === work.source_id; })[0];
-  if (typeof source == "undefined" || source === "") { return []; }
+  if (typeof source == "undefined" || source === "") { source = {}; }
 
   var relation_type = relation_types.filter(function(d) { return d.id === work.relation_type_id; })[0];
-  if (typeof relation_type == "undefined" || relation_type === "") { return []; }
+  if (typeof relation_type == "undefined" || relation_type === "") { relation_type = {}; }
 
-  return [relation_type.inverse_title, " via " + source.title];
+  return [relation_type.title, " via " + source.title];
+}
+
+function metadataToString(work, work_types) {;
+  var containerTitleString = work["container-title"] ? " via " + work["container-title"] : "";
+
+  var work_type = work_types.filter(function(d) { return d.id === work.work_type_id; })[0];
+  if (typeof work_type == "undefined" || work_type === "") { work_type = { "title": "Work" }; }
+
+  return work_type.title + " published " + formattedDate(work.published) + containerTitleString;
+}
+
+// construct author list from author object
+function formattedAuthorList(authorList) {
+  authorList = authorList.map(function(d) { return formattedAuthor(d); });
+  switch (authorList.length) {
+    case 0:
+    case 1:
+    case 2:
+      return authorList.join(" & ");
+    case 3:
+    case 4:
+      return authorList.slice(0,-1).join(", ") + " & " + authorList[authorList.length - 1];
+    default:
+      return authorList.slice(0,3).join(", ") + ", <em>et al</em>";
+  }
 }
 
 // construct author object from author parts
 function formattedAuthor(author) {
-  author = author.map(function(d) { return d.given + " " + d.family; });
-  switch (author.length) {
-    case 0:
-    case 1:
-    case 2:
-      return author.join(" & ");
-    case 3:
-    case 4:
-      return author.slice(0,-1).join(", ") + " & " + author[author.length - 1];
-    default:
-      return author.slice(0,3).join(", ") + ", <em>et al</em>";
+  var given = (typeof author.given !== "undefined") ? author.given : "";
+  var family = (typeof author.family !== "undefined") ? author.family : "";
+  var name = [given, family].join(" ");
+  var name = (typeof author["ORCID"] !== "undefined") ? '<a href="/contributors/' + author["ORCID"].substring(7) + '">' + name + '</a>' : name;
+  return name;
+}
+
+function formattedState(state) {
+  if (state === "failed") {
+    return '<span class="label label-fatal">failed</span>';
+  } else {
+    return state;
   }
 }
 
-// format event type
-function formattedType(type) {
-  var types = { "article-journal": "Journal article",
-                "article-newspaper": "News",
-                "post": "Blog post",
-                "webpage": "Web page",
-                "broadcast": "Podcast/Video",
-                "personal_communication": "Personal communication" };
-  return types[type] || "Other";
+// from https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+function getParameterByName(name, url) {
+  if (!url) url = window.location.href;
+  name = name.replace(/[\[\]]/g, "\\$&");
+  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, " "));
 }

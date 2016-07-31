@@ -12,7 +12,7 @@ var width = 250,
 
 // bar chart
 function barViz(data, div, count, format) {
-  var domain = (format === "days") ? [startDate, endDate] : [startTime, endTime];
+  var domain = (format === "hours") ? [startTime, endTime] : [startDate, endDate];
 
   var x = d3.time.scale.utc()
     .domain(domain)
@@ -45,6 +45,10 @@ function barViz(data, div, count, format) {
         timeStamp = Date.parse(d.key + 'T12:00:00Z');
         var weekNumber = formatWeek(new Date(timeStamp));
         return (weekNumber % 2 === 0) ? "bar relations" : "bar relations-alt";
+      } else if (format === "months") {
+        timeStamp = Date.parse(d.key + 'T12:00:00Z');
+        var year = formatYear(new Date(timeStamp));
+        return (year % 2 === 0) ? "bar relations" : "bar relations-alt";
       } else {
         timeStamp = Date.parse(d.key + ':00:01Z');
         var hour = formatHour(new Date(timeStamp));
@@ -53,6 +57,8 @@ function barViz(data, div, count, format) {
     .attr("x", function(d) {
       if (format === "days") {
         return x(new Date(Date.parse(d.key + 'T12:00:00Z')));
+      } else if (format === "months") {
+        return x(d.key);
       } else {
         return x(new Date(Date.parse(d.key + ':00:00Z')));
       }})
@@ -82,6 +88,9 @@ function barViz(data, div, count, format) {
       if (format === "days") {
         dateStamp = Date.parse(d.key + 'T12:00:00Z');
         dateString = " on " + formatDate(new Date(dateStamp));
+      } else if (format === "months") {
+        dateStamp = Date.parse(d.key + '-01T12:00:00Z');
+        dateString = " on " + formatMonthYear(new Date(dateStamp));
       } else {
         dateStamp = Date.parse(d.key + ':00:00Z');
         dateString = " at " + formatTime(new Date(dateStamp));

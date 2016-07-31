@@ -13,7 +13,7 @@ if (!params.empty()) {
   var query = encodeURI("/api/status");
 }
 
-// load the data from the Lagotto API
+// load the data from the API
 if (query) {
   d3.json(query)
     .header("Accept", "application/json; version=1")

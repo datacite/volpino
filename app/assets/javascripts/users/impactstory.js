@@ -4,8 +4,8 @@
 var params = d3.select("#api_key");
 
 if (!params.empty()) {
-  var contributor_id = params.attr('data-contributor-id').substring(17);
-  var query = encodeURI("https://impactstory.org/api/person/" + contributor_id);
+  var user_id = params.attr('data-user-id');
+  var query = encodeURI("https://impactstory.org/api/person/" + user_id);
 }
 
 // load the data from the ImpactStory API
@@ -23,13 +23,13 @@ function BadgesViz(json) {
   if (typeof data === "undefined" || data.length === 0) { return; }
 
   d3.select("#impactstory-link")
-    .attr("href", function() { return "https://impactstory.org/u/" + contributor_id; })
-    .text("go to my profile");
+    .attr("href", function() { return "https://impactstory.org/u/" + user_id; })
+    .text("go to profile");
 
   for (var i=0; i<data.length; i++) {
     var badge = data[i];
 
-    d3.select("#content-impactstory").insert("div")
+    d3.select("#impactstory").insert("div")
       .attr("class", "panel panel-default")
       .attr("id", "panel-" + i).insert("div")
       .attr("class", "panel-body")
