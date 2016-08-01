@@ -28,7 +28,7 @@
 </div>
 
 <div class="row">
-  <div class='col-md-9' id="content">
+  <div class='col-md-9 panel-list' id="content">
     <% if can?(:manage, Member) and (controller.action_name == "new" || (controller.action_name == "create" && !@member.errors.empty?)) %>
       <div class="panel panel-default">
         <%= simple_form_for @member, url: members_path, :html => { role: "form", multipart: true, remote: true } do |f| %>
