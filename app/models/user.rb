@@ -120,6 +120,10 @@ class User < ActiveRecord::Base
     [family_name.to_s, given_names].join(', ')
   end
 
+  def display_name
+    name.presence || uid
+  end
+
   def names_for_search
     ([uid, name, reversed_name].compact + Array(other_names).compact).map { |n| '"' + n + '"' }.join(" OR ")
   end
