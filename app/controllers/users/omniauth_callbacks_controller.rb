@@ -22,7 +22,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     if @user.present?
-      redirect_to user_path("me")
+      redirect_to stored_location_for(:user) || user_path("me")
     else
       flash[:omniauth] = { "github" => auth.info.nickname,
                            "github_uid" => auth.uid,
@@ -45,7 +45,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     if @user.present?
-      redirect_to user_path("me")
+      redirect_to stored_location_for(:user) || user_path("me")
     else
       flash[:omniauth] = { "google_uid" => auth.uid,
                            "google_token" => auth.credentials.token,
@@ -67,7 +67,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     if @user.present?
-      redirect_to user_path("me")
+      redirect_to stored_location_for(:user) || user_path("me")
     else
       flash[:omniauth] = { "facebook_uid" => auth.uid,
                            "facebook_token" => auth.credentials.token }
@@ -94,11 +94,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       sign_in @user
-      if flash[:notice].present?
-        redirect_to user_path("me")
-      else
-        redirect_to stored_location_for(:user) || root_path
-      end
+      redirect_to stored_location_for(:user) ||  user_path("me")
     else
       session["devise.#{provider}_data"] = request.env["omniauth.auth"]
       flash[:alert] = @user.errors.map { |k,v| "#{k}: #{v}" }.join("<br />").html_safe || "Error signing in with #{provider}"
