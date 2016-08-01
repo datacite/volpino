@@ -1,8 +1,10 @@
 <div class="panel panel-default" id="content-account">
   <div class="panel-body">
     <dl class="dl-horizontal">
-      <dt>Name</dt>
-      <dd><%= @user.name %></dd>
+      <% if @user.name.present? %>
+        <dt>Name</dt>
+        <dd><%= @user.name %></dd>
+      <% end %>
       <% if @user.other_names.present? %>
         <dt>Other Names</dt>
         <dd><%= h(@user.other_names.join(', ')) %></dd>
