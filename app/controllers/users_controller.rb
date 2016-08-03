@@ -15,51 +15,33 @@ class UsersController < ApplicationController
   end
 
   def edit
-    if params[:id]
+    if params[:panel].present?
+      # user updates his account
+      render @panel
+    else
       # admin updates user account
       @user = User.find(params[:id])
       load_index
       render :index
-    else
-      # user updates his account
-      render @panel
     end
   end
 
-  # def update
-  #   if params[:id].to_i == current_user.id
-  #     # user updates his account
-
-  #     load_user
-
-  #     sign_in @user, :bypass => true if @user.update_attributes(safe_params)
-
-  #     render @panel
-  #   else
-  #     # admin updates user account
-  #     @user = User.find(params[:id])
-  #     @user.update_attributes(safe_params)
-
-  #     load_index
-  #     render :index
-  #   end
-  # end
-
   def update
-    if params[:id]
+    if params[:panel].present?
+      # user updates his account
+
+      load_user
+
+      sign_in @user, :bypass => true if @user.update_attributes(safe_params)
+
+      render @panel
+    else
       # admin updates user account
       @user = User.find(params[:id])
       @user.update_attributes(safe_params)
 
       load_index
       render :index
-    else
-      # user updates his account
-      load_user
-
-      sign_in @user, :bypass => true if @user.update_attributes(safe_params)
-
-      render @panel
     end
   end
 

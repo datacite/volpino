@@ -9,9 +9,9 @@
     <div class="btn-toolbar">
       <div class="btn-group btn-group-sm pull-right">
         <% if current_user.auto_update %>
-          <%= link_to 'disable'.html_safe, user_path(current_user, :user => { :auto_update => false }), :method => :put, :remote => true, :class => 'btn btn-warning btn-sm', :id => "auto-update" %>
+          <%= link_to 'disable'.html_safe, user_path(current_user, user: { auto_update: false }, panel: "auto"), :method => :put, :remote => true, :class => 'btn btn-warning btn-sm', :id => "auto-update" %>
         <% else %>
-          <%= link_to 'enable'.html_safe, user_path(current_user, :user => { :auto_update => true }), :method => :put, :remote => true, :class => 'btn btn-success btn-sm', :id => "auto-update" %>
+          <%= link_to 'enable'.html_safe, user_path(current_user, user: { auto_update: true }, panel: "auto"), :method => :put, :remote => true, :class => 'btn btn-success btn-sm', :id => "auto-update" %>
         <% end %>
       </div>
     </div>
