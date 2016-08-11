@@ -11,7 +11,7 @@ class Ability
     elsif user.role == "staff"
       can :read, :all
       can [:update], User, :id => user.id
-    elsif user.role == "member_admin"
+    elsif  %w(member_representative member_technical_contact member_billing_contact).include?(user.role)
       can [:read], Claim
       can [:manage], Claim, :orcid => user.uid
       can [:update, :show], User, :id => user.id

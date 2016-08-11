@@ -61,7 +61,7 @@
                   <% end %>
 
                   <h5>Role</h5>
-                  <%= user.role.capitalize %>
+                  <%= user.role.humanize.titleize %>
 
                   <% if user.member.present? %>
                     <h5>Member</h5>

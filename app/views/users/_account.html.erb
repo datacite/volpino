@@ -44,13 +44,7 @@
         <dd><%= link_to @user.member.title, member_path(@user.member.name) %></dd>
       <% end %>
       <dt>Role</dt>
-      <% if @user.role == "admin" %>
-        <dd>Admin</dd>
-      <% elsif @user.role == "staff" %>
-        <dd>Staff</dd>
-      <% else %>
-        <dd>User</dd>
-      <% end %>
+      <dd><%= @user.role.humanize.titleize %></dd>
     </dl>
   </div>
 </div>
