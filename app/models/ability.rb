@@ -1,8 +1,6 @@
 class Ability
   include CanCan::Ability
 
-  # To simplify, all admin permissions are linked to the Notification resource
-
   def initialize(user)
     user ||= User.new(:role => "anonymous") # Guest user
 
@@ -16,11 +14,6 @@ class Ability
       can [:manage], Claim, :orcid => user.uid
       can [:update, :show], User, :id => user.id
       can [:update, :show], Member, :id => user.member_id
-    elsif user.role == "member"
-      can [:read], Claim
-      can [:manage], Claim, :orcid => user.uid
-      can [:update, :show], User, :id => user.id
-      can [:show], Member, :id => user.member_id
     elsif user.role == "user"
       can [:read], Claim
       can [:manage], Claim, :orcid => user.uid
