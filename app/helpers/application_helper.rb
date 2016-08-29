@@ -74,7 +74,7 @@ module ApplicationHelper
   end
 
   def roles
-    %w(user data_centre data_centre_admin member member_representative member_technical_contact member_billing_contact staff admin)
+    %w(user data_centre data_centre_admin member_representative member_technical_contact member_billing_contact staff admin)
   end
 
   def member_types
