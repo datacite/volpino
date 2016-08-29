@@ -143,18 +143,19 @@ class User < ActiveRecord::Base
 
     # extend hash fetch method to nested hashes
     result.extend Hashie::Extensions::DeepFetch
-    items = result.deep_fetch('data', 'orcid-profile', 'orcid-activities', 'orcid-works', 'orcid-work') { [] }
+    items = result.deep_fetch('data', 'orcid_message', 'orcid_profile', 'orcid_activities', 'orcid_works', 'orcid_work') { [] }
+
     items.select do |item|
       item.extend Hashie::Extensions::DeepFetch
-      item.deep_fetch('source', 'source-orcid', 'path') { nil } == ENV['ORCID_CLIENT_ID']
+      item.deep_fetch('source', 'source_orcid', 'path') { nil } == ENV['ORCID_CLIENT_ID']
     end
   end
 
   def parse_data(items, options={})
     Array(items).map do |item|
       item.extend Hashie::Extensions::DeepFetch
-      doi = item.deep_fetch('work-external-identifiers', 'work-external-identifier', 0, 'work-external-identifier-id', 'value') { nil }
-      claimed_at = get_iso8601_from_epoch(item.deep_fetch('source', 'source-date', 'value') { nil })
+      doi = item.deep_fetch('work_external_identifiers', 'work_external_identifier', 'work_external_identifier_id') { nil }
+      claimed_at = get_iso8601_from_epoch(item.deep_fetch('source', 'source_date') { nil })
 
       claim = Claim.where(orcid: uid, doi: doi).first_or_create!(
                           source_id: "orcid_search",

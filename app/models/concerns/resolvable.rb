@@ -124,14 +124,15 @@ module Resolvable
       response = Maremma.get(url, options)
       return response if response["errors"]
 
-      metadata = response.fetch("data", {}).fetch("orcid-profile", nil)
-
+      metadata = response.fetch("data", {}).fetch("orcid_message", {}).fetch("orcid_profile", nil)
       metadata.extend Hashie::Extensions::DeepFetch
-      personal_details = metadata.deep_fetch("orcid-bio", "personal-details") { {} }
+
+      personal_details = metadata.deep_fetch("orcid_bio", "personal_details") { {} }
       personal_details.extend Hashie::Extensions::DeepFetch
-      author = { "family" => personal_details.deep_fetch("family-name", "value") { nil },
-                 "given" => personal_details.deep_fetch("given-names", "value") { nil } }
-      url = metadata.deep_fetch("orcid-identifier", "uri") { nil }
+
+      author = { "family" => personal_details.fetch("family_name", nil),
+                 "given" => personal_details.fetch("given_names", nil) }
+      url = metadata.deep_fetch("orcid_identifier", "uri") { nil }
       timestamp = Time.zone.now.utc.iso8601
 
       { "author" => [author],

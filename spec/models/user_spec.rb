@@ -13,16 +13,16 @@ describe User, type: :model, vcr: true do
 
     it 'get data' do
       result = subject.get_data
-      expect(result.length).to eq(52)
+      expect(result.length).to eq(58)
       item = result.first
-      expect(item["source"]).to eq("source-orcid"=>{"value"=>nil, "uri"=>"http://orcid.org/0000-0001-8099-6984", "path"=>"0000-0001-8099-6984", "host"=>"orcid.org"}, "source-client-id"=>nil, "source-name"=>{"value"=>"DataCite"}, "source-date"=>{"value"=>1460565737170})
+      expect(item["source"]).to eq("source_orcid"=>{"uri"=>"http://orcid.org/0000-0001-8099-6984", "path"=>"0000-0001-8099-6984", "host"=>"orcid.org"}, "source_name"=>"DataCite", "source_date"=>"2016-04-13T16:42:17.170Z")
     end
 
     it 'parse data' do
       result = subject.get_data
 
       result = subject.parse_data(result)
-      expect(result.length).to eq(52)
+      expect(result.length).to eq(58)
       expect(result.first).to eq("10.5281/ZENODO.48705")
     end
   end
