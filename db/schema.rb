@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160731171528) do
+ActiveRecord::Schema.define(version: 20160829095530) do
 
   create_table "claims", force: :cascade do |t|
     t.string   "uuid",           limit: 191
@@ -46,6 +46,9 @@ ActiveRecord::Schema.define(version: 20160731171528) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image",        limit: 255
+  end
+
+  create_table "profiles_test", force: :cascade do |t|
   end
 
   create_table "services", force: :cascade do |t|
@@ -119,7 +122,7 @@ ActiveRecord::Schema.define(version: 20160731171528) do
     t.string   "github_uid",           limit: 191
     t.string   "github_token",         limit: 191
     t.string   "facebook_uid",         limit: 191
-    t.string   "facebook_token",       limit: 191
+    t.text     "facebook_token",       limit: 65535
     t.string   "google_uid",           limit: 191
     t.string   "google_token",         limit: 191
   end
