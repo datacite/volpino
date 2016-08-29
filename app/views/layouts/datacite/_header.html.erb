@@ -75,7 +75,7 @@
               </ul>
             </li>
           <% elsif !["sessions","registrations"].include?(controller.controller_name) %>
-            <li><%= link_to "#{icon('sign-in')} Sign In".html_safe, "/sign_in", :id => "sign-in", class: 'btn btn-default' %></li>
+            <li><%= link_to "#{icon('sign-in')} Sign In".html_safe, new_session_path, :id => "sign-in", class: 'btn btn-default' %></li>
           <% end %>
         </ul>
       </div>
