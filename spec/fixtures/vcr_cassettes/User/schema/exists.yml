@@ -20,34 +20,36 @@ http_interactions:
     headers:
       Content-Security-Policy:
       - default-src 'none'; style-src 'unsafe-inline'
-      X-Xss-Protection:
-      - 1; mode=block
-      X-Frame-Options:
-      - deny
-      X-Content-Type-Options:
-      - nosniff
       Strict-Transport-Security:
       - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
       Etag:
       - '"2ab39a66bd0457ca331906375fd3fa00c1119cec"'
       Content-Type:
       - text/plain; charset=utf-8
       Cache-Control:
       - max-age=300
+      X-Geo-Block-List:
+      - ''
       X-Github-Request-Id:
-      - B91F1114:5B7D:A7386:5736DA06
+      - B91F1115:3C98:761471B:57C42CB3
       Content-Length:
       - '14182'
       Accept-Ranges:
       - bytes
       Date:
-      - Sat, 14 May 2016 07:55:51 GMT
+      - Mon, 29 Aug 2016 12:38:34 GMT
       Via:
       - 1.1 varnish
       Connection:
       - keep-alive
       X-Served-By:
-      - cache-fra1224-FRA
+      - cache-fra1248-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
@@ -57,11 +59,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Fastly-Request-Id:
-      - ee0d3a78fe5f0d8c2763551fb8518cee789768a9
+      - 3420550b62b00a17e9dea3b5e1610e9f36cae68c
       Expires:
-      - Sat, 14 May 2016 08:00:51 GMT
+      - Mon, 29 Aug 2016 12:43:34 GMT
       Source-Age:
-      - '0'
+      - '22'
     body:
       encoding: UTF-8
       string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"\n\txmlns:sch=\"http://purl.oclc.org/dsdl/schematron\"
@@ -1252,5 +1254,5 @@ http_interactions:
         base=\"orcid:non-empty-string\">\n\t\t\t\t<xs:attribute name=\"language-code\"
         type=\"orcid:language-code\" use=\"required\"/>\n\t\t\t</xs:extension>\n\t\t</xs:simpleContent>\n\t</xs:complexType>\n</xs:schema>\n"
     http_version: 
-  recorded_at: Sat, 14 May 2016 07:55:51 GMT
+  recorded_at: Mon, 29 Aug 2016 12:38:33 GMT
 recorded_with: VCR 2.9.3

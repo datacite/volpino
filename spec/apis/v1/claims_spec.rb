@@ -10,7 +10,7 @@ describe "/api/v1/claims", :type => :api do
                     "source-id"=>claim.source_id,
                     "state"=>"waiting",
                     "claimed-at"=>nil }}
-  let(:user) { FactoryGirl.create(:admin_user) }
+  let(:user) { FactoryGirl.create(:admin_user, uid: "0000-0002-1825-0097") }
   let(:uuid) { SecureRandom.uuid }
   let(:headers) do
     { "HTTP_ACCEPT" => "application/json; version=1",
@@ -38,7 +38,7 @@ describe "/api/v1/claims", :type => :api do
     end
 
     context "as staff user" do
-      let(:user) { FactoryGirl.create(:user, role: "staff") }
+      let(:user) { FactoryGirl.create(:staff_user) }
 
       it "JSON" do
         post uri, params, headers
@@ -50,7 +50,7 @@ describe "/api/v1/claims", :type => :api do
     end
 
     context "as regular user" do
-      let(:user) { FactoryGirl.create(:user, role: "user") }
+      let(:user) { FactoryGirl.create(:regular_user) }
 
       it "JSON" do
         post uri, params, headers
@@ -154,7 +154,7 @@ describe "/api/v1/claims", :type => :api do
   end
 
   context "index" do
-    let!(:claim) { FactoryGirl.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58") }
+    let!(:claim) { FactoryGirl.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
     let(:uri) { "/api/claims" }
 
     context "as admin user" do
@@ -165,12 +165,13 @@ describe "/api/v1/claims", :type => :api do
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
         item = response["data"].first
-        expect(item['attributes']).to eq("orcid"=>claim.orcid, "doi"=>"10.5061/DRYAD.781PV", "source-id"=>"orcid_update", "state"=>"waiting", "claimed-at"=>nil)
+        expect(item['attributes']).to eq("orcid"=>"0000-0002-1825-0002", "doi"=>"10.5061/DRYAD.781PV", "source-id"=>"orcid_update", "state"=>"waiting", "claimed-at"=>nil)
       end
     end
 
     context "as staff user" do
-      let(:user) { FactoryGirl.create(:user, role: "staff") }
+      let(:user) { FactoryGirl.create(:staff_user) }
+      let!(:claim) { FactoryGirl.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
 
       it "JSON" do
         get uri, nil, headers
@@ -179,12 +180,13 @@ describe "/api/v1/claims", :type => :api do
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
         item = response["data"].first
-        expect(item['attributes']).to eq("orcid"=>claim.orcid, "doi"=>"10.5061/DRYAD.781PV", "source-id"=>"orcid_update", "state"=>"waiting", "claimed-at"=>nil)
+        expect(item['attributes']).to eq("orcid"=>"0000-0002-1825-0002", "doi"=>"10.5061/DRYAD.781PV", "source-id"=>"orcid_update", "state"=>"waiting", "claimed-at"=>nil)
       end
     end
 
     context "as regular user" do
-      let(:user) { FactoryGirl.create(:user, role: "user") }
+      let(:user) { FactoryGirl.create(:regular_user) }
+      let!(:claim) { FactoryGirl.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
 
       it "JSON" do
         get uri, nil, headers
@@ -193,7 +195,7 @@ describe "/api/v1/claims", :type => :api do
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
         item = response["data"].first
-        expect(item['attributes']).to eq("orcid"=>claim.orcid, "doi"=>"10.5061/DRYAD.781PV", "source-id"=>"orcid_update", "state"=>"waiting", "claimed-at"=>nil)
+        expect(item['attributes']).to eq("orcid"=>"0000-0002-1825-0002", "doi"=>"10.5061/DRYAD.781PV", "source-id"=>"orcid_update", "state"=>"waiting", "claimed-at"=>nil)
       end
     end
 
@@ -223,7 +225,7 @@ describe "/api/v1/claims", :type => :api do
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
         item = response["data"].first
-        expect(item['attributes']).to eq("orcid"=>claim.orcid, "doi"=>"10.5061/DRYAD.781PV", "source-id"=>"orcid_update", "state"=>"waiting", "claimed-at"=>nil)
+        expect(item['attributes']).to eq("orcid"=>"0000-0002-1825-0002", "doi"=>"10.5061/DRYAD.781PV", "source-id"=>"orcid_update", "state"=>"waiting", "claimed-at"=>nil)
       end
     end
 
@@ -244,7 +246,7 @@ describe "/api/v1/claims", :type => :api do
   end
 
   context "show" do
-    let(:claim) { FactoryGirl.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58") }
+    let(:claim) { FactoryGirl.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
     let(:uri) { "/api/claims/#{claim.uuid}" }
 
     context "as admin user" do
@@ -259,7 +261,7 @@ describe "/api/v1/claims", :type => :api do
     end
 
     context "as staff user" do
-      let(:user) { FactoryGirl.create(:user, role: "staff") }
+      let(:user) { FactoryGirl.create(:staff_user) }
 
       it "JSON" do
         get uri, nil, headers
@@ -272,7 +274,7 @@ describe "/api/v1/claims", :type => :api do
     end
 
     context "as regular user" do
-      let(:user) { FactoryGirl.create(:user, role: "user") }
+      let(:user) { FactoryGirl.create(:regular_user) }
 
       it "JSON" do
         get uri, nil, headers
@@ -327,7 +329,7 @@ describe "/api/v1/claims", :type => :api do
     end
 
     context "as staff user" do
-      let(:user) { FactoryGirl.create(:user, role: "staff") }
+      let(:user) { FactoryGirl.create(:staff_user) }
 
       it "JSON" do
         delete uri, nil, headers
@@ -339,7 +341,7 @@ describe "/api/v1/claims", :type => :api do
     end
 
     context "as regular user" do
-      let(:user) { FactoryGirl.create(:user, role: "user") }
+      let(:user) { FactoryGirl.create(:regular_user) }
 
       it "JSON" do
         delete uri, nil, headers

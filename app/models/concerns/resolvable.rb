@@ -48,7 +48,7 @@ module Resolvable
       return {} if doi.blank?
 
       url = "http://api.crossref.org/works/" + PostRank::URI.escape(doi)
-      response = Maremma.get(url, options)
+      response = Maremma.get(url, options.merge(host: true))
       return response if response["errors"]
 
       metadata = response.fetch("data", {}).fetch("message", {})
@@ -147,7 +147,7 @@ module Resolvable
       return {} if doi.blank?
 
       url = "http://doi.crossref.org/doiRA/" + CGI.unescape(doi)
-      response = Maremma.get(url, options)
+      response = Maremma.get(url, options.merge(host: true))
       return response if response["errors"]
 
       ra = response.fetch("data", {}).first.fetch("RA", nil)

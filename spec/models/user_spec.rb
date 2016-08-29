@@ -50,7 +50,7 @@ describe User, type: :model, vcr: true do
                          .fetch("external-identifier", [])
         expect(claims.length).to eq(2)
         claim = claims.first
-        expect(claim).to eq("orcid"=>nil, "external-id-orcid"=>nil, "external-id-common-name"=>{"value"=>"ISNI"}, "external-id-reference"=>{"value"=>"000000035060549X"}, "external-id-url"=>{"value"=>"http://isni.org/000000035060549X"}, "external-id-source"=>nil, "source"=>{"source-orcid"=>{"value"=>nil, "uri"=>"http://orcid.org/0000-0003-0412-1857", "path"=>"0000-0003-0412-1857", "host"=>"orcid.org"}, "source-client-id"=>nil, "source-name"=>{"value"=>"ISNI2ORCID search and link"}, "source-date"=>{"value"=>1387382277259}})
+        expect(claim).to eq("orcid"=>nil, "external-id-orcid"=>nil, "external-id-common-name"=>{"value"=>"Scopus Author ID"}, "external-id-reference"=>{"value"=>"7006600825"}, "external-id-url"=>{"value"=>"http://www.scopus.com/inward/authorDetails.url?authorID=7006600825&partnerID=MN8TOARS"}, "external-id-source"=>nil, "source"=>{"source-orcid"=>{"value"=>nil, "uri"=>"http://orcid.org/0000-0002-5982-8983", "path"=>"0000-0002-5982-8983", "host"=>"orcid.org"}, "source-client-id"=>nil, "source-name"=>{"value"=>"Scopus to ORCID"}, "source-date"=>{"value"=>1378921887304}})
       end
     end
 

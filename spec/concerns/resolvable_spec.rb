@@ -54,7 +54,7 @@ describe Claim, type: :model, vcr: true do
         expect(response["author"]).to eq([{"family"=>"Trends", "given"=>"Research"}, {"family"=>"Piwowar", "given"=>"Heather", "ORCID"=>"http://orcid.org/0000-0003-1613-5981"}])
         expect(response["published"]).to eq("2013")
         expect(response["issued"]).to eq("2013-02-13T14:46:00Z")
-        expect(response["type"]).to eq("Dataset")
+        expect(response["type"]).to eq("Audiovisual")
       end
 
       it "get_metadata orcid" do
@@ -98,7 +98,7 @@ describe Claim, type: :model, vcr: true do
         expect(response["DOI"]).to eq(doi)
         expect(response["title"]).to eq("Paving the path to HIV neurotherapy: Predicting SIV CNS disease")
         expect(response["container-title"]).to eq("European Journal of Pharmacology")
-        expect(response["issued"]).to eq("date-parts"=>[[2016, 3, 24]])
+        expect(response["issued"]).to eq("date-parts"=>[[2016, 8, 20]])
         expect(response["type"]).to eq("article-journal")
       end
 

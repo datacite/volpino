@@ -32,7 +32,7 @@ class UsersController < ApplicationController
 
       load_user
 
-      sign_in @user, :bypass => true if @user.update_attributes(safe_params)
+      @user.update_attributes(safe_params)
 
       render @panel
     else

@@ -6,7 +6,7 @@ describe "tags", type: :feature, js: true, vcr: true do
   it 'lists all tags' do
     sign_in
     visit '/tags'
-    expect(page).to have_css ".panel-heading", text: tag.title
+    expect(page).to have_css ".panel-default h3", text: tag.title
   end
 
   it 'not authorized' do

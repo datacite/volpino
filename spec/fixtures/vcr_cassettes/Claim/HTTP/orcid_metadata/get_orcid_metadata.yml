@@ -10,7 +10,7 @@ http_interactions:
       User-Agent:
       - Maremma - http://profiles.local
       Accept:
-      - application/json
+      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
   response:
     status:
       code: 200
@@ -19,26 +19,103 @@ http_interactions:
       Server:
       - nginx/1.4.6 (Ubuntu)
       Content-Type:
-      - application/json;charset=UTF-8
+      - application/vnd.orcid+xml; qs=5;charset=UTF-8
       Date:
-      - Sat, 14 May 2016 07:26:45 GMT
+      - Mon, 29 Aug 2016 12:38:38 GMT
       Access-Control-Allow-Origin:
       - "*"
       Connection:
       - keep-alive
       Set-Cookie:
-      - X-Mapping-fjhppofk=BB082610361E703B21115ED5EB3CF586; path=/
+      - X-Mapping-fjhppofk=BB32ADE26669E4E542AAA075A6CC205A; path=/
     body:
       encoding: UTF-8
-      string: '{"message-version":"1.2","orcid-profile":{"orcid":null,"orcid-id":null,"orcid-identifier":{"value":null,"uri":"http://orcid.org/0000-0002-0159-2197","path":"0000-0002-0159-2197","host":"orcid.org"},"orcid-deprecated":null,"orcid-preferences":{"locale":"EN"},"orcid-history":{"creation-method":"WEBSITE","completion-date":{"value":1350431231944},"submission-date":{"value":1350426975660},"last-modified-date":{"value":1463083757122},"claimed":{"value":true},"source":null,"deactivation-date":null,"verified-email":{"value":true},"verified-primary-email":{"value":true},"visibility":null},"orcid-bio":{"personal-details":{"given-names":{"value":"Jonathan
-        A.","visibility":null},"family-name":{"value":"Eisen","visibility":null},"credit-name":null,"other-names":null},"biography":null,"researcher-urls":{"researcher-url":[{"url-name":{"value":"microBEnet"},"url":{"value":"http://microBE.net"}},{"url-name":{"value":"Tree
-        of Life Blog"},"url":{"value":"http://phylogenomics.blogspot.com"}},{"url-name":{"value":"Lab
-        Page"},"url":{"value":"http://phylogenomics.wordpress.com"}},{"url-name":{"value":"Twitter"},"url":{"value":"http://twitter.com/phylogenomics"}},{"url-name":{"value":"Disclosures"},"url":{"value":"https://phylogenomics.wordpress.com/about/disclosures/"}}],"visibility":"PUBLIC"},"contact-details":null,"keywords":{"keyword":[{"value":"evolution,
-        genomics, microbiology, ecology, microbial diversity, citizen science, "},{"value":"microbiomes,
-        DNA repair, open science,"}],"visibility":"PUBLIC"},"external-identifiers":{"external-identifier":[{"orcid":null,"external-id-orcid":null,"external-id-common-name":{"value":"Loop
-        profile"},"external-id-reference":{"value":"224690"},"external-id-url":{"value":"http://loop.frontiersin.org/people/224690/overview?referrer=orcid_profile"},"external-id-source":null,"source":{"source-orcid":null,"source-client-id":{"value":null,"uri":"http://orcid.org/client/APP-4DPEW6SVSNQHKC8G","path":"APP-4DPEW6SVSNQHKC8G","host":"orcid.org"},"source-name":{"value":"Loop"},"source-date":{"value":1452488714527}}},{"orcid":null,"external-id-orcid":null,"external-id-common-name":{"value":"Scopus
-        Author ID"},"external-id-reference":{"value":"35247902700"},"external-id-url":{"value":"http://www.scopus.com/inward/authorDetails.url?authorID=35247902700&partnerID=MN8TOARS"},"external-id-source":null,"source":{"source-orcid":{"value":null,"uri":"http://orcid.org/0000-0002-5982-8983","path":"0000-0002-5982-8983","host":"orcid.org"},"source-client-id":null,"source-name":{"value":"Scopus
-        to ORCID"},"source-date":{"value":1364149242464}}}],"visibility":"PUBLIC"},"delegation":null,"scope":null},"orcid-activities":null,"orcid-internal":null,"type":"USER","group-type":null,"client-type":null},"orcid-search-results":null,"error-desc":null}'
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <orcid-message xmlns="http://www.orcid.org/ns/orcid">
+            <message-version>1.2</message-version>
+            <orcid-profile type="user">
+                <orcid-identifier>
+                    <uri>http://orcid.org/0000-0002-0159-2197</uri>
+                    <path>0000-0002-0159-2197</path>
+                    <host>orcid.org</host>
+                </orcid-identifier>
+                <orcid-preferences>
+                    <locale>en</locale>
+                </orcid-preferences>
+                <orcid-history>
+                    <creation-method>website</creation-method>
+                    <completion-date>2012-10-16T23:47:11.944Z</completion-date>
+                    <submission-date>2012-10-16T22:36:15.660Z</submission-date>
+                    <last-modified-date>2016-08-23T14:14:49.050Z</last-modified-date>
+                    <claimed>true</claimed>
+                    <verified-email>true</verified-email>
+                    <verified-primary-email>true</verified-primary-email>
+                </orcid-history>
+                <orcid-bio>
+                    <personal-details>
+                        <given-names>Jonathan A.</given-names>
+                        <family-name>Eisen</family-name>
+                    </personal-details>
+                    <researcher-urls visibility="public">
+                        <researcher-url>
+                            <url-name>microBEnet</url-name>
+                            <url>http://microBE.net</url>
+                        </researcher-url>
+                        <researcher-url>
+                            <url-name>Tree of Life Blog</url-name>
+                            <url>http://phylogenomics.blogspot.com</url>
+                        </researcher-url>
+                        <researcher-url>
+                            <url-name>Lab Page</url-name>
+                            <url>http://phylogenomics.wordpress.com</url>
+                        </researcher-url>
+                        <researcher-url>
+                            <url-name>Twitter</url-name>
+                            <url>http://twitter.com/phylogenomics</url>
+                        </researcher-url>
+                        <researcher-url>
+                            <url-name>Disclosures</url-name>
+                            <url>https://phylogenomics.wordpress.com/about/disclosures/</url>
+                        </researcher-url>
+                    </researcher-urls>
+                    <keywords visibility="public">
+                        <keyword>evolution, genomics, microbiology, ecology, microbial diversity, citizen science, </keyword>
+                        <keyword>microbiomes, DNA repair, open science,</keyword>
+                    </keywords>
+                    <external-identifiers visibility="public">
+                        <external-identifier>
+                            <external-id-common-name>Scopus Author ID</external-id-common-name>
+                            <external-id-reference>35247902700</external-id-reference>
+                            <external-id-url>http://www.scopus.com/inward/authorDetails.url?authorID=35247902700&amp;partnerID=MN8TOARS</external-id-url>
+                            <source>
+                                <source-orcid>
+                                    <uri>http://orcid.org/0000-0002-5982-8983</uri>
+                                    <path>0000-0002-5982-8983</path>
+                                    <host>orcid.org</host>
+                                </source-orcid>
+                                <source-name>Scopus to ORCID</source-name>
+                                <source-date>2013-03-24T18:20:42.464Z</source-date>
+                            </source>
+                        </external-identifier>
+                        <external-identifier>
+                            <external-id-common-name>Loop profile</external-id-common-name>
+                            <external-id-reference>224690</external-id-reference>
+                            <external-id-url>http://loop.frontiersin.org/people/224690/overview?referrer=orcid_profile</external-id-url>
+                            <source>
+                                <source-client-id>
+                                    <uri>http://orcid.org/client/APP-4DPEW6SVSNQHKC8G</uri>
+                                    <path>APP-4DPEW6SVSNQHKC8G</path>
+                                    <host>orcid.org</host>
+                                </source-client-id>
+                                <source-name>Loop</source-name>
+                                <source-date>2016-01-11T05:05:14.527Z</source-date>
+                            </source>
+                        </external-identifier>
+                    </external-identifiers>
+                </orcid-bio>
+            </orcid-profile>
+        </orcid-message>
     http_version: 
-  recorded_at: Sat, 14 May 2016 07:26:45 GMT
+  recorded_at: Mon, 29 Aug 2016 12:38:38 GMT
 recorded_with: VCR 2.9.3

@@ -5,7 +5,7 @@ module UserAuthMacros
     else
       OmniAuth.config.add_mock(:orcid, { extra: { raw_info: { role: role }}})
     end
-    visit "/"
+    visit "/sign_in"
     click_link_or_button "Sign in with ORCID"
   end
 

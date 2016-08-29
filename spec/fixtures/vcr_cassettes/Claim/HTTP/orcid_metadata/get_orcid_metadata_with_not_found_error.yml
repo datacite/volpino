@@ -10,7 +10,7 @@ http_interactions:
       User-Agent:
       - Maremma - http://profiles.local
       Accept:
-      - application/json
+      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
   response:
     status:
       code: 404
@@ -19,19 +19,23 @@ http_interactions:
       Server:
       - nginx/1.4.6 (Ubuntu)
       Content-Type:
-      - application/json;charset=UTF-8
+      - application/vnd.orcid+xml; qs=5;charset=UTF-8
       Date:
-      - Sat, 14 May 2016 07:26:44 GMT
+      - Mon, 29 Aug 2016 12:38:38 GMT
       Access-Control-Allow-Origin:
       - "*"
       Connection:
       - keep-alive
       Set-Cookie:
-      - X-Mapping-fjhppofk=C09163FCAE41D74539C91CB2476C0D71; path=/
+      - X-Mapping-fjhppofk=BB32ADE26669E4E542AAA075A6CC205A; path=/
     body:
       encoding: UTF-8
-      string: '{"message-version":"1.2","orcid-profile":null,"orcid-search-results":null,"error-desc":{"value":"Not
-        found : No entity found for query"}}'
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <orcid-message xmlns="http://www.orcid.org/ns/orcid">
+            <message-version>1.2</message-version>
+            <error-desc>Not found : No entity found for query</error-desc>
+        </orcid-message>
     http_version: 
-  recorded_at: Sat, 14 May 2016 07:26:44 GMT
+  recorded_at: Mon, 29 Aug 2016 12:38:37 GMT
 recorded_with: VCR 2.9.3

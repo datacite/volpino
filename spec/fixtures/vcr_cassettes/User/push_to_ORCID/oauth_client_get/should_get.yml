@@ -23,7 +23,7 @@ http_interactions:
       Server:
       - nginx/1.4.6 (Ubuntu)
       Date:
-      - Sat, 14 May 2016 07:26:53 GMT
+      - Mon, 29 Aug 2016 12:38:25 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Transfer-Encoding:
@@ -38,9 +38,9 @@ http_interactions:
       - no-cache
     body:
       encoding: UTF-8
-      string: '{"access_token":"1a5c037a-c338-48dc-8256-1c645b5eb20e","token_type":"bearer","refresh_token":"19b0680b-a089-4a5c-825f-1ad9de45ed58","expires_in":631138518,"scope":"/read-public","orcid":null}'
+      string: '{"access_token":"da4d463b-4792-4b81-ae11-cadf714cf2fb","token_type":"bearer","refresh_token":"c9f924d1-411c-4607-93c2-e72a4426cdc8","expires_in":631138518,"scope":"/read-public","orcid":null}'
     http_version: 
-  recorded_at: Sat, 14 May 2016 07:26:53 GMT
+  recorded_at: Mon, 29 Aug 2016 12:38:25 GMT
 - request:
     method: get
     uri: https://api.orcid.org/v1.2/0000-0003-1419-2405/orcid-bio/external-identifiers
@@ -51,7 +51,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Authorization:
-      - Bearer 1a5c037a-c338-48dc-8256-1c645b5eb20e
+      - Bearer da4d463b-4792-4b81-ae11-cadf714cf2fb
       Accept:
       - application/json
       Accept-Encoding:
@@ -64,7 +64,7 @@ http_interactions:
       Server:
       - nginx/1.4.6 (Ubuntu)
       Date:
-      - Sat, 14 May 2016 07:26:54 GMT
+      - Mon, 29 Aug 2016 12:38:26 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Transfer-Encoding:
@@ -75,11 +75,11 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"message-version":"1.2","orcid-profile":{"orcid":null,"orcid-id":null,"orcid-identifier":{"value":null,"uri":"http://orcid.org/0000-0003-1419-2405","path":"0000-0003-1419-2405","host":"orcid.org"},"orcid-deprecated":null,"orcid-preferences":{"locale":"EN"},"orcid-history":{"creation-method":"WEBSITE","completion-date":{"value":1349732964340},"submission-date":{"value":1349729360270},"last-modified-date":{"value":1463206276217},"claimed":{"value":true},"source":null,"deactivation-date":null,"verified-email":{"value":true},"verified-primary-email":{"value":true},"visibility":null},"orcid-bio":{"personal-details":{"given-names":{"value":"","visibility":null},"family-name":null,"credit-name":null,"other-names":null},"biography":null,"researcher-urls":{"researcher-url":[{"url-name":{"value":"Blog"},"url":{"value":"http://blog.martinfenner.org"}},{"url-name":{"value":"Twitter"},"url":{"value":"http://twitter.com/mfenner"}},{"url-name":{"value":"My
-        SciENCV"},"url":{"value":"http://www.ncbi.nlm.nih.gov/myncbi/mfenner/cv/1413/"}},{"url-name":{"value":"Github"},"url":{"value":"https://github.com/mfenner"}}],"visibility":"PUBLIC"},"contact-details":null,"keywords":null,"external-identifiers":{"external-identifier":[{"orcid":null,"external-id-orcid":null,"external-id-common-name":{"value":"ISNI"},"external-id-reference":{"value":"000000035060549X"},"external-id-url":{"value":"http://isni.org/000000035060549X"},"external-id-source":null,"source":{"source-orcid":{"value":null,"uri":"http://orcid.org/0000-0003-0412-1857","path":"0000-0003-0412-1857","host":"orcid.org"},"source-client-id":null,"source-name":{"value":"ISNI2ORCID
-        search and link"},"source-date":{"value":1387382277259}}},{"orcid":null,"external-id-orcid":null,"external-id-common-name":{"value":"Scopus
+      string: '{"message-version":"1.2","orcid-profile":{"orcid":null,"orcid-id":null,"orcid-identifier":{"value":null,"uri":"http://orcid.org/0000-0003-1419-2405","path":"0000-0003-1419-2405","host":"orcid.org"},"orcid-deprecated":null,"orcid-preferences":{"locale":"EN"},"orcid-history":{"creation-method":"WEBSITE","completion-date":{"value":1349732964340},"submission-date":{"value":1349729360270},"last-modified-date":{"value":1472474294053},"claimed":{"value":true},"source":null,"deactivation-date":null,"verified-email":{"value":true},"verified-primary-email":{"value":true},"visibility":null},"orcid-bio":{"personal-details":{"given-names":{"value":"","visibility":null},"family-name":null,"credit-name":null,"other-names":null},"biography":null,"researcher-urls":{"researcher-url":[{"url-name":{"value":"Blog"},"url":{"value":"http://blog.martinfenner.org"}},{"url-name":{"value":"Twitter"},"url":{"value":"http://twitter.com/mfenner"}},{"url-name":{"value":"My
+        SciENCV"},"url":{"value":"http://www.ncbi.nlm.nih.gov/myncbi/mfenner/cv/1413/"}},{"url-name":{"value":"Github"},"url":{"value":"https://github.com/mfenner"}}],"visibility":"PUBLIC"},"contact-details":null,"keywords":null,"external-identifiers":{"external-identifier":[{"orcid":null,"external-id-orcid":null,"external-id-common-name":{"value":"Scopus
         Author ID"},"external-id-reference":{"value":"7006600825"},"external-id-url":{"value":"http://www.scopus.com/inward/authorDetails.url?authorID=7006600825&partnerID=MN8TOARS"},"external-id-source":null,"source":{"source-orcid":{"value":null,"uri":"http://orcid.org/0000-0002-5982-8983","path":"0000-0002-5982-8983","host":"orcid.org"},"source-client-id":null,"source-name":{"value":"Scopus
-        to ORCID"},"source-date":{"value":1378921887304}}}],"visibility":"PUBLIC"},"delegation":null,"scope":null},"orcid-activities":null,"orcid-internal":null,"type":"USER","group-type":null,"client-type":null},"orcid-search-results":null,"error-desc":null}'
+        to ORCID"},"source-date":{"value":1378921887304}}},{"orcid":null,"external-id-orcid":null,"external-id-common-name":{"value":"ISNI"},"external-id-reference":{"value":"000000035060549X"},"external-id-url":{"value":"http://isni.org/000000035060549X"},"external-id-source":null,"source":{"source-orcid":{"value":null,"uri":"http://orcid.org/0000-0003-0412-1857","path":"0000-0003-0412-1857","host":"orcid.org"},"source-client-id":null,"source-name":{"value":"ISNI2ORCID
+        search and link"},"source-date":{"value":1387382277259}}}],"visibility":"PUBLIC"},"delegation":null,"scope":null},"orcid-activities":null,"orcid-internal":null,"type":"USER","group-type":null,"client-type":null},"orcid-search-results":null,"error-desc":null}'
     http_version: 
-  recorded_at: Sat, 14 May 2016 07:26:54 GMT
+  recorded_at: Mon, 29 Aug 2016 12:38:26 GMT
 recorded_with: VCR 2.9.3

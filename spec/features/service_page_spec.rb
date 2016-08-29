@@ -6,7 +6,7 @@ describe "services", type: :feature, js: true, vcr: true do
   it 'lists all services' do
     sign_in
     visit '/services'
-    expect(page).to have_css ".panel-heading", text: service.title
+    expect(page).to have_css ".panel-default h3", text: service.title
   end
 
   it 'not authorized' do

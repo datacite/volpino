@@ -9,6 +9,17 @@ FactoryGirl.define do
     factory :admin_user do
       role "admin"
       api_key "12345"
+      uid "0000-0002-1825-0003"
+    end
+
+    factory :staff_user do
+      role "staff"
+      uid "0000-0002-1825-0004"
+    end
+
+    factory :regular_user do
+      role "user"
+      uid "0000-0002-1825-0001"
     end
 
     factory :valid_user do
