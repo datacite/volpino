@@ -31,6 +31,8 @@ FactoryGirl.define do
   factory :member do
     name 'ANDS'
     title 'Australian National Data Service (ANDS)'
+    country_code 'AU'
+    year 2009
 
     initialize_with { Member.where(name: name).first_or_initialize }
   end
