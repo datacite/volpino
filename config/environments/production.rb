@@ -72,4 +72,7 @@ Rails.application.configure do
 
   # for devise
   config.action_mailer.default_url_options = { :host => "localhost" }
+
+  # use ssl with Devise
+  config.to_prepare { Devise::SessionsController.force_ssl }
 end
