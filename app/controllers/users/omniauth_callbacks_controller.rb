@@ -18,15 +18,16 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                               github_token: auth.credentials.token)
       flash[:notice] = "Account successfully linked with GitHub account."
     elsif @user = User.where(github_uid: auth.uid).first
-      sign_in @user if @user
-    end
-
-    if @user.present?
-      redirect_to stored_location_for(:user) || user_path("me")
+      cookies[:jwt] = { value: @user.jwt_payload,
+                        expires: 14.days.from_now.utc,
+                        domain: :all }
+      sign_in @user
+      redirect_to stored_location_for(:user)
     else
       flash[:omniauth] = { "github" => auth.info.nickname,
                            "github_uid" => auth.uid,
-                           "github_token" => auth.credentials.token }
+                           "github_token" => auth.credentials.token,
+                           "origin" => origin }
       redirect_to "/link_orcid"
     end
   end
@@ -40,12 +41,12 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                               google_token: auth.credentials.token,
                               email: auth.info.email)
       flash[:notice] = "Account successfully linked with Google account."
-    elsif @user = User.where(google_uid: auth.uid).first
-      sign_in @user if @user
-    end
-
-    if @user.present?
-      redirect_to stored_location_for(:user) || user_path("me")
+    elsif @user = User.where(github_uid: auth.uid).first
+      cookies[:jwt] = { value: @user.jwt_payload,
+                        expires: 14.days.from_now.utc,
+                        domain: :all }
+      sign_in @user
+      redirect_to stored_location_for(:user)
     else
       flash[:omniauth] = { "google_uid" => auth.uid,
                            "google_token" => auth.credentials.token,
@@ -62,12 +63,12 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       @user.update_attributes(facebook_uid: auth.uid,
                               facebook_token: auth.credentials.token)
       flash[:notice] = "Account successfully linked with Facebook account."
-    elsif @user = User.where(facebook_uid: auth.uid).first
-      sign_in @user if @user
-    end
-
-    if @user.present?
-      redirect_to stored_location_for(:user) || user_path("me")
+    elsif @user = User.where(github_uid: auth.uid).first
+      cookies[:jwt] = { value: @user.jwt_payload,
+                        expires: 14.days.from_now.utc,
+                        domain: :all }
+      sign_in @user
+      redirect_to stored_location_for(:user)
     else
       flash[:omniauth] = { "facebook_uid" => auth.uid,
                            "facebook_token" => auth.credentials.token }
@@ -94,9 +95,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       sign_in @user
-      redirect_to stored_location_for(:user) ||  user_path("me")
+      cookies[:jwt] = { value: @user.jwt_payload,
+                        expires: 14.days.from_now.utc,
+                        domain: :all }
+      redirect_to stored_location_for(:user)
     else
-      session["devise.#{provider}_data"] = request.env["omniauth.auth"]
       flash[:alert] = @user.errors.map { |k,v| "#{k}: #{v}" }.join("<br />").html_safe || "Error signing in with #{provider}"
       redirect_to root_path
     end

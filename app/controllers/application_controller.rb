@@ -3,21 +3,31 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  helper_method :current_user
+  helper_method :current_user, :devise_current_user
 
   def after_sign_in_path_for(resource)
-    if resource.created_at > 1.minute.ago
-      '/users/me'
-    else
-      request.env['omniauth.origin'].presence || stored_location_for(resource) || root_path
-    end
+    stored_location_for(:user) || root_path
   end
 
   def after_sign_out_path_for(resource_or_scope)
-    root_path
+    request.referrer
+  end
+
+  def authenticate_user!
+    if user_signed_in?
+      super
+    else
+      redirect_to "/sign_in"
+    end
+  end
+
+  # override devise method as user may come from different subsite
+  def store_location_for(resource_or_scope, location)
+    session_key = stored_location_key_for(resource_or_scope)
+    session[session_key] = location
   end
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to main_app.root_path, :alert => exception.message
+    redirect_to root_path, :alert => exception.message
   end
 end

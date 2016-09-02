@@ -3,6 +3,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # GET /sign_in
   def new
+    store_location_for(:user, request.referer)
     @show_image = true
     super
   end
@@ -14,11 +15,8 @@ class Users::SessionsController < Devise::SessionsController
 
   # DELETE /sign_out
   def destroy
-    @service = Service.where(name: params[:id]).first
-    url = @service.present? ? @service.url : nil
-    sign_out current_user
-    flash[:notice] = "Signed out successfully." if url.nil?
-    redirect_to url || root_path
+    cookies.delete :jwt, domain: :all
+    super
   end
 
   def link_orcid

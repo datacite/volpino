@@ -73,6 +73,19 @@ module ApplicationHelper
     end
   end
 
+  def devise_current_user
+    @devise_current_user ||= warden.authenticate(:scope => :user)
+  end
+
+  def current_user
+    if session[:auth].blank?
+      devise_current_user
+    else
+      uid = session[:auth].fetch("uid", nil)
+      User.where(uid: uid).first
+    end
+  end
+
   def roles
     %w(user data_centre data_centre_admin member_representative member_technical_contact member_billing_contact staff admin)
   end

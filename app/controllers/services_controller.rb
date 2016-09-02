@@ -9,13 +9,11 @@ class ServicesController < ApplicationController
   load_and_authorize_resource :except => [:show]
 
   def show
-    # use optional :origin and :query parameters to redirect to specific page
-    url = @service.redirect_uri + '?'
-    origin = params[:query].present? ? "/works?query=#{params[:query]}" : params[:origin]
+    # use optional :query parameter to redirect to specific page
+    url = @service.url
+    url += "/works?query=#{params[:query]}" if params[:query]
 
-    redirect_to url +  URI.encode_www_form({
-      jwt: current_user.jwt_payload,
-      origin: origin }.compact)
+    redirect_to url
   end
 
   def index
@@ -59,9 +57,12 @@ class ServicesController < ApplicationController
 
   def load_service
     @service = Service.where(name: params[:id]).first
-    fail ActiveRecord::RecordNotFound unless @service.present?
 
-    @tags = @service.tags.all
+    if @service.present?
+      @tags = @service.tags.all
+    else
+      redirect_to root_url
+    end
   end
 
   def load_index

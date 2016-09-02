@@ -105,12 +105,12 @@ class User < ActiveRecord::Base
   def jwt_payload
     claims = {
       uid: uid,
-      api_key: api_key,
-      expires_at: expires_at,
       name: name,
       email: email,
       role: role,
-      iat: Time.now.to_i
+      api_key: api_key,
+      iat: Time.now.to_i,
+      exp: Time.now.to_i + 14 * 24 * 3600
     }
 
     JWT.encode(claims, ENV['JWT_SECRET_KEY'])
