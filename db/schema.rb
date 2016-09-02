@@ -48,9 +48,6 @@ ActiveRecord::Schema.define(version: 20160829095530) do
     t.string   "image",        limit: 255
   end
 
-  create_table "profiles_test", force: :cascade do |t|
-  end
-
   create_table "services", force: :cascade do |t|
     t.string   "name",         limit: 255,   null: false
     t.string   "title",        limit: 255,   null: false

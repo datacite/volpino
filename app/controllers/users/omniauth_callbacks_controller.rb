@@ -4,7 +4,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def failure
-    flash[:alert] = "Error signing in with ORCID: #{request.env["omniauth.error.type"].to_s.humanize}"
+    flash[:alert] = "Error signing in: #{request.env["omniauth.error.type"].to_s.humanize}"
     redirect_to root_path
   end
 
@@ -26,8 +26,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     else
       flash[:omniauth] = { "github" => auth.info.nickname,
                            "github_uid" => auth.uid,
-                           "github_token" => auth.credentials.token,
-                           "origin" => origin }
+                           "github_token" => auth.credentials.token }
       redirect_to "/link_orcid"
     end
   end
