@@ -3,7 +3,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # GET /sign_in
   def new
-    store_location_for(:user, request.referer)
+    store_location_for(:user, request.referer || root_url)
     @show_image = true
     super
   end
