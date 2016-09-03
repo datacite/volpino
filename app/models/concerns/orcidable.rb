@@ -43,6 +43,19 @@ module Orcidable
       { "errors" => [{ "title" => e.message }] }
     end
 
+    def oauth_client_delete(options={})
+      options[:endpoint] ||= "orcid-works"
+      response = user_token.delete("#{ENV['ORCID_API_URL']}/v#{ORCID_VERSION}/#{uid}/#{options[:endpoint]}") do |request|
+        request.headers['Accept'] = 'application/json'
+      end
+
+      return { "data" => JSON.parse(response.body) } if response.status == 200
+
+      { "errors" => [{ "title" => "Error deleting claim" }] }
+    rescue OAuth2::Error => e
+      { "errors" => [{ "title" => e.message }] }
+    end
+
     def root_attributes
       { :'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
         :'xsi:schemaLocation' => 'http://www.orcid.org/ns/orcid https://raw.github.com/ORCID/ORCID-Source/master/orcid-model/src/main/resources/orcid-message-1.2.xsd',
