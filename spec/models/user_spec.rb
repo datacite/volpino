@@ -59,14 +59,7 @@ describe User, type: :model, vcr: true do
 
       it 'should post' do
         response = subject.oauth_client_post(subject.data, endpoint: "orcid-bio/external-identifiers")
-        claims = response.fetch("data", {})
-                         .fetch("orcid-profile", {})
-                         .fetch("orcid-bio", {})
-                         .fetch("external-identifiers", {})
-                         .fetch("external-identifier", [])
-        expect(claims.length).to eq(2)
-        claim = claims.first
-        expect(claim).to eq("orcid"=>nil, "external-id-orcid"=>nil, "external-id-common-name"=>{"value"=>"ISNI"}, "external-id-reference"=>{"value"=>"000000035060549X"}, "external-id-url"=>{"value"=>"http://isni.org/000000035060549X"}, "external-id-source"=>nil, "source"=>{"source-orcid"=>{"value"=>nil, "uri"=>"http://orcid.org/0000-0003-0412-1857", "path"=>"0000-0003-0412-1857", "host"=>"orcid.org"}, "source-client-id"=>nil, "source-name"=>{"value"=>"ISNI2ORCID search and link"}, "source-date"=>{"value"=>1387382277259}})
+        expect(response["errors"].first["title"]).to include("Insufficient or wrong scope")
       end
     end
 
@@ -79,31 +72,12 @@ describe User, type: :model, vcr: true do
       end
     end
 
-  #   describe 'push_data' do
-  #     it 'no errors' do
-  #       response = subject.push_data
-  #       claim = response["data"].fetch("orcid-profile", {})
-  #                                .fetch("orcid-bio", {})
-  #                                .fetch("orcid-external-identifiers", {})
-  #                                .fetch("orcid-external-identifier", [])
-  #       expect(claim).to eq("title"=>"omniauth-orcid: v.1.0")
-  #     end
-  #   end
-
-    # describe 'push_data invalid data' do
-    #   it 'it errors' do
-    #     subject = FactoryGirl.create(:valid_user, github: nil)
-    #     response = subject.push_data
-    #     expect(response["errors"]).to eq([{"title"=>"Missing data"}])
-    #   end
-    # end
-
     describe 'push_data invalid token' do
       subject { FactoryGirl.create(:valid_user, uid: "0000-0003-1419-240x", github: "mfenner") }
 
       it 'errors' do
         response = subject.push_data
-        expect(response["errors"].first["title"]).to include("Attempt to retrieve a OrcidOauth2TokenDetail with a null or empty token value")
+        expect(response["errors"].first["title"]).to include("Insufficient or wrong scope")
       end
     end
   end
