@@ -28,7 +28,8 @@ ENV['SESSION_KEY'] ||= "_#{ENV['APPLICATION']}_session"
 ENV['SITE_TITLE'] ||= "DataCite Profiles"
 ENV['LOG_LEVEL'] ||= "info"
 ENV['GITHUB_URL'] ||= "https://github.com/datacite/volpino"
-ENV['TRUSTED_IP'] ||= "10.0.10.1"
+ENV['TRUSTED_IP'] ||= "127.0.0.0/8"
+ENV['MEMCACHE_SERVERS'] ||= "127.0.0.1"
 
 module Volpino
   class Application < Rails::Application
@@ -45,7 +46,6 @@ module Volpino
 
     # Use a different cache store
     # dalli uses ENV['MEMCACHE_SERVERS']
-    ENV['MEMCACHE_SERVERS'] ||= ENV['HOSTNAME']
     config.cache_store = :dalli_store, nil, { :namespace => ENV['APPLICATION'], :compress => true }
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
