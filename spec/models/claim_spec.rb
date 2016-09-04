@@ -49,6 +49,14 @@ describe Claim, type: :model, vcr: true do
       end
     end
 
+    describe 'oauth_client_delete' do
+      it 'should delete' do
+        response = subject.oauth_client_delete
+        error = response["errors"].first
+        expect(error["title"]).to include("Please specify a version number")
+      end
+    end
+
     describe 'oauth_client_post invalid token' do
       let(:user) { FactoryGirl.create(:user, uid: "0000-0003-1419-240x") }
       subject { FactoryGirl.create(:claim, user: user, orcid: "0000-0003-1419-240x", doi: "10.5281/ZENODO.21429", source_id: "orcid_update") }
