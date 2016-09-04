@@ -14,11 +14,11 @@
 </div>
 
 <div class="row">
-  <div class='col-md-9' id="content">
+  <div class='col-md-9 panel-list' id="content">
     <% if @claims.size > 0 %>
       <% @claims.each do |claim| %>
         <div class="panel panel-default">
-          <% if claim.claimed_at.present? %>
+          <% if claim.claimed_at > Date.new(1971,1,1) %>
             <div class="panel-heading panel-list">
               <%= h(claim.doi) %><span class="small pull-right"><%= l claim.claimed_at, format: :medium %></span>
             </div>
@@ -47,6 +47,8 @@
               <div class="btn-group btn-group-sm">
                 <% if claim.failed? %>
                   <%= link_to claim.human_state_name, claim_path(claim, :claim => { :resolve => true }, state: params[:state], source: params[:source]), :method => :put, :remote => true %>
+                <% elsif claim.done? %>
+                  <%= claim.claim_action + "d" %>
                 <% else %>
                   <%= claim.human_state_name %>
                 <% end %>
@@ -117,6 +119,28 @@
                   <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], source: source.first, state: params[:state]) %>
                   <div class="facet-title"><%= sources[source.first] %></div>
                   <span class="number pull-right"><%= number_with_delimiter(source.last) %></span>
+                  <div class="clearfix"/>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+        <div class="panel-body">
+          <h4>Actions</h4>
+          <ul>
+            <% if @claim_action %>
+              <li class="active">
+                <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], state: params[:state]) %>
+                <div class="facet-title"><%= @claim_action.first.humanize %></div>
+                <span class="number pull-right"><%= number_with_delimiter(@claim_action.last) %></span>
+                <div class="clearfix"/>
+              </li>
+            <% else %>
+              <% @claim_actions.each do |claim_action| %>
+                <li>
+                  <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], claim_action: claim_action.first, state: params[:state]) %>
+                  <div class="facet-title"><%= claim_action.first.humanize %></div>
+                  <span class="number pull-right"><%= number_with_delimiter(claim_action.last) %></span>
                   <div class="clearfix"/>
                 </li>
               <% end %>
