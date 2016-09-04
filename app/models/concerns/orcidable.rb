@@ -43,13 +43,14 @@ module Orcidable
       { "errors" => [{ "title" => e.message }] }
     end
 
-    def oauth_client_delete(options={})
+    def oauth_client_delete(data, options={})
       options[:endpoint] ||= "orcid-works"
       response = user_token.delete("#{ENV['ORCID_API_URL']}/v#{ORCID_VERSION}/#{uid}/#{options[:endpoint]}") do |request|
-        request.headers['Accept'] = 'application/json'
+        request.headers['Content-Type'] = 'application/orcid+xml'
+        request.body = data
       end
 
-      return { "data" => JSON.parse(response.body) } if response.status == 200
+      return { "data" => Hash.from_xml(data) } if response.status == 200
 
       { "errors" => [{ "title" => "Error deleting claim" }] }
     rescue OAuth2::Error => e

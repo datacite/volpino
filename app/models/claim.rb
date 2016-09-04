@@ -84,7 +84,9 @@ class Claim < ActiveRecord::Base
 
   # push to deposit API if no error and we have collected works
   def lagotto_post
-    Maremma.post ENV['ORCID_UPDATE_URL'], data: deposit, token: ENV['ORCID_UPDATE_TOKEN']
+    Maremma.post ENV['ORCID_UPDATE_URL'], data: deposit.to_json,
+                                          token: ENV['ORCID_UPDATE_TOKEN'],
+                                          content_type: 'json'
   end
 
   def process_data(options={})
@@ -123,7 +125,12 @@ class Claim < ActiveRecord::Base
     # validate data
     return { "errors" => validation_errors.map { |error| { "title" => error } }} if validation_errors.present?
 
-    oauth_client_post(data)
+    # create or delete entry in ORCID record
+    if claim_action == "delete"
+      oauth_client_delete(data)
+    else
+      oauth_client_post(data)
+    end
   end
 
   def create_uuid

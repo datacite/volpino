@@ -39,11 +39,16 @@ class ClaimsController < ApplicationController
       collection = collection.where(source_id: params[:source])
       @source = collection.group(:source_id).count.first
     end
+    if params[:claim_action].present?
+      collection = collection.where(claim_action: params[:claim_action])
+      @claim_action = collection.group(:claim_action).count.first
+    end
     if params[:state].present?
       collection = collection.where(state: params[:state])
       @state = collection.group(:state).count.first
     end
     @sources = collection.where.not(source_id: nil).group(:source_id).count
+    @claim_actions = collection.where.not(claim_action: nil).group(:claim_action).count
     @states = collection.where.not(state: nil).group(:state).count
     @claims = collection.order_by_date.paginate(:page => params[:page])
     @page = params[:page] || 1
@@ -66,6 +71,7 @@ class ClaimsController < ApplicationController
 
   def safe_params
     params.require(:claim).permit(:state,
+                                  :claim_action,
                                   :error_messages)
   end
 end

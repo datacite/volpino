@@ -11,23 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160829095530) do
+ActiveRecord::Schema.define(version: 20160903171528) do
 
   create_table "claims", force: :cascade do |t|
     t.string   "uuid",           limit: 191
     t.string   "doi",            limit: 191
     t.integer  "state",          limit: 4,     default: 0
     t.string   "state_event",    limit: 255
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
     t.string   "orcid",          limit: 191
     t.string   "source_id",      limit: 191
     t.datetime "claimed_at"
     t.text     "error_messages", limit: 65535
+    t.string   "claim_action",   limit: 191,   default: "create"
   end
 
   add_index "claims", ["created_at"], name: "index_claims_created_at", using: :btree
-  add_index "claims", ["orcid", "doi"], name: "index_claims_on_orcid_and_doi", unique: true, using: :btree
   add_index "claims", ["orcid"], name: "index_claims_uid", using: :btree
   add_index "claims", ["source_id"], name: "index_claims_source_id", using: :btree
 
