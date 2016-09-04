@@ -13,17 +13,17 @@ describe User, type: :model, vcr: true do
 
     it 'get data' do
       result = subject.get_data
-      expect(result.length).to eq(58)
+      expect(result.length).to eq(59)
       item = result.first
-      expect(item["source"]).to eq("source_orcid"=>{"uri"=>"http://orcid.org/0000-0001-8099-6984", "path"=>"0000-0001-8099-6984", "host"=>"orcid.org"}, "source_name"=>"DataCite", "source_date"=>"2016-04-13T16:42:17.170Z")
+      expect(item["source"]["source_orcid"]).to eq("uri"=>"http://orcid.org/0000-0001-8099-6984", "path"=>"0000-0001-8099-6984", "host"=>"orcid.org")
     end
 
     it 'parse data' do
       result = subject.get_data
 
       result = subject.parse_data(result)
-      expect(result.length).to eq(58)
-      expect(result.first).to eq("10.5281/ZENODO.48705")
+      expect(result.length).to eq(59)
+      expect(result.first).to eq("10.5281/ZENODO.49516")
     end
   end
 
@@ -54,30 +54,30 @@ describe User, type: :model, vcr: true do
       end
     end
 
-    # describe 'oauth_client_post' do
-    #   subject { FactoryGirl.create(:valid_user, github: "mfenner") }
+    describe 'oauth_client_post' do
+      subject { FactoryGirl.create(:valid_user, github: "mfenner") }
 
-    #   it 'should post' do
-    #     response = subject.oauth_client_post(subject.data, endpoint: "orcid-bio/external-identifiers")
-    #     claims = response.fetch("data", {})
-    #                      .fetch("orcid-profile", {})
-    #                      .fetch("orcid-bio", {})
-    #                      .fetch("external-identifiers", {})
-    #                      .fetch("external-identifier", [])
-    #     expect(claims.length).to eq(2)
-    #     claim = claims.first
-    #     expect(claim).to eq("orcid"=>nil, "external-id-orcid"=>nil, "external-id-common-name"=>{"value"=>"ISNI"}, "external-id-reference"=>{"value"=>"000000035060549X"}, "external-id-url"=>{"value"=>"http://isni.org/000000035060549X"}, "external-id-source"=>nil, "source"=>{"source-orcid"=>{"value"=>nil, "uri"=>"http://orcid.org/0000-0003-0412-1857", "path"=>"0000-0003-0412-1857", "host"=>"orcid.org"}, "source-client-id"=>nil, "source-name"=>{"value"=>"ISNI2ORCID search and link"}, "source-date"=>{"value"=>1387382277259}})
-    #   end
-    # end
+      it 'should post' do
+        response = subject.oauth_client_post(subject.data, endpoint: "orcid-bio/external-identifiers")
+        claims = response.fetch("data", {})
+                         .fetch("orcid-profile", {})
+                         .fetch("orcid-bio", {})
+                         .fetch("external-identifiers", {})
+                         .fetch("external-identifier", [])
+        expect(claims.length).to eq(2)
+        claim = claims.first
+        expect(claim).to eq("orcid"=>nil, "external-id-orcid"=>nil, "external-id-common-name"=>{"value"=>"ISNI"}, "external-id-reference"=>{"value"=>"000000035060549X"}, "external-id-url"=>{"value"=>"http://isni.org/000000035060549X"}, "external-id-source"=>nil, "source"=>{"source-orcid"=>{"value"=>nil, "uri"=>"http://orcid.org/0000-0003-0412-1857", "path"=>"0000-0003-0412-1857", "host"=>"orcid.org"}, "source-client-id"=>nil, "source-name"=>{"value"=>"ISNI2ORCID search and link"}, "source-date"=>{"value"=>1387382277259}})
+      end
+    end
 
-    # describe 'oauth_client_post invalid token' do
-    #   subject { FactoryGirl.create(:user, uid: "0000-0003-1419-240x") }
+    describe 'oauth_client_post invalid token' do
+      subject { FactoryGirl.create(:user, uid: "0000-0003-1419-240x") }
 
-    #   it 'should post' do
-    #     response = subject.oauth_client_post(subject.data)
-    #     expect(response["errors"].first["title"]).to include("Attempt to retrieve a OrcidOauth2TokenDetail with a null or empty token value")
-    #   end
-    # end
+      it 'should post' do
+        response = subject.oauth_client_post(subject.data, endpoint: "orcid-bio/external-identifiers")
+        expect(response["errors"].first["title"]).to include("Attempt to retrieve a OrcidOauth2TokenDetail with a null or empty token value")
+      end
+    end
 
   #   describe 'push_data' do
   #     it 'no errors' do

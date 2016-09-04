@@ -19,7 +19,7 @@ http_interactions:
       Server:
       - nginx/1.11.3
       Date:
-      - Mon, 29 Aug 2016 12:38:11 GMT
+      - Sun, 04 Sep 2016 13:35:35 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Connection:
@@ -42,7 +42,7 @@ http_interactions:
 
 '
     http_version: 
-  recorded_at: Mon, 29 Aug 2016 12:38:11 GMT
+  recorded_at: Sun, 04 Sep 2016 13:35:35 GMT
 - request:
     method: get
     uri: https://raw.githubusercontent.com/ORCID/ORCID-Source/master/orcid-model/src/main/resources/orcid-message-1.2.xsd
@@ -80,33 +80,33 @@ http_interactions:
       X-Geo-Block-List:
       - ''
       X-Github-Request-Id:
-      - B91F1115:3C98:761471B:57C42CB3
+      - B91F1115:AEE3:E227BC:57CC22FB
       Content-Length:
       - '14182'
       Accept-Ranges:
       - bytes
       Date:
-      - Mon, 29 Aug 2016 12:38:11 GMT
+      - Sun, 04 Sep 2016 13:35:35 GMT
       Via:
       - 1.1 varnish
       Connection:
       - keep-alive
       X-Served-By:
-      - cache-fra1224-FRA
+      - cache-fra1238-FRA
       X-Cache:
-      - MISS
+      - HIT
       X-Cache-Hits:
-      - '0'
+      - '2'
       Vary:
       - Authorization,Accept-Encoding
       Access-Control-Allow-Origin:
       - "*"
       X-Fastly-Request-Id:
-      - f22b88fda4749e04bdad5d2b171c404246705b99
+      - 28f1f583beb4b481f95d3e52a84314a753243427
       Expires:
-      - Mon, 29 Aug 2016 12:43:11 GMT
+      - Sun, 04 Sep 2016 13:40:35 GMT
       Source-Age:
-      - '0'
+      - '45'
     body:
       encoding: UTF-8
       string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"\n\txmlns:sch=\"http://purl.oclc.org/dsdl/schematron\"
@@ -1297,7 +1297,7 @@ http_interactions:
         base=\"orcid:non-empty-string\">\n\t\t\t\t<xs:attribute name=\"language-code\"
         type=\"orcid:language-code\" use=\"required\"/>\n\t\t\t</xs:extension>\n\t\t</xs:simpleContent>\n\t</xs:complexType>\n</xs:schema>\n"
     http_version: 
-  recorded_at: Mon, 29 Aug 2016 12:38:11 GMT
+  recorded_at: Sun, 04 Sep 2016 13:35:35 GMT
 - request:
     method: post
     uri: https://api.orcid.org/v1.2/0000-0003-1419-2405/orcid-works
@@ -1351,7 +1351,7 @@ http_interactions:
       Server:
       - nginx/1.4.6 (Ubuntu)
       Date:
-      - Mon, 29 Aug 2016 12:38:12 GMT
+      - Sun, 04 Sep 2016 13:35:36 GMT
       Content-Type:
       - application/orcid+xml; qs=3;charset=UTF-8
       Content-Length:
@@ -1366,5 +1366,5 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Mon, 29 Aug 2016 12:38:12 GMT
+  recorded_at: Sun, 04 Sep 2016 13:35:36 GMT
 recorded_with: VCR 2.9.3

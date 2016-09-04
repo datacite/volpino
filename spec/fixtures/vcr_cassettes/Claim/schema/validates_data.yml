@@ -37,19 +37,19 @@ http_interactions:
       X-Geo-Block-List:
       - ''
       X-Github-Request-Id:
-      - B91F1115:3C98:761471B:57C42CB3
+      - B91F1115:AEE3:E227BC:57CC22FB
       Content-Length:
       - '14182'
       Accept-Ranges:
       - bytes
       Date:
-      - Mon, 29 Aug 2016 12:38:14 GMT
+      - Sun, 04 Sep 2016 13:35:31 GMT
       Via:
       - 1.1 varnish
       Connection:
       - keep-alive
       X-Served-By:
-      - cache-fra1245-FRA
+      - cache-fra1240-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
@@ -59,11 +59,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Fastly-Request-Id:
-      - 968c56f42c2beab824b193ec02a720c2f6bb26cc
+      - af6497297dd30b6b1a16cce16102f9861a6ddd6b
       Expires:
-      - Mon, 29 Aug 2016 12:43:14 GMT
+      - Sun, 04 Sep 2016 13:40:31 GMT
       Source-Age:
-      - '3'
+      - '40'
     body:
       encoding: UTF-8
       string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"\n\txmlns:sch=\"http://purl.oclc.org/dsdl/schematron\"
@@ -1254,7 +1254,7 @@ http_interactions:
         base=\"orcid:non-empty-string\">\n\t\t\t\t<xs:attribute name=\"language-code\"
         type=\"orcid:language-code\" use=\"required\"/>\n\t\t\t</xs:extension>\n\t\t</xs:simpleContent>\n\t</xs:complexType>\n</xs:schema>\n"
     http_version: 
-  recorded_at: Mon, 29 Aug 2016 12:38:14 GMT
+  recorded_at: Sun, 04 Sep 2016 13:35:31 GMT
 - request:
     method: get
     uri: http://search.datacite.org/api?fl=doi,creator,title,publisher,publicationYear,resourceTypeGeneral,description,datacentre,datacentre_symbol,prefix,relatedIdentifier,xml,minted,updated&q=doi:10.5061/DRYAD.781PV&rows=1&wt=json
@@ -1274,7 +1274,7 @@ http_interactions:
       Server:
       - nginx/1.11.3
       Date:
-      - Mon, 29 Aug 2016 12:38:14 GMT
+      - Sun, 04 Sep 2016 13:35:31 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Connection:
@@ -1292,5 +1292,5 @@ http_interactions:
 
 '
     http_version: 
-  recorded_at: Mon, 29 Aug 2016 12:38:14 GMT
+  recorded_at: Sun, 04 Sep 2016 13:35:31 GMT
 recorded_with: VCR 2.9.3
