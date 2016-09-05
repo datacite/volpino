@@ -177,7 +177,7 @@ class User < ActiveRecord::Base
 
   def set_role
     # use admin role for first user
-    write_attribute(:role, "admin") if User.count == 0 && !Rails.env.test?
+    write_attribute(:role, "admin") if User.count == 0 && role.blank?
   end
 
   def user_token
