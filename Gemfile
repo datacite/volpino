@@ -32,7 +32,6 @@ gem "rouge", "~> 1.7.2"
 gem 'hashie', '~> 3.3.2'
 gem 'bibtex-ruby', '~> 4.2'
 gem 'namae', '~> 0.10.1'
-gem 'httplog'
 gem 'lograge', '~> 0.3.5'
 
 gem 'devise', '~> 3.5', '>= 3.5.2'
