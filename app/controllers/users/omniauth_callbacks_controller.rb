@@ -17,6 +17,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                               github_uid: auth.uid,
                               github_token: auth.credentials.token)
       flash[:notice] = "Account successfully linked with GitHub account."
+      redirect_to user_path("me")
     elsif @user = User.where(github_uid: auth.uid).first
       cookies[:jwt] = { value: @user.jwt_payload,
                         expires: 14.days.from_now.utc,
@@ -40,6 +41,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                               google_token: auth.credentials.token,
                               email: auth.info.email)
       flash[:notice] = "Account successfully linked with Google account."
+      redirect_to user_path("me")
     elsif @user = User.where(google_uid: auth.uid).first
       cookies[:jwt] = { value: @user.jwt_payload,
                         expires: 14.days.from_now.utc,
@@ -62,6 +64,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       @user.update_attributes(facebook_uid: auth.uid,
                               facebook_token: auth.credentials.token)
       flash[:notice] = "Account successfully linked with Facebook account."
+      redirect_to user_path("me")
     elsif @user = User.where(facebook_uid: auth.uid).first
       cookies[:jwt] = { value: @user.jwt_payload,
                         expires: 14.days.from_now.utc,
