@@ -22,7 +22,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                         expires: 14.days.from_now.utc,
                         domain: :all }
       sign_in @user
-      redirect_to stored_location_for(:user) || root_path
+      redirect_to stored_location_for(:user) || user_path("me")
     else
       flash[:omniauth] = { "github" => auth.info.nickname,
                            "github_uid" => auth.uid,
@@ -45,7 +45,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                         expires: 14.days.from_now.utc,
                         domain: :all }
       sign_in @user
-      redirect_to stored_location_for(:user) || root_path
+      redirect_to stored_location_for(:user) || user_path("me")
     else
       flash[:omniauth] = { "google_uid" => auth.uid,
                            "google_token" => auth.credentials.token,
@@ -67,7 +67,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                         expires: 14.days.from_now.utc,
                         domain: :all }
       sign_in @user
-      redirect_to stored_location_for(:user) || root_path
+      redirect_to stored_location_for(:user) || user_path("me")
     else
       flash[:omniauth] = { "facebook_uid" => auth.uid,
                            "facebook_token" => auth.credentials.token }
@@ -97,7 +97,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       cookies[:jwt] = { value: @user.jwt_payload,
                         expires: 14.days.from_now.utc,
                         domain: :all }
-      redirect_to stored_location_for(:user) || root_path
+      redirect_to stored_location_for(:user) || user_path("me")
     else
       flash[:alert] = @user.errors.map { |k,v| "#{k}: #{v}" }.join("<br />").html_safe || "Error signing in with #{provider}"
       redirect_to root_path
