@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   # include hash helper
   include Hashie::Extensions::DeepFetch
 
+  before_create :set_role
+
   after_commit :queue_user_job, :on => :create
 
   has_many :claims, primary_key: "uid", foreign_key: "orcid", inverse_of: :user
@@ -72,20 +74,12 @@ class User < ActiveRecord::Base
   end
 
   def self.get_auth_hash(auth, options={})
-    if User.count > 0 || Rails.env.test?
-      role = auth.extra.raw_info.role || "user"
-    else
-      # use admin role for first user
-      role = "admin"
-    end
-
     { name: auth.info && auth.info.name,
       family_name: auth.info.fetch(:last_name, nil),
       given_names: auth.info.fetch(:first_name, nil),
       other_names: auth.extra.fetch(:raw_info, {}).fetch(:other_names, nil),
       authentication_token: auth.credentials.token,
       expires_at: timestamp(auth.credentials),
-      role: role,
       api_key: generate_api_key,
       google_uid: options.fetch("google_uid", nil),
       google_token: options.fetch("google_token", nil),
@@ -179,6 +173,11 @@ class User < ActiveRecord::Base
     return { "errors" => validation_errors.map { |error| { "title" => error } }} if validation_errors.present?
 
     oauth_client_post(data, endpoint: "orcid-bio/external-identifiers")
+  end
+
+  def set_role
+    # use admin role for first user
+    write_attribute(:role, "admin") if User.count == 0 && !Rails.env.test?
   end
 
   def user_token
