@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
   # include helper module for ORCID claims
   include Orcidable
 
+  nilify_blanks
+
   # include hash helper
   include Hashie::Extensions::DeepFetch
 
