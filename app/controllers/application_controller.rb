@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user, :devise_current_user
 
   def after_sign_in_path_for(resource)
-    stored_location_for(:user) || root_path
+    stored_location_for(:user) || user_path("me")
   end
 
   def after_sign_out_path_for(resource_or_scope)
