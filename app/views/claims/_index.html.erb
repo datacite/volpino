@@ -18,7 +18,7 @@
     <% if @claims.size > 0 %>
       <% @claims.each do |claim| %>
         <div class="panel panel-default">
-          <% if claim.claimed_at > Date.new(1971,1,1) %>
+          <% if claim.claimed_at && claim.claimed_at > Date.new(1971,1,1) %>
             <div class="panel-heading panel-list">
               <%= h(claim.doi) %><span class="small pull-right"><%= l claim.claimed_at, format: :medium %></span>
             </div>
