@@ -40,6 +40,7 @@ gem 'omniauth-facebook', '~> 3.0'
 gem 'omniauth-github', '~> 1.1.2'
 gem "omniauth-orcid", '~> 1.2'
 gem 'omniauth', '~> 1.3', '>= 1.3.1'
+gem 'oauth2', '~> 1.2', git: "https://github.com/fjg/oauth2.git", branch: "invalid_encoding"
 gem 'jwt', '~> 1.5', '>= 1.5.1'
 gem 'cancancan', '~> 1.9.2'
 
