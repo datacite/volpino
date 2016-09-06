@@ -140,10 +140,9 @@ class User < ActiveRecord::Base
     # extend hash fetch method to nested hashes
     result.extend Hashie::Extensions::DeepFetch
     items = result.deep_fetch('data', 'orcid_message', 'orcid_profile', 'orcid_activities', 'orcid_works', 'orcid_work') { [] }
+    logger.info "UserItems for user #{uid}: " + items.inspect
 
     items.select do |item|
-      logger.info "UserItem: " + item.inspect
-
       item.fetch('source', {}).fetch('source_orcid', {}).fetch('path', nil) == ENV['ORCID_CLIENT_ID']
     end
   end
