@@ -140,6 +140,9 @@ class User < ActiveRecord::Base
     # extend hash fetch method to nested hashes
     result.extend Hashie::Extensions::DeepFetch
     items = result.deep_fetch('data', 'orcid_message', 'orcid_profile', 'orcid_activities', 'orcid_works', 'orcid_work') { [] }
+
+    # make sure items with lengh 1 is an array
+    items = [items] if items.is_a?(Hash)
     logger.info "UserItems for user #{uid}: " + items.inspect
 
     items.select do |item|
