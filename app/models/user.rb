@@ -142,8 +142,7 @@ class User < ActiveRecord::Base
     items = result.deep_fetch('data', 'orcid_message', 'orcid_profile', 'orcid_activities', 'orcid_works', 'orcid_work') { [] }
 
     items.select do |item|
-      # add bugsnag tab
-      notification.add_tab(:item_info, { item: item })
+      logger.info "UserItem: " + item.inspect
 
       item.fetch('source', {}).fetch('source_orcid', {}).fetch('path', nil) == ENV['ORCID_CLIENT_ID']
     end
