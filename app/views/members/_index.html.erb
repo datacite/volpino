@@ -51,7 +51,7 @@
           </div>
         <% end %>
         <div class="text-center">
-          <%= will_paginate @members, :params => { :controller => members_path }, :renderer => BootstrapPagination::Rails %>
+          <%= will_paginate @members, :params => { :controller => members_path }, :renderer => BootstrapPagination::Rails, inner_window: 1 %>
         </div>
       <% else %>
         <div class="alert alert-simple-info">
