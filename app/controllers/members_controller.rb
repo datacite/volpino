@@ -88,6 +88,7 @@ class MembersController < ApplicationController
     @member_types = collection.where.not(member_type: nil).group(:member_type).count
     @regions = collection.where.not(region: nil).group(:region).count
     @years = collection.where.not(year: nil).group(:year).count
+
     @members = collection.order(:title).paginate(:page => params[:page])
   end
 

@@ -92,3 +92,10 @@ TYPE_OF_WORK = {
   'Film' => 'other'
   # pick up other legacy types as we go along
 }
+
+# regions used by countries gem
+REGIONS = {
+  "APAC" => "Asia and Pacific",
+  "EMEA" => "Europe, Middle East and Africa",
+  "AMER" => "Americas"
+}
