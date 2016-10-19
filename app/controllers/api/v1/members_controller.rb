@@ -30,7 +30,7 @@ class Api::V1::MembersController < Api::BaseController
     end
     if params[:region].present?
       regions = [{ id: params[:region],
-                   title: params[:region],
+                   title: REGIONS[params[:region].upcase],
                    count: collection.where(region: params[:region]).count }]
     else
       regions = collection.where.not(region: nil).group(:region).count
@@ -42,7 +42,7 @@ class Api::V1::MembersController < Api::BaseController
                  count: collection.where(year: params[:year]).count }]
     else
       years = collection.where.not(year: nil).order("year DESC").group(:year).count
-      years = years.map { |k,v| { id: k, title: k, count: v } }
+      years = years.map { |k,v| { id: k.to_s, title: k.to_s, count: v } }
     end
 
     page = params[:page] || { number: 1, size: 1000 }
