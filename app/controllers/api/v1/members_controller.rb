@@ -21,19 +21,28 @@ class Api::V1::MembersController < Api::BaseController
 
     # calculate facet counts after filtering
     if params[:member_type].present?
-      member_types = { params[:member_type] => collection.where(member_type: params[:member_type]).count }
+      member_types = [{ id: params[:member_type],
+                        title: params[:member_type],
+                        count: collection.where(member_type: params[:member_type]).count }]
     else
       member_types = collection.where.not(member_type: nil).group(:member_type).count
+      member_types = member_types.map { |k,v| { id: k, title: k.humanize, count: v } }
     end
     if params[:region].present?
-      regions = { params[:region] => collection.where(region: params[:region]).count }
+      regions = [{ id: params[:region],
+                   title: params[:region],
+                   count: collection.where(region: params[:region]).count }]
     else
       regions = collection.where.not(region: nil).group(:region).count
+      regions = regions.map { |k,v| { id: k.downcase, title: REGIONS[k], count: v } }
     end
     if params[:year].present?
-      years = { params[:year] => collection.where(year: params[:year]).count }
+      years = [{ id: params[:year],
+                 title: params[:year],
+                 count: collection.where(year: params[:year]).count }]
     else
       years = collection.where.not(year: nil).order("year DESC").group(:year).count
+      years = years.map { |k,v| { id: k, title: k, count: v } }
     end
 
     page = params[:page] || { number: 1, size: 1000 }
