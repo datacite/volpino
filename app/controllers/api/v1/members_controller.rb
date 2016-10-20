@@ -22,7 +22,7 @@ class Api::V1::MembersController < Api::BaseController
     # calculate facet counts after filtering
     if params[:member_type].present?
       member_types = [{ id: params[:member_type],
-                        title: params[:member_type],
+                        title: params[:member_type].humanize,
                         count: collection.where(member_type: params[:member_type]).count }]
     else
       member_types = collection.where.not(member_type: nil).group(:member_type).count
