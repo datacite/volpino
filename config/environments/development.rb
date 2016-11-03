@@ -42,6 +42,10 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
+  # Use a different cache store
+  # dalli uses ENV['MEMCACHE_SERVERS']
+  config.cache_store = :dalli_store, nil, { :namespace => ENV['APPLICATION'], :compress => true }
+
   # for devise
   config.action_mailer.default_url_options = { :host => "localhost" }
 
