@@ -23,8 +23,8 @@ FactoryGirl.define do
     end
 
     factory :valid_user do
-      uid '0000-0003-1419-2405'
-      authentication_token ENV['ORCID_AUTHENTICATION_TOKEN']
+      uid '0000-0001-6528-2027'
+      authentication_token ENV['ACCESS_TOKEN']
     end
 
     initialize_with { User.where(uid: uid).first_or_initialize }
