@@ -5,7 +5,7 @@ gem 'rails', '~> 4.2', '>= 4.2.6'
 gem 'mysql2', '0.3.18'
 gem 'ar-octopus', '~> 0.8.5', :require => 'octopus', :git => 'https://github.com/tchandy/octopus.git'
 
-gem "dotenv", '~> 1.0.2'
+gem "dotenv", '~> 2.1'
 gem 'sidekiq', '~> 4.0', '>= 4.0.1'
 gem 'sinatra', :require => nil
 gem "config"
@@ -13,6 +13,7 @@ gem 'rake', '~> 10.5'
 gem "whenever", "~> 0.9.0", require: false
 gem 'bugsnag', '~> 2.8.6'
 gem 'maremma', '~> 2.3'
+gem 'orcid_client', '~> 0.1'
 gem 'addressable', "~> 2.3.8"
 gem 'postrank-uri', '~> 1.0.18'
 gem 'nilify_blanks', '~> 1.2.0'
@@ -30,7 +31,6 @@ gem 'nokogiri', '~> 1.6', '>= 1.6.7.2'
 gem "github-markdown", "~> 0.6.3"
 gem "rouge", "~> 1.7.2"
 gem 'hashie', '~> 3.3.2'
-gem 'bibtex-ruby', '~> 4.2'
 gem 'namae', '~> 0.10.1'
 gem 'lograge', '~> 0.3.5'
 

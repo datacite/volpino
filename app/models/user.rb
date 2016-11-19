@@ -1,4 +1,5 @@
 require 'jwt'
+require 'orcid_client'
 
 class User < ActiveRecord::Base
   # include helper module for date and time calculations
@@ -7,13 +8,13 @@ class User < ActiveRecord::Base
   # include helper module for DOI resolution
   include Resolvable
 
-  # include helper module for ORCID claims
-  include Orcidable
-
   nilify_blanks
 
   # include hash helper
   include Hashie::Extensions::DeepFetch
+
+  # include orcid_client
+  include OrcidClient::Api
 
   before_create :set_role
 
@@ -60,7 +61,11 @@ class User < ActiveRecord::Base
   end
 
   def orcid
-    "http://orcid.org/#{uid}"
+    uid
+  end
+
+  def access_token
+    authentication_token
   end
 
   def credit_name
@@ -124,42 +129,41 @@ class User < ActiveRecord::Base
     ([uid, name, reversed_name].compact + Array(other_names).compact).map { |n| '"' + n + '"' }.join(" OR ")
   end
 
-  def orcid_url
-    "http://pub.orcid.org/v#{ORCID_VERSION}/#{uid}/orcid-works"
-  end
-
   def collect_data(options={})
     result = get_data(options)
     result = parse_data(result, options)
   end
 
   def get_data(options={})
-    result = Maremma.get(orcid_url)
-    return nil if result["errors"]
+    options[:sandbox] = true if ENV['ORCID_SANDBOX'].present?
+    response = get_works(options)
+    return nil if response["errors"]
 
-    # extend hash fetch method to nested hashes
-    result.extend Hashie::Extensions::DeepFetch
-    items = result.deep_fetch('data', 'orcid_message', 'orcid_profile', 'orcid_activities', 'orcid_works', 'orcid_work') { [] }
+    works = response.fetch("data", {}).fetch("group", {})
 
-    # make sure items with lengh 1 is an array
-    items = [items] if items.is_a?(Hash)
-    logger.info "UserItems for user #{uid}: " + items.inspect
+    # make sure works with lengh 1 is an array
+    works = [works] if works.is_a?(Hash)
 
-    items.select do |item|
-      item.fetch('source', {}).fetch('source_orcid', {}).fetch('path', nil) == ENV['ORCID_CLIENT_ID']
+    works.select do |work|
+      work.fetch('work-summary', [{}]).first.fetch("source", {}).fetch('source-client-id', {}).fetch('path', nil) == ENV['ORCID_CLIENT_ID']
     end
   end
 
-  def parse_data(items, options={})
-    Array(items).map do |item|
-      item.extend Hashie::Extensions::DeepFetch
-      doi = item.deep_fetch('work_external_identifiers', 'work_external_identifier', 'work_external_identifier_id') { nil }
-      claimed_at = get_iso8601_from_epoch(item.deep_fetch('source', 'source_date') { nil })
+  def parse_data(works, options={})
+    Array(works).map do |work|
+      work.extend Hashie::Extensions::DeepFetch
+      doi = work.deep_fetch('external-ids', 'external-id', 0, 'external-id-value') { nil }
+      claimed_at = get_iso8601_from_epoch(work.deep_fetch('last-modified-date', 'value') { nil })
+      put_code = work.deep_fetch('work-summary', 0, 'put-code') { nil }
 
-      claim = Claim.where(orcid: uid, doi: doi).first_or_create!(
-                          source_id: "orcid_search",
-                          state: 3,
-                          claimed_at: claimed_at)
+      claim = Claim.where(orcid: orcid, doi: doi).first_or_initialize
+      source_id = claim.new_record? ? "orcid_search" : claim.source_id
+      claim.assign_attributes(source_id: source_id,
+                              state: 3,
+                              put_code: put_code,
+                              claimed_at: claimed_at)
+      claim.save!
+
       claim.present? ? claim.doi : nil
     end
   end
@@ -184,35 +188,6 @@ class User < ActiveRecord::Base
   def set_role
     # use admin role for first user
     write_attribute(:role, "admin") if User.count == 0 && role.blank?
-  end
-
-  def user_token
-    OAuth2::AccessToken.new(oauth_client, authentication_token)
-  end
-
-  def data
-    return nil unless github.present?
-
-    Nokogiri::XML::Builder.new do |xml|
-      xml.send(:'orcid-message', root_attributes) do
-        xml.send(:'message-version', ORCID_VERSION)
-        xml.send(:'orcid-profile') do
-          xml.send(:'orcid-bio') do
-            xml.send(:'external-identifiers') do
-              insert_external_identifier(xml)
-            end
-          end
-        end
-      end
-    end.to_xml
-  end
-
-  def insert_external_identifier(xml)
-    xml.send(:'external-identifier') do
-      xml.send(:'external-id-common-name', "GitHub")
-      xml.send(:'external-id-reference', github)
-      xml.send(:'external-id-url', github_as_url(github))
-    end
   end
 
   private

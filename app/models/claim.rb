@@ -1,6 +1,5 @@
 require 'nokogiri'
-require 'bibtex'
-require 'oauth2'
+require 'orcid_client'
 
 class Claim < ActiveRecord::Base
   # include view helpers
@@ -18,9 +17,6 @@ class Claim < ActiveRecord::Base
   # include helper module for work type
   include Typeable
 
-  # include helper module for ORCID claims
-  include Orcidable
-
   belongs_to :user, foreign_key: "orcid", primary_key: "uid", inverse_of: :claims
 
   before_create :create_uuid
@@ -29,7 +25,7 @@ class Claim < ActiveRecord::Base
   validates :orcid, :doi, :source_id, presence: true
 
   delegate :uid, to: :user
-  delegate :authentication_token, to: :user
+  delegate :access_token, to: :user
 
   state_machine :initial => :waiting do
     state :waiting, value: 0
@@ -101,7 +97,7 @@ class Claim < ActiveRecord::Base
 
       self.error
     elsif collect_data["data"]
-      update_attributes(claimed_at: Time.zone.now) unless claimed_at.present?
+      update_attributes(claimed_at: Time.zone.now, put_code: collect_data["put_code"])
       lagotto_post
       self.finish
     else
@@ -113,111 +109,31 @@ class Claim < ActiveRecord::Base
     # already claimed
     return { "data" => data } if claimed_at.present?
 
-    # user has not signed up yet or authentication_token is missing
-    return {} unless user.present? && user.authentication_token.present?
+    # user has not signed up yet or access_token is missing
+    return {} unless user.present? && user.access_token.present?
 
     # user has not given permission for auto-update
     return {} if source_id == "orcid_update" && user && !user.auto_update
 
+    # use work from orcid_client gem
+    work = Work.new(doi: doi, orcid: uid, access_token: access_token)
+
     # missing data raise errors
-    return { "errors" => [{ "title" => "Missing data" }] } if data.nil?
+    return { "errors" => [{ "title" => "Missing data" }] } if work.data.nil?
 
     # validate data
-    return { "errors" => validation_errors.map { |error| { "title" => error } }} if validation_errors.present?
+    return { "errors" => work.validation_errors.map { |error| { "title" => error } }} if work.validation_errors.present?
 
     # create or delete entry in ORCID record
-    if claim_action == "delete"
-      oauth_client_delete(data)
-    else
-      oauth_client_post(data)
+    if claim_action == "create"
+      work.create_work(sandbox: true)
+    elsif claim_action == "delete"
+      work.delete_work(sandbox: true)
     end
   end
 
   def create_uuid
     write_attribute(:uuid, SecureRandom.uuid) if uuid.blank?
-  end
-
-  def metadata
-    @metadata ||= get_metadata(doi, 'datacite')
-  end
-
-  def contributors
-    Array(metadata.fetch('author', nil)).map do |contributor|
-      { orcid: contributor.fetch('ORCID', nil),
-        credit_name: get_credit_name(contributor),
-        role: nil }
-    end
-  end
-
-  def author_string
-    Array(metadata.fetch('author', nil)).map do |contributor|
-      get_full_name(contributor)
-    end.join(" and ")
-  end
-
-  def title
-    metadata.fetch('title', nil)
-  end
-
-  def container_title
-    metadata.fetch('container-title', nil)
-  end
-
-  def publisher_id
-    metadata.fetch('publisher_id', nil)
-  end
-
-  def publication_date
-    get_year_month_day(metadata.fetch('published', nil))
-  end
-
-  def description
-    Array(metadata.fetch('description', nil)).first
-  end
-
-  def type
-    orcid_work_type(metadata.fetch('type', nil), metadata.fetch('subtype', nil))
-  end
-
-  def citation
-    return nil unless contributors && title && container_title && publication_date
-
-    url = "http://doi.org/#{doi}"
-
-    # generate citation in bibtex format. Don't use DOI content negotiation as
-    # author name formatting is broken. Use the url as bibtex key.
-    # TODO set correct bibtex type
-
-    BibTeX::Entry.new({
-      bibtex_type: :data,
-      bibtex_key: url,
-      author: author_string,
-      title: title,
-      publisher: container_title,
-      doi: doi,
-      url: url,
-      year: publication_date['year']
-    }).to_s.gsub("\n",'').gsub(/\s+/, ' ')
-  end
-
-  def data
-    # check for DataCite required metadata
-    return nil unless doi && contributors && title && container_title && publication_date
-
-    Nokogiri::XML::Builder.new do |xml|
-      xml.send(:'orcid-message', root_attributes) do
-        xml.send(:'message-version', ORCID_VERSION)
-        xml.send(:'orcid-profile') do
-          xml.send(:'orcid-activities') do
-            xml.send(:'orcid-works') do
-              xml.send(:'orcid-work') do
-                insert_work(xml)
-              end
-            end
-          end
-        end
-      end
-    end.to_xml
   end
 
   def deposit
@@ -228,90 +144,6 @@ class Claim < ActiveRecord::Base
                      "message_type" => "contribution",
                      "prefix" => doi[/^10\.\d{4,5}/],
                      "source_token" => ENV['ORCID_UPDATE_UUID'] } }
-  end
-
-  def insert_work(xml)
-    insert_titles(xml)
-    insert_description(xml)
-    insert_citation(xml)
-    insert_type(xml)
-    insert_pub_date(xml)
-    insert_ids(xml)
-    insert_contributors(xml)
-  end
-
-  def insert_titles(xml)
-    if title
-      xml.send(:'work-title') do
-        xml.title(title)
-      end
-    end
-
-    xml.send(:'journal-title', container_title) if container_title
-  end
-
-  def insert_description(xml)
-    return nil unless description.present?
-
-    xml.send(:'short-description', truncate(description, length: 2500, separator: ' '))
-  end
-
-  def insert_citation(xml)
-    return nil unless citation.present?
-
-    xml.send(:'work-citation') do
-      xml.send(:'work-citation-type', 'bibtex')
-      xml.citation(citation)
-    end
-  end
-
-  def insert_type(xml)
-    xml.send(:'work-type', type)
-  end
-
-  def insert_pub_date(xml)
-    if publication_date['year']
-      xml.send(:'publication-date') do
-        xml.year(publication_date.fetch('year'))
-        xml.month(publication_date.fetch('month', nil)) if publication_date['month']
-        xml.day(publication_date.fetch('day', nil)) if publication_date['month'] && publication_date['day']
-      end
-    end
-  end
-
-  def insert_ids(xml)
-    xml.send(:'work-external-identifiers') do
-      insert_id(xml, 'doi', doi)
-    end
-  end
-
-  def insert_id(xml, id_type, value)
-    xml.send(:'work-external-identifier') do
-      xml.send(:'work-external-identifier-type', id_type)
-      xml.send(:'work-external-identifier-id', value)
-    end
-  end
-
-  def insert_contributors(xml)
-    return nil unless contributors.present?
-
-    xml.send(:'work-contributors') do
-      contributors.each do |contributor|
-        xml.contributor do
-          insert_contributor(xml, contributor)
-        end
-      end
-    end
-  end
-
-  def insert_contributor(xml, contributor)
-    #xml.send(:'contributor-orcid', contributor[:orcid]) if contributor[:orcid]
-    xml.send(:'credit-name', contributor[:credit_name])
-    if contributor[:role]
-      xml.send(:'contributor-attributes') do
-        xml.send(:'contributor-role', contributor[:role])
-      end
-    end
   end
 
   def without_control(s)
