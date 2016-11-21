@@ -29,12 +29,12 @@ class Api::V1::ClaimsController < Api::BaseController
 
   def create
     @claim = Claim.where(orcid: params.fetch(:claim, {}).fetch(:orcid, nil),
-                         doi: params.fetch(:claim, {}).fetch(:doi, nil),
-                         claim_action: params.fetch(:claim, {}).fetch(:claim_action, nil))
+                         doi: params.fetch(:claim, {}).fetch(:doi, nil))
                   .first_or_initialize
 
     @claim.assign_attributes(state: 0,
-                             source_id: params.fetch(:claim, {}).fetch(:source_id, nil))
+                             source_id: params.fetch(:claim, {}).fetch(:source_id, nil),
+                             claim_action: params.fetch(:claim, {}).fetch(:claim_action, nil))
 
     authorize! :create, @claim
 

@@ -96,12 +96,10 @@ class Claim < ActiveRecord::Base
       end
 
       self.error
-    elsif collect_data["data"]
+    else
       update_attributes(claimed_at: Time.zone.now, put_code: collect_data["put_code"])
       lagotto_post
       self.finish
-    else
-      self.skip
     end
   end
 
