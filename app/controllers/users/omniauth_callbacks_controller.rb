@@ -84,7 +84,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if current_user.present?
       @user = current_user
-      @user.update_attributes(expires_at: User.timestamp(auth.credentials))
+      @user.update_attributes(expires_at: User.timestamp(auth.credentials),
+                              authentication_token: auth.credentials.token)
       flash[:notice] = "ORCID token successfully refreshed."
     else
       @user = User.from_omniauth(auth)

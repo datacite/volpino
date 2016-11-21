@@ -23,7 +23,7 @@ if (query) {
 
       // aggregate claims by month
       var by_month = d3.nest()
-        .key(function(d) { return d.attributes["claimed-at"].substr(0,7); }).sortKeys(d3.ascending)
+        .key(function(d) { return (!d.attributes["claimed-at"]) ? null : d.attributes["claimed-at"].substr(0,7); }).sortKeys(d3.ascending)
         .rollup(function(leaves) { return { "claims_count": leaves.length }; })
         .entries(data);
 

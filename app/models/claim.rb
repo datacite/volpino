@@ -107,7 +107,7 @@ class Claim < ActiveRecord::Base
 
   def collect_data
     # already claimed
-    return { "data" => data } if claimed_at.present?
+    return { "data" => work.data } if claimed_at.present?
 
     # user has not signed up yet or access_token is missing
     return {} unless user.present? && user.access_token.present?
@@ -123,9 +123,9 @@ class Claim < ActiveRecord::Base
 
     # create or delete entry in ORCID record
     if claim_action == "create"
-      work.create_work(sandbox: true)
+      work.create_work
     elsif claim_action == "delete"
-      work.delete_work(sandbox: true)
+      work.delete_work
     end
   end
 
