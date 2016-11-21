@@ -1,7 +1,7 @@
 namespace :import do
   desc "Import works for all users"
   task :all => :environment do
-    User.all.each do |user|
+    User.find_each do |user|
       UserJob.perform_later(user)
       puts "Importing works for user #{user.uid}."
     end
