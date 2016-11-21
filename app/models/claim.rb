@@ -115,9 +115,6 @@ class Claim < ActiveRecord::Base
     # user has not given permission for auto-update
     return {} if source_id == "orcid_update" && user && !user.auto_update
 
-    # use work from orcid_client gem
-    work = Work.new(doi: doi, orcid: uid, access_token: access_token)
-
     # missing data raise errors
     return { "errors" => [{ "title" => "Missing data" }] } if work.data.nil?
 
@@ -136,12 +133,18 @@ class Claim < ActiveRecord::Base
     write_attribute(:uuid, SecureRandom.uuid) if uuid.blank?
   end
 
+  def work
+    Work.new(doi: doi, orcid: uid, access_token: access_token)
+  end
+
   def deposit
     { "deposit" => { "subj_id" => orcid_as_url(orcid),
                      "obj_id" => doi_as_url(doi),
                      "source_id" => "datacite_search_link",
-                     "publisher_id" => publisher_id,
+                     "publisher_id" => work.publisher_id,
+                     "registration_agency_id" => "datacite",
                      "message_type" => "contribution",
+                     "message_action" => claim_action,
                      "prefix" => doi[/^10\.\d{4,5}/],
                      "source_token" => ENV['ORCID_UPDATE_UUID'] } }
   end

@@ -145,7 +145,7 @@ class User < ActiveRecord::Base
     works = [works] if works.is_a?(Hash)
 
     works.select do |work|
-      work.fetch('work-summary', [{}]).first.fetch("source", {}).fetch('source-client-id', {}).fetch('path', nil) == ENV['ORCID_CLIENT_ID']
+      work.fetch('work-summary', [{}]).first && work.fetch('work-summary', [{}]).first.fetch("source", {}).fetch('source-client-id', {}).fetch('path', nil) == ENV['ORCID_CLIENT_ID']
     end
   end
 
@@ -182,7 +182,7 @@ class User < ActiveRecord::Base
     # validate data
     return { "errors" => validation_errors.map { |error| { "title" => error } }} if validation_errors.present?
 
-    oauth_client_post(data, endpoint: "orcid-bio/external-identifiers")
+    #oauth_client_post(data, endpoint: "orcid-bio/external-identifiers")
   end
 
   def set_role

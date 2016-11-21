@@ -16,20 +16,14 @@ describe Claim, type: :model, vcr: true do
     describe 'collect_data' do
       it 'no errors' do
         response = subject.collect_data
-        claim = response["data"].fetch("orcid_message", {})
-                        .fetch("orcid_profile", {})
-                        .fetch("orcid_activities", {})
-                        .fetch("orcid_works", {})
-                        .fetch("orcid_work", {})
-        expect(claim["work_title"]).to eq("title"=>"omniauth-orcid: v.1.0")
+        expect(response["put_code"]).not_to be_blank
       end
     end
 
-    describe 'collect_data invalid data' do
-      it 'it errors' do
-        allow(subject).to receive(:metadata) { {} }
+    describe 'collect_data' do
+      it 'already exists' do
         response = subject.collect_data
-        expect(response["errors"]).to eq([{"title"=>"Missing data"}])
+        expect(response["errors"]).to eq([{"status"=>400, "title"=>"the server responded with status 409"}])
       end
     end
 
