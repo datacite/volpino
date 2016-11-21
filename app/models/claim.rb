@@ -134,7 +134,7 @@ class Claim < ActiveRecord::Base
   end
 
   def work
-    Work.new(doi: doi, orcid: uid, access_token: access_token)
+    Work.new(doi: doi, orcid: uid, access_token: access_token, put_code: put_code)
   end
 
   def deposit

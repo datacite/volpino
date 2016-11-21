@@ -9,7 +9,7 @@ describe Claim, type: :model, vcr: true do
   it { is_expected.to validate_presence_of(:source_id) }
   it { is_expected.to belong_to(:user) }
 
-  describe 'push to ORCID' do
+  describe 'push to ORCID', :order => :defined do
     let(:user) { FactoryGirl.create(:valid_user) }
     subject { FactoryGirl.create(:claim, user: user, orcid: "0000-0003-1419-2405", doi: "10.5281/ZENODO.21429") }
 
@@ -24,6 +24,16 @@ describe Claim, type: :model, vcr: true do
       it 'already exists' do
         response = subject.collect_data
         expect(response["errors"]).to eq([{"status"=>400, "title"=>"the server responded with status 409"}])
+      end
+    end
+
+    describe 'collect_data' do
+      user = FactoryGirl.create(:valid_user)
+      subject = FactoryGirl.create(:claim, user: user, orcid: "0000-0003-1419-2405", doi: "10.5281/ZENODO.21429", claim_action: "delete", put_code: "740622")
+      it 'delete claim' do
+        response = subject.collect_data
+        expect(response["data"]).to be_blank
+        expect(response["errors"]).to be_nil
       end
     end
 
