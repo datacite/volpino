@@ -97,24 +97,24 @@ class Claim < ActiveRecord::Base
       end
 
       self.error
-    elsif collect_data["data"]
+    elsif collect_data["skip"]
+      self.skip
+    else
       update_attributes(claimed_at: Time.zone.now, put_code: collect_data["put_code"])
       lagotto_post
       self.finish
-    else
-      self.skip
     end
   end
 
   def collect_data
     # already claimed
-    return { "data" => work.data } if claimed_at.present?
+    return { "skip" => true } if claimed_at.present?
 
     # user has not signed up yet or access_token is missing
-    return {} unless user.present? && user.access_token.present?
+    return { "skip" => true } unless user.present? && user.access_token.present?
 
     # user has not given permission for auto-update
-    return {} if source_id == "orcid_update" && user && !user.auto_update
+    return { "skip" => true } if source_id == "orcid_update" && user && !user.auto_update
 
     # user has too many claims already
     return { "errors" => [{ "title" => "Too many claims. Only 18,000 claims allowed." }] } if user.claims.total_count > 18000
@@ -129,7 +129,7 @@ class Claim < ActiveRecord::Base
     if claim_action == "create"
       work.create_work
     elsif claim_action == "delete"
-      work.delete_work.merge("data" => work.data, "put_code" => nil)
+      work.delete_work
     end
   end
 
