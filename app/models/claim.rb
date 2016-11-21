@@ -67,6 +67,7 @@ class Claim < ActiveRecord::Base
   scope :query, ->(query) { where("doi like ?", "%#{query}%") }
   scope :search_and_link, -> { where(source_id: "orcid_search").where("claimed_at IS NOT NULL") }
   scope :auto_update, -> { where(source_id: "orcid_update").where("claimed_at IS NOT NULL") }
+  scope :total_count, -> { where(claim_action: "create").count }
 
   serialize :error_messages, JSON
 
@@ -114,6 +115,9 @@ class Claim < ActiveRecord::Base
 
     # user has not given permission for auto-update
     return {} if source_id == "orcid_update" && user && !user.auto_update
+
+    # user has too many claims already
+    return { "errors" => [{ "title" => "Too many claims. Only 18,000 claims allowed." }] } if user.claims.total_count > 18000
 
     # missing data raise errors
     return { "errors" => [{ "title" => "Missing data" }] } if work.data.nil?
