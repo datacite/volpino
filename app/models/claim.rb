@@ -127,7 +127,7 @@ class Claim < ActiveRecord::Base
 
   def collect_data(options={})
     # already claimed
-    return { "skip" => true } if claimed_at.present?
+    return { "skip" => true } if to_be_created? && claimed_at.present?
 
     # user has not signed up yet or access_token is missing
     return { "skip" => true } unless user.present? && user.access_token.present?
