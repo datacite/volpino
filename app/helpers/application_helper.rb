@@ -110,7 +110,8 @@ module ApplicationHelper
       1 => "working",
       2 => "failed",
       3 => "done",
-      4 => "ignored" }
+      4 => "ignored",
+      5 => "deleted" }
   end
 
   def settings
