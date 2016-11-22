@@ -145,7 +145,8 @@ class User < ActiveRecord::Base
     works = [works] if works.is_a?(Hash)
 
     works.select do |work|
-      work.fetch('work-summary', [{}]).first && work.fetch('work-summary', [{}]).first.fetch("source", {}).fetch('source-client-id', {}).fetch('path', nil) == ENV['ORCID_CLIENT_ID']
+      work.extend Hashie::Extensions::DeepFetch
+      work.deep_fetch('work-summary', 0, 'source', 'source-client-id', 'path') { nil } == ENV['ORCID_CLIENT_ID']
     end
   end
 
@@ -157,12 +158,14 @@ class User < ActiveRecord::Base
       put_code = work.deep_fetch('work-summary', 0, 'put-code') { nil }
 
       claim = Claim.where(orcid: orcid, doi: doi).first_or_initialize
-      source_id = claim.new_record? ? "orcid_search" : claim.source_id
-      claim.assign_attributes(source_id: source_id,
-                              state: 3,
-                              put_code: put_code,
-                              claimed_at: claimed_at)
-      claim.save!
+      if claim.put_code.blank?
+        source_id = claim.new_record? ? "orcid_search" : claim.source_id
+        claim.assign_attributes(source_id: source_id,
+                                state: 3,
+                                put_code: put_code,
+                                claimed_at: claimed_at)
+        claim.save!
+      end
 
       claim.present? ? claim.doi : nil
     end
