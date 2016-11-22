@@ -100,7 +100,12 @@ class Claim < ActiveRecord::Base
     elsif collect_data["skip"]
       self.skip
     else
-      update_attributes(claimed_at: Time.zone.now, put_code: collect_data["put_code"])
+      if claim_action == "create"
+        update_attributes(claimed_at: Time.zone.now, put_code: collect_data["put_code"])
+      elsif claim_action == "delete"
+        update_attributes(claimed_at: nil, put_code: nil)
+      end
+
       lagotto_post
       self.finish
     end
