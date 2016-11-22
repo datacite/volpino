@@ -98,7 +98,11 @@ class Claim < ActiveRecord::Base
 
   def process_data(options={})
     self.start
-    if collect_data["errors"]
+    result = collect_data
+
+    if result["skip"]
+      self.skip
+    elsif result["errors"]
       write_attribute(:error_messages, collect_data["errors"])
 
       # send notification to Bugsnag
@@ -107,13 +111,13 @@ class Claim < ActiveRecord::Base
       end
 
       self.error
-    elsif collect_data["skip"]
-      self.skip
     else
       if to_be_created?
-        update_attributes(claimed_at: Time.zone.now, put_code: collect_data["put_code"])
+        write_attribute(:claimed_at, Time.zone.now)
+        write_attribute(:put_code, result["put_code"])
       elsif to_be_deleted?
-        update_attributes(claimed_at: nil, put_code: nil)
+        write_attribute(:claimed_at, nil)
+        write_attribute(:put_code, nil)
       end
 
       lagotto_post
@@ -121,7 +125,7 @@ class Claim < ActiveRecord::Base
     end
   end
 
-  def collect_data
+  def collect_data(options={})
     # already claimed
     return { "skip" => true } if claimed_at.present?
 
@@ -140,11 +144,13 @@ class Claim < ActiveRecord::Base
     # validate data
     return { "errors" => work.validation_errors.map { |error| { "title" => error } }} if work.validation_errors.present?
 
+    options[:sandbox] = true if ENV['ORCID_SANDBOX'].present?
+
     # create or delete entry in ORCID record
     if to_be_created?
-      work.create_work
+      work.create_work(options)
     elsif to_be_deleted?
-      work.delete_work
+      work.delete_work(options)
     end
   end
 

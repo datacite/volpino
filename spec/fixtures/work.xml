@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<work:work xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:common="http://www.orcid.org/ns/common" xmlns:work="http://www.orcid.org/ns/work" put-code="740618" visibility="public" xsi:schemaLocation="http://www.orcid.org/ns/work ../work-2.0_rc3.xsd">
+<work:work xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:common="http://www.orcid.org/ns/common" xmlns:work="http://www.orcid.org/ns/work" put-code="740670" visibility="public" xsi:schemaLocation="http://www.orcid.org/ns/work ../work-2.0_rc3.xsd">
   <work:title>
-    <common:title>omniauth-orcid: v.1.1.5</common:title>
+    <common:title>1000 random PLOS ONE DOIs from 2013</common:title>
   </work:title>
-  <work:journal-title>Zenodo</work:journal-title>
-  <work:short-description>onmiauth-orcid 1.1.5 was released on August 11, 2016 with the following changes: compatibility with omniauth-oauth2 1.4.0. Thanks to pull request #7 by eleanorakh.</work:short-description>
-  <work:type>other</work:type>
+  <work:journal-title>Figshare</work:journal-title>
+  <work:type>data-set</work:type>
   <common:publication-date>
-    <common:year>2016</common:year>
+    <common:year>2014</common:year>
   </common:publication-date>
   <common:external-ids>
     <common:external-id>
       <common:external-id-type>doi</common:external-id-type>
-      <common:external-id-value>10.5281/zenodo.59983</common:external-id-value>
+      <common:external-id-value>10.6084/M9.FIGSHARE.1066168</common:external-id-value>
       <common:external-id-relationship>self</common:external-id-relationship>
     </common:external-id>
   </common:external-ids>
   <work:contributors>
     <work:contributor>
+      <work:credit-name>Zohreh Zahedi</work:credit-name>
+    </work:contributor>
+    <work:contributor>
+      <common:contributor-orcid>
+        <common:uri>http://orcid.org/0000-0002-2184-6094</common:uri>
+        <common:path>0000-0002-2184-6094</common:path>
+        <common:host>orcid.org</common:host>
+      </common:contributor-orcid>
       <work:credit-name>Martin Fenner</work:credit-name>
     </work:contributor>
     <work:contributor>
-      <work:credit-name>Gudmundur A. Thorisson</work:credit-name>
-    </work:contributor>
-    <work:contributor>
-      <work:credit-name>Eleanor Kiefel Haggerty</work:credit-name>
-    </work:contributor>
-    <work:contributor>
-      <work:credit-name>Anusha Ranganathan</work:credit-name>
+      <work:credit-name>Rodrigo Costas</work:credit-name>
     </work:contributor>
   </work:contributors>
 </work:work>
