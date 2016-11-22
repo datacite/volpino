@@ -33,6 +33,7 @@ class Claim < ActiveRecord::Base
     state :failed, value: 2
     state :done, value: 3
     state :ignored, value: 4
+    state :deleted, value: 5
 
     event :start do
       transition [:waiting] => :working
@@ -40,6 +41,7 @@ class Claim < ActiveRecord::Base
     end
 
     event :finish do
+      transition [:working] => :deleted, :if => :to_be_deleted?
       transition [:working] => :done
       transition any => same
     end
@@ -67,8 +69,17 @@ class Claim < ActiveRecord::Base
   scope :query, ->(query) { where("doi like ?", "%#{query}%") }
   scope :search_and_link, -> { where(source_id: "orcid_search").where("claimed_at IS NOT NULL") }
   scope :auto_update, -> { where(source_id: "orcid_update").where("claimed_at IS NOT NULL") }
+  scope :total_count, -> { where(claim_action: "create").count }
 
   serialize :error_messages, JSON
+
+  def to_be_created?
+    claim_action == "create"
+  end
+
+  def to_be_deleted?
+    claim_action == "delete"
+  end
 
   def queue_claim_job
     ClaimJob.perform_later(self)
@@ -87,7 +98,11 @@ class Claim < ActiveRecord::Base
 
   def process_data(options={})
     self.start
-    if collect_data["errors"]
+    result = collect_data
+
+    if result["skip"]
+      self.skip
+    elsif result["errors"]
       write_attribute(:error_messages, collect_data["errors"])
 
       # send notification to Bugsnag
@@ -96,27 +111,32 @@ class Claim < ActiveRecord::Base
       end
 
       self.error
-    elsif collect_data["data"]
-      update_attributes(claimed_at: Time.zone.now, put_code: collect_data["put_code"])
+    else
+      if to_be_created?
+        write_attribute(:claimed_at, Time.zone.now)
+        write_attribute(:put_code, result["put_code"])
+      elsif to_be_deleted?
+        write_attribute(:claimed_at, nil)
+        write_attribute(:put_code, nil)
+      end
+
       lagotto_post
       self.finish
-    else
-      self.skip
     end
   end
 
-  def collect_data
+  def collect_data(options={})
     # already claimed
-    return { "data" => data } if claimed_at.present?
+    return { "skip" => true } if to_be_created? && claimed_at.present?
 
     # user has not signed up yet or access_token is missing
-    return {} unless user.present? && user.access_token.present?
+    return { "skip" => true } unless user.present? && user.access_token.present?
 
     # user has not given permission for auto-update
-    return {} if source_id == "orcid_update" && user && !user.auto_update
+    return { "skip" => true } if source_id == "orcid_update" && user && !user.auto_update
 
-    # use work from orcid_client gem
-    work = Work.new(doi: doi, orcid: uid, access_token: access_token)
+    # user has too many claims already
+    return { "errors" => [{ "title" => "Too many claims. Only 18,000 claims allowed." }] } if user.claims.total_count > 18000
 
     # missing data raise errors
     return { "errors" => [{ "title" => "Missing data" }] } if work.data.nil?
@@ -124,11 +144,13 @@ class Claim < ActiveRecord::Base
     # validate data
     return { "errors" => work.validation_errors.map { |error| { "title" => error } }} if work.validation_errors.present?
 
+    options[:sandbox] = true if ENV['ORCID_SANDBOX'].present?
+
     # create or delete entry in ORCID record
-    if claim_action == "create"
-      work.create_work(sandbox: true)
-    elsif claim_action == "delete"
-      work.delete_work(sandbox: true)
+    if to_be_created?
+      work.create_work(options)
+    elsif to_be_deleted?
+      work.delete_work(options)
     end
   end
 
@@ -136,12 +158,18 @@ class Claim < ActiveRecord::Base
     write_attribute(:uuid, SecureRandom.uuid) if uuid.blank?
   end
 
+  def work
+    Work.new(doi: doi, orcid: uid, access_token: access_token, put_code: put_code)
+  end
+
   def deposit
     { "deposit" => { "subj_id" => orcid_as_url(orcid),
                      "obj_id" => doi_as_url(doi),
                      "source_id" => "datacite_search_link",
-                     "publisher_id" => publisher_id,
+                     "publisher_id" => work.publisher_id,
+                     "registration_agency_id" => "datacite",
                      "message_type" => "contribution",
+                     "message_action" => claim_action,
                      "prefix" => doi[/^10\.\d{4,5}/],
                      "source_token" => ENV['ORCID_UPDATE_UUID'] } }
   end

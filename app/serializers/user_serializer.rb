@@ -4,11 +4,11 @@ class UserSerializer < ActiveModel::Serializer
   has_many :claims
 
   def ORCID
-    object.orcid
+    "http://orcid.org/#{object.orcid}"
   end
 
   def id
-    object.orcid
+    "http://orcid.org/#{object.orcid}"
   end
 
   def github

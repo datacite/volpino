@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://search.datacite.org/api?fl=doi,creator,title,publisher,publicationYear,resourceTypeGeneral,description,datacentre,datacentre_symbol,prefix,relatedIdentifier,xml,minted,updated&q=doi:10.5281/zenodo.59983&rows=1&wt=json
+    uri: http://search.datacite.org/api?fl=doi,creator,title,publisher,publicationYear,resourceTypeGeneral,description,datacentre,datacentre_symbol,prefix,relatedIdentifier,xml,minted,updated&q=doi:10.6084/M9.FIGSHARE.1066168&rows=1&wt=json
     body:
       encoding: US-ASCII
       string: ''
@@ -19,7 +19,7 @@ http_interactions:
       Server:
       - openresty/1.11.2.1
       Date:
-      - Fri, 18 Nov 2016 20:55:48 GMT
+      - Tue, 22 Nov 2016 10:25:47 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Connection:
@@ -30,15 +30,12 @@ http_interactions:
       - GET, POST, OPTIONS
     body:
       encoding: UTF-8
-      string: '{"responseHeader":{"status":0,"QTime":0},"response":{"numFound":1,"start":0,"docs":[{"minted":"2016-08-11T04:47:51Z","datacentre_symbol":"CERN.ZENODO","xml":"PHJlc291cmNlIHhtbG5zPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyBodHRwOi8vc2NoZW1hLmRhdGFjaXRlLm9yZy9tZXRhL2tlcm5lbC0zL21ldGFkYXRhLnhzZCI+CiAgPGlkZW50aWZpZXIgaWRlbnRpZmllclR5cGU9IkRPSSI+MTAuNTI4MS96ZW5vZG8uNTk5ODM8L2lkZW50aWZpZXI+CiAgPGNyZWF0b3JzPgogICAgPGNyZWF0b3I+CiAgICAgIDxjcmVhdG9yTmFtZT5NYXJ0aW4gRmVubmVyPC9jcmVhdG9yTmFtZT4KICAgICAgPGFmZmlsaWF0aW9uPkRhdGFDaXRlPC9hZmZpbGlhdGlvbj4KICAgIDwvY3JlYXRvcj4KICAgIDxjcmVhdG9yPgogICAgICA8Y3JlYXRvck5hbWU+R3VkbXVuZHVyIEEuIFRob3Jpc3NvbjwvY3JlYXRvck5hbWU+CiAgICA8L2NyZWF0b3I+CiAgICA8Y3JlYXRvcj4KICAgICAgPGNyZWF0b3JOYW1lPkVsZWFub3IgS2llZmVsIEhhZ2dlcnR5PC9jcmVhdG9yTmFtZT4KICAgIDwvY3JlYXRvcj4KICAgIDxjcmVhdG9yPgogICAgICA8Y3JlYXRvck5hbWU+QW51c2hhIFJhbmdhbmF0aGFuPC9jcmVhdG9yTmFtZT4KICAgIDwvY3JlYXRvcj4KICA8L2NyZWF0b3JzPgogIDx0aXRsZXM+CiAgICA8dGl0bGU+b21uaWF1dGgtb3JjaWQ6IHYuMS4xLjU8L3RpdGxlPgogIDwvdGl0bGVzPgogIDxwdWJsaXNoZXI+WmVub2RvPC9wdWJsaXNoZXI+CiAgPHB1YmxpY2F0aW9uWWVhcj4yMDE2PC9wdWJsaWNhdGlvblllYXI+CiAgPGNvbnRyaWJ1dG9ycy8+CiAgPGRhdGVzPgogICAgPGRhdGUgZGF0ZVR5cGU9Iklzc3VlZCI+MjAxNi0wOC0xMTwvZGF0ZT4KICA8L2RhdGVzPgogIDxyZXNvdXJjZVR5cGUgcmVzb3VyY2VUeXBlR2VuZXJhbD0iU29mdHdhcmUiLz4KICA8YWx0ZXJuYXRlSWRlbnRpZmllcnM+CiAgICA8YWx0ZXJuYXRlSWRlbnRpZmllciBhbHRlcm5hdGVJZGVudGlmaWVyVHlwZT0iVVJMIj5odHRwOi8vemVub2RvLm9yZy9yZWNvcmQvNTk5ODM8L2FsdGVybmF0ZUlkZW50aWZpZXI+CiAgPC9hbHRlcm5hdGVJZGVudGlmaWVycz4KICA8cmVsYXRlZElkZW50aWZpZXJzPgogICAgPHJlbGF0ZWRJZGVudGlmaWVyIHJlbGF0aW9uVHlwZT0iSXNTdXBwbGVtZW50VG8iIHJlbGF0ZWRJZGVudGlmaWVyVHlwZT0iVVJMIj5odHRwczovL2dpdGh1Yi5jb20vZGF0YWNpdGUvb21uaWF1dGgtb3JjaWQvdHJlZS92LjEuMS41PC9yZWxhdGVkSWRlbnRpZmllcj4KICAgIDxyZWxhdGVkSWRlbnRpZmllciByZWxhdGlvblR5cGU9Ikhhc1BhcnQiIHJlbGF0ZWRJZGVudGlmaWVyVHlwZT0iVVJMIj5odHRwczovL3plbm9kby5vcmcvcmVjb3JkLzU5OTgzL2ZpbGVzL29tbmlhdXRoLW9yY2lkLXYuMS4xLjUuemlwPC9yZWxhdGVkSWRlbnRpZmllcj4KICA8L3JlbGF0ZWRJZGVudGlmaWVycz4KICA8cmlnaHRzTGlzdD4KICAgIDxyaWdodHMgcmlnaHRzVVJJPSJpbmZvOmV1LXJlcG8vc2VtYW50aWNzL29wZW5BY2Nlc3MiPk9wZW4gQWNjZXNzPC9yaWdodHM+CiAgICA8cmlnaHRzIHJpZ2h0c1VSST0iIj5PdGhlciAoT3Blbik8L3JpZ2h0cz4KICA8L3JpZ2h0c0xpc3Q+CiAgPGRlc2NyaXB0aW9ucz4KICAgIDxkZXNjcmlwdGlvbiBkZXNjcmlwdGlvblR5cGU9IkFic3RyYWN0Ij4mbHQ7cCZndDsmbHQ7YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vZGF0YWNpdGUvb21uaWF1dGgtb3JjaWQvcmVsZWFzZXMvdGFnL3YuMS4xLjUiJmd0O29ubWlhdXRoLW9yY2lkIDEuMS41Jmx0Oy9hJmd0OyB3YXMgcmVsZWFzZWQgb24gQXVndXN0IDExLCAyMDE2IHdpdGggdGhlIGZvbGxvd2luZyBjaGFuZ2VzOiZsdDsvcCZndDsKCiZsdDt1bCZndDsKJmx0O2xpJmd0O2NvbXBhdGliaWxpdHkgd2l0aCBvbW5pYXV0aC1vYXV0aDIgMS40LjAuIFRoYW5rcyB0byBwdWxsIHJlcXVlc3QgJmx0O2EgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL2RhdGFjaXRlL29tbmlhdXRoLW9yY2lkL3B1bGwvNyImZ3Q7IzcmbHQ7L2EmZ3Q7IGJ5ICZsdDthIGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9lbGVhbm9yYWtoIiZndDtlbGVhbm9yYWtoJmx0Oy9hJmd0Oy4mbHQ7L2xpJmd0OwombHQ7L3VsJmd0OzwvZGVzY3JpcHRpb24+CiAgPC9kZXNjcmlwdGlvbnM+CjwvcmVzb3VyY2U+Cg==","datacentre":"CERN.ZENODO
-        - ZENODO - Research. Shared.","updated":"2016-08-11T04:47:51Z","prefix":"10.5281","doi":"10.5281/ZENODO.59983","relatedIdentifier":["IsSupplementTo:URL:https://github.com/datacite/omniauth-orcid/tree/v.1.1.5","HasPart:URL:https://zenodo.org/record/59983/files/omniauth-orcid-v.1.1.5.zip"],"creator":["Martin
-        Fenner","Gudmundur A. Thorisson","Eleanor Kiefel Haggerty","Anusha Ranganathan"],"publisher":"Zenodo","title":["omniauth-orcid:
-        v.1.1.5"],"description":["<p><a href=\"https://github.com/datacite/omniauth-orcid/releases/tag/v.1.1.5\">onmiauth-orcid
-        1.1.5</a> was released on August 11, 2016 with the following changes:</p>\n\n<ul>\n<li>compatibility
-        with omniauth-oauth2 1.4.0. Thanks to pull request <a href=\"https://github.com/datacite/omniauth-orcid/pull/7\">#7</a>
-        by <a href=\"https://github.com/eleanorakh\">eleanorakh</a>.</li>\n</ul>"],"publicationYear":"2016","resourceTypeGeneral":"Software"}]}}
+      string: '{"responseHeader":{"status":0,"QTime":0},"response":{"numFound":1,"start":0,"docs":[{"minted":"2014-06-22T10:41:15Z","datacentre_symbol":"FIGSHARE.ARS","xml":"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHJlc291cmNlIHhtbG5zPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyBodHRwOi8vc2NoZW1hLmRhdGFjaXRlLm9yZy9tZXRhL2tlcm5lbC0zL21ldGFkYXRhLnhzZCI+PGlkZW50aWZpZXIgaWRlbnRpZmllclR5cGU9IkRPSSI+MTAuNjA4NC9NOS5GSUdTSEFSRS4xMDY2MTY4PC9pZGVudGlmaWVyPjx0aXRsZXM+PHRpdGxlPjEwMDAgcmFuZG9tIFBMT1MgT05FIERPSXMgZnJvbSAyMDEzPC90aXRsZT48L3RpdGxlcz48cHVibGlzaGVyPkZpZ3NoYXJlPC9wdWJsaXNoZXI+PHB1YmxpY2F0aW9uWWVhcj4yMDE0PC9wdWJsaWNhdGlvblllYXI+PHJlc291cmNlVHlwZSByZXNvdXJjZVR5cGVHZW5lcmFsPSJEYXRhc2V0Ij5EYXRhc2V0PC9yZXNvdXJjZVR5cGU+PHJpZ2h0c0xpc3Q+PHJpZ2h0cyByaWdodHNVUkk9Imh0dHA6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LzMuMC91cy8iPkNDLUJZPC9yaWdodHM+PC9yaWdodHNMaXN0PjxjcmVhdG9ycz48Y3JlYXRvcj48Y3JlYXRvck5hbWU+Wm9ocmVoIFphaGVkaTwvY3JlYXRvck5hbWU+PC9jcmVhdG9yPjxjcmVhdG9yPjxjcmVhdG9yTmFtZT5NYXJ0aW4gRmVubmVyPC9jcmVhdG9yTmFtZT48bmFtZUlkZW50aWZpZXIgbmFtZUlkZW50aWZpZXJTY2hlbWU9Ik9SQ0lEIj4wMDAwLTAwMDItMjE4NC02MDk0PC9uYW1lSWRlbnRpZmllcj48L2NyZWF0b3I+PGNyZWF0b3I+PGNyZWF0b3JOYW1lPlJvZHJpZ28gQ29zdGFzPC9jcmVhdG9yTmFtZT48L2NyZWF0b3I+PC9jcmVhdG9ycz48L3Jlc291cmNlPg==","datacentre":"FIGSHARE.ARS
+        - figshare Academic Research System","updated":"2014-07-04T20:44:04Z","prefix":"10.6084","doi":"10.6084/M9.FIGSHARE.1066168","creator":["Zohreh
+        Zahedi","Martin Fenner","Rodrigo Costas"],"publisher":"Figshare","title":["1000
+        random PLOS ONE DOIs from 2013"],"publicationYear":"2014","resourceTypeGeneral":"Dataset"}]}}
 
 '
     http_version: 
-  recorded_at: Fri, 18 Nov 2016 20:55:48 GMT
+  recorded_at: Tue, 22 Nov 2016 10:25:47 GMT
 recorded_with: VCR 2.9.3

@@ -1,9 +1,9 @@
 require "rails_helper"
 
 describe Work, type: :model, vcr: true do
-  let(:doi) { "10.5281/zenodo.59983"}
+  let(:doi) { "10.6084/M9.FIGSHARE.1066168"}
   let(:user) { FactoryGirl.create(:valid_user) }
-  let(:put_code) { "740618" }
+  let(:put_code) { "740670" }
 
   subject { Work.new(doi: doi, orcid: user.uid, access_token: user.authentication_token, put_code: put_code) }
 
@@ -21,7 +21,7 @@ describe Work, type: :model, vcr: true do
       it 'should get works' do
         response = subject.get_works(sandbox: true)
         works = response.fetch("data", {}).fetch("group", {})
-        expect(works.length).to eq(26)
+        expect(works.length).to eq(25)
         work = works.first
         expect(work["external-ids"]).to eq("external-id"=>[{"external-id-type"=>"doi", "external-id-value"=>"10.5167/UZH-19531", "external-id-url"=>nil, "external-id-relationship"=>"SELF"}])
       end
@@ -60,7 +60,7 @@ describe Work, type: :model, vcr: true do
 
   describe 'contributors' do
     it 'valid' do
-      expect(subject.contributors).to eq([{:credit_name=>"Martin Fenner"}, {:credit_name=>"Gudmundur A. Thorisson"}, {:credit_name=>"Eleanor Kiefel Haggerty"}, {:credit_name=>"Anusha Ranganathan"}])
+      expect(subject.contributors).to eq([{:credit_name=>"Zohreh Zahedi"}, {:orcid=>"http://orcid.org/0000-0002-2184-6094", :credit_name=>"Martin Fenner"}, {:credit_name=>"Rodrigo Costas"}])
     end
 
     it 'literal' do
@@ -75,7 +75,7 @@ describe Work, type: :model, vcr: true do
   end
 
   it 'publication_date' do
-    expect(subject.publication_date).to eq("year" => 2016)
+    expect(subject.publication_date).to eq("year" => 2014)
   end
 
   it 'data' do
