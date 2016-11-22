@@ -25,7 +25,7 @@ describe Claim, type: :model, vcr: true do
 
     it 'delete claim' do
       user = FactoryGirl.create(:valid_user)
-      subject = FactoryGirl.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.5281/ZENODO.21429", claim_action: "delete", put_code: "740658")
+      subject = FactoryGirl.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.5281/ZENODO.21429", claim_action: "delete", claimed_at: Time.zone.now, put_code: "740658")
       response = subject.collect_data
       expect(response["data"]).to be_blank
       expect(response["errors"]).to be_nil
