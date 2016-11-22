@@ -41,7 +41,7 @@ class Claim < ActiveRecord::Base
     end
 
     event :finish do
-      transition [:working] => :deleted, :if => :claim_status == "delete"
+      transition [:working] => :deleted, :if => :to_be_deleted?
       transition [:working] => :done
       transition any => same
     end
@@ -73,6 +73,14 @@ class Claim < ActiveRecord::Base
 
   serialize :error_messages, JSON
 
+  def to_be_created?
+    claim_action == "create"
+  end
+
+  def to_be_deleted?
+    claim_action == "delete"
+  end
+
   def queue_claim_job
     ClaimJob.perform_later(self)
   end
@@ -102,9 +110,9 @@ class Claim < ActiveRecord::Base
     elsif collect_data["skip"]
       self.skip
     else
-      if claim_action == "create"
+      if to_be_created?
         update_attributes(claimed_at: Time.zone.now, put_code: collect_data["put_code"])
-      elsif claim_action == "delete"
+      elsif to_be_deleted?
         update_attributes(claimed_at: nil, put_code: nil)
       end
 
@@ -133,9 +141,9 @@ class Claim < ActiveRecord::Base
     return { "errors" => work.validation_errors.map { |error| { "title" => error } }} if work.validation_errors.present?
 
     # create or delete entry in ORCID record
-    if claim_action == "create"
+    if to_be_created?
       work.create_work
-    elsif claim_action == "delete"
+    elsif to_be_deleted?
       work.delete_work
     end
   end
