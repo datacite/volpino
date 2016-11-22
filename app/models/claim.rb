@@ -33,6 +33,7 @@ class Claim < ActiveRecord::Base
     state :failed, value: 2
     state :done, value: 3
     state :ignored, value: 4
+    state :deleted, value: 5
 
     event :start do
       transition [:waiting] => :working
@@ -40,6 +41,7 @@ class Claim < ActiveRecord::Base
     end
 
     event :finish do
+      transition [:working] => :deleted, :if => :claim_status == "delete"
       transition [:working] => :done
       transition any => same
     end

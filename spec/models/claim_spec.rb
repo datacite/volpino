@@ -52,7 +52,7 @@ describe Claim, type: :model, vcr: true do
 
       it 'errors' do
         response = subject.collect_data
-        expect(response).to eq({})
+        expect(response).to eq("skip"=>true)
       end
     end
   end
