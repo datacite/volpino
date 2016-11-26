@@ -173,11 +173,11 @@ class Claim < ActiveRecord::Base
   end
 
   def work
-    Work.new(doi: doi, orcid: uid, access_token: access_token, put_code: put_code) if access_token.present?
+    Work.new(doi: doi, orcid: orcid, access_token: access_token, put_code: put_code) if access_token.present?
   end
 
   def notification
-    Notification.new(doi: doi, orcid: uid, notification_access_token: ENV['NOTIFICATION_ACCESS_TOKEN'], put_code: put_code)
+    Notification.new(doi: doi, orcid: orcid, notification_access_token: ENV['NOTIFICATION_ACCESS_TOKEN'], put_code: put_code)
   end
 
   def deposit

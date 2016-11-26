@@ -316,7 +316,7 @@ describe "/api/v1/claims", :type => :api do
     end
   end
 
-  context "destroy" do
+  context "delete" do
     let(:claim) { FactoryGirl.create(:claim) }
     let(:uri) { "/api/claims/#{claim.uuid}" }
 
