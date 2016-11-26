@@ -37,13 +37,13 @@ class Claim < ActiveRecord::Base
     state :notified, value: 6
 
     event :start do
-      transition [:waiting] => :working
+      transition [:waiting, :ignored, :deleted, :notified] => :working
       transition any => same
     end
 
     event :finish do
-      transition [:working] => :deleted, :if => :to_be_deleted?
-      transition [:working] => :done
+      transition [:working, :ignored, :notified] => :deleted, :if => :to_be_deleted?
+      transition [:working, :ignored, :deleted, :notified] => :done
       transition any => same
     end
 
