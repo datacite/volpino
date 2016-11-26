@@ -69,6 +69,8 @@ class Claim < ActiveRecord::Base
   scope :failed, -> { by_state(2).order_by_date }
   scope :done, -> { by_state(3).order_by_date }
   scope :ignored, -> { by_state(4).order_by_date }
+  scope :deleted, -> { by_state(5).order_by_date }
+  scope :notified, -> { by_state(6).order_by_date }
   scope :stale, -> { where("state < 2").order_by_date }
   scope :total, ->(duration) { where(updated_at: (Time.zone.now.beginning_of_hour - duration.hours)..Time.zone.now.beginning_of_hour) }
 
@@ -119,7 +121,6 @@ class Claim < ActiveRecord::Base
       self.error
     elsif result.body["notification"]
       write_attribute(:put_code, result.body["put_code"])
-      write_attribute(:claim_action, result.body["put_code"])
       self.notify
     else
       if to_be_created?

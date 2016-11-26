@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
   before_create :set_role
 
   after_commit :queue_user_job, :on => :create
+  after_commit :queue_claim_jobs, :on => :create
 
   has_many :claims, primary_key: "uid", foreign_key: "orcid", inverse_of: :user
   belongs_to :member
@@ -141,6 +142,10 @@ class User < ActiveRecord::Base
   def collect_data(options={})
     result = get_data(options)
     result = parse_data(result, options)
+  end
+
+  def queue_claim_jobs
+    claims.notified.find_each do |claim| { claim.queue_claim_job }
   end
 
   def get_data(options={})
