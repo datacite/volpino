@@ -1,11 +1,11 @@
 <div class="row">
   <div class='col-md-9'>
     <div class="tab-content">
-      <div class="tab-pane panel-list" id="login">
-        <%= render :partial => 'users/login' %>
-      </div>
       <div class="tab-pane" id="account">
         <%= render :partial => 'users/account' %>
+      </div>
+      <div class="tab-pane panel-list" id="login">
+        <%= render :partial => 'users/login' %>
       </div>
       <% if @member.present? %>
         <div class="tab-pane" id="member">
@@ -22,8 +22,8 @@
   </div>
   <div class='col-md-3'>
     <ul class="nav nav-tabs nav-stacked" id="user-tabs" data-active="<%= @panel %>">
-      <li><a href="#login" data-toggle="tab">Social Login</a></li>
       <li><a href="#account" data-toggle="tab">Your Account</a></li>
+      <li><a href="#login" data-toggle="tab">Social Login</a></li>
       <% if @member.present? %>
         <li><a href="#member" data-toggle="tab">Member Record</a></li>
       <% end %>

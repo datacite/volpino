@@ -17,7 +17,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                               github_uid: auth.uid,
                               github_token: auth.credentials.token)
       flash[:notice] = "Account successfully linked with GitHub account."
-      redirect_to user_path("me")
+      redirect_to user_path("me", panel: "login")
     elsif @user = User.where(github_uid: auth.uid).first
       cookies[:jwt] = { value: @user.jwt_payload,
                         expires: 14.days.from_now.utc,
@@ -41,7 +41,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                               google_token: auth.credentials.token,
                               email: auth.info.email)
       flash[:notice] = "Account successfully linked with Google account."
-      redirect_to user_path("me")
+      redirect_to user_path("me", panel: "login")
     elsif @user = User.where(google_uid: auth.uid).first
       cookies[:jwt] = { value: @user.jwt_payload,
                         expires: 14.days.from_now.utc,
@@ -64,7 +64,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       @user.update_attributes(facebook_uid: auth.uid,
                               facebook_token: auth.credentials.token)
       flash[:notice] = "Account successfully linked with Facebook account."
-      redirect_to user_path("me")
+      redirect_to user_path("me", panel: "login")
     elsif @user = User.where(facebook_uid: auth.uid).first
       cookies[:jwt] = { value: @user.jwt_payload,
                         expires: 14.days.from_now.utc,
@@ -101,7 +101,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       cookies[:jwt] = { value: @user.jwt_payload,
                         expires: 14.days.from_now.utc,
                         domain: :all }
-      redirect_to stored_location_for(:user) || user_path("me")
+      redirect_to stored_location_for(:user) || user_path("me", panel: "orcid")
     else
       flash[:alert] = @user.errors.map { |k,v| "#{k}: #{v}" }.join("<br />").html_safe || "Error signing in with #{provider}"
       redirect_to root_path
