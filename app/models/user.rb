@@ -145,7 +145,7 @@ class User < ActiveRecord::Base
   end
 
   def queue_claim_jobs
-    claims.notified.find_each do |claim| { claim.queue_claim_job }
+    claims.notified.find_each { |claim| claim.queue_claim_job }
   end
 
   def get_data(options={})
