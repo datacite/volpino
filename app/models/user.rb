@@ -87,6 +87,7 @@ class User < ActiveRecord::Base
       other_names: auth.extra.fetch(:raw_info, {}).fetch(:other_names, nil),
       authentication_token: auth.credentials.token,
       expires_at: timestamp(auth.credentials),
+      role: auth.extra.fetch(:raw_info, {}).fetch(:role, nil),
       api_key: generate_api_key,
       google_uid: options.fetch("google_uid", nil),
       google_token: options.fetch("google_token", nil),
@@ -136,10 +137,11 @@ class User < ActiveRecord::Base
 
   def get_data(options={})
     options[:sandbox] = true if ENV['ORCID_SANDBOX'].present?
-    response = get_works(options)
-    return nil if response["errors"]
 
-    works = response.fetch("data", {}).fetch("group", {})
+    response = get_works(options)
+    return nil if response.body["errors"]
+
+    works = response.body.fetch("data", {}).fetch("group", {})
 
     # make sure works with lengh 1 is an array
     works = [works] if works.is_a?(Hash)

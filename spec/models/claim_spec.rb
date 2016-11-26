@@ -15,20 +15,21 @@ describe Claim, type: :model, vcr: true do
 
     it 'no errors' do
       response = subject.collect_data
-      expect(response["put_code"]).not_to be_blank
+      expect(response.body["put_code"]).not_to be_blank
+      expect(response.status).to eq(201)
     end
 
     it 'already exists' do
-      response = subject.collect_data
-      expect(response["errors"]).to eq([{"status"=>400, "title"=>"the server responded with status 409"}])
+      FactoryGirl.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.5281/ZENODO.21429", claim_action: "create", claimed_at: Time.zone.now, put_code: "741211")
+      expect(subject.collect_data).to eq("skip"=>true)
     end
 
     it 'delete claim' do
       user = FactoryGirl.create(:valid_user)
-      subject = FactoryGirl.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.5281/ZENODO.21429", claim_action: "delete", claimed_at: Time.zone.now, put_code: "740658")
+      subject = FactoryGirl.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.5281/ZENODO.21429", claim_action: "delete", claimed_at: Time.zone.now, put_code: "741211")
       response = subject.collect_data
-      expect(response["data"]).to be_blank
-      expect(response["errors"]).to be_nil
+      expect(response.body["data"]).to be_blank
+      expect(response.body["errors"]).to be_nil
     end
 
     it 'no permission for auto-update' do
@@ -38,10 +39,18 @@ describe Claim, type: :model, vcr: true do
     end
 
     it 'invalid token' do
-      user = FactoryGirl.create(:user, uid: "0000-0003-1419-240x")
+      user = FactoryGirl.create(:invalid_user)
       subject = FactoryGirl.create(:claim, user: user, orcid: "0000-0003-1419-240x", doi: "10.5281/ZENODO.21429", source_id: "orcid_update")
       response = subject.collect_data
-      expect(response).to eq("skip"=>true)
+      expect(response.body["notification"]).to be true
+      expect(response.body["put_code"]).not_to be_blank
+    end
+
+    it 'no user' do
+      subject = FactoryGirl.create(:claim, orcid: "0000-0001-6528-2027", doi: "10.5281/ZENODO.21429")
+      response = subject.collect_data
+      expect(response.body["notification"]).to be true
+      expect(response.body["put_code"]).not_to be_blank
     end
   end
 
@@ -57,14 +66,14 @@ describe Claim, type: :model, vcr: true do
     end
 
     it 'already exists' do
+      FactoryGirl.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.5281/ZENODO.59983", claim_action: "create", put_code: "741206")
       expect(subject.process_data).to be true
-      expect(subject.error_messages).to eq([{"status"=>400, "title"=>"the server responded with status 409"}])
-      expect(subject.human_state_name).to eq("failed")
+      expect(subject.human_state_name).to eq("done")
     end
 
     it 'delete claim' do
       user = FactoryGirl.create(:valid_user)
-      subject = FactoryGirl.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.5281/ZENODO.59983", claim_action: "delete", put_code: "740668")
+      subject = FactoryGirl.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.5281/ZENODO.59983", claim_action: "delete", put_code: "741206")
       expect(subject.process_data).to be true
       expect(subject.put_code).to be_blank
       expect(subject.claimed_at).to be_blank
@@ -79,10 +88,16 @@ describe Claim, type: :model, vcr: true do
     end
 
     it 'invalid token' do
-      user = FactoryGirl.create(:user, uid: "0000-0003-1419-240x")
-      subject = FactoryGirl.create(:claim, user: user, orcid: "0000-0003-1419-240x", doi: "10.5281/ZENODO.59983", source_id: "orcid_update")
+      user = FactoryGirl.create(:invalid_user)
+      subject = FactoryGirl.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.5281/ZENODO.59983", source_id: "orcid_update")
       expect(subject.process_data).to be true
-      expect(subject.human_state_name).to eq("ignored")
+      expect(subject.human_state_name).to eq("notified")
+    end
+
+    it 'no user' do
+      subject = FactoryGirl.create(:claim, orcid: "0000-0001-6528-2027", doi: "10.5281/ZENODO.21429")
+      expect(subject.process_data).to be true
+      expect(subject.human_state_name).to eq("notified")
     end
   end
 

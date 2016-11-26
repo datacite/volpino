@@ -27,6 +27,11 @@ FactoryGirl.define do
       authentication_token ENV['ACCESS_TOKEN']
     end
 
+    factory :invalid_user do
+      uid '0000-0001-6528-2027'
+      authentication_token nil
+    end
+
     initialize_with { User.where(uid: uid).first_or_initialize }
   end
 
@@ -61,7 +66,7 @@ FactoryGirl.define do
     doi "10.5061/DRYAD.781PV"
     source_id "orcid_update"
 
-    association :user, factory: :user
+    # association :user, factory: :user
 
     initialize_with { Claim.where(orcid: orcid).where(doi: doi).first_or_initialize }
   end

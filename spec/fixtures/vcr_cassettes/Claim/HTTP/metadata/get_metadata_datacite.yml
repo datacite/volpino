@@ -17,27 +17,78 @@ http_interactions:
       message: ''
     headers:
       Server:
-      - nginx/1.11.3
+      - openresty/1.11.2.1
       Date:
-      - Sun, 04 Sep 2016 13:35:41 GMT
+      - Sat, 26 Nov 2016 06:43:27 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
       - "*"
-      Access-Control-Allow-Headers:
-      - Content-Type,Accept,Accept-Encoding,Origin,User-Agent,Cache-Control,Keep-Alive
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
     body:
-      encoding: UTF-8
-      string: '{"responseHeader":{"status":0,"QTime":0},"response":{"numFound":1,"start":0,"docs":[{"minted":"2013-02-13T14:46:00Z","datacentre_symbol":"CDL.DIGSCI","xml":"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHJlc291cmNlIHhtbG5zPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyBodHRwOi8vc2NoZW1hLmRhdGFjaXRlLm9yZy9tZXRhL2tlcm5lbC0zL21ldGFkYXRhLnhzZCI+PGlkZW50aWZpZXIgaWRlbnRpZmllclR5cGU9IkRPSSI+MTAuNjA4NC9NOS5GSUdTSEFSRS4xNTY1OTU8L2lkZW50aWZpZXI+PGNyZWF0b3JzPjxjcmVhdG9yPjxjcmVhdG9yTmFtZT5SZXNlYXJjaCBUcmVuZHM8L2NyZWF0b3JOYW1lPjwvY3JlYXRvcj48Y3JlYXRvcj48Y3JlYXRvck5hbWU+SGVhdGhlciBQaXdvd2FyPC9jcmVhdG9yTmFtZT48bmFtZUlkZW50aWZpZXIgbmFtZUlkZW50aWZpZXJTY2hlbWU9Ik9SQ0lEIiBzY2hlbWVVUkk9Imh0dHA6Ly9vcmNpZC5vcmciPjAwMDAtMDAwMy0xNjEzLTU5ODE8L25hbWVJZGVudGlmaWVyPjwvY3JlYXRvcj48L2NyZWF0b3JzPjx0aXRsZXM+PHRpdGxlPlVuY292ZXJpbmcgSW1wYWN0IC0gTW92aW5nIGJleW9uZCB0aGUgam91cm5hbCBhcnRpY2xlIGFuZCBiZXlvbmQgdGhlIGltcGFjdCBmYWN0b3I8L3RpdGxlPjwvdGl0bGVzPjxkZXNjcmlwdGlvbnM+PGRlc2NyaXB0aW9uIGRlc2NyaXB0aW9uVHlwZT0iQWJzdHJhY3QiPiZsdDtwJmd0O1ByZXNlbnRhdGlvbiBnaXZlbiBieSBEciBIZWF0aGVyIFBpd293YXIgZHVyaW5nIHRoZSBSZXNlYXJjaCBUcmVuZHMgVmlydHVhbCBTZW1pbmFywqAmbHQ7L3AmZ3Q7CiZsdDtwJmd0O1BhcnQgMiAtIEV2YWx1YXRpbmcgTmV0d29yayBSZWxhdGlvbnNoaXBzJmx0Oy9wJmd0OzwvZGVzY3JpcHRpb24+PC9kZXNjcmlwdGlvbnM+PHN1YmplY3RzPjxzdWJqZWN0PlNjaWVuY2UgUG9saWN5PC9zdWJqZWN0Pjwvc3ViamVjdHM+PHB1Ymxpc2hlcj5GaWdzaGFyZTwvcHVibGlzaGVyPjxwdWJsaWNhdGlvblllYXI+MjAxMzwvcHVibGljYXRpb25ZZWFyPjxkYXRlcz48ZGF0ZSBkYXRlVHlwZT0iQ3JlYXRlZCI+MjAxMy0wMi0xMzwvZGF0ZT48ZGF0ZSBkYXRlVHlwZT0iVXBkYXRlZCI+MjAxMy0wMi0xMzwvZGF0ZT48L2RhdGVzPjxyZXNvdXJjZVR5cGUgcmVzb3VyY2VUeXBlR2VuZXJhbD0iQXVkaW92aXN1YWwiPlByZXNlbnRhdGlvbjwvcmVzb3VyY2VUeXBlPjxzaXplcz48c2l6ZT4yMjI3MzMyIEJ5dGVzPC9zaXplPjwvc2l6ZXM+PHJpZ2h0c0xpc3Q+PHJpZ2h0cyByaWdodHNVUkk9Imh0dHA6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LzMuMC91cy8iPkNDLUJZPC9yaWdodHM+PC9yaWdodHNMaXN0PjwvcmVzb3VyY2U+","datacentre":"CDL.DIGSCI
-        - Digital Science","updated":"2016-05-24T07:37:22Z","prefix":"10.6084","doi":"10.6084/M9.FIGSHARE.156595","creator":["Research
-        Trends","Heather Piwowar"],"publisher":"Figshare","title":["Uncovering Impact
-        - Moving beyond the journal article and beyond the impact factor"],"description":["<p>Presentation
-        given by Dr Heather Piwowar during the Research Trends Virtual Seminar </p>\n<p>Part
-        2 - Evaluating Network Relationships</p>"],"publicationYear":"2013","resourceTypeGeneral":"Audiovisual"}]}}
-
-'
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJyZXNwb25zZUhlYWRlciI6eyJzdGF0dXMiOjAsIlFUaW1lIjo4fSwicmVz
+        cG9uc2UiOnsibnVtRm91bmQiOjEsInN0YXJ0IjowLCJkb2NzIjpbeyJtaW50
+        ZWQiOiIyMDEzLTAyLTEzVDE0OjQ2OjAwWiIsImRhdGFjZW50cmVfc3ltYm9s
+        IjoiRklHU0hBUkUuQVJTIiwieG1sIjoiUEQ5NGJXd2dkbVZ5YzJsdmJqMGlN
+        UzR3SWlCbGJtTnZaR2x1WnowaVZWUkdMVGdpUHo0S1BISmxjMjkxY21ObElI
+        aHRiRzV6UFNKb2RIUndPaTh2WkdGMFlXTnBkR1V1YjNKbkwzTmphR1Z0WVM5
+        clpYSnVaV3d0TXlJZ2VHMXNibk02ZUhOcFBTSm9kSFJ3T2k4dmQzZDNMbmN6
+        TG05eVp5OHlNREF4TDFoTlRGTmphR1Z0WVMxcGJuTjBZVzVqWlNJZ2VITnBP
+        bk5qYUdWdFlVeHZZMkYwYVc5dVBTSm9kSFJ3T2k4dlpHRjBZV05wZEdVdWIz
+        Sm5MM05qYUdWdFlTOXJaWEp1Wld3dE15Qm9kSFJ3T2k4dmMyTm9aVzFoTG1S
+        aGRHRmphWFJsTG05eVp5OXRaWFJoTDJ0bGNtNWxiQzB6TDIxbGRHRmtZWFJo
+        TG5oelpDSStQR2xrWlc1MGFXWnBaWElnYVdSbGJuUnBabWxsY2xSNWNHVTlJ
+        a1JQU1NJK01UQXVOakE0TkM5Tk9TNUdTVWRUU0VGU1JTNHhOVFkxT1RVOEwy
+        bGtaVzUwYVdacFpYSStQR055WldGMGIzSnpQanhqY21WaGRHOXlQanhqY21W
+        aGRHOXlUbUZ0WlQ1U1pYTmxZWEpqYUNCVWNtVnVaSE04TDJOeVpXRjBiM0pP
+        WVcxbFBqd3ZZM0psWVhSdmNqNDhZM0psWVhSdmNqNDhZM0psWVhSdmNrNWhi
+        V1UrU0dWaGRHaGxjaUJRYVhkdmQyRnlQQzlqY21WaGRHOXlUbUZ0WlQ0OGJt
+        RnRaVWxrWlc1MGFXWnBaWElnYm1GdFpVbGtaVzUwYVdacFpYSlRZMmhsYldV
+        OUlrOVNRMGxFSWlCelkyaGxiV1ZWVWtrOUltaDBkSEE2THk5dmNtTnBaQzV2
+        Y21jaVBqQXdNREF0TURBd015MHhOakV6TFRVNU9ERThMMjVoYldWSlpHVnVk
+        R2xtYVdWeVBqd3ZZM0psWVhSdmNqNDhMMk55WldGMGIzSnpQangwYVhSc1pY
+        TStQSFJwZEd4bFBsVnVZMjkyWlhKcGJtY2dTVzF3WVdOMElDMGdUVzkyYVc1
+        bklHSmxlVzl1WkNCMGFHVWdhbTkxY201aGJDQmhjblJwWTJ4bElHRnVaQ0Jp
+        WlhsdmJtUWdkR2hsSUdsdGNHRmpkQ0JtWVdOMGIzSThMM1JwZEd4bFBqd3Zk
+        R2wwYkdWelBqeGtaWE5qY21sd2RHbHZibk0rUEdSbGMyTnlhWEIwYVc5dUlH
+        UmxjMk55YVhCMGFXOXVWSGx3WlQwaVFXSnpkSEpoWTNRaVBpWnNkRHR3Sm1k
+        ME8xQnlaWE5sYm5SaGRHbHZiaUJuYVhabGJpQmllU0JFY2lCSVpXRjBhR1Z5
+        SUZCcGQyOTNZWElnWkhWeWFXNW5JSFJvWlNCU1pYTmxZWEpqYUNCVWNtVnVa
+        SE1nVm1seWRIVmhiQ0JUWlcxcGJtRnl3cUFtYkhRN0wzQW1aM1E3Q2lac2RE
+        dHdKbWQwTzFCaGNuUWdNaUF0SUVWMllXeDFZWFJwYm1jZ1RtVjBkMjl5YXlC
+        U1pXeGhkR2x2Ym5Ob2FYQnpKbXgwT3k5d0ptZDBPend2WkdWelkzSnBjSFJw
+        YjI0K1BDOWtaWE5qY21sd2RHbHZibk0rUEhOMVltcGxZM1J6UGp4emRXSnFa
+        V04wUGxOamFXVnVZMlVnVUc5c2FXTjVQQzl6ZFdKcVpXTjBQand2YzNWaWFt
+        VmpkSE0rUEhCMVlteHBjMmhsY2o1R2FXZHphR0Z5WlR3dmNIVmliR2x6YUdW
+        eVBqeHdkV0pzYVdOaGRHbHZibGxsWVhJK01qQXhNend2Y0hWaWJHbGpZWFJw
+        YjI1WlpXRnlQanhrWVhSbGN6NDhaR0YwWlNCa1lYUmxWSGx3WlQwaVEzSmxZ
+        WFJsWkNJK01qQXhNeTB3TWkweE16d3ZaR0YwWlQ0OFpHRjBaU0JrWVhSbFZI
+        bHdaVDBpVlhCa1lYUmxaQ0krTWpBeE15MHdNaTB4TXp3dlpHRjBaVDQ4TDJS
+        aGRHVnpQanh5WlhOdmRYSmpaVlI1Y0dVZ2NtVnpiM1Z5WTJWVWVYQmxSMlZ1
+        WlhKaGJEMGlRWFZrYVc5MmFYTjFZV3dpUGxCeVpYTmxiblJoZEdsdmJqd3Zj
+        bVZ6YjNWeVkyVlVlWEJsUGp4emFYcGxjejQ4YzJsNlpUNHlNakkzTXpNeUlF
+        SjVkR1Z6UEM5emFYcGxQand2YzJsNlpYTStQSEpwWjJoMGMweHBjM1ErUEhK
+        cFoyaDBjeUJ5YVdkb2RITlZVa2s5SW1oMGRIQTZMeTlqY21WaGRHbDJaV052
+        YlcxdmJuTXViM0puTDJ4cFkyVnVjMlZ6TDJKNUx6TXVNQzkxY3k4aVBrTkRM
+        VUpaUEM5eWFXZG9kSE0rUEM5eWFXZG9kSE5NYVhOMFBqd3ZjbVZ6YjNWeVky
+        VSsiLCJkYXRhY2VudHJlIjoiRklHU0hBUkUuQVJTIC0gZmlnc2hhcmUgQWNh
+        ZGVtaWMgUmVzZWFyY2ggU3lzdGVtIiwidXBkYXRlZCI6IjIwMTYtMDUtMjRU
+        MDc6Mzc6MjJaIiwicHJlZml4IjoiMTAuNjA4NCIsImRvaSI6IjEwLjYwODQv
+        TTkuRklHU0hBUkUuMTU2NTk1IiwiY3JlYXRvciI6WyJSZXNlYXJjaCBUcmVu
+        ZHMiLCJIZWF0aGVyIFBpd293YXIiXSwicHVibGlzaGVyIjoiRmlnc2hhcmUi
+        LCJ0aXRsZSI6WyJVbmNvdmVyaW5nIEltcGFjdCAtIE1vdmluZyBiZXlvbmQg
+        dGhlIGpvdXJuYWwgYXJ0aWNsZSBhbmQgYmV5b25kIHRoZSBpbXBhY3QgZmFj
+        dG9yIl0sImRlc2NyaXB0aW9uIjpbIjxwPlByZXNlbnRhdGlvbiBnaXZlbiBi
+        eSBEciBIZWF0aGVyIFBpd293YXIgZHVyaW5nIHRoZSBSZXNlYXJjaCBUcmVu
+        ZHMgVmlydHVhbCBTZW1pbmFywqA8L3A+XG48cD5QYXJ0IDIgLSBFdmFsdWF0
+        aW5nIE5ldHdvcmsgUmVsYXRpb25zaGlwczwvcD4iXSwicHVibGljYXRpb25Z
+        ZWFyIjoiMjAxMyIsInJlc291cmNlVHlwZUdlbmVyYWwiOiJBdWRpb3Zpc3Vh
+        bCJ9XX19Cg==
     http_version: 
-  recorded_at: Sun, 04 Sep 2016 13:35:41 GMT
+  recorded_at: Sat, 26 Nov 2016 06:43:29 GMT
 recorded_with: VCR 2.9.3
