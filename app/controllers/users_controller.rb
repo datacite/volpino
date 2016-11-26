@@ -59,8 +59,8 @@ class UsersController < ApplicationController
       @user = current_user
       @member = @user.member
 
-      panels = %w(account login auto)
-      @panel = panels.find { |p| p == params[:panel] } || "auto"
+      panels = %w(auto login account orcid impactstory)
+      @panel = panels.find { |p| p == params[:panel] } || "account"
     else
       fail CanCan::AccessDenied.new("Please sign in first.", :read, User)
     end
