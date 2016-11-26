@@ -64,6 +64,14 @@ class User < ActiveRecord::Base
     uid
   end
 
+  def orcid_as_url
+    if ENV['ORCID_SANDBOX'].present?
+      "http://sandbox.orcid.org/#{orcid}"
+    else
+      "http://orcid.org/#{orcid}"
+    end
+  end
+
   def access_token
     authentication_token
   end
