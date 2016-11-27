@@ -115,7 +115,7 @@ class Claim < ActiveRecord::Base
 
       # send notification to Bugsnag
       if ENV['BUGSNAG_KEY']
-        Bugsnag.notify(RuntimeError.new(collect_data["errors"].first["title"]))
+        Bugsnag.notify(RuntimeError.new(collect_data.body["errors"].first["title"]))
       end
 
       self.error

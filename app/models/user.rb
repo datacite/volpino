@@ -207,7 +207,7 @@ class User < ActiveRecord::Base
     elsif result.body["errors"]
       # send notification to Bugsnag
       if ENV['BUGSNAG_KEY']
-        Bugsnag.notify(RuntimeError.new(result["errors"].first["title"]))
+        Bugsnag.notify(RuntimeError.new(result.body["errors"].first["title"]))
       end
     else
       if github_to_be_created?
