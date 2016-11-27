@@ -2,11 +2,41 @@ require "rails_helper"
 require "cancan/matchers"
 
 describe User, type: :model, vcr: true do
-  subject { FactoryGirl.create(:user, github: "mfenner") }
+  subject { FactoryGirl.create(:valid_user, github: "mfenner") }
 
   it { is_expected.to validate_uniqueness_of(:uid) }
   it { is_expected.to validate_presence_of(:provider) }
   it { is_expected.to have_many(:claims) }
+
+  describe 'push_github_identifier', :order => :defined do
+    it 'no errors' do
+      response = subject.push_github_identifier
+      expect(response.body["put_code"]).not_to be_blank
+      expect(response.status).to eq(201)
+    end
+
+    it 'delete claim' do
+      subject = FactoryGirl.create(:valid_user, github: "mfenner", github_put_code: "3322")
+      response = subject.push_github_identifier
+      expect(response.body["data"]).to be_blank
+      expect(response.body["errors"]).to be_nil
+      expect(response.status).to eq(204)
+    end
+  end
+
+  describe 'process_data', :order => :defined do
+    it 'no errors' do
+      subject = FactoryGirl.create(:valid_user, github: "mfenner", github_put_code: nil)
+      expect(subject.process_data).to eq(3323)
+      expect(subject.github_put_code).to eq(3323)
+    end
+
+    it 'delete claim' do
+      subject = FactoryGirl.create(:valid_user, github: "mfenner", github_put_code: "3323")
+      expect(subject.process_data).to be nil
+      expect(subject.github_put_code).to be nil
+    end
+  end
 
   describe "claims from ORCID" do
     subject { FactoryGirl.create(:valid_user) }

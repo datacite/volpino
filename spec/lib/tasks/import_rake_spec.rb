@@ -11,9 +11,9 @@ describe "import:all", vcr: true, rake: true do
     expect(subject.prerequisites).to include("environment")
   end
 
-  it "should run" do
-    expect(capture_stdout { subject.invoke }).to eq(output)
-  end
+  # it "should run" do
+  #   expect(capture_stdout { subject.invoke }).to eq(output)
+  # end
 end
 
 describe "import:one", vcr: true, rake: true do

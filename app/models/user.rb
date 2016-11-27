@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
 
   scope :query, ->(query) { where("name like ? OR uid like ?", "%#{query}%", "%#{query}%") }
   scope :ordered, -> { order("created_at DESC") }
+  scope :with_github, -> { where("github IS NOT NULL AND github_put_code IS NULL") }
 
   serialize :other_names, JSON
 
@@ -71,6 +72,10 @@ class User < ActiveRecord::Base
     else
       "http://orcid.org/#{orcid}"
     end
+  end
+
+  def external_identifier
+    ExternalIdentifier.new(type: "GitHub", value: github, url: github_as_url(github), orcid: orcid, access_token: access_token, put_code: github_put_code) if access_token.present?
   end
 
   def access_token
@@ -186,21 +191,49 @@ class User < ActiveRecord::Base
     end
   end
 
-  def process_data(options={})
-    push_data
+  def github_to_be_created?
+    github.present? && github_put_code.blank?
   end
 
-  def push_data
+  def github_to_be_deleted?
+    github_put_code.present?
+  end
+
+  def process_data(options={})
+    result = push_github_identifier(options)
+
+    if result["errors"]
+      # send notification to Bugsnag
+      if ENV['BUGSNAG_KEY']
+        Bugsnag.notify(RuntimeError.new(result["errors"].first["title"]))
+      end
+    else
+      if github_to_be_created?
+        write_attribute(:github_put_code, result.body["put_code"])
+      elsif github_to_be_deleted?
+        write_attribute(:github_put_code, nil)
+      end
+    end
+  end
+
+  def push_github_identifier(options={})
     # user has not linked github username
-    return {} unless github.present?
+    return { "skip" => true } unless github_to_be_created? || github_to_be_deleted?
+
+    options[:sandbox] = true if ENV['ORCID_SANDBOX'].present?
 
     # missing data raise errors
-    return { "errors" => [{ "title" => "Missing data" }] } if data.nil?
+    return { "errors" => [{ "title" => "Missing data" }] } if external_identifier.data.nil?
 
     # validate data
-    return { "errors" => validation_errors.map { |error| { "title" => error } }} if validation_errors.present?
+    return { "errors" => external_identifier.validation_errors.map { |error| { "title" => error } }} if external_identifier.validation_errors.present?
 
-    #oauth_client_post(data, endpoint: "orcid-bio/external-identifiers")
+    # create or delete entry in ORCID record
+    if github_to_be_created?
+      external_identifier.create_external_identifier(options)
+    elsif github_to_be_deleted?
+      external_identifier.delete_external_identifier(options)
+    end
   end
 
   def set_role

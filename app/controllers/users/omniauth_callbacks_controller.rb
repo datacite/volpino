@@ -16,6 +16,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       @user.update_attributes(github: auth.info.nickname,
                               github_uid: auth.uid,
                               github_token: auth.credentials.token)
+
+      # push GitHub external identifier to ORCID if GitHub account is linked
+      GithubJob.perform_later(@user) if @user.github_put_code.blank? && @user.github.present?
+
       flash[:notice] = "Account successfully linked with GitHub account."
       redirect_to user_path("me", panel: "login")
     elsif @user = User.where(github_uid: auth.uid).first
@@ -94,6 +98,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if Time.zone.now > @user.expires_at || omniauth.present?
       auth_hash = User.get_auth_hash(auth, omniauth)
       @user.update_attributes(auth_hash)
+
+      # push GitHub external identifier to ORCID if GitHub account is linked
+      GithubJob.perform_later(@user) if @user.github_put_code.blank? && @user.github.present?
     end
 
     if @user.persisted?

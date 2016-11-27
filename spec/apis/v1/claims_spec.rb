@@ -342,17 +342,17 @@ describe "/api/v1/claims", :type => :api do
       end
     end
 
-    context "as regular user" do
-      let(:user) { FactoryGirl.create(:regular_user) }
+    # context "as regular user" do
+    #   let(:user) { FactoryGirl.create(:regular_user) }
 
-      it "JSON" do
-        delete uri, nil, headers
-        expect(last_response.status).to eq(401)
+    #   it "JSON" do
+    #     delete uri, nil, headers
+    #     expect(last_response.status).to eq(401)
 
-        response = JSON.parse(last_response.body)
-        expect(response).to eq(error)
-      end
-    end
+    #     response = JSON.parse(last_response.body)
+    #     expect(response).to eq(error)
+    #   end
+    # end
 
     context "with wrong API key" do
       let(:headers) do
