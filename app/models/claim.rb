@@ -177,7 +177,7 @@ class Claim < ActiveRecord::Base
   end
 
   def work
-    Work.new(doi: doi, orcid: orcid, access_token: authentication_token, put_code: put_code)
+    Work.new(doi: doi, orcid: orcid, access_token: access_token, put_code: put_code)
   end
 
   def notification
