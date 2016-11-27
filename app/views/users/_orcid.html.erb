@@ -23,7 +23,12 @@
     Claim Status
   </div>
   <div class="panel-body">
-    <p>You have <%= pluralize(number_with_delimiter(@user.claims.done.count), "successful claim") %>, <%= pluralize(@user.claims.stale.count, "queued claim") %> and <%= pluralize(@user.claims.failed.count, "failed claim") %>.</p>
+    <p>
+      You have <%= pluralize(number_with_delimiter(@user.claims.done.count), "successful claim") %>,
+      <%= pluralize(@user.claims.notified.count, "notification claim") %>,
+      <%= pluralize(@user.claims.stale.count, "queued claim") %> and
+      <%= pluralize(@user.claims.failed.count, "failed claim") %>.
+    </p>
     <div class="graphs" id="chart_claims"></div>
     <div class="text-muted" id="chart_claims-loading">Loading … <img src="<%= asset_path('/images/spinner.gif', host: ENV['CDN_HOST']) %>"></div>
   </div>

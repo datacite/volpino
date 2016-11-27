@@ -34,6 +34,7 @@ describe User, type: :model, vcr: true do
     let!(:claim) { FactoryGirl.create(:claim, user: subject, orcid: "0000-0001-6528-2027", doi: "10.6084/M9.FIGSHARE.1041821", state: 6) }
 
     it 'queue_claims_jobs' do
+      subject.queue_claim_jobs
       expect(subject.claims.count).to eq(1)
       updated_claim = subject.claims.first
       expect(updated_claim.human_state_name).to eq("notified")

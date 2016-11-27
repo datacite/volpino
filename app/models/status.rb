@@ -36,8 +36,7 @@ class Status < ActiveRecord::Base
 
   def get_current_version
     response = Maremma.get RELEASES_URL
-    response = response.body.is_a?(Array) ? response.body.first : nil
-    response.body.to_h.fetch("tag_name", "v.#{version}")[2..-1]
+    response.body.is_a?(Array) ? response.body.first.to_h.fetch("tag_name", "v.#{version}")[2..-1] : nil
   end
 
   # get combined data and index size for all tables

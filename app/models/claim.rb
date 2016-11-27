@@ -42,8 +42,8 @@ class Claim < ActiveRecord::Base
     end
 
     event :finish do
-      transition [:working, :ignored, :notified] => :deleted, :if => :to_be_deleted?
-      transition [:working, :ignored, :deleted, :notified] => :done
+      transition [:working] => :deleted, :if => :to_be_deleted?
+      transition [:working] => :done
       transition any => same
     end
 
