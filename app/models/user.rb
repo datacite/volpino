@@ -75,7 +75,7 @@ class User < ActiveRecord::Base
   end
 
   def external_identifier
-    ExternalIdentifier.new(type: "GitHub", value: github, url: github_as_url(github), orcid: orcid, access_token: access_token, put_code: github_put_code) if access_token.present?
+    ExternalIdentifier.new(type: "GitHub", value: github, url: github_as_url(github), orcid: orcid, access_token: authentication_token, put_code: github_put_code)
   end
 
   def access_token
