@@ -140,6 +140,9 @@ class Claim < ActiveRecord::Base
     # already claimed
     return { "skip" => true } if to_be_created? && claimed_at.present?
 
+    # user has not signed up yet or access_token is missing
+    return { "skip" => true } unless user.present? && user.access_token.present?
+
     # user has not given permission for auto-update
     return { "skip" => true } if source_id == "orcid_update" && user && !user.auto_update
 
