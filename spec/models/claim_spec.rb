@@ -21,7 +21,7 @@ describe Claim, type: :model, vcr: true do
 
     it 'already exists' do
       FactoryGirl.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.5281/ZENODO.21429", claim_action: "create", claimed_at: Time.zone.now, put_code: "741211")
-      expect(subject.collect_data).to eq("skip"=>true)
+      expect(subject.collect_data.body).to eq("skip"=>true)
     end
 
     it 'delete claim' do
@@ -35,7 +35,7 @@ describe Claim, type: :model, vcr: true do
     it 'no permission for auto-update' do
       user = FactoryGirl.create(:valid_user, auto_update: false)
       subject = FactoryGirl.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.5281/ZENODO.21429", source_id: "orcid_update")
-      expect(subject.collect_data).to eq("skip"=>true)
+      expect(subject.collect_data.body).to eq("skip"=>true)
     end
 
     # it 'invalid token' do

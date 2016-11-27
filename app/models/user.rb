@@ -203,7 +203,8 @@ class User < ActiveRecord::Base
     result = push_github_identifier(options)
     logger.info result.inspect
 
-    if result["errors"]
+    if result.body["skip"]
+    elsif result.body["errors"]
       # send notification to Bugsnag
       if ENV['BUGSNAG_KEY']
         Bugsnag.notify(RuntimeError.new(result["errors"].first["title"]))
@@ -215,20 +216,21 @@ class User < ActiveRecord::Base
         write_attribute(:github_put_code, nil)
       end
     end
+
     logger.info "Added Github username to ORCID record for user #{orcid}."
   end
 
   def push_github_identifier(options={})
     # user has not linked github username
-    return { "skip" => true } unless github_to_be_created? || github_to_be_deleted?
+    return OpenStruct.new(body: { "skip" => true }) unless github_to_be_created? || github_to_be_deleted?
 
     options[:sandbox] = true if ENV['ORCID_SANDBOX'].present?
 
     # missing data raise errors
-    return { "errors" => [{ "title" => "Missing data" }] } if external_identifier.data.nil?
+    return OpenStruct.new(body: { "errors" => [{ "title" => "Missing data" }] }) if external_identifier.data.nil?
 
     # validate data
-    return { "errors" => external_identifier.validation_errors.map { |error| { "title" => error } }} if external_identifier.validation_errors.present?
+    return OpenStruct.new(body: { "errors" => external_identifier.validation_errors.map { |error| { "title" => error } }}) if external_identifier.validation_errors.present?
 
     # create or delete entry in ORCID record
     if github_to_be_created?

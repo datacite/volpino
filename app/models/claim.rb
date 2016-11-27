@@ -108,9 +108,9 @@ class Claim < ActiveRecord::Base
     self.start
     result = collect_data
 
-    if result["skip"]
+    if result.body["skip"]
       claimed_at.present? ? self.finish : self.skip
-    elsif result["errors"]
+    elsif result.body["errors"]
       write_attribute(:error_messages, collect_data["errors"])
 
       # send notification to Bugsnag
@@ -138,13 +138,13 @@ class Claim < ActiveRecord::Base
 
   def collect_data(options={})
     # already claimed
-    return { "skip" => true } if to_be_created? && claimed_at.present?
+    return OpenStruct.new(body: { "skip" => true }) if to_be_created? && claimed_at.present?
 
     # user has not signed up yet or access_token is missing
-    return { "skip" => true } unless user.present? && user.access_token.present?
+    return OpenStruct.new(body: { "skip" => true }) unless user.present? && user.access_token.present?
 
     # user has not given permission for auto-update
-    return { "skip" => true } if source_id == "orcid_update" && user && !user.auto_update
+    return OpenStruct.new(body: { "skip" => true }) if source_id == "orcid_update" && user && !user.auto_update
 
     options[:sandbox] = true if ENV['ORCID_SANDBOX'].present?
 
@@ -156,13 +156,13 @@ class Claim < ActiveRecord::Base
     end
 
     # user has too many claims already
-    return { "errors" => [{ "title" => "Too many claims. Only 18,000 claims allowed." }] } if user.claims.total_count > 18000
+    return OpenStruct.new(body: { "errors" => [{ "title" => "Too many claims. Only 18,000 claims allowed." }] }) if user.claims.total_count > 18000
 
     # missing data raise errors
-    return { "errors" => [{ "title" => "Missing data" }] } if work.data.nil?
+    return OpenStruct.new(body: { "errors" => [{ "title" => "Missing data" }] }) if work.data.nil?
 
     # validate data
-    return { "errors" => work.validation_errors.map { |error| { "title" => error } }} if work.validation_errors.present?
+    return OpenStruct.new(body: { "errors" => work.validation_errors.map { |error| { "title" => error } }}) if work.validation_errors.present?
 
     # create or delete entry in ORCID record
     if to_be_created?
