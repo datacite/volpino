@@ -201,6 +201,7 @@ class User < ActiveRecord::Base
 
   def process_data(options={})
     result = push_github_identifier(options)
+    logger.debug result.inspect
 
     if result["errors"]
       # send notification to Bugsnag
@@ -214,6 +215,7 @@ class User < ActiveRecord::Base
         write_attribute(:github_put_code, nil)
       end
     end
+    logger.debug "Added Github username to ORCID record for user #{orcid}."
   end
 
   def push_github_identifier(options={})
