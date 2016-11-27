@@ -24,8 +24,8 @@ class Claim < ActiveRecord::Base
 
   validates :orcid, :doi, :source_id, presence: true
 
-  delegate :uid, to: :user
-  delegate :access_token, to: :user
+  delegate :uid, to: :user, allow_nil: true
+  delegate :access_token, to: :user, allow_nil: true
 
   state_machine :initial => :waiting do
     state :waiting, value: 0
@@ -34,15 +34,21 @@ class Claim < ActiveRecord::Base
     state :done, value: 3
     state :ignored, value: 4
     state :deleted, value: 5
+    state :notified, value: 6
 
     event :start do
-      transition [:waiting] => :working
+      transition [:waiting, :ignored, :deleted, :notified] => :working
       transition any => same
     end
 
     event :finish do
       transition [:working] => :deleted, :if => :to_be_deleted?
       transition [:working] => :done
+      transition any => same
+    end
+
+    event :notify do
+      transition [:working] => :notified
       transition any => same
     end
 
@@ -63,6 +69,8 @@ class Claim < ActiveRecord::Base
   scope :failed, -> { by_state(2).order_by_date }
   scope :done, -> { by_state(3).order_by_date }
   scope :ignored, -> { by_state(4).order_by_date }
+  scope :deleted, -> { by_state(5).order_by_date }
+  scope :notified, -> { by_state(6).order_by_date }
   scope :stale, -> { where("state < 2").order_by_date }
   scope :total, ->(duration) { where(updated_at: (Time.zone.now.beginning_of_hour - duration.hours)..Time.zone.now.beginning_of_hour) }
 
@@ -101,7 +109,7 @@ class Claim < ActiveRecord::Base
     result = collect_data
 
     if result["skip"]
-      self.skip
+      claimed_at.present? ? self.finish : self.skip
     elsif result["errors"]
       write_attribute(:error_messages, collect_data["errors"])
 
@@ -111,10 +119,13 @@ class Claim < ActiveRecord::Base
       end
 
       self.error
+    elsif result.body["notification"]
+      write_attribute(:put_code, result.body["put_code"])
+      self.notify
     else
       if to_be_created?
         write_attribute(:claimed_at, Time.zone.now)
-        write_attribute(:put_code, result["put_code"])
+        write_attribute(:put_code, result.body["put_code"])
       elsif to_be_deleted?
         write_attribute(:claimed_at, nil)
         write_attribute(:put_code, nil)
@@ -129,11 +140,17 @@ class Claim < ActiveRecord::Base
     # already claimed
     return { "skip" => true } if to_be_created? && claimed_at.present?
 
-    # user has not signed up yet or access_token is missing
-    return { "skip" => true } unless user.present? && user.access_token.present?
-
     # user has not given permission for auto-update
     return { "skip" => true } if source_id == "orcid_update" && user && !user.auto_update
+
+    options[:sandbox] = true if ENV['ORCID_SANDBOX'].present?
+
+    # user has not signed up yet or access_token is missing
+    unless user.present? && user.access_token.present?
+      response = notification.create_notification(options)
+      response.body["notification"] = true
+      return response
+    end
 
     # user has too many claims already
     return { "errors" => [{ "title" => "Too many claims. Only 18,000 claims allowed." }] } if user.claims.total_count > 18000
@@ -143,8 +160,6 @@ class Claim < ActiveRecord::Base
 
     # validate data
     return { "errors" => work.validation_errors.map { |error| { "title" => error } }} if work.validation_errors.present?
-
-    options[:sandbox] = true if ENV['ORCID_SANDBOX'].present?
 
     # create or delete entry in ORCID record
     if to_be_created?
@@ -159,7 +174,11 @@ class Claim < ActiveRecord::Base
   end
 
   def work
-    Work.new(doi: doi, orcid: uid, access_token: access_token, put_code: put_code)
+    Work.new(doi: doi, orcid: orcid, access_token: access_token, put_code: put_code) if access_token.present?
+  end
+
+  def notification
+    Notification.new(doi: doi, orcid: orcid, notification_access_token: ENV['NOTIFICATION_ACCESS_TOKEN'], put_code: put_code)
   end
 
   def deposit

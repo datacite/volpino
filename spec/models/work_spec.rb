@@ -13,14 +13,14 @@ describe Work, type: :model, vcr: true do
 
       it 'should create work' do
         response = subject.create_work(sandbox: true)
-        expect(response["put_code"]).not_to be_blank
+        expect(response.body["put_code"]).not_to be_blank
       end
     end
 
     describe 'get' do
       it 'should get works' do
         response = subject.get_works(sandbox: true)
-        works = response.fetch("data", {}).fetch("group", {})
+        works = response.body.fetch("data", {}).fetch("group", {})
         expect(works.length).to eq(25)
         work = works.first
         expect(work["external-ids"]).to eq("external-id"=>[{"external-id-type"=>"doi", "external-id-value"=>"10.5167/UZH-19531", "external-id-url"=>nil, "external-id-relationship"=>"SELF"}])
@@ -30,7 +30,7 @@ describe Work, type: :model, vcr: true do
     describe 'put' do
       it 'should update work' do
         response = subject.update_work(sandbox: true)
-        expect(response.fetch("data", {}).fetch("work", {}).fetch("put_code", nil)).to eq(put_code)
+        expect(response.body.fetch("data", {}).fetch("work", {}).fetch("put_code", nil)).to eq(put_code)
       end
     end
 

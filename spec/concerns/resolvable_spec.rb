@@ -104,7 +104,7 @@ describe Claim, type: :model, vcr: true do
 
       it "get_crossref_metadata with not found error" do
         response = subject.get_crossref_metadata("#{doi}x")
-        expect(response).to eq("errors"=>[{"status"=>404, "title"=>"Not found"}])
+        expect(response.body).to eq("errors"=>[{"status"=>404, "title"=>"Not found"}])
       end
     end
 
@@ -146,7 +146,7 @@ describe Claim, type: :model, vcr: true do
 
       it "get_orcid_metadata with not found error" do
         response = subject.get_orcid_metadata("#{orcid}x")
-        expect(response).to eq("errors"=>[{"status"=>404, "title"=>"Not found"}])
+        expect(response.body).to eq("errors"=>[{"status"=>404, "title"=>"Not found"}])
       end
     end
 

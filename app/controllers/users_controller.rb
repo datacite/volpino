@@ -34,6 +34,9 @@ class UsersController < ApplicationController
 
       @user.update_attributes(safe_params)
 
+      # delete GitHub external identifier from ORCID if GitHub account is unlinked
+      GithubJob.perform_later(@user) if @user.github_put_code.present? && @user.github.blank?
+
       render @panel
     else
       # admin updates user account
@@ -59,8 +62,8 @@ class UsersController < ApplicationController
       @user = current_user
       @member = @user.member
 
-      panels = %w(account login auto)
-      @panel = panels.find { |p| p == params[:panel] } || "auto"
+      panels = %w(auto login account orcid impactstory)
+      @panel = panels.find { |p| p == params[:panel] } || "account"
     else
       fail CanCan::AccessDenied.new("Please sign in first.", :read, User)
     end

@@ -111,7 +111,8 @@ module ApplicationHelper
       2 => "failed",
       3 => "done",
       4 => "ignored",
-      5 => "deleted" }
+      5 => "deleted",
+      6 => "notified" }
   end
 
   def settings

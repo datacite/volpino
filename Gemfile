@@ -12,8 +12,8 @@ gem "config"
 gem 'rake', '~> 10.5'
 gem "whenever", "~> 0.9.0", require: false
 gem 'bugsnag', '~> 2.8.6'
-gem 'maremma', '~> 2.3'
-gem 'orcid_client', '~> 0.1.1'
+gem 'maremma', '~> 3.0'
+gem 'orcid_client', '~> 0.2'
 gem 'addressable', "~> 2.3.8"
 gem 'postrank-uri', '~> 1.0.18'
 gem 'nilify_blanks', '~> 1.2.0'

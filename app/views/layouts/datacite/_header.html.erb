@@ -74,7 +74,7 @@
                 <li><%= link_to "#{icon('user')} Settings".html_safe, user_path("me") %></li>
                 <% if ENV['ORCID_CLIENT_ID'].present? %>
                   <li class="divider"></li>
-                  <li><%= link_to "#{icon('external-link')} ORCID Record".html_safe, current_user.orcid %></li>
+                  <li><%= link_to "#{icon('external-link')} ORCID Record".html_safe, current_user.orcid_as_url %></li>
                 <% end %>
                 <li class="divider"></li>
                 <li><%= link_to "#{icon('sign-out')} Sign Out".html_safe, destroy_user_session_path, :id => "sign_out" %></li>

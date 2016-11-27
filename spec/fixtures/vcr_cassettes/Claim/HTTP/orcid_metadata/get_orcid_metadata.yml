@@ -21,7 +21,7 @@ http_interactions:
       Content-Type:
       - application/vnd.orcid+xml; qs=5;charset=UTF-8
       Date:
-      - Sun, 04 Sep 2016 13:35:40 GMT
+      - Sat, 26 Nov 2016 06:43:23 GMT
       Access-Control-Allow-Origin:
       - "*"
       Connection:
@@ -47,7 +47,7 @@ http_interactions:
                     <creation-method>website</creation-method>
                     <completion-date>2012-10-16T23:47:11.944Z</completion-date>
                     <submission-date>2012-10-16T22:36:15.660Z</submission-date>
-                    <last-modified-date>2016-08-23T14:14:49.050Z</last-modified-date>
+                    <last-modified-date>2016-10-07T18:45:32.993Z</last-modified-date>
                     <claimed>true</claimed>
                     <verified-email>true</verified-email>
                     <verified-primary-email>true</verified-primary-email>
@@ -117,5 +117,5 @@ http_interactions:
             </orcid-profile>
         </orcid-message>
     http_version: 
-  recorded_at: Sun, 04 Sep 2016 13:35:40 GMT
+  recorded_at: Sat, 26 Nov 2016 06:43:25 GMT
 recorded_with: VCR 2.9.3
