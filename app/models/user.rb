@@ -192,7 +192,7 @@ class User < ActiveRecord::Base
   end
 
   def github_to_be_created?
-    github.present? && github_put_code.blank?
+    github_uid.present? && github_put_code.blank?
   end
 
   def github_to_be_deleted?
