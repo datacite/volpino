@@ -210,11 +210,7 @@ class User < ActiveRecord::Base
         Bugsnag.notify(RuntimeError.new(result.body["errors"].first["title"]))
       end
     else
-      if github_to_be_created?
-        write_attribute(:github_put_code, result.body["put_code"])
-      elsif github_to_be_deleted?
-        write_attribute(:github_put_code, nil)
-      end
+      write_attribute(:github_put_code, result.body["put_code"])
     end
 
     logger.info "Added Github username to ORCID record for user #{orcid}."
