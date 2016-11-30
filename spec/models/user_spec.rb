@@ -27,13 +27,13 @@ describe User, type: :model, vcr: true do
   describe 'process_data', :order => :defined do
     it 'no errors' do
       subject = FactoryGirl.create(:valid_user, github: "mfenner", github_put_code: nil)
-      expect(subject.process_data).to eq(3323)
+      expect(subject.process_data).to be true
       expect(subject.github_put_code).to eq(3323)
     end
 
     it 'delete claim' do
       subject = FactoryGirl.create(:valid_user, github: "mfenner", github_put_code: "3323")
-      expect(subject.process_data).to be nil
+      expect(subject.process_data).to be true
       expect(subject.github_put_code).to be nil
     end
   end

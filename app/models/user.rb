@@ -75,7 +75,7 @@ class User < ActiveRecord::Base
   end
 
   def external_identifier
-    ExternalIdentifier.new(type: "GitHub", value: github, url: github_as_url(github), orcid: orcid, access_token: access_token, put_code: github_put_code) if access_token.present?
+    ExternalIdentifier.new(type: "GitHub", value: github, url: github_as_url(github), orcid: orcid, access_token: authentication_token, put_code: github_put_code)
   end
 
   def access_token
@@ -192,7 +192,7 @@ class User < ActiveRecord::Base
   end
 
   def github_to_be_created?
-    github.present? && github_put_code.blank?
+    github_uid.present? && github_put_code.blank?
   end
 
   def github_to_be_deleted?
@@ -201,32 +201,32 @@ class User < ActiveRecord::Base
 
   def process_data(options={})
     result = push_github_identifier(options)
+    logger.info result.inspect
 
-    if result["errors"]
+    if result.body["skip"]
+    elsif result.body["errors"]
       # send notification to Bugsnag
       if ENV['BUGSNAG_KEY']
-        Bugsnag.notify(RuntimeError.new(result["errors"].first["title"]))
+        Bugsnag.notify(RuntimeError.new(result.body["errors"].first["title"]))
       end
     else
-      if github_to_be_created?
-        write_attribute(:github_put_code, result.body["put_code"])
-      elsif github_to_be_deleted?
-        write_attribute(:github_put_code, nil)
-      end
+      write_attribute(:github_put_code, result.body["put_code"])
     end
+
+    logger.info "Added Github username to ORCID record for user #{orcid}."
   end
 
   def push_github_identifier(options={})
     # user has not linked github username
-    return { "skip" => true } unless github_to_be_created? || github_to_be_deleted?
+    return OpenStruct.new(body: { "skip" => true }) unless github_to_be_created? || github_to_be_deleted?
 
     options[:sandbox] = true if ENV['ORCID_SANDBOX'].present?
 
     # missing data raise errors
-    return { "errors" => [{ "title" => "Missing data" }] } if external_identifier.data.nil?
+    return OpenStruct.new(body: { "errors" => [{ "title" => "Missing data" }] }) if external_identifier.data.nil?
 
     # validate data
-    return { "errors" => external_identifier.validation_errors.map { |error| { "title" => error } }} if external_identifier.validation_errors.present?
+    return OpenStruct.new(body: { "errors" => external_identifier.validation_errors.map { |error| { "title" => error } }}) if external_identifier.validation_errors.present?
 
     # create or delete entry in ORCID record
     if github_to_be_created?
