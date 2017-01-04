@@ -17,6 +17,9 @@ class Claim < ActiveRecord::Base
   # include helper module for work type
   include Typeable
 
+  SUBJECT = "Add your published work(s) to your ORCID record"
+  INTRO =  "Hello, You may not be familiar with DataCite. Our data centers send us publication information (including ORCID iDs and DOIs), and we ensure that your work can be found, linked and cited. It looks like you have included your ORCID iD with a recent publication submission and that has been passed to us by your data center. We would like to auto-update your ORCID record with information about these published work(s) published, starting today with those listed below, so you don’t have to search for and add them manually, now or in the future. Please click ‘Grant permissions’ below to set this up."
+
   belongs_to :user, foreign_key: "orcid", primary_key: "uid", inverse_of: :claims
 
   before_create :create_uuid
@@ -181,7 +184,7 @@ class Claim < ActiveRecord::Base
   end
 
   def notification
-    Notification.new(doi: doi, orcid: orcid, notification_access_token: ENV['NOTIFICATION_ACCESS_TOKEN'], put_code: put_code)
+    Notification.new(doi: doi, orcid: orcid, notification_access_token: ENV['NOTIFICATION_ACCESS_TOKEN'], put_code: put_code, subject: SUBJECT, intro: INTRO)
   end
 
   def deposit
