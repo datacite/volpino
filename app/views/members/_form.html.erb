@@ -23,19 +23,6 @@
     <div class="tab-pane" id="description">
       <%= f.input :description, label: false, hint: "Use <a href='https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet' target='_blank'>markdown</a> for formatting.".html_safe, :input_html => { :rows => 12 } %>
     </div>
-    <% if can?(:manage, @member) %>
-      <div class="tab-pane" id="logo">
-        <%= f.hidden_field :image_cache %>
-        <div class="logo text-center">
-          <% if @member.image.present? %>
-            <img src="<%= @member.image.url %>" id="logo_img" />
-          <% else %>
-            <img src="http://placehold.it/500x200/f5f5f5" id="logo_img" />
-          <% end %>
-          <%= f.input :image, as: :file, label: false, input_html: { onchange: "readURL(this)" } %>
-        </div>
-      </div>
-    <% end %>
     <div class="tab-pane" id="contact">
       <%= f.input :website %>
       <%= f.input :email %>
