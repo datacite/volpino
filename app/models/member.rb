@@ -45,4 +45,8 @@ class Member < ActiveRecord::Base
   def region_human_name
     regions[region]
   end
+
+  def image_url
+    "https://<%= ENV['CDN_HOST'] %>/images/members/#{image}"
+  end
 end
