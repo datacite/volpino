@@ -47,6 +47,6 @@ class Member < ActiveRecord::Base
   end
 
   def image_url
-    "https://<%= ENV['CDN_HOST'] %>/images/members/#{image}"
+    "https://#{ENV['CDN_HOST']}/images/members/#{image}"
   end
 end
