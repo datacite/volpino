@@ -1,6 +1,4 @@
 class Member < ActiveRecord::Base
-  # mount_uploader :image, ImageUploader
-
   has_many :users
 
   validates :name, presence: true, uniqueness: true
@@ -47,6 +45,6 @@ class Member < ActiveRecord::Base
   end
 
   def image_url
-    "https://#{ENV['CDN_HOST']}/images/members/#{image}"
+    "https://#{ENV['CDN_HOST']}/images/members/#{name.downcase}.png"
   end
 end

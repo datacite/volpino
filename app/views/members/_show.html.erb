@@ -12,11 +12,9 @@
       <% if @member.description.present? %>
         <div class="description"><%= markdown(@member.description) %></div>
       <% end %>
-      <% if @member.image.present? %>
-        <div class="logo text-center">
-          <img src="<%= @member.image_url %>">
-        </div>
-      <% end %>
+      <div class="logo text-center">
+        <img src="<%= @member.image_url %>">
+      </div>
     </div>
     <div class="panel-body">
       <dl class="dl-horizontal">

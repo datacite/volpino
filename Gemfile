@@ -47,8 +47,6 @@ gem 'sprockets-rails', '~> 2.2.0', :require => 'sprockets/railtie'
 gem 'coffee-rails', '~> 4.1', '>= 4.1.1'
 gem 'sass-rails', '~> 4.0.4'
 gem 'uglifier', '~> 2.7', '>= 2.7.2'
-gem 'carrierwave', '~> 1.0'
-gem 'carrierwave-aws', '~> 1.0'
 gem 'mini_magick', '~> 4.5', '>= 4.5.1'
 gem 'remotipart', '~> 1.2'
 
