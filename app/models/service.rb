@@ -1,8 +1,6 @@
 require 'uri'
 
 class Service < ActiveRecord::Base
-  mount_uploader :image, ImageUploader
-
   has_and_belongs_to_many :tags
 
   nilify_blanks
@@ -17,5 +15,8 @@ class Service < ActiveRecord::Base
   def to_param
     name
   end
-end
 
+  def image_url
+    "https://#{ENV['CDN_HOST']}/images/services/#{name.downcase}.png"
+  end
+end
