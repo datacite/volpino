@@ -30,8 +30,9 @@ class User < ActiveRecord::Base
   validates :provider, presence: true
   validate :validate_email
 
-  scope :query, ->(query) { where("name like ? OR uid like ?", "%#{query}%", "%#{query}%") }
+  scope :query, ->(query) { where("name like ? OR uid like ? OR github like ?", "%#{query}%", "%#{query}%", "%#{query}%") }
   scope :ordered, -> { order("created_at DESC") }
+  scope :is_public, -> { where("is_public = 1") }
   scope :with_github, -> { where("github IS NOT NULL AND github_put_code IS NULL") }
 
   serialize :other_names, JSON

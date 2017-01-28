@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161127101519) do
+ActiveRecord::Schema.define(version: 20170128071616) do
 
   create_table "claims", force: :cascade do |t|
     t.string   "uuid",           limit: 191
@@ -112,7 +112,6 @@ ActiveRecord::Schema.define(version: 20161127101519) do
     t.datetime "updated_at"
     t.text     "other_names",          limit: 65535
     t.string   "api_key",              limit: 191
-    t.boolean  "skip_info",                          default: false
     t.string   "confirmation_token",   limit: 191
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
@@ -126,12 +125,14 @@ ActiveRecord::Schema.define(version: 20161127101519) do
     t.string   "google_uid",           limit: 191
     t.string   "google_token",         limit: 191
     t.integer  "github_put_code",      limit: 4
+    t.boolean  "is_public",                          default: true
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["family_name", "given_names"], name: "index_users_on_family_name_and_given_names", using: :btree
   add_index "users", ["github"], name: "index_users_on_github", unique: true, using: :btree
   add_index "users", ["github_put_code"], name: "index_users_on_github_put_code", using: :btree
+  add_index "users", ["is_public"], name: "index_users_on_is_public", using: :btree
   add_index "users", ["uid"], name: "index_users_on_uid", unique: true, using: :btree
 
 end

@@ -62,7 +62,7 @@ class UsersController < ApplicationController
       @user = current_user
       @member = @user.member
 
-      panels = %w(auto login account orcid impactstory)
+      panels = %w(auto public login account orcid impactstory)
       @panel = panels.find { |p| p == params[:panel] } || "account"
     else
       fail CanCan::AccessDenied.new("Please sign in first.", :read, User)
@@ -89,6 +89,7 @@ class UsersController < ApplicationController
                                  :email,
                                  :unconfirmed_email,
                                  :auto_update,
+                                 :is_public,
                                  :role,
                                  :member_id,
                                  :expires_at,

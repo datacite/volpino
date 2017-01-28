@@ -15,7 +15,8 @@ class Api::V1::UsersController < Api::BaseController
     page[:size] = page[:size] && (1..1000).include?(page[:size].to_i) ? page[:size].to_i : 1000
 
     collection = User.where(created_at: from_date..until_date)
-    @users = collection.ordered.page(page[:number]).per_page(page[:size])
+    collection = collection.query(params[:query]) if params[:query]
+    @users = collection.is_public.ordered.page(page[:number]).per_page(page[:size])
 
     meta = { total: @users.total_entries, 'total-pages' => @users.total_pages, page: page[:number].to_i }
     render json: @users, meta: meta

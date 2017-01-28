@@ -26,11 +26,12 @@
               <div id="user_<%= user.id %>" class="panel-collapse collapse.in">
                 <%= simple_form_for user, url: user_path(user), html: { role: "form", remote: true } do |f| %>
                   <div class="panel-body">
-                      <%= f.input :api_key, label: "API key", input_html: { class: "form-user" } %>
-                      <% if user.id != current_user.id %>
-                        <%= f.input :role, collection: roles.map { |role| [role.titleize, role] }, include_blank: false, input_html: { class: "form-user" } %>
-                      <% end %>
-                      <%= f.association :member, label_method: :title, input_html: { class: "form-user" } %>
+                    <%= f.input :api_key, label: "API key", input_html: { class: "form-user" } %>
+                    <% if user.id != current_user.id %>
+                      <%= f.input :role, collection: roles.map { |role| [role.titleize, role] }, include_blank: false, input_html: { class: "form-user" } %>
+                    <% end %>
+                    <%= f.association :member, label_method: :title, input_html: { class: "form-user" } %>
+                    <%= f.input :is_public, label: "Public record", input_html: { class: "form-user" } %>
                   </div>
                   <div class="panel-footer">
                     <div class="form-group pull-right">
@@ -62,6 +63,11 @@
 
                   <h5>Role</h5>
                   <%= user.role.humanize.titleize %>
+
+                  <% unless user.is_public %>
+                    <h5>Record public</h5>
+                    <%= user.is_public %>
+                  <% end %>
 
                   <% if user.member.present? %>
                     <h5>Member</h5>

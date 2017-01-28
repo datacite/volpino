@@ -45,6 +45,12 @@
       <% end %>
       <dt>Role</dt>
       <dd><%= @user.role.humanize.titleize %></dd>
+      <dt>Record Public</dt>
+      <% if @user.is_public %>
+        <dd><%= @user.is_public %></dd>
+      <% else %>
+        <dd class="text-info"><%= @user.is_public %></dd>
+      <% end %>
     </dl>
   </div>
 </div>

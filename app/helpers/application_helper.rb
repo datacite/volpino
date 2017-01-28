@@ -25,6 +25,16 @@ module ApplicationHelper
     doc.to_s
   end
 
+  def public_text
+    if !user_signed_in?
+      'panel-default'
+    elsif current_user.is_public
+      'panel-success'
+    else
+      'panel-warning'
+    end
+  end
+
   def auto_update_text
     if !user_signed_in?
       'panel-default'
@@ -52,6 +62,16 @@ module ApplicationHelper
       'panel-info'
     else
       'panel-default'
+    end
+  end
+
+  def true_text
+    if !user_signed_in?
+      ''
+    elsif current_user.is_public
+      '<span class="small pull-right">true</span>'
+    else
+      '<span class="small pull-right">false</span>'
     end
   end
 
