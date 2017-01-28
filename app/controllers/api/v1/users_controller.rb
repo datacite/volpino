@@ -1,7 +1,5 @@
 class Api::V1::UsersController < Api::BaseController
   prepend_before_filter :load_user, only: [:show]
-  before_filter :authenticate_user_from_token!
-  load_and_authorize_resource
 
   def show
     render json: @user
