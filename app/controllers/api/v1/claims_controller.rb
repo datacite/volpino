@@ -32,16 +32,20 @@ class Api::V1::ClaimsController < Api::BaseController
                          doi: params.fetch(:claim, {}).fetch(:doi, nil))
                   .first_or_initialize
 
-    @claim.assign_attributes(state: 0,
-                             source_id: params.fetch(:claim, {}).fetch(:source_id, nil),
-                             claim_action: params.fetch(:claim, {}).fetch(:claim_action, nil))
+    if @claim.new_record? || @claim.source_id == "orcid_search"
+      @claim.assign_attributes(state: 0,
+                               source_id: params.fetch(:claim, {}).fetch(:source_id, nil),
+                               claim_action: params.fetch(:claim, {}).fetch(:claim_action, nil))
 
-    authorize! :create, @claim
+      authorize! :create, @claim
 
-    if @claim.save
-      render json: @claim, :status => :accepted
+      if @claim.save
+        render json: @claim, :status => :accepted
+      else
+        render json: { errors: @claim.errors.to_a.map { |error| { status: 400, title: error } }}, status: :bad_request
+      end
     else
-      render json: { errors: @claim.errors.to_a.map { |error| { status: 400, title: error } }}, status: :bad_request
+      render json: @claim, :status => :accepted
     end
   rescue ActiveRecord::RecordNotUnique
     render json: @claim, :status => :ok
