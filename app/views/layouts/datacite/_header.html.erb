@@ -102,7 +102,7 @@
                 <li><%= link_to "#{icon('files-o')} Works".html_safe, "#{ENV['SEARCH_URL']}/people/#{current_user.orcid}" %></li>
                 <% if ENV['ORCID_CLIENT_ID'].present? %>
                   <li class="divider"></li>
-                  <li><%= link_to "#{icon('external-link')} ORCID Record".html_safe, current_user.orcid_as_url %></li>
+                  <li><%= link_to "#{icon('external-link')} ORCID Record".html_safe, "#{ENV['ORCID_URL']}/#{current_user.orcid}" %></li>
                 <% end %>
                 <li class="divider"></li>
                 <li><%= link_to "#{icon('sign-out')} Sign Out".html_safe, destroy_user_session_path, :id => "sign_out" %></li>

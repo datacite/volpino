@@ -74,6 +74,6 @@ class Api::V1::ClaimsController < Api::BaseController
   private
 
   def safe_params
-    params.require(:claim).permit(:uuid, :orcid, :doi, :source_id)
+    params.require(:claim).permit(:uuid, :orcid, :doi, :source_id, :claim_action)
   end
 end
