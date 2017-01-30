@@ -97,9 +97,9 @@ class User < ActiveRecord::Base
   end
 
   def self.get_auth_hash(auth, options={})
-    { name: auth.info && auth.info.name.strip,
-      family_name: auth.info.fetch(:last_name, "").strip,
-      given_names: auth.info.fetch(:first_name, "").strip,
+    { name: auth.info && auth.info.name.to_s.strip,
+      family_name: auth.info.fetch(:last_name, "").to_s.strip,
+      given_names: auth.info.fetch(:first_name, "").to_s.strip,
       other_names: auth.extra.fetch(:raw_info, {}).fetch(:other_names, nil),
       authentication_token: auth.credentials.token,
       expires_at: timestamp(auth.credentials),
