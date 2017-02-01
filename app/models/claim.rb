@@ -100,13 +100,6 @@ class Claim < ActiveRecord::Base
     uuid
   end
 
-  # push to deposit API if no error and we have collected works
-  def lagotto_post
-    Maremma.post ENV['ORCID_UPDATE_URL'], data: deposit.to_json,
-                                          token: ENV['ORCID_UPDATE_TOKEN'],
-                                          content_type: 'json'
-  end
-
   def process_data(options={})
     self.start
     result = collect_data
@@ -114,11 +107,11 @@ class Claim < ActiveRecord::Base
     if result.body["skip"]
       claimed_at.present? ? self.finish : self.skip
     elsif result.body["errors"]
-      write_attribute(:error_messages, collect_data["errors"])
+      write_attribute(:error_messages, result.body["errors"])
 
       # send notification to Bugsnag
       if ENV['BUGSNAG_KEY']
-        Bugsnag.notify(RuntimeError.new(collect_data.body["errors"].first["title"]))
+        Bugsnag.notify(RuntimeError.new(result.body["errors"].first["title"]))
       end
 
       self.error
@@ -134,7 +127,6 @@ class Claim < ActiveRecord::Base
         write_attribute(:put_code, nil)
       end
 
-      lagotto_post
       self.finish
     end
   end
@@ -185,18 +177,6 @@ class Claim < ActiveRecord::Base
 
   def notification
     Notification.new(doi: doi, orcid: orcid, notification_access_token: ENV['NOTIFICATION_ACCESS_TOKEN'], put_code: put_code, subject: SUBJECT, intro: INTRO)
-  end
-
-  def deposit
-    { "deposit" => { "subj_id" => orcid_as_url(orcid),
-                     "obj_id" => doi_as_url(doi),
-                     "source_id" => "datacite_search_link",
-                     "publisher_id" => work.publisher_id,
-                     "registration_agency_id" => "datacite",
-                     "message_type" => "contribution",
-                     "message_action" => claim_action,
-                     "prefix" => doi[/^10\.\d{4,5}/],
-                     "source_token" => ENV['ORCID_UPDATE_UUID'] } }
   end
 
   def without_control(s)

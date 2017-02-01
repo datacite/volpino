@@ -13,13 +13,47 @@ http_interactions:
       - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
   response:
     status:
+      code: 301
+      message: ''
+    headers:
+      Server:
+      - openresty/1.11.2.1
+      Date:
+      - Wed, 01 Feb 2017 20:58:58 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '191'
+      Connection:
+      - keep-alive
+      Location:
+      - https://search.datacite.org/api?fl=doi%2Ccreator%2Ctitle%2Cpublisher%2CpublicationYear%2CresourceTypeGeneral%2Cdescription%2Cdatacentre%2Cdatacentre_symbol%2Cprefix%2CrelatedIdentifier%2Cxml%2Cminted%2Cupdated&q=doi%3A10.6084%2FM9.FIGSHARE.1066168&rows=1&wt=json
+    body:
+      encoding: UTF-8
+      string: "<html>\r\n<head><title>301 Moved Permanently</title></head>\r\n<body
+        bgcolor=\"white\">\r\n<center><h1>301 Moved Permanently</h1></center>\r\n<hr><center>openresty/1.11.2.1</center>\r\n</body>\r\n</html>\r\n"
+    http_version: 
+  recorded_at: Wed, 01 Feb 2017 20:58:58 GMT
+- request:
+    method: get
+    uri: https://search.datacite.org/api?fl=doi,creator,title,publisher,publicationYear,resourceTypeGeneral,description,datacentre,datacentre_symbol,prefix,relatedIdentifier,xml,minted,updated&q=doi:10.6084/M9.FIGSHARE.1066168&rows=1&wt=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Maremma - http://profiles.local
+      Accept:
+      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
+  response:
+    status:
       code: 200
       message: ''
     headers:
       Server:
       - openresty/1.11.2.1
       Date:
-      - Sat, 26 Nov 2016 07:53:39 GMT
+      - Wed, 01 Feb 2017 20:58:58 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Connection:
@@ -30,14 +64,14 @@ http_interactions:
       - GET, POST, OPTIONS
     body:
       encoding: UTF-8
-      string: '{"responseHeader":{"status":0,"QTime":3},"response":{"numFound":1,"start":0,"docs":[{"minted":"2014-06-22T10:41:15Z","datacentre_symbol":"FIGSHARE.ARS","xml":"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHJlc291cmNlIHhtbG5zPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyBodHRwOi8vc2NoZW1hLmRhdGFjaXRlLm9yZy9tZXRhL2tlcm5lbC0zL21ldGFkYXRhLnhzZCI+PGlkZW50aWZpZXIgaWRlbnRpZmllclR5cGU9IkRPSSI+MTAuNjA4NC9NOS5GSUdTSEFSRS4xMDY2MTY4PC9pZGVudGlmaWVyPjx0aXRsZXM+PHRpdGxlPjEwMDAgcmFuZG9tIFBMT1MgT05FIERPSXMgZnJvbSAyMDEzPC90aXRsZT48L3RpdGxlcz48cHVibGlzaGVyPkZpZ3NoYXJlPC9wdWJsaXNoZXI+PHB1YmxpY2F0aW9uWWVhcj4yMDE0PC9wdWJsaWNhdGlvblllYXI+PHJlc291cmNlVHlwZSByZXNvdXJjZVR5cGVHZW5lcmFsPSJEYXRhc2V0Ij5EYXRhc2V0PC9yZXNvdXJjZVR5cGU+PHJpZ2h0c0xpc3Q+PHJpZ2h0cyByaWdodHNVUkk9Imh0dHA6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LzMuMC91cy8iPkNDLUJZPC9yaWdodHM+PC9yaWdodHNMaXN0PjxjcmVhdG9ycz48Y3JlYXRvcj48Y3JlYXRvck5hbWU+Wm9ocmVoIFphaGVkaTwvY3JlYXRvck5hbWU+PC9jcmVhdG9yPjxjcmVhdG9yPjxjcmVhdG9yTmFtZT5NYXJ0aW4gRmVubmVyPC9jcmVhdG9yTmFtZT48bmFtZUlkZW50aWZpZXIgbmFtZUlkZW50aWZpZXJTY2hlbWU9Ik9SQ0lEIj4wMDAwLTAwMDItMjE4NC02MDk0PC9uYW1lSWRlbnRpZmllcj48L2NyZWF0b3I+PGNyZWF0b3I+PGNyZWF0b3JOYW1lPlJvZHJpZ28gQ29zdGFzPC9jcmVhdG9yTmFtZT48L2NyZWF0b3I+PC9jcmVhdG9ycz48L3Jlc291cmNlPg==","datacentre":"FIGSHARE.ARS
+      string: '{"responseHeader":{"status":0,"QTime":1},"response":{"numFound":1,"start":0,"docs":[{"minted":"2014-06-22T10:41:15Z","datacentre_symbol":"FIGSHARE.ARS","xml":"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHJlc291cmNlIHhtbG5zPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyBodHRwOi8vc2NoZW1hLmRhdGFjaXRlLm9yZy9tZXRhL2tlcm5lbC0zL21ldGFkYXRhLnhzZCI+PGlkZW50aWZpZXIgaWRlbnRpZmllclR5cGU9IkRPSSI+MTAuNjA4NC9NOS5GSUdTSEFSRS4xMDY2MTY4PC9pZGVudGlmaWVyPjx0aXRsZXM+PHRpdGxlPjEwMDAgcmFuZG9tIFBMT1MgT05FIERPSXMgZnJvbSAyMDEzPC90aXRsZT48L3RpdGxlcz48cHVibGlzaGVyPkZpZ3NoYXJlPC9wdWJsaXNoZXI+PHB1YmxpY2F0aW9uWWVhcj4yMDE0PC9wdWJsaWNhdGlvblllYXI+PHJlc291cmNlVHlwZSByZXNvdXJjZVR5cGVHZW5lcmFsPSJEYXRhc2V0Ij5EYXRhc2V0PC9yZXNvdXJjZVR5cGU+PHJpZ2h0c0xpc3Q+PHJpZ2h0cyByaWdodHNVUkk9Imh0dHA6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LzMuMC91cy8iPkNDLUJZPC9yaWdodHM+PC9yaWdodHNMaXN0PjxjcmVhdG9ycz48Y3JlYXRvcj48Y3JlYXRvck5hbWU+Wm9ocmVoIFphaGVkaTwvY3JlYXRvck5hbWU+PC9jcmVhdG9yPjxjcmVhdG9yPjxjcmVhdG9yTmFtZT5NYXJ0aW4gRmVubmVyPC9jcmVhdG9yTmFtZT48bmFtZUlkZW50aWZpZXIgbmFtZUlkZW50aWZpZXJTY2hlbWU9Ik9SQ0lEIj4wMDAwLTAwMDItMjE4NC02MDk0PC9uYW1lSWRlbnRpZmllcj48L2NyZWF0b3I+PGNyZWF0b3I+PGNyZWF0b3JOYW1lPlJvZHJpZ28gQ29zdGFzPC9jcmVhdG9yTmFtZT48L2NyZWF0b3I+PC9jcmVhdG9ycz48L3Jlc291cmNlPg==","datacentre":"FIGSHARE.ARS
         - figshare Academic Research System","updated":"2014-07-04T20:44:04Z","prefix":"10.6084","doi":"10.6084/M9.FIGSHARE.1066168","creator":["Zohreh
         Zahedi","Martin Fenner","Rodrigo Costas"],"publisher":"Figshare","title":["1000
         random PLOS ONE DOIs from 2013"],"publicationYear":"2014","resourceTypeGeneral":"Dataset"}]}}
 
 '
     http_version: 
-  recorded_at: Sat, 26 Nov 2016 07:53:39 GMT
+  recorded_at: Wed, 01 Feb 2017 20:58:59 GMT
 - request:
     method: post
     uri: https://api.sandbox.orcid.org/v2.0_rc3/0000-0001-6528-2027/notification-permission
@@ -82,7 +116,7 @@ http_interactions:
       Server:
       - nginx/1.4.6 (Ubuntu)
       Date:
-      - Sat, 26 Nov 2016 07:53:40 GMT
+      - Wed, 01 Feb 2017 20:58:59 GMT
       Content-Type:
       - application/vnd.orcid+xml; qs=5;charset=UTF-8
       Content-Length:
@@ -92,10 +126,10 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       Location:
-      - http://api.sandbox.orcid.org:443/orcid-api-web/v2.0_rc3/0000-0001-6528-2027/notification-permission/144942
+      - http://api.sandbox.orcid.org:443/orcid-api-web/v2.0_rc3/0000-0001-6528-2027/notification-permission/161183
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Sat, 26 Nov 2016 07:53:40 GMT
+  recorded_at: Wed, 01 Feb 2017 20:59:00 GMT
 recorded_with: VCR 2.9.3

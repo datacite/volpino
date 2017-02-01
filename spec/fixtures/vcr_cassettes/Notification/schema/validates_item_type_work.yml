@@ -13,13 +13,47 @@ http_interactions:
       - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
   response:
     status:
+      code: 301
+      message: ''
+    headers:
+      Server:
+      - openresty/1.11.2.1
+      Date:
+      - Wed, 01 Feb 2017 20:59:02 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '191'
+      Connection:
+      - keep-alive
+      Location:
+      - https://search.datacite.org/api?fl=doi%2Ccreator%2Ctitle%2Cpublisher%2CpublicationYear%2CresourceTypeGeneral%2Cdescription%2Cdatacentre%2Cdatacentre_symbol%2Cprefix%2CrelatedIdentifier%2Cxml%2Cminted%2Cupdated&q=doi%3A10.6084%2FM9.FIGSHARE.1066168&rows=1&wt=json
+    body:
+      encoding: UTF-8
+      string: "<html>\r\n<head><title>301 Moved Permanently</title></head>\r\n<body
+        bgcolor=\"white\">\r\n<center><h1>301 Moved Permanently</h1></center>\r\n<hr><center>openresty/1.11.2.1</center>\r\n</body>\r\n</html>\r\n"
+    http_version: 
+  recorded_at: Wed, 01 Feb 2017 20:59:02 GMT
+- request:
+    method: get
+    uri: https://search.datacite.org/api?fl=doi,creator,title,publisher,publicationYear,resourceTypeGeneral,description,datacentre,datacentre_symbol,prefix,relatedIdentifier,xml,minted,updated&q=doi:10.6084/M9.FIGSHARE.1066168&rows=1&wt=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Maremma - http://profiles.local
+      Accept:
+      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
+  response:
+    status:
       code: 200
       message: ''
     headers:
       Server:
       - openresty/1.11.2.1
       Date:
-      - Sat, 26 Nov 2016 06:57:43 GMT
+      - Wed, 01 Feb 2017 20:59:02 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Connection:
@@ -37,5 +71,5 @@ http_interactions:
 
 '
     http_version: 
-  recorded_at: Sat, 26 Nov 2016 06:57:44 GMT
+  recorded_at: Wed, 01 Feb 2017 20:59:02 GMT
 recorded_with: VCR 2.9.3

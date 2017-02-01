@@ -54,7 +54,7 @@ describe User, type: :model, vcr: true do
 
       result = subject.parse_data(result)
       expect(result.length).to eq(26)
-      expect(result.first).to eq("10.5167/UZH-19531")
+      expect(result.first).to eq("10.5281/ZENODO.49516")
     end
   end
 

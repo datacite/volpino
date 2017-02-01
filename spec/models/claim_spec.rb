@@ -68,7 +68,7 @@ describe Claim, type: :model, vcr: true do
     it 'already exists' do
       FactoryGirl.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.5281/ZENODO.59983", claim_action: "create", put_code: "741206")
       expect(subject.process_data).to be true
-      expect(subject.human_state_name).to eq("done")
+      expect(subject.human_state_name).to eq("failed")
     end
 
     it 'delete claim' do
@@ -91,32 +91,13 @@ describe Claim, type: :model, vcr: true do
       user = FactoryGirl.create(:invalid_user)
       subject = FactoryGirl.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.5281/ZENODO.59983", source_id: "orcid_update")
       expect(subject.process_data).to be true
-      expect(subject.human_state_name).to eq("notified")
+      expect(subject.human_state_name).to eq("ignored")
     end
 
     it 'no user' do
       subject = FactoryGirl.create(:claim, orcid: "0000-0001-6528-2027", doi: "10.5281/ZENODO.21429")
       expect(subject.process_data).to be true
-      expect(subject.human_state_name).to eq("notified")
+      expect(subject.human_state_name).to eq("ignored")
     end
   end
-
-  # describe 'push to Lagotto' do
-  #   let(:user) { FactoryGirl.create(:valid_user) }
-  #   subject { FactoryGirl.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.5281/ZENODO.59983") }
-
-  #   describe 'lagotto_post' do
-  #     it 'should post' do
-  #       response = subject.lagotto_post
-  #       meta = response["data"]['meta']
-  #       deposit = response["data"]['deposit']
-  #       expect(meta).to eq("status"=>"accepted", "message-type"=>"deposit", "message-version"=>"v7")
-  #       expect(deposit['state']).to eq("waiting")
-  #       expect(deposit['message_type']).to eq("contribution")
-  #       expect(deposit['subj_id']).to eq("http://orcid.org/0000-0003-1419-2405")
-  #       expect(deposit['obj_id']).to eq("http://doi.org/10.5281/ZENODO.21429")
-  #       expect(deposit['source_id']).to eq("datacite_search_link")
-  #     end
-  #   end
-  # end
 end

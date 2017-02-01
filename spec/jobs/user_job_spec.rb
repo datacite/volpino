@@ -14,6 +14,6 @@ RSpec.describe UserJob, :type => :job do
   it 'executes perform', vcr: true do
     expect(user.claims.count).to eq(0)
     perform_enqueued_jobs { job }
-    expect(user.claims.count).to eq(19)
+    expect(user.claims.count).to eq(25)
   end
 end

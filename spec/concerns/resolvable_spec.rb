@@ -98,7 +98,7 @@ describe Claim, type: :model, vcr: true do
         expect(response["DOI"]).to eq(doi)
         expect(response["title"]).to eq("Paving the path to HIV neurotherapy: Predicting SIV CNS disease")
         expect(response["container-title"]).to eq("European Journal of Pharmacology")
-        expect(response["issued"]).to eq("date-parts"=>[[2016, 8, 20]])
+        expect(response["issued"]).to eq("date-parts"=>[[2016, 11, 2]])
         expect(response["type"]).to eq("article-journal")
       end
 
