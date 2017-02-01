@@ -23,7 +23,7 @@ http_interactions:
       Server:
       - nginx/1.4.6 (Ubuntu)
       Date:
-      - Sat, 26 Nov 2016 07:54:38 GMT
+      - Wed, 01 Feb 2017 20:59:00 GMT
       Content-Type:
       - application/vnd.orcid+xml; qs=5;charset=UTF-8
       Connection:
@@ -54,6 +54,8 @@ http_interactions:
                 </notification:item>
             </notification:items>
             <common:created-date>2016-11-26T07:53:40.473Z</common:created-date>
+            <common:sent-date>2016-11-26T07:55:35.318Z</common:sent-date>
+            <common:archived-date>2016-11-26T07:54:39.399Z</common:archived-date>
             <common:source>
                 <common:source-client-id>
                     <common:uri>http://sandbox.orcid.org/client/<ORCID_CLIENT_ID></common:uri>
@@ -64,5 +66,5 @@ http_interactions:
             </common:source>
         </notification:notification>
     http_version: 
-  recorded_at: Sat, 26 Nov 2016 07:54:38 GMT
+  recorded_at: Wed, 01 Feb 2017 20:59:00 GMT
 recorded_with: VCR 2.9.3

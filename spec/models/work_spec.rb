@@ -3,7 +3,7 @@ require "rails_helper"
 describe Work, type: :model, vcr: true do
   let(:doi) { "10.6084/M9.FIGSHARE.1066168"}
   let(:user) { FactoryGirl.create(:valid_user) }
-  let(:put_code) { "740670" }
+  let(:put_code) { "753978" }
 
   subject { Work.new(doi: doi, orcid: user.uid, access_token: user.authentication_token, put_code: put_code) }
 
@@ -21,9 +21,9 @@ describe Work, type: :model, vcr: true do
       it 'should get works' do
         response = subject.get_works(sandbox: true)
         works = response.body.fetch("data", {}).fetch("group", {})
-        expect(works.length).to eq(25)
+        expect(works.length).to eq(27)
         work = works.first
-        expect(work["external-ids"]).to eq("external-id"=>[{"external-id-type"=>"doi", "external-id-value"=>"10.5167/UZH-19531", "external-id-url"=>nil, "external-id-relationship"=>"SELF"}])
+        expect(work["external-ids"]).to eq("external-id"=>[{"external-id-type"=>"doi", "external-id-value"=>"10.5281/ZENODO.49516", "external-id-url"=>nil, "external-id-relationship"=>"SELF"}])
       end
     end
 

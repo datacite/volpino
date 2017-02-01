@@ -88,7 +88,7 @@ module Resolvable
                  rows: 1,
                  fl: "doi,creator,title,publisher,publicationYear,resourceTypeGeneral,description,datacentre,datacentre_symbol,prefix,relatedIdentifier,xml,minted,updated",
                  wt: "json" }
-      url = "http://search.datacite.org/api?" + URI.encode_www_form(params)
+      url = "https://search.datacite.org/api?" + URI.encode_www_form(params)
       response = Maremma.get(url, options)
       return response if response.body["errors"]
 

@@ -30,7 +30,7 @@ http_interactions:
       Server:
       - nginx/1.4.6 (Ubuntu)
       Date:
-      - Sun, 27 Nov 2016 11:40:57 GMT
+      - Wed, 01 Feb 2017 21:24:41 GMT
       Content-Type:
       - application/vnd.orcid+xml; qs=5;charset=UTF-8
       Content-Length:
@@ -40,10 +40,10 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       Location:
-      - http://api.sandbox.orcid.org:443/orcid-api-web/v2.0_rc3/0000-0001-6528-2027/external-identifiers/3320
+      - http://api.sandbox.orcid.org:443/orcid-api-web/v2.0_rc3/0000-0001-6528-2027/external-identifiers/3436
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Sun, 27 Nov 2016 11:40:57 GMT
+  recorded_at: Wed, 01 Feb 2017 21:24:41 GMT
 recorded_with: VCR 2.9.3

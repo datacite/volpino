@@ -17,13 +17,13 @@ http_interactions:
       - Bearer <ACCESS_TOKEN>
   response:
     status:
-      code: 204
+      code: 404
       message: ''
     headers:
       Server:
       - nginx/1.4.6 (Ubuntu)
       Date:
-      - Sun, 27 Nov 2016 11:59:34 GMT
+      - Wed, 01 Feb 2017 21:27:59 GMT
       Content-Type:
       - application/vnd.orcid+xml; qs=5;charset=UTF-8
       Connection:
@@ -32,7 +32,15 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: ''
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <error xmlns="http://www.orcid.org/ns/error">
+            <response-code>404</response-code>
+            <developer-message>javax.persistence.NoResultException: No entity found for query</developer-message>
+            <user-message>The resource was not found.</user-message>
+            <error-code>9016</error-code>
+            <more-info>http://members.orcid.org/api/api-error-codes</more-info>
+        </error>
     http_version: 
-  recorded_at: Sun, 27 Nov 2016 11:59:34 GMT
+  recorded_at: Wed, 01 Feb 2017 21:27:59 GMT
 recorded_with: VCR 2.9.3

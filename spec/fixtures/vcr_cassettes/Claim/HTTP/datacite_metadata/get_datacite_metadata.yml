@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://search.datacite.org/api?fl=doi,creator,title,publisher,publicationYear,resourceTypeGeneral,description,datacentre,datacentre_symbol,prefix,relatedIdentifier,xml,minted,updated&q=doi:10.5061/DRYAD.8515&rows=1&wt=json
+    uri: https://search.datacite.org/api?fl=doi,creator,title,publisher,publicationYear,resourceTypeGeneral,description,datacentre,datacentre_symbol,prefix,relatedIdentifier,xml,minted,updated&q=doi:10.5061/DRYAD.8515&rows=1&wt=json
     body:
       encoding: US-ASCII
       string: ''
@@ -19,7 +19,7 @@ http_interactions:
       Server:
       - openresty/1.11.2.1
       Date:
-      - Sat, 26 Nov 2016 06:43:24 GMT
+      - Wed, 01 Feb 2017 21:30:43 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Connection:
@@ -31,7 +31,7 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJyZXNwb25zZUhlYWRlciI6eyJzdGF0dXMiOjAsIlFUaW1lIjo2fSwicmVz
+        eyJyZXNwb25zZUhlYWRlciI6eyJzdGF0dXMiOjAsIlFUaW1lIjowfSwicmVz
         cG9uc2UiOnsibnVtRm91bmQiOjEsInN0YXJ0IjowLCJkb2NzIjpbeyJtaW50
         ZWQiOiIyMDExLTAyLTAxVDE3OjMyOjAyWiIsImRhdGFjZW50cmVfc3ltYm9s
         IjoiQ0RMLkRSWUFEIiwieG1sIjoiUEQ5NGJXd2dkbVZ5YzJsdmJqMGlNUzR3
@@ -128,5 +128,5 @@ http_interactions:
         blllYXIiOiIyMDExIiwicmVzb3VyY2VUeXBlR2VuZXJhbCI6IkRhdGFzZXQi
         fV19fQo=
     http_version: 
-  recorded_at: Sat, 26 Nov 2016 06:43:26 GMT
+  recorded_at: Wed, 01 Feb 2017 21:30:43 GMT
 recorded_with: VCR 2.9.3
