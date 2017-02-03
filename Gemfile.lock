@@ -19,7 +19,7 @@ GIT
 
 GIT
   remote: https://github.com/rails-api/active_model_serializers.git
-  revision: 2d1c68044e220e185a12a7c66cb307bd7fa4dcd4
+  revision: 58e3983e4c18baea937535038c1324017793f166
   specs:
     active_model_serializers (0.10.4)
       actionpack (>= 4.1, < 6)
@@ -164,6 +164,7 @@ GEM
     faraday_middleware (0.10.1)
       faraday (>= 0.7.4, < 1.0)
     fastercsv (1.5.5)
+    gender_detector (1.0.0)
     github-markdown (0.6.9)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
@@ -226,7 +227,7 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.0.0)
     mysql2 (0.3.18)
-    namae (0.10.2)
+    namae (0.11.3)
     nilify_blanks (1.2.1)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -253,12 +254,12 @@ GEM
       omniauth (~> 1.2)
     omniauth-orcid (1.2.2)
       omniauth-oauth2 (~> 1.3)
-    orcid_client (0.2.1)
+    orcid_client (0.2.2)
       activesupport (~> 4.2, >= 4.2.5)
       builder (~> 3.2, >= 3.2.2)
       dotenv (~> 2.1, >= 2.1.1)
       maremma (~> 3.0)
-      namae (~> 0.10.1)
+      namae (~> 0.11.3)
       nokogiri (~> 1.6.8)
       sanitize (~> 4.0, >= 4.0.1)
     orm_adapter (0.5.0)
@@ -357,7 +358,7 @@ GEM
       sass (~> 3.2.2)
       sprockets (~> 2.8, < 3.0)
       sprockets-rails (~> 2.0)
-    sexp_processor (4.7.0)
+    sexp_processor (4.8.0)
     shoulda-matchers (2.7.0)
       activesupport (>= 3.0.0)
     sidekiq (4.2.9)
@@ -404,6 +405,13 @@ GEM
     thor (0.19.4)
     thread_safe (0.3.5)
     tilt (1.4.1)
+    toccatore (0.2.1)
+      activesupport (~> 4.2, >= 4.2.5)
+      dotenv (~> 2.1, >= 2.1.1)
+      gender_detector (~> 1.0)
+      maremma (~> 3.1)
+      namae (~> 0.11.0)
+      thor (~> 0.19)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.7.2)
@@ -469,7 +477,7 @@ DEPENDENCIES
   maremma (~> 3.0)
   mini_magick (~> 4.5, >= 4.5.1)
   mysql2 (= 0.3.18)
-  namae (~> 0.10.1)
+  namae (~> 0.11.1)
   nilify_blanks (~> 1.2.0)
   nokogiri (~> 1.6, >= 1.6.7.2)
   oauth2 (~> 1.2)!
@@ -499,6 +507,7 @@ DEPENDENCIES
   sprockets-rails (~> 2.2.0)
   state_machine (~> 1.2.0)!
   teaspoon-jasmine (~> 2.2.0)
+  toccatore (~> 0.2)
   uglifier (~> 2.7, >= 2.7.2)
   vcr (~> 2.9.3)
   web-console (~> 2.0)
