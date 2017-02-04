@@ -32,10 +32,16 @@ class Api::V1::ClaimsController < Api::BaseController
                          doi: params.fetch(:claim, {}).fetch(:doi, nil))
                   .first_or_initialize
 
-    if @claim.new_record? || [2,4,5,6].include?(@claim.state) || @claim.source_id == "orcid_search"
+    claim_action = params.fetch(:claim, {}).fetch(:claim_action, "create")
+
+    if @claim.new_record? ||
+      @claim.source_id == "orcid_search" ||
+      (claim_action == "create" && [2,4,5,6].include?(@claim.state)) ||
+      (claim_action == "delete" && [2,3,4,6].include?(@claim.state))
+
       @claim.assign_attributes(state: 0,
                                source_id: params.fetch(:claim, {}).fetch(:source_id, nil),
-                               claim_action: params.fetch(:claim, {}).fetch(:claim_action, nil))
+                               claim_action: claim_action)
 
       authorize! :create, @claim
 
