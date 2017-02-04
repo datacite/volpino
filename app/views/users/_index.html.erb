@@ -54,7 +54,7 @@
                   <% end %>
 
                   <h5>ORCID</h5>
-                  <%= link_to h(user.orcid), user.orcid %>
+                  <%= link_to h(user.orcid), user.orcid_as_url %>
 
                   <% if user.api_key.present? %>
                     <h5>API key</h5>
@@ -76,6 +76,9 @@
 
                   <h5>Account created</h5>
                   <%= l user.created_at, format: :medium %>
+
+                  <h5>Claims</h5>
+                  <%= link_to_if user.claims.count > 0, pluralize(user.claims.count, "Claim"), claims_path(query: params[:query], source: params[:source], state: params[:state], user_id: user.orcid) %>
 
                   <div class="btn-toolbar">
                     <div class="btn-group btn-group-sm pull-right">

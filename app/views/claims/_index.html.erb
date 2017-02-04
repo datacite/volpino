@@ -18,20 +18,11 @@
     <% if @claims.size > 0 %>
       <% @claims.each do |claim| %>
         <div class="panel panel-default">
-          <% if claim.claimed_at && claim.claimed_at > Date.new(1971,1,1) %>
-            <div class="panel-heading panel-list">
-              <%= h(claim.doi) %><span class="small pull-right"><%= l claim.claimed_at, format: :medium %></span>
-            </div>
-          <% else %>
-            <div class="panel-heading panel-list">
-              <%= h(claim.doi) %><span class="small pull-right">not claimed</span>
-            </div>
-          <% end %>
-          <% if claim.error_messages.present? || current_user.is_admin_or_staff? %>
-            <div class="panel-body">
-              <%= link_to h(claim.orcid), claims_path(query: params[:query], source: params[:source], state: params[:state], user_id: claim.orcid) %>
+          <div class="panel-body">
+            <h3 class="work"><%= link_to h(claim.doi), "#{ENV['SEARCH_URL']}/works/#{claim.doi}" %></h3>
+            <% if claim.error_messages.present? || current_user.is_admin_or_staff? %>
               <% if claim.user %>
-                <span class="pull-right"><%= link_to h(claim.user.credit_name), users_path(query: claim.orcid) %></span>
+                <%= link_to h(claim.user.credit_name), users_path(query: claim.orcid) %>
               <% end %>
               <% if claim.error_messages.present? %>
                 <% if current_user.is_admin_or_staff? %>
@@ -39,8 +30,8 @@
                 <% end %>
                 <%= h(claim.error_messages.first["title"]) %>
               <% end %>
-            </div>
-          <% end %>
+            <% end %>
+          </div>
           <div class="panel-footer">
             <%= sources[claim.source_id] %>
             <div class="btn-toolbar pull-right">
@@ -48,7 +39,7 @@
                 <% if claim.failed? %>
                   <%= link_to claim.human_state_name, claim_path(claim, :claim => { :resolve => true }, state: params[:state], source: params[:source]), :method => :put, :remote => true %>
                 <% elsif claim.done? %>
-                  <%= claim.claim_action + "d" %>
+                  <%= claim.claim_action + "d" %> <%= l claim.claimed_at, format: :medium %>
                 <% else %>
                   <%= claim.human_state_name %>
                 <% end %>
