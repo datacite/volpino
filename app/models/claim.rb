@@ -117,14 +117,17 @@ class Claim < ActiveRecord::Base
       self.error
     elsif result.body["notification"]
       write_attribute(:put_code, result.body["put_code"])
+      write_attribute(:error_messages, nil)
       self.notify
     else
       if to_be_created?
         write_attribute(:claimed_at, Time.zone.now)
         write_attribute(:put_code, result.body["put_code"])
+        write_attribute(:error_messages, nil)
       elsif to_be_deleted?
         write_attribute(:claimed_at, nil)
         write_attribute(:put_code, nil)
+        write_attribute(:error_messages, nil)
       end
 
       self.finish
