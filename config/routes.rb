@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       resources :services
       resources :status, only: [:index]
       resources :tags
+      resources :funders
       resources :users do
         resources :claims
       end
