@@ -1,17 +1,17 @@
-FROM phusion/passenger-full:0.9.19
+FROM phusion/passenger-full:0.9.20
 MAINTAINER Martin Fenner "mfenner@datacite.org"
 
 # Set correct environment variables
 ENV HOME /home/app
-
-# Use runit to manage sidekiq workers
-ENV RUNIT 1
 
 # Allow app user to read /etc/container_environment
 RUN usermod -a -G docker_env app
 
 # Use baseimage-docker's init process
 CMD ["/sbin/my_init"]
+
+# Install Ruby 2.3.3
+RUN bash -lc 'rvm --default use ruby-2.3.3'
 
 # Update installed APT packages, clean up when done
 RUN apt-get update && \
