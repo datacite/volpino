@@ -17,8 +17,9 @@ gem 'addressable', "~> 2.3.8"
 gem 'postrank-uri', '~> 1.0.18'
 gem 'nilify_blanks', '~> 1.2.0'
 gem "state_machine", "~> 1.2.0", :git => 'https://github.com/fly1tkg/state_machine.git', :branch => 'issue/334'
-gem 'active_model_serializers', git: 'https://github.com/rails-api/active_model_serializers.git'
+gem 'active_model_serializers', '~> 0.10.4'
 gem 'colorize', '~> 0.7.7'
+gem 'librato-rails', '~> 1.4.2'
 
 gem "haml-rails", "~> 0.9"
 gem "dalli", "~> 2.7.0"
