@@ -3,11 +3,8 @@ ENV["RAILS_ENV"] = "test"
 ENV["API_KEY"] = "12345"
 
 # set up Code Climate
-require "codeclimate-test-reporter"
-CodeClimate::TestReporter.configure do |config|
-  config.logger.level = Logger::WARN
-end
-CodeClimate::TestReporter.start
+require 'simplecov'
+SimpleCov.start
 
 require File.expand_path("../../config/environment", __FILE__)
 require "rspec/rails"
@@ -83,7 +80,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = false
+  config.use_transactional_fixtures = true
   config.infer_base_class_for_anonymous_controllers = false
   config.infer_spec_type_from_file_location!
   config.order = :random

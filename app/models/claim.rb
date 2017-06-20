@@ -148,9 +148,13 @@ class Claim < ActiveRecord::Base
 
     # user has not signed up yet or access_token is missing
     unless user.present? && user.access_token.present?
-      response = notification.create_notification(options)
-      response.body["notification"] = true
-      return response
+      if ENV['NOTIFICATION_ACCESS_TOKEN'].present?
+        response = notification.create_notification(options)
+        response.body["notification"] = true
+        return response
+      else
+        return OpenStruct.new(body: { "skip" => true }) 
+      end
     end
 
     # user has too many claims already

@@ -194,11 +194,11 @@ class User < ActiveRecord::Base
   end
 
   def github_to_be_created?
-    github_uid.present? && github_put_code.blank?
+    github.present? && github_put_code.blank?
   end
 
   def github_to_be_deleted?
-    github_put_code.present?
+    github.present? && github_put_code.present?
   end
 
   def process_data(options={})
@@ -222,13 +222,13 @@ class User < ActiveRecord::Base
     # user has not linked github username
     return OpenStruct.new(body: { "skip" => true }) unless github_to_be_created? || github_to_be_deleted?
 
-    options[:sandbox] = true if ENV['ORCID_SANDBOX'].present?
-
     # missing data raise errors
     return OpenStruct.new(body: { "errors" => [{ "title" => "Missing data" }] }) if external_identifier.data.nil?
 
     # validate data
     return OpenStruct.new(body: { "errors" => external_identifier.validation_errors.map { |error| { "title" => error } }}) if external_identifier.validation_errors.present?
+
+    options[:sandbox] = true if ENV['ORCID_SANDBOX'].present?
 
     # create or delete entry in ORCID record
     if github_to_be_created?

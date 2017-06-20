@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 FROM phusion/passenger-full:0.9.20
+=======
+FROM phusion/passenger-full:0.9.22
+>>>>>>> test
 MAINTAINER Martin Fenner "mfenner@datacite.org"
 
 # Set correct environment variables
@@ -10,15 +14,29 @@ RUN usermod -a -G docker_env app
 # Use baseimage-docker's init process
 CMD ["/sbin/my_init"]
 
+<<<<<<< HEAD
 # Install Ruby 2.3.3
 RUN bash -lc 'rvm --default use ruby-2.3.3'
+=======
+# Install Ruby 2.4.1
+RUN bash -lc 'rvm --default use ruby-2.4.1'
+>>>>>>> test
 
 # Update installed APT packages, clean up when done
 RUN apt-get update && \
     apt-get upgrade -y -o Dpkg::Options::="--force-confold" && \
-    apt-get install ntp imagemagick -y && \
+    apt-get install ntp wget -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# install phantomjs
+RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
+    bzip2 -d phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
+    tar -xvf phantomjs-2.1.1-linux-x86_64.tar && \
+    cp phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/bin/phantomjs
+
+# Remove unused SSH service
+RUN rm -rf /etc/service/sshd /etc/my_init.d/00_regen_ssh_host_keys.sh
 
 # Enable Passenger and Nginx and remove the default site
 # Preserve env variables for nginx
@@ -26,6 +44,10 @@ RUN rm -f /etc/service/nginx/down && \
     rm /etc/nginx/sites-enabled/default
 COPY vendor/docker/webapp.conf /etc/nginx/sites-enabled/webapp.conf
 COPY vendor/docker/00_app_env.conf /etc/nginx/conf.d/00_app_env.conf
+
+# send logs to STDOUT and STDERR
+RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
+    ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Use Amazon NTP servers
 COPY vendor/docker/ntp.conf /etc/ntp.conf
@@ -39,8 +61,7 @@ RUN mkdir -p /home/app/webapp/tmp/pids && \
 
 # Install npm and bower packages
 WORKDIR /home/app/webapp/vendor
-RUN /sbin/setuser app npm install && \
-    npm install -g phantomjs-prebuilt
+RUN /sbin/setuser app npm install
 
 # Install Ruby gems
 WORKDIR /home/app/webapp
