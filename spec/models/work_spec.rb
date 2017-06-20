@@ -3,7 +3,7 @@ require "rails_helper"
 describe Work, type: :model, vcr: true do
   let(:doi) { "10.6084/M9.FIGSHARE.1066168"}
   let(:user) { FactoryGirl.create(:valid_user) }
-  let(:put_code) { "753978" }
+  let(:put_code) { "837849" }
 
   subject { Work.new(doi: doi, orcid: user.uid, access_token: user.authentication_token, put_code: put_code) }
 
@@ -30,7 +30,7 @@ describe Work, type: :model, vcr: true do
     describe 'put' do
       it 'should update work' do
         response = subject.update_work(sandbox: true)
-        expect(response.body.fetch("data", {}).fetch("work", {}).fetch("put_code", nil)).to eq(put_code)
+        expect(response.body.dig("data", "work", "put_code")).to eq(put_code)
       end
     end
 

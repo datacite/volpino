@@ -2,7 +2,7 @@ require "rails_helper"
 require "cancan/matchers"
 
 describe User, type: :model, vcr: true do
-  subject { FactoryGirl.create(:valid_user, github: "mfenner") }
+  subject { FactoryGirl.create(:valid_user, github: "mfenner", github_put_code: nil) }
 
   it { is_expected.to validate_uniqueness_of(:uid) }
   it { is_expected.to validate_presence_of(:provider) }
@@ -10,13 +10,15 @@ describe User, type: :model, vcr: true do
 
   describe 'push_github_identifier', :order => :defined do
     it 'no errors' do
+      expect(subject.github_to_be_created?).to be true
       response = subject.push_github_identifier
       expect(response.body["put_code"]).not_to be_blank
       expect(response.status).to eq(201)
     end
 
     it 'delete claim' do
-      subject = FactoryGirl.create(:valid_user, github: "mfenner", github_put_code: "3322")
+      subject = FactoryGirl.create(:valid_user, github: "mfenner", github_put_code: "3826")
+      expect(subject.github_to_be_deleted?).to be true
       response = subject.push_github_identifier
       expect(response.body["data"]).to be_blank
       expect(response.body["errors"]).to be_nil
@@ -28,11 +30,11 @@ describe User, type: :model, vcr: true do
     it 'no errors' do
       subject = FactoryGirl.create(:valid_user, github: "mfenner", github_put_code: nil)
       expect(subject.process_data).to be true
-      expect(subject.github_put_code).to eq(3323)
+      expect(subject.github_put_code).to eq(3827)
     end
 
     it 'delete claim' do
-      subject = FactoryGirl.create(:valid_user, github: "mfenner", github_put_code: "3323")
+      subject = FactoryGirl.create(:valid_user, github: "mfenner", github_put_code: "3827")
       expect(subject.process_data).to be true
       expect(subject.github_put_code).to be nil
     end
