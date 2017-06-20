@@ -2,41 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://search.datacite.org/api?fl=doi,creator,title,publisher,publicationYear,resourceTypeGeneral,description,datacentre,datacentre_symbol,prefix,relatedIdentifier,xml,minted,updated&q=doi:10.6084/M9.FIGSHARE.1066168&rows=1&wt=json
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Maremma - http://profiles.local
-      Accept:
-      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
-  response:
-    status:
-      code: 301
-      message: ''
-    headers:
-      Server:
-      - openresty/1.11.2.1
-      Date:
-      - Wed, 01 Feb 2017 20:58:58 GMT
-      Content-Type:
-      - text/html
-      Content-Length:
-      - '191'
-      Connection:
-      - keep-alive
-      Location:
-      - https://search.datacite.org/api?fl=doi%2Ccreator%2Ctitle%2Cpublisher%2CpublicationYear%2CresourceTypeGeneral%2Cdescription%2Cdatacentre%2Cdatacentre_symbol%2Cprefix%2CrelatedIdentifier%2Cxml%2Cminted%2Cupdated&q=doi%3A10.6084%2FM9.FIGSHARE.1066168&rows=1&wt=json
-    body:
-      encoding: UTF-8
-      string: "<html>\r\n<head><title>301 Moved Permanently</title></head>\r\n<body
-        bgcolor=\"white\">\r\n<center><h1>301 Moved Permanently</h1></center>\r\n<hr><center>openresty/1.11.2.1</center>\r\n</body>\r\n</html>\r\n"
-    http_version: 
-  recorded_at: Wed, 01 Feb 2017 20:58:58 GMT
-- request:
-    method: get
-    uri: https://search.datacite.org/api?fl=doi,creator,title,publisher,publicationYear,resourceTypeGeneral,description,datacentre,datacentre_symbol,prefix,relatedIdentifier,xml,minted,updated&q=doi:10.6084/M9.FIGSHARE.1066168&rows=1&wt=json
+    uri: https://api.datacite.org/prefixes/10.6084
     body:
       encoding: US-ASCII
       string: ''
@@ -48,28 +14,86 @@ http_interactions:
   response:
     status:
       code: 200
-      message: ''
+      message: OK
     headers:
-      Server:
-      - openresty/1.11.2.1
-      Date:
-      - Wed, 01 Feb 2017 20:58:58 GMT
-      Content-Type:
-      - application/json;charset=UTF-8
-      Connection:
-      - keep-alive
-      Access-Control-Allow-Origin:
-      - "*"
+      Access-Control-Allow-Headers:
+      - Content-Type,Accept,Accept-Encoding,Origin,User-Agent,Cache-Control,Keep-Alive
       Access-Control-Allow-Methods:
       - GET, POST, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '1728000'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/vnd.api+json; charset=utf-8
+      Date:
+      - Tue, 20 Jun 2017 09:46:29 GMT
+      Etag:
+      - W/"58c74e33ab541adc084b3eaeb81a81fd"
+      Server:
+      - openresty/1.11.2.2
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Powered-By:
+      - Phusion Passenger 5.1.4
+      X-Request-Id:
+      - ff8545e6-1088-408b-a7a4-e8e15deda2e0
+      X-Runtime:
+      - '0.724574'
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Length:
+      - '124'
+      Connection:
+      - keep-alive
     body:
       encoding: UTF-8
-      string: '{"responseHeader":{"status":0,"QTime":0},"response":{"numFound":1,"start":0,"docs":[{"minted":"2014-06-22T10:41:15Z","datacentre_symbol":"FIGSHARE.ARS","xml":"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHJlc291cmNlIHhtbG5zPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyBodHRwOi8vc2NoZW1hLmRhdGFjaXRlLm9yZy9tZXRhL2tlcm5lbC0zL21ldGFkYXRhLnhzZCI+PGlkZW50aWZpZXIgaWRlbnRpZmllclR5cGU9IkRPSSI+MTAuNjA4NC9NOS5GSUdTSEFSRS4xMDY2MTY4PC9pZGVudGlmaWVyPjx0aXRsZXM+PHRpdGxlPjEwMDAgcmFuZG9tIFBMT1MgT05FIERPSXMgZnJvbSAyMDEzPC90aXRsZT48L3RpdGxlcz48cHVibGlzaGVyPkZpZ3NoYXJlPC9wdWJsaXNoZXI+PHB1YmxpY2F0aW9uWWVhcj4yMDE0PC9wdWJsaWNhdGlvblllYXI+PHJlc291cmNlVHlwZSByZXNvdXJjZVR5cGVHZW5lcmFsPSJEYXRhc2V0Ij5EYXRhc2V0PC9yZXNvdXJjZVR5cGU+PHJpZ2h0c0xpc3Q+PHJpZ2h0cyByaWdodHNVUkk9Imh0dHA6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LzMuMC91cy8iPkNDLUJZPC9yaWdodHM+PC9yaWdodHNMaXN0PjxjcmVhdG9ycz48Y3JlYXRvcj48Y3JlYXRvck5hbWU+Wm9ocmVoIFphaGVkaTwvY3JlYXRvck5hbWU+PC9jcmVhdG9yPjxjcmVhdG9yPjxjcmVhdG9yTmFtZT5NYXJ0aW4gRmVubmVyPC9jcmVhdG9yTmFtZT48bmFtZUlkZW50aWZpZXIgbmFtZUlkZW50aWZpZXJTY2hlbWU9Ik9SQ0lEIj4wMDAwLTAwMDItMjE4NC02MDk0PC9uYW1lSWRlbnRpZmllcj48L2NyZWF0b3I+PGNyZWF0b3I+PGNyZWF0b3JOYW1lPlJvZHJpZ28gQ29zdGFzPC9jcmVhdG9yTmFtZT48L2NyZWF0b3I+PC9jcmVhdG9ycz48L3Jlc291cmNlPg==","datacentre":"FIGSHARE.ARS
-        - figshare Academic Research System","updated":"2014-07-04T20:44:04Z","prefix":"10.6084","doi":"10.6084/M9.FIGSHARE.1066168","creator":["Zohreh
-        Zahedi","Martin Fenner","Rodrigo Costas"],"publisher":"Figshare","title":["1000
-        random PLOS ONE DOIs from 2013"],"publicationYear":"2014","resourceTypeGeneral":"Dataset"}]}}
+      string: '{"data":{"id":"10.6084","type":"prefixes","attributes":{"registration-agency":"DataCite","updated":"2016-09-21T20:27:26Z"}}}'
+    http_version: 
+  recorded_at: Tue, 20 Jun 2017 09:46:30 GMT
+- request:
+    method: get
+    uri: https://search.datacite.org/api?fl=doi,xml,media,minted,updated&q=doi:10.6084/m9.figshare.1066168&wt=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Maremma - http://profiles.local
+      Accept:
+      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json;charset=UTF-8
+      Date:
+      - Tue, 20 Jun 2017 09:46:32 GMT
+      Server:
+      - openresty/1.11.2.2
+      Content-Length:
+      - '1443'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"responseHeader":{"status":0,"QTime":7},"response":{"numFound":1,"start":0,"docs":[{"xml":"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHJlc291cmNlIHhtbG5zPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyBodHRwOi8vc2NoZW1hLmRhdGFjaXRlLm9yZy9tZXRhL2tlcm5lbC0zL21ldGFkYXRhLnhzZCI+PGlkZW50aWZpZXIgaWRlbnRpZmllclR5cGU9IkRPSSI+MTAuNjA4NC9NOS5GSUdTSEFSRS4xMDY2MTY4PC9pZGVudGlmaWVyPjx0aXRsZXM+PHRpdGxlPjEwMDAgcmFuZG9tIFBMT1MgT05FIERPSXMgZnJvbSAyMDEzPC90aXRsZT48L3RpdGxlcz48cHVibGlzaGVyPkZpZ3NoYXJlPC9wdWJsaXNoZXI+PHB1YmxpY2F0aW9uWWVhcj4yMDE0PC9wdWJsaWNhdGlvblllYXI+PHJlc291cmNlVHlwZSByZXNvdXJjZVR5cGVHZW5lcmFsPSJEYXRhc2V0Ij5EYXRhc2V0PC9yZXNvdXJjZVR5cGU+PHJpZ2h0c0xpc3Q+PHJpZ2h0cyByaWdodHNVUkk9Imh0dHA6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LzMuMC91cy8iPkNDLUJZPC9yaWdodHM+PC9yaWdodHNMaXN0PjxjcmVhdG9ycz48Y3JlYXRvcj48Y3JlYXRvck5hbWU+Wm9ocmVoIFphaGVkaTwvY3JlYXRvck5hbWU+PC9jcmVhdG9yPjxjcmVhdG9yPjxjcmVhdG9yTmFtZT5NYXJ0aW4gRmVubmVyPC9jcmVhdG9yTmFtZT48bmFtZUlkZW50aWZpZXIgbmFtZUlkZW50aWZpZXJTY2hlbWU9Ik9SQ0lEIj4wMDAwLTAwMDItMjE4NC02MDk0PC9uYW1lSWRlbnRpZmllcj48L2NyZWF0b3I+PGNyZWF0b3I+PGNyZWF0b3JOYW1lPlJvZHJpZ28gQ29zdGFzPC9jcmVhdG9yTmFtZT48L2NyZWF0b3I+PC9jcmVhdG9ycz48L3Jlc291cmNlPg==","minted":"2014-06-22T10:41:15Z","updated":"2014-07-04T20:44:04Z","doi":"10.6084/M9.FIGSHARE.1066168"}]}}
 
 '
     http_version: 
-  recorded_at: Wed, 01 Feb 2017 20:58:58 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Tue, 20 Jun 2017 09:46:32 GMT
+recorded_with: VCR 3.0.3

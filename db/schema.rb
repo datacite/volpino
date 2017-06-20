@@ -114,7 +114,6 @@ ActiveRecord::Schema.define(version: 20170203053946) do
     t.datetime "updated_at"
     t.text     "other_names",          limit: 65535
     t.string   "api_key",              limit: 191
-    t.boolean  "skip_info",                          default: false
     t.string   "confirmation_token",   limit: 191
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"

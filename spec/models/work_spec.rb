@@ -53,7 +53,7 @@ describe Work, type: :model, vcr: true do
     end
 
     it 'validates data with errors' do
-      allow(subject).to receive(:metadata) { {} }
+      allow(subject).to receive(:metadata) { OpenStruct.new }
       expect(subject.validation_errors).to eq(["The document has no document element."])
     end
   end
@@ -65,17 +65,17 @@ describe Work, type: :model, vcr: true do
 
     it 'literal' do
       subject = Work.new(doi: "10.1594/PANGAEA.745083", orcid: "0000-0003-3235-5933", access_token: user.authentication_token, put_code: put_code)
-      expect(subject.contributors).to eq([{:credit_name=>"EPOCA Arctic experiment 2009 team"}])
+      expect(subject.contributors).to eq([{:credit_name=>"EPOCA Arctic Experiment 2009 Team"}])
     end
 
     it 'multiple titles' do
       subject = Work.new(doi: "10.6084/M9.FIGSHARE.1537331.V1", orcid: "0000-0003-0811-2536", access_token: user.authentication_token, put_code: put_code)
-      expect(subject.contributors).to eq( [{:credit_name=>"Iosr journals"}, {:credit_name=>"Dr. Rohit Arora, MDS"}, {:credit_name=>"Shalya Raj*.MDS"}])
+      expect(subject.contributors).to eq([{:credit_name=>"Iosr Journals"}, {:credit_name=>"Dr. Rohit Arora, MDS"}, {:credit_name=>"Dr. Shalya Raj*.MDS"}])
     end
   end
 
   it 'publication_date' do
-    expect(subject.publication_date).to eq("year" => 2014)
+    expect(subject.publication_date).to eq("year" => "2014")
   end
 
   it 'data' do

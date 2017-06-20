@@ -8,17 +8,18 @@ gem "dotenv", '~> 2.1'
 gem 'sidekiq', '~> 4.0', '>= 4.0.1'
 gem 'sinatra', :require => nil
 gem "config"
+gem 'tzinfo-data'
 gem 'rake', '~> 10.5'
 gem "whenever", "~> 0.9.0", require: false
 gem 'bugsnag', '~> 2.8.6'
 gem 'maremma', '~> 3.0'
-gem 'orcid_client', '~> 0.2.3'
+gem 'orcid_client', '~> 0.3', '>= 0.3.1'
 gem 'addressable', "~> 2.3.8"
-gem 'postrank-uri', '~> 1.0.18'
+gem 'postrank-uri', '~> 1.0', '>= 1.0.22'
 gem 'nilify_blanks', '~> 1.2.0'
 gem "state_machine", "~> 1.2.0", :git => 'https://github.com/fly1tkg/state_machine.git', :branch => 'issue/334'
-gem 'active_model_serializers', git: 'https://github.com/rails-api/active_model_serializers.git'
-gem 'colorize', '~> 0.7.7'
+gem 'active_model_serializers', '~> 0.10.4'
+gem 'colorize', '~> 0.8.1'
 
 gem "haml-rails", "~> 0.9"
 gem "dalli", "~> 2.7.0"
@@ -26,10 +27,11 @@ gem 'will_paginate', '3.0.7'
 gem "will_paginate-bootstrap", "~> 1.0.1"
 gem "simple_form", "~> 3.1.0"
 gem 'country_select', '~> 2.5', '>= 2.5.1'
-gem 'nokogiri', '~> 1.6', '>= 1.6.7.2'
+gem 'nokogiri', '>= 1.6.8', '~> 1.6'
 gem "github-markdown", "~> 0.6.3"
 gem "rouge", "~> 1.7.2"
-gem 'hashie', '~> 3.3.2'
+gem 'hashie', '~> 3.5.0'
+gem 'bolognese', '~> 0.9.22'
 gem 'namae', '~> 0.11.3'
 gem 'lograge', '~> 0.3.5'
 
@@ -76,10 +78,10 @@ group :test do
   gem "email_spec", "~> 1.6.0"
   gem "rack-test", "~> 0.6.2", :require => "rack/test"
   gem "simplecov", "~> 0.10.0", :require => false
-  gem 'codeclimate-test-reporter', '~> 0.4.8', :require => nil
+  gem 'codeclimate-test-reporter', '~> 1.0', '>= 1.0.8'
   gem "shoulda-matchers", "~> 2.7.0", :require => false
-  gem "webmock", "~> 1.20.0"
-  gem 'vcr', '~> 2.9.3'
-  gem "poltergeist", "~> 1.8.1"
+  gem 'webmock', '~> 3.0', '>= 3.0.1'
+  gem 'vcr', '~> 3.0', '>= 3.0.3'
+  gem 'poltergeist', '~> 1.15'
   gem "with_env", "~> 1.1.0"
 end

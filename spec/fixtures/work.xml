@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<work:work xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:common="http://www.orcid.org/ns/common" xmlns:work="http://www.orcid.org/ns/work" put-code="753978" visibility="public" xsi:schemaLocation="http://www.orcid.org/ns/work ../work-2.0_rc3.xsd">
+<work:work xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:common="http://www.orcid.org/ns/common" xmlns:work="http://www.orcid.org/ns/work" put-code="753978" visibility="public" xsi:schemaLocation="http://www.orcid.org/ns/work ../work-2.0.xsd">
   <work:title>
     <common:title>1000 random PLOS ONE DOIs from 2013</common:title>
   </work:title>

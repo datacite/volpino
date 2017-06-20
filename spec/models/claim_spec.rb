@@ -66,14 +66,14 @@ describe Claim, type: :model, vcr: true do
     end
 
     it 'already exists' do
-      FactoryGirl.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.5281/ZENODO.59983", claim_action: "create", put_code: "741206")
+      FactoryGirl.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.5281/ZENODO.59983", claim_action: "create", put_code: "837888")
       expect(subject.process_data).to be true
       expect(subject.human_state_name).to eq("failed")
     end
 
     it 'delete claim' do
       user = FactoryGirl.create(:valid_user)
-      subject = FactoryGirl.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.5281/ZENODO.59983", claim_action: "delete", put_code: "741206")
+      subject = FactoryGirl.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.5281/ZENODO.59983", claim_action: "delete", put_code: "837888")
       expect(subject.process_data).to be true
       expect(subject.put_code).to be_blank
       expect(subject.claimed_at).to be_blank
