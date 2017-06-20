@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-FROM phusion/passenger-full:0.9.20
-=======
 FROM phusion/passenger-full:0.9.22
->>>>>>> test
 MAINTAINER Martin Fenner "mfenner@datacite.org"
 
 # Set correct environment variables
@@ -14,13 +10,8 @@ RUN usermod -a -G docker_env app
 # Use baseimage-docker's init process
 CMD ["/sbin/my_init"]
 
-<<<<<<< HEAD
-# Install Ruby 2.3.3
-RUN bash -lc 'rvm --default use ruby-2.3.3'
-=======
 # Install Ruby 2.4.1
 RUN bash -lc 'rvm --default use ruby-2.4.1'
->>>>>>> test
 
 # Update installed APT packages, clean up when done
 RUN apt-get update && \
