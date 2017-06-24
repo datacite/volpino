@@ -23,9 +23,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       flash[:notice] = "Account successfully linked with GitHub account."
       redirect_to user_path("me", panel: "login")
     elsif @user = User.where(github_uid: auth.uid).first
-      cookies[:jwt] = { value: @user.jwt_payload,
-                        expires: 14.days.from_now.utc,
-                        domain: :all }
+      cookies[:_datacite_jwt] = { value: @user.jwt_payload,
+                                 expires: 14.days.from_now.utc,
+                                 domain: :all }
       sign_in @user
       redirect_to stored_location_for(:user) || user_path("me")
     else
@@ -47,9 +47,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       flash[:notice] = "Account successfully linked with Google account."
       redirect_to user_path("me", panel: "login")
     elsif @user = User.where(google_uid: auth.uid).first
-      cookies[:jwt] = { value: @user.jwt_payload,
-                        expires: 14.days.from_now.utc,
-                        domain: :all }
+      cookies[:_datacite_jwt] = { value: @user.jwt_payload,
+                                 expires: 14.days.from_now.utc,
+                                 domain: :all }
       sign_in @user
       redirect_to stored_location_for(:user) || user_path("me")
     else
@@ -70,9 +70,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       flash[:notice] = "Account successfully linked with Facebook account."
       redirect_to user_path("me", panel: "login")
     elsif @user = User.where(facebook_uid: auth.uid).first
-      cookies[:jwt] = { value: @user.jwt_payload,
-                        expires: 14.days.from_now.utc,
-                        domain: :all }
+      cookies[:_datacite_jwt] = { value: @user.jwt_payload,
+                                 expires: 14.days.from_now.utc,
+                                 domain: :all }
       sign_in @user
       redirect_to stored_location_for(:user) || user_path("me")
     else
@@ -105,9 +105,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       sign_in @user
-      cookies[:jwt] = { value: @user.jwt_payload,
-                        expires: 14.days.from_now.utc,
-                        domain: :all }
+      cookies[:_datacite_jwt] = { value: @user.jwt_payload,
+                                 expires: 14.days.from_now.utc,
+                                 domain: :all }
       redirect_to stored_location_for(:user) || user_path("me", panel: "orcid")
     else
       flash[:alert] = @user.errors.map { |k,v| "#{k}: #{v}" }.join("<br />").html_safe || "Error signing in with #{provider}"
