@@ -42,6 +42,11 @@ class User < ActiveRecord::Base
     where(provider: auth.provider, uid: auth.uid).first_or_create
   end
 
+  # replace newline characters with actual newlines
+  def self.private_key
+    OpenSSL::PKey::RSA.new(ENV['JWT_PRIVATE_KEY'].to_s.gsub('\n', "\n"))
+  end
+
   def per_page
     15
   end
@@ -131,7 +136,7 @@ class User < ActiveRecord::Base
       exp: Time.now.to_i + 14 * 24 * 3600
     }
 
-    JWT.encode(claims, ENV['JWT_SECRET_KEY'])
+    JWT.encode(claims, User.private_key, 'RS256')
   end
 
   def reversed_name
