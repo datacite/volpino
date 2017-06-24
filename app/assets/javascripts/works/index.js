@@ -1,10 +1,9 @@
 /*global d3 */
 
-var params = d3.select("#api_key");
+var params = d3.select("#jwt");
 
 if (!params.empty()) {
   var host = params.attr('data-host');
-  var api_key = params.attr('data-api-key');
   var page = params.attr('data-page');
   if (page === null) { page = 1; }
   var per_page = params.attr('data-per-page');

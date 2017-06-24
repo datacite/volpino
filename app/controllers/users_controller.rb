@@ -100,7 +100,6 @@ class UsersController < ApplicationController
                                  :github,
                                  :github_uid,
                                  :github_token,
-                                 :api_key,
                                  :authentication_token)
   end
 end

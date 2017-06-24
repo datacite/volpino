@@ -37,8 +37,6 @@
   </div>
   <div class="panel-body">
     <dl class="dl-horizontal">
-      <dt>API Key</dt>
-      <dd><%= @user.api_key %></dd>
       <% if @user.member.present? %>
         <dt>Member</dt>
         <dd><%= link_to @user.member.title, member_path(@user.member.name) %></dd>

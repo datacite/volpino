@@ -1,14 +1,12 @@
 FactoryGirl.define do
   factory :user do
     sequence(:name) { |n| "Josiah Carberry{n}" }
-    sequence(:api_key) { |n| "q9pWP8QxzkR24Mvs9BEy#{n}" }
     provider "orcid"
     role "user"
     sequence(:uid) { |n| "0000-0002-1825-000#{n}" }
 
     factory :admin_user do
       role "admin"
-      api_key "12345"
       uid "0000-0002-1825-0003"
     end
 

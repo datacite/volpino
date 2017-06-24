@@ -109,7 +109,6 @@ class User < ActiveRecord::Base
       authentication_token: auth.credentials.token,
       expires_at: timestamp(auth.credentials),
       role: auth.extra.fetch(:raw_info, {}).fetch(:role, nil),
-      api_key: generate_api_key,
       google_uid: options.fetch("google_uid", nil),
       google_token: options.fetch("google_token", nil),
       email: options.fetch("email", nil),
@@ -125,13 +124,12 @@ class User < ActiveRecord::Base
     ts = Time.at(ts).utc if ts.present?
   end
 
-  def jwt_payload
+  def jwt
     claims = {
       uid: uid,
       name: name,
       email: email,
       role: role,
-      api_key: api_key,
       iat: Time.now.to_i,
       exp: Time.now.to_i + 14 * 24 * 3600
     }
@@ -246,14 +244,5 @@ class User < ActiveRecord::Base
   def set_role
     # use admin role for first user
     write_attribute(:role, "admin") if User.count == 0 && role.blank?
-  end
-
-  private
-
-  def self.generate_api_key
-    loop do
-      token = Devise.friendly_token
-      break token unless User.where(api_key: token).first
-    end
   end
 end

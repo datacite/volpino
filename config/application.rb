@@ -49,7 +49,7 @@ module Volpino
     # config.i18n.default_locale = :de
 
     # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:api_key, :jwt]
+    config.filter_parameters += [:jwt]
 
     # See everything in the log (default is :info)
     log_level = ENV["LOG_LEVEL"] ? ENV["LOG_LEVEL"].to_sym : :info

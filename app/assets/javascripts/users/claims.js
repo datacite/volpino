@@ -5,9 +5,9 @@ var endDate = new Date(),
     colors = d3.scale.ordinal().range(["#2582d5","#145996","#e2e6e7"]);
 
 // construct query string
-var params = d3.select("#api_key");
+var params = d3.select("#jwt");
 if (!params.empty()) {
-  var api_key = params.attr('data-api-key');
+  var jwt = params.attr('data-jwt');
   var user_id = params.attr('data-user-id');
   var query = encodeURI("/api/claims?user_id=" + user_id);
 }
@@ -16,7 +16,7 @@ if (!params.empty()) {
 if (query) {
   d3.json(query)
     .header("Accept", "application/json; version=1")
-    .header("Authorization", "Token token=" + api_key)
+    .header("Authorization", "Token token=" + jwt)
     .get(function(error, json) {
       if (error) { return console.warn(error); }
       var data = json.data;

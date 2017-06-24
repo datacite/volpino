@@ -1,7 +1,7 @@
 /*global d3 */
 
 // construct query string
-var params = d3.select("#api_key");
+var params = d3.select("#jwt");
 
 if (!params.empty()) {
   var user_id = params.attr('data-user-id');
@@ -51,4 +51,3 @@ function BadgesViz(json) {
       .html(badge.description + " " + badge.context);
   }
 }
-

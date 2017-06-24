@@ -1,6 +1,5 @@
 # set ENV variables for testing
 ENV["RAILS_ENV"] = "test"
-ENV["API_KEY"] = "12345"
 
 # set up Code Climate
 require 'simplecov'

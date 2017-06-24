@@ -6,12 +6,18 @@ module Authenticable
       request.format = :json if request.format.html?
     end
 
-    # looking for header "Authorization: Token token=12345"
     def authenticate_user_from_token!
       authenticate_with_http_token do |token, options|
-        user = token && User.where(api_key: token).first
+        unless token.present?
+          current_user = false
+          return false
+        end
 
-        if user && Devise.secure_compare(user.api_key, token)
+        public_key = OpenSSL::PKey::RSA.new(ENV['JWT_PUBLIC_KEY'].to_s.gsub('\n', "\n"))
+        jwt = (JWT.decode token, public_key, true, { :algorithm => 'RS256' }).first
+        user = token && User.where(uid: jwt[:uid]).first
+
+        if user && Devise.secure_compare(user.uid, jwt[:uid])
           sign_in user, store: false
         else
           current_user = false
