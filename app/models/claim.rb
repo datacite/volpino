@@ -46,7 +46,7 @@ class Claim < ActiveRecord::Base
 
     event :finish do
       transition [:working] => :deleted, :if => :to_be_deleted?
-      transition [:working] => :done
+      transition [:waiting, :working, :failed] => :done
       transition any => same
     end
 
@@ -147,13 +147,13 @@ class Claim < ActiveRecord::Base
     options[:sandbox] = true if ENV['ORCID_SANDBOX'].present?
 
     # user has not signed up yet or access_token is missing
-    unless user.present? && user.access_token.present?
+    unless (user.present? && user.access_token.present?)
       if ENV['NOTIFICATION_ACCESS_TOKEN'].present?
         response = notification.create_notification(options)
         response.body["notification"] = true
         return response
       else
-        return OpenStruct.new(body: { "skip" => true }) 
+        return OpenStruct.new(body: { "skip" => true })
       end
     end
 

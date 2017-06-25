@@ -5,9 +5,9 @@ var endDate = new Date(),
     colors = d3.scale.ordinal().range(["#2582d5","#145996","#e2e6e7"]);
 
 // construct query string
-var params = d3.select("#jwt");
+var params = d3.select("#api");
 if (!params.empty()) {
-  var jwt = params.attr('data-jwt');
+  var jwt = getCookieValue('_datacite_jwt');
   var user_id = params.attr('data-user-id');
   var query = encodeURI("/api/claims?user_id=" + user_id);
 }

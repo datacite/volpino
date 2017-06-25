@@ -1,7 +1,7 @@
 /*global d3 */
 
 // construct query string
-var params = d3.select("#jwt");
+var params = d3.select("#api");
 
 if (!params.empty()) {
   var user_id = params.attr('data-user-id');

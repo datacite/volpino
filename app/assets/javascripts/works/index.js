@@ -1,6 +1,6 @@
 /*global d3 */
 
-var params = d3.select("#jwt");
+var params = d3.select("#api");
 
 if (!params.empty()) {
   var host = params.attr('data-host');

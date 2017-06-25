@@ -7,11 +7,8 @@ var endDate = new Date(),
     colors = d3.scale.ordinal().range(["#2582d5","#145996","#e2e6e7"]);
 
 // construct query string
-var params = d3.select("#jwt");
-if (!params.empty()) {
-  var jwt = params.attr('data-jwt');
-  var query = encodeURI("/api/status");
-}
+var jwt = getCookieValue('_datacite_jwt');
+var query = encodeURI("/api/status");
 
 // load the data from the API
 if (query) {

@@ -149,12 +149,11 @@ module ApplicationHelper
 
   def data_tags_for_api
     data = { per_page: 15, model: controller.controller_name, host: ENV['LAGOTTO_URL'] }
-    data[:jwt] = current_user.jwt if current_user
     data[:page] = @page if @page.present?
     data[:source_id] = @source.name if @source.present? && !@source.is_a?(Array)
     data[:user_id] = current_user.uid if current_user.present?
     data[:sort] = @sort.name if @sort.present?
 
-    { class: "logo", id: "jwt", data: data }
+    { class: "logo", id: "api", data: data }
   end
 end
