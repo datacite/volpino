@@ -370,7 +370,7 @@ GEM
     rdf-turtle (2.2.0)
       ebnf (~> 1.1)
       rdf (~> 2.2)
-    rdf-xsd (2.1.0)
+    rdf-xsd (2.2.0)
       rdf (~> 2.1)
     redcarpet (3.4.0)
     redis (3.3.3)

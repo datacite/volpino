@@ -28,11 +28,11 @@ class Api::V1::ClaimsController < Api::BaseController
   end
 
   def create
-    @claim = Claim.where(orcid: params.fetch(:claim, {}).fetch(:orcid, nil),
-                         doi: params.fetch(:claim, {}).fetch(:doi, nil))
+    @claim = Claim.where(orcid: params.dig(:claim, :orcid),
+                         doi: params.dig(:claim, :doi))
                   .first_or_initialize
 
-    claim_action = params.fetch(:claim, {}).fetch(:claim_action, "create")
+    claim_action = params.dig(:claim, :claim_action) || "create"
 
     if @claim.new_record? ||
       @claim.source_id == "orcid_search" ||
@@ -40,7 +40,7 @@ class Api::V1::ClaimsController < Api::BaseController
       (claim_action == "delete" && [2,3,4,6].include?(@claim.state))
 
       @claim.assign_attributes(state: 0,
-                               source_id: params.fetch(:claim, {}).fetch(:source_id, nil),
+                               source_id: params.dig(:claim, :source_id),
                                claim_action: claim_action)
 
       authorize! :create, @claim
