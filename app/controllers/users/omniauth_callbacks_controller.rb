@@ -25,6 +25,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     elsif @user = User.where(github_uid: auth.uid).first
       cookies[:_datacite_jwt] = { value: @user.jwt,
                                  expires: 14.days.from_now.utc,
+                                 secure: !Rails.env.development? && !Rails.env.test?,
                                  domain: :all }
       sign_in @user
       redirect_to stored_location_for(:user) || user_path("me")
@@ -49,6 +50,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     elsif @user = User.where(google_uid: auth.uid).first
       cookies[:_datacite_jwt] = { value: @user.jwt,
                                  expires: 14.days.from_now.utc,
+                                 secure: !Rails.env.development? && !Rails.env.test?,
                                  domain: :all }
       sign_in @user
       redirect_to stored_location_for(:user) || user_path("me")
@@ -72,6 +74,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     elsif @user = User.where(facebook_uid: auth.uid).first
       cookies[:_datacite_jwt] = { value: @user.jwt,
                                  expires: 14.days.from_now.utc,
+                                 secure: !Rails.env.development? && !Rails.env.test?,
                                  domain: :all }
       sign_in @user
       redirect_to stored_location_for(:user) || user_path("me")
@@ -107,6 +110,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       sign_in @user
       cookies[:_datacite_jwt] = { value: @user.jwt,
                                  expires: 14.days.from_now.utc,
+                                 secure: !Rails.env.development? && !Rails.env.test?,
                                  domain: :all }
       redirect_to stored_location_for(:user) || user_path("me", panel: "orcid")
     else
