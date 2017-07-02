@@ -148,7 +148,7 @@
               <div class="clearfix"/>
             </li>
           <% else %>
-            <% @organizations.each do |organization| %>
+            <% Array.wrap(@organizations).each do |organization| %>
               <li>
                 <%= link_to icon('square-o').html_safe, users_path(organization: organization.first) %>
                 <div class="facet-title"><%= organization.first.titleize %></div>
