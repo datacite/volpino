@@ -27,7 +27,7 @@
                 <%= simple_form_for user, url: user_path(user), html: { role: "form", remote: true } do |f| %>
                   <div class="panel-body">
                     <%= f.input :member_id, collection: Member.all, label_method: :title, value_method: :name, input_html: { class: "form-user" } %>
-                    <% if user.id == current_user.id %>
+                    <% if user.id != current_user.id %>
                       <%= f.input :role, collection: roles.map { |role| [role.titleize, role] }, include_blank: false, input_html: { class: "form-user" } %>                <% end %>
                     <div class="form-group">
                       <label for="contact">Contact Information</label>
@@ -143,7 +143,7 @@
           <ul>
             <% if @organization %>
               <li class="active">
-                <%= link_to icon('check-square-o').html_safe, users_path %>
+                <%= link_to icon('check-square-o').html_safe, users_path(contact_type: params[:contact_type], role: params[:role]) %>
                 <div class="facet-title"><%= @organization.first.titleize %></div>
                 <span class="number pull-right"><%= number_with_delimiter(@organization.last) %></span>
                 <div class="clearfix"/>
@@ -151,7 +151,7 @@
             <% else %>
               <% @organizations.each do |organization| %>
                 <li>
-                  <%= link_to icon('square-o').html_safe, users_path(organization: organization.first) %>
+                  <%= link_to icon('square-o').html_safe, users_path(contact_type: params[:contact_type], organization: organization.first, role: params[:role]) %>
                   <div class="facet-title"><%= organization.first.titleize %></div>
                   <span class="number pull-right"><%= number_with_delimiter(organization.last) %></span>
                   <div class="clearfix"/>
@@ -165,7 +165,7 @@
         <ul>
           <% if @contact_type %>
             <li class="active">
-              <%= link_to icon('check-square-o').html_safe, users_path %>
+              <%= link_to icon('check-square-o').html_safe, users_path(organization: params[:organization], role: params[:role]) %>
               <div class="facet-title"><%= @contact_type.first.titleize %></div>
               <span class="number pull-right"><%= number_with_delimiter(@contact_type.last) %></span>
               <div class="clearfix"/>
@@ -173,7 +173,7 @@
           <% else %>
             <% @contact_types.each do |contact_type| %>
               <li>
-                <%= link_to icon('square-o').html_safe, users_path(contact_type: contact_type.first) %>
+                <%= link_to icon('square-o').html_safe, users_path(organization: params[:organization], contact_type: contact_type.first, role: params[:role]) %>
                 <div class="facet-title"><%= contact_type.first.titleize %></div>
                 <span class="number pull-right"><%= number_with_delimiter(contact_type.last) %></span>
                 <div class="clearfix"/>
@@ -186,7 +186,7 @@
         <ul>
           <% if @role %>
             <li class="active">
-              <%= link_to icon('check-square-o').html_safe, users_path %>
+              <%= link_to icon('check-square-o').html_safe, users_path(organization: params[:organization], contact_type: params[:contact_type]) %>
               <div class="facet-title"><%= @role.first.titleize %></div>
               <span class="number pull-right"><%= number_with_delimiter(@role.last) %></span>
               <div class="clearfix"/>
@@ -194,7 +194,7 @@
           <% else %>
             <% @roles.each do |role| %>
               <li>
-                <%= link_to icon('square-o').html_safe, users_path(role: role.first) %>
+                <%= link_to icon('square-o').html_safe, users_path(organization: params[:organization], contact_type: params[:contact_type], role: role.first) %>
                 <div class="facet-title"><%= role.first.titleize %></div>
                 <span class="number pull-right"><%= number_with_delimiter(role.last) %></span>
                 <div class="clearfix"/>
