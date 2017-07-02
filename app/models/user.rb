@@ -34,9 +34,13 @@ class User < ActiveRecord::Base
   scope :query, ->(query) { where("name like ? OR uid like ? OR github like ?", "%#{query}%", "%#{query}%", "%#{query}%") }
   scope :ordered, -> { order("created_at DESC") }
   scope :order_by_name, -> { order("ISNULL(family_name), family_name") }
-  scope :is_admin, -> { where("is_admin = 1") }
   scope :is_public, -> { where("is_public = 1") }
   scope :with_github, -> { where("github IS NOT NULL AND github_put_code IS NULL") }
+  scope :voting_contacts, -> { where(is_voting_contact: true) }
+  scope :billing_contacts, -> { where(is_billing_contact: true) }
+  scope :business_contacts, -> { where(is_business_contact: true) }
+  scope :technical_contacts, -> { where(is_technical_contact: true) }
+  scope :metadata_contacts, -> { where(is_metadata_contact: true) }
 
   serialize :other_names, JSON
 

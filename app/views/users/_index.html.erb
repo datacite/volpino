@@ -125,8 +125,8 @@
       <div class="alert alert-simple-info">
         <h5>
           There are currently no users
-          <% unless @role.nil? %>
-              with role "<%= @role.titleize %>"
+          <% unless params[:role].blank? %>
+              with role "<%= params[:role].titleize %>"
           <% end %>
           <% unless params[:query].blank? %>
               with <strong><%= params[:query] %></strong> in the name, email or API key
