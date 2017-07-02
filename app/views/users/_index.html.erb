@@ -138,26 +138,28 @@
   <div class='col-md-3'>
     <div class="panel facets">
       <div class="panel-body">
-        <h4>Organization</h4>
-        <ul>
-          <% if @organization %>
-            <li class="active">
-              <%= link_to icon('check-square-o').html_safe, users_path %>
-              <div class="facet-title"><%= @organization.first.titleize %></div>
-              <span class="number pull-right"><%= number_with_delimiter(@organization.last) %></span>
-              <div class="clearfix"/>
-            </li>
-          <% else %>
-            <% Array.wrap(@organizations).each do |organization| %>
-              <li>
-                <%= link_to icon('square-o').html_safe, users_path(organization: organization.first) %>
-                <div class="facet-title"><%= organization.first.titleize %></div>
-                <span class="number pull-right"><%= number_with_delimiter(organization.last) %></span>
+        <% if @organizations.present? %>
+          <h4>Organization</h4>
+          <ul>
+            <% if @organization %>
+              <li class="active">
+                <%= link_to icon('check-square-o').html_safe, users_path %>
+                <div class="facet-title"><%= @organization.first.titleize %></div>
+                <span class="number pull-right"><%= number_with_delimiter(@organization.last) %></span>
                 <div class="clearfix"/>
               </li>
+            <% else %>
+              <% @organizations.each do |organization| %>
+                <li>
+                  <%= link_to icon('square-o').html_safe, users_path(organization: organization.first) %>
+                  <div class="facet-title"><%= organization.first.titleize %></div>
+                  <span class="number pull-right"><%= number_with_delimiter(organization.last) %></span>
+                  <div class="clearfix"/>
+                </li>
+              <% end %>
             <% end %>
-          <% end %>
-        </ul>
+          </ul>
+        <% end %>
 
         <h4>Contact Types</h4>
         <ul>

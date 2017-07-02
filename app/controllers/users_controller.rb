@@ -114,7 +114,7 @@ class UsersController < ApplicationController
       ["technical_contact", User.where(is_technical_contact: true).count],
       ["metadata_contact", User.where(is_metadata_contact: true).count],
     ].select { |contact| contact.last > 0 }
-    @organizations = User.group(:organization).count
+    @organizations = User.where.not(organization: nil).group(:organization).count
     @roles = User.group(:role).count
     @users = collection.paginate(:page => params[:page])
   end
