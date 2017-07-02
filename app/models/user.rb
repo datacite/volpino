@@ -162,10 +162,12 @@ class User < ActiveRecord::Base
       uid: uid,
       name: name,
       email: email,
+      member_id: member_id,
+      datacenter_id: datacenter_id,
       role: role,
       iat: Time.now.to_i,
       exp: Time.now.to_i + 14 * 24 * 3600
-    }
+    }.compact
 
     JWT.encode(claims, User.private_key, 'RS256')
   end
