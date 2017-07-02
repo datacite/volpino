@@ -32,10 +32,10 @@
 </div>
 <div class="panel-footer">
   <div class="form-group submit pull-right">
-    <% if @members.present? %>
-      <%= link_to 'Cancel', members_path, { remote: true, class: "btn btn-sm" } %>
-    <% else %>
+    <% if @user.present? %>
       <%= link_to 'Cancel', member_path(@member, user_id: @user), { remote: true, class: "btn btn-sm" } %>
+    <% else %>
+      <%= link_to 'Cancel', members_path, { remote: true, class: "btn btn-sm" } %>
     <% end %>
     <%= f.submit "Save ", class: "btn btn-sm btn-fill" %>
   </div>

@@ -38,6 +38,12 @@
         <% end %>
       </dl>
     </div>
+    <div class="panel-body">
+      <dl class="dl-horizontal">
+        <dt>Users</dt>
+        <dd><%= link_to_if @member.users.count > 0, pluralize(@member.users.count, "User"), users_path(member_id: @member.name) %></dd>
+      </dl>
+    </div>
     <div class="panel-footer">
       <%= icon("info-circle") %>
       <%= @member.name.upcase %>

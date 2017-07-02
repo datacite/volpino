@@ -42,7 +42,7 @@
         <dd><%= link_to @user.member.title, member_path(@user.member.name) %></dd>
       <% end %>
       <dt>Role</dt>
-      <dd><%= @user.role.humanize.titleize %></dd>
+      <dd><%= @user.role.titleize %></dd>
       <dt>Record Public</dt>
       <% if @user.is_public %>
         <dd><%= @user.is_public %></dd>

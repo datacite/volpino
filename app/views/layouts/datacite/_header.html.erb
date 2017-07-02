@@ -30,12 +30,6 @@
                 <% if can?(:manage, Member) %>
                   <li><%= link_to "Members", members_path %></li>
                 <% end %>
-                <% if can?(:manage, Service) %>
-                  <li><%= link_to "Services", services_path %></li>
-                <% end %>
-                <% if can?(:read, Tag) %>
-                  <li><%= link_to "Tags", tags_path %></li>
-                <% end %>
                 <li><%= link_to "Status", status_index_path %></li>
               </ul>
             </li>

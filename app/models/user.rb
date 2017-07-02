@@ -17,12 +17,13 @@ class User < ActiveRecord::Base
   include OrcidClient::Api
 
   before_create :set_role
+  before_save :set_organization
 
   after_commit :queue_user_job, :on => :create
   after_commit :queue_claim_jobs, :on => :create
 
   has_many :claims, primary_key: "uid", foreign_key: "orcid", inverse_of: :user
-  belongs_to :member
+  belongs_to :member, primary_key: "name", foreign_key: "member_id"
 
   devise :omniauthable, :omniauth_providers => [:orcid, :github, :google_oauth2, :facebook]
 
@@ -33,6 +34,7 @@ class User < ActiveRecord::Base
   scope :query, ->(query) { where("name like ? OR uid like ? OR github like ?", "%#{query}%", "%#{query}%", "%#{query}%") }
   scope :ordered, -> { order("created_at DESC") }
   scope :order_by_name, -> { order("ISNULL(family_name), family_name") }
+  scope :is_admin, -> { where("is_admin = 1") }
   scope :is_public, -> { where("is_public = 1") }
   scope :with_github, -> { where("github IS NOT NULL AND github_put_code IS NULL") }
 
@@ -57,12 +59,43 @@ class User < ActiveRecord::Base
 
   # Helper method to check for admin user
   def is_admin?
-    role == "admin"
+    role == "staff_admin"
   end
+
+  # user is contact person for member or data center
+  def contact_list
+    [human_voting_contact,
+     human_billing_contact,
+     human_business_contact,
+     human_technical_contact,
+     human_metadata_contact].compact
+  end
+
+  def human_voting_contact
+    is_voting_contact ? "Voting contact" : nil
+  end
+
+  def human_billing_contact
+    is_billing_contact ? "Billing contact" : nil
+  end
+
+  def human_business_contact
+    is_business_contact ? "Business contact" : nil
+  end
+
+  def human_technical_contact
+    is_technical_contact ? "Technical contact" : nil
+  end
+
+  def human_metadata_contact
+    is_metadata_contact ? "Metadata contact" : nil
+  end
+
+  #alias_method :is_admin?, :is_admin
 
   # Helper method to check for admin or staff user
   def is_admin_or_staff?
-    ["admin", "staff"].include?(role)
+    ["staff_admin", "staff_user"].include?(role)
   end
 
   def has_email?
@@ -241,8 +274,20 @@ class User < ActiveRecord::Base
     end
   end
 
+  def set_organization
+    if member_id.present?
+      org = "member"
+    elsif datacenter_id.present?
+      org = "data_center"
+    elsif %w(staff_user staff_admin).include?(role)
+      org = "staff"
+    end
+
+    write_attribute(:organization, org) if organization.blank?
+  end
+
   def set_role
     # use admin role for first user
-    write_attribute(:role, "admin") if User.count == 0 && role.blank?
+    write_attribute(:role, "staff_admin") if User.count == 0 && role.blank?
   end
 end

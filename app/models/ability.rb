@@ -4,16 +4,21 @@ class Ability
   def initialize(user)
     user ||= User.new(:role => "anonymous") # Guest user
 
-    if user.role == "admin"
+    if user.role == "staff_admin"
       can :manage, :all
-    elsif user.role == "staff"
+    elsif user.role == "staff_user"
       can :read, :all
       can [:update], User, :id => user.id
-    elsif  %w(member_representative member_technical_contact member_billing_contact).include?(user.role)
+    elsif user.role == "member_admin"
       can [:read], Claim
       can [:manage], Claim, :orcid => user.uid
       can [:update, :show], User, :id => user.id
       can [:update, :show], Member, :id => user.member_id
+    elsif user.role == "member_user"
+      can [:read], Claim
+      can [:manage], Claim, :orcid => user.uid
+      can [:update, :show], User, :id => user.id
+      can [:read], Member, :id => user.member_id
     elsif user.role == "user"
       can [:read], Claim
       can [:manage], Claim, :orcid => user.uid
