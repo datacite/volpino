@@ -73,10 +73,11 @@
                   <% end %>
 
                   <% if user.contact_list.present? %>
-                    <h5>Contact info</h5>
-                    <% user.contact_list.each do |contact| %>
-                      <%= contact %></br>
-                    <% end %>
+                    <p>
+                      <% user.contact_list.each do |contact| %>
+                        <%= contact %></br>
+                      <% end %>
+                    </p>
                   <% end %>
 
                   <h5>Role</h5>
