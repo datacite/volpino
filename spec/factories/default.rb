@@ -6,12 +6,12 @@ FactoryGirl.define do
     sequence(:uid) { |n| "0000-0002-1825-000#{n}" }
 
     factory :admin_user do
-      role "admin"
+      role "staff_admin"
       uid "0000-0002-1825-0003"
     end
 
     factory :staff_user do
-      role "staff"
+      role "staff_user"
       uid "0000-0002-1825-0004"
     end
 

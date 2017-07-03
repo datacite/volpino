@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(version: 20170702121818) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "other_names",          limit: 65535
+    t.boolean  "skip_info",                          default: false
     t.string   "confirmation_token",   limit: 191
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
@@ -137,6 +138,7 @@ ActiveRecord::Schema.define(version: 20170702121818) do
     t.boolean  "is_public",                          default: true
     t.string   "member_id",            limit: 255
     t.string   "datacenter_id",        limit: 255
+    t.string   "organization",         limit: 255
     t.boolean  "is_billing_contact",                 default: false
     t.boolean  "is_voting_contact",                  default: false
     t.boolean  "is_business_contact",                default: false

@@ -29,7 +29,7 @@ http_interactions:
       Content-Type:
       - application/vnd.api+json; charset=utf-8
       Date:
-      - Tue, 20 Jun 2017 09:50:29 GMT
+      - Mon, 03 Jul 2017 21:36:44 GMT
       Etag:
       - W/"0f8a68f3c1e4c153cec8ed895fc58aa4"
       Server:
@@ -38,28 +38,40 @@ http_interactions:
       - 200 OK
       Vary:
       - Accept-Encoding
+      Via:
+      - kong/0.10.3
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
       - SAMEORIGIN
+      X-Kong-Proxy-Latency:
+      - '1'
+      X-Kong-Upstream-Latency:
+      - '713'
       X-Powered-By:
-      - Phusion Passenger 5.1.4
+      - Phusion Passenger 5.1.5
+      X-Ratelimit-Limit-Hour:
+      - '100000'
+      X-Ratelimit-Remaining-Hour:
+      - '99979'
       X-Request-Id:
-      - 1a0c1237-fe74-43ec-8f66-aa0dbe29ea15
+      - 6d9591ac-1a5c-4968-9406-b7f1cf0d496d
       X-Runtime:
-      - '0.570535'
+      - '0.711765'
       X-Xss-Protection:
       - 1; mode=block
+      Content-Length:
+      - '124'
       Connection:
       - keep-alive
     body:
       encoding: UTF-8
       string: '{"data":{"id":"10.1594","type":"prefixes","attributes":{"registration-agency":"DataCite","updated":"2016-09-21T20:24:47Z"}}}'
     http_version: 
-  recorded_at: Tue, 20 Jun 2017 09:50:29 GMT
+  recorded_at: Mon, 03 Jul 2017 21:36:44 GMT
 - request:
     method: get
-    uri: https://search.datacite.org/api?fl=doi,xml,media,minted,updated&q=doi:10.1594/pangaea.745083&wt=json
+    uri: https://search.test.datacite.org/api?fl=doi,xml,media,minted,updated&q=doi:10.1594/pangaea.745083&wt=json
     body:
       encoding: US-ASCII
       string: ''
@@ -80,18 +92,18 @@ http_interactions:
       Content-Type:
       - application/json;charset=UTF-8
       Date:
-      - Tue, 20 Jun 2017 09:50:31 GMT
+      - Mon, 03 Jul 2017 21:36:46 GMT
       Server:
       - openresty/1.11.2.2
       Content-Length:
-      - '1942'
+      - '88'
       Connection:
       - keep-alive
     body:
       encoding: UTF-8
-      string: '{"responseHeader":{"status":0,"QTime":0},"response":{"numFound":1,"start":0,"docs":[{"xml":"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48cmVzb3VyY2UgeG1sbnM9Imh0dHA6Ly9kYXRhY2l0ZS5vcmcvc2NoZW1hL2tlcm5lbC0zIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIiB4c2k6c2NoZW1hTG9jYXRpb249Imh0dHA6Ly9kYXRhY2l0ZS5vcmcvc2NoZW1hL2tlcm5lbC0zIGh0dHA6Ly9zY2hlbWEuZGF0YWNpdGUub3JnL21ldGEva2VybmVsLTMvbWV0YWRhdGEueHNkIj48aWRlbnRpZmllciBpZGVudGlmaWVyVHlwZT0iRE9JIj4xMC4xNTk0L1BBTkdBRUEuNzQ1MDgzPC9pZGVudGlmaWVyPjxjcmVhdG9ycz48Y3JlYXRvcj48Y3JlYXRvck5hbWU+RVBPQ0EgQXJjdGljIGV4cGVyaW1lbnQgMjAwOSB0ZWFtPC9jcmVhdG9yTmFtZT48L2NyZWF0b3I+PC9jcmVhdG9ycz48dGl0bGVzPjx0aXRsZT5FUE9DQSAyMDA5IFN2YWxiYXJkIGJlbnRoaWMgZXhwZXJpbWVudDwvdGl0bGU+PC90aXRsZXM+PHB1Ymxpc2hlcj5QQU5HQUVBIC0gRGF0YSBQdWJsaXNoZXIgZm9yIEVhcnRoICZhbXA7IEVudmlyb25tZW50YWwgU2NpZW5jZTwvcHVibGlzaGVyPjxwdWJsaWNhdGlvblllYXI+MjAwOTwvcHVibGljYXRpb25ZZWFyPjxzdWJqZWN0cz48c3ViamVjdCBzdWJqZWN0U2NoZW1lPSJQcm9qZWN0Ij5FdXJvcGVhbiBQcm9qZWN0IG9uIE9jZWFuIEFjaWRpZmljYXRpb24gKEVQT0NBKTwvc3ViamVjdD48L3N1YmplY3RzPjxkYXRlcz48ZGF0ZSBkYXRlVHlwZT0iQ29sbGVjdGVkIj4yMDA5LTA1LTAyVDE0OjAwOjAwLzIwMDktMDYtMjhUMDA6MDA6MDA8L2RhdGU+PC9kYXRlcz48bGFuZ3VhZ2U+ZW5nPC9sYW5ndWFnZT48cmVzb3VyY2VUeXBlIHJlc291cmNlVHlwZUdlbmVyYWw9IkNvbGxlY3Rpb24iPkNvbGxlY3Rpb24gb2YgRGF0YXNldHM8L3Jlc291cmNlVHlwZT48c2l6ZXM+PHNpemU+MTAgZGF0YXNldHM8L3NpemU+PC9zaXplcz48Zm9ybWF0cz48Zm9ybWF0PmFwcGxpY2F0aW9uL3ppcDwvZm9ybWF0PjwvZm9ybWF0cz48cmlnaHRzTGlzdD48cmlnaHRzIHJpZ2h0c1VSST0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbGljZW5zZXMvYnkvMy4wLyI+Q3JlYXRpdmUgQ29tbW9ucyBBdHRyaWJ1dGlvbiAzLjAgVW5wb3J0ZWQgKENDLUJZKTwvcmlnaHRzPjwvcmlnaHRzTGlzdD48Z2VvTG9jYXRpb25zPjxnZW9Mb2NhdGlvbj48Z2VvTG9jYXRpb25Cb3g+NzguOTQwMDAwMDAwMDAwMDEgMTEuOSA3OC45NjAwMDAwMDAwMDAwMSAxMi4wNzwvZ2VvTG9jYXRpb25Cb3g+PC9nZW9Mb2NhdGlvbj48L2dlb0xvY2F0aW9ucz48L3Jlc291cmNlPg==","minted":"2010-10-21T01:06:41Z","updated":"2016-04-01T18:28:38Z","doi":"10.1594/PANGAEA.745083"}]}}
+      string: '{"responseHeader":{"status":0,"QTime":0},"response":{"numFound":0,"start":0,"docs":[]}}
 
 '
     http_version: 
-  recorded_at: Tue, 20 Jun 2017 09:50:31 GMT
+  recorded_at: Mon, 03 Jul 2017 21:36:46 GMT
 recorded_with: VCR 3.0.3

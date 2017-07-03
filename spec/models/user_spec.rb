@@ -8,6 +8,23 @@ describe User, type: :model, vcr: true do
   it { is_expected.to validate_presence_of(:provider) }
   it { is_expected.to have_many(:claims) }
 
+  describe "jwt" do
+    subject { FactoryGirl.create(:regular_user) }
+
+    it 'is user' do
+      payload = subject.decode_token(subject.jwt)
+      expect(payload["uid"]).to eq(subject.uid)
+      expect(payload["role"]).to eq("user")
+    end
+
+    it 'is admin' do
+      subject = FactoryGirl.create(:admin_user)
+      payload = subject.decode_token(subject.jwt)
+      expect(payload["uid"]).to eq(subject.uid)
+      expect(payload["role"]).to eq("staff_admin")
+    end
+  end
+
   describe 'push_github_identifier', :order => :defined do
     it 'no errors' do
       expect(subject.github_to_be_created?).to be true

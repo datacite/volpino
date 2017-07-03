@@ -16,7 +16,7 @@ if (!params.empty()) {
 if (query) {
   d3.json(query)
     .header("Accept", "application/json; version=1")
-    .header("Authorization", "Token token=" + jwt)
+    .header("Authorization", "Bearer " + jwt)
     .get(function(error, json) {
       if (error) { return console.warn(error); }
       var data = json.data;

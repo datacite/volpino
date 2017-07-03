@@ -15,7 +15,7 @@ describe "/api/v1/claims", :type => :api do
   let(:uuid) { SecureRandom.uuid }
   let(:headers) do
     { "HTTP_ACCEPT" => "application/json; version=1",
-      "HTTP_AUTHORIZATION" => "Token token=#{user.jwt}" }
+      "HTTP_AUTHORIZATION" => "Bearer #{user.jwt}" }
   end
 
   context "create" do
@@ -114,7 +114,7 @@ describe "/api/v1/claims", :type => :api do
     context "with wrong API key" do
       let(:headers) do
         { "HTTP_ACCEPT" => "application/json; version=1",
-          "HTTP_AUTHORIZATION" => "Token token=12345678" }
+          "HTTP_AUTHORIZATION" => "Bearer 12345678" }
       end
 
       it "JSON" do
@@ -204,7 +204,7 @@ describe "/api/v1/claims", :type => :api do
     context "with wrong API key" do
       let(:headers) do
         { "HTTP_ACCEPT" => "application/json; version=1",
-          "HTTP_AUTHORIZATION" => "Token token=12345678" }
+          "HTTP_AUTHORIZATION" => "Bearer 12345678" }
       end
 
       it "JSON" do
@@ -291,7 +291,7 @@ describe "/api/v1/claims", :type => :api do
     context "with wrong API key" do
       let(:headers) do
         { "HTTP_ACCEPT" => "application/json; version=1",
-          "HTTP_AUTHORIZATION" => "Token token=12345678" }
+          "HTTP_AUTHORIZATION" => "Bearer 12345678" }
       end
 
       it "JSON" do
@@ -357,7 +357,7 @@ describe "/api/v1/claims", :type => :api do
     context "with wrong API key" do
       let(:headers) do
         { "HTTP_ACCEPT" => "application/json; version=1",
-          "HTTP_AUTHORIZATION" => "Token token=12345678" }
+          "HTTP_AUTHORIZATION" => "Bearer 12345678" }
       end
 
       it "JSON" do

@@ -1,4 +1,3 @@
-require 'jwt'
 require 'orcid_client'
 
 class User < ActiveRecord::Base
@@ -7,6 +6,9 @@ class User < ActiveRecord::Base
 
   # include helper module for DOI resolution
   include Resolvable
+
+  # include helper module for JWT encode and decode
+  include Authenticable
 
   nilify_blanks
 
@@ -46,11 +48,6 @@ class User < ActiveRecord::Base
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create
-  end
-
-  # replace newline characters with actual newlines
-  def self.private_key
-    OpenSSL::PKey::RSA.new(ENV['JWT_PRIVATE_KEY'].to_s.gsub('\n', "\n"))
   end
 
   def per_page
@@ -162,7 +159,7 @@ class User < ActiveRecord::Base
   end
 
   def jwt
-    claims = {
+    payload = {
       uid: uid,
       name: name,
       email: email,
@@ -173,7 +170,7 @@ class User < ActiveRecord::Base
       exp: Time.now.to_i + 14 * 24 * 3600
     }.compact
 
-    JWT.encode(claims, User.private_key, 'RS256')
+    encode_token(payload)
   end
 
   def reversed_name

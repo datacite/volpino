@@ -28,8 +28,8 @@ class Api::V1::ClaimsController < Api::BaseController
   end
 
   def create
-    @claim = Claim.where(orcid: params.dig(:claim, :orcid),
-                         doi: params.dig(:claim, :doi))
+    @claim = Claim.where(orcid: params.fetch(:claim, {}).fetch(:orcid, nil),
+                         doi: params.fetch(:claim, {}).fetch(:doi, nil))
                   .first_or_initialize
 
     claim_action = params.dig(:claim, :claim_action) || "create"

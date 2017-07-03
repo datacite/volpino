@@ -17,13 +17,13 @@ http_interactions:
       - Bearer <ACCESS_TOKEN>
   response:
     status:
-      code: 204
-      message: No Content
+      code: 404
+      message: Not Found
     headers:
       Server:
       - nginx/1.10.0
       Date:
-      - Tue, 20 Jun 2017 13:03:26 GMT
+      - Mon, 03 Jul 2017 21:36:31 GMT
       Content-Type:
       - application/vnd.orcid+xml; qs=5;charset=UTF-8
       Connection:
@@ -44,7 +44,15 @@ http_interactions:
       - nosniff
     body:
       encoding: UTF-8
-      string: ''
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <error xmlns="http://www.orcid.org/ns/error">
+            <response-code>404</response-code>
+            <developer-message>404 Not Found: The resource was not found.</developer-message>
+            <user-message>The resource was not found.</user-message>
+            <error-code>9016</error-code>
+            <more-info>https://members.orcid.org/api/resources/troubleshooting</more-info>
+        </error>
     http_version: 
-  recorded_at: Tue, 20 Jun 2017 13:03:26 GMT
+  recorded_at: Mon, 03 Jul 2017 21:36:31 GMT
 recorded_with: VCR 3.0.3
