@@ -2,8 +2,7 @@ class Api::BaseController < ActionController::Base
   # include base controller methods
   include Authenticable
 
-  before_filter :default_format_json,
-                :authenticate_user_from_token!
+  before_filter :default_format_json
   after_filter :cors_set_access_control_headers, :set_jsonp_format
 
   # from https://github.com/spree/spree/blob/master/api/app/controllers/spree/api/base_controller.rb
@@ -27,7 +26,7 @@ class Api::BaseController < ActionController::Base
 
   def authenticate_user_from_token!
     token = token_from_request_headers
-    raise CanCan::AccessDenied unless token.present?
+    return false unless token.present?
 
     payload = decode_token(token)
     raise CanCan::AccessDenied unless payload.present?
