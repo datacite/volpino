@@ -76,24 +76,6 @@ class UsersController < ApplicationController
       collection = collection.where(:member_id => params[:member_id])
     end
 
-    case params[:contact_type]
-    when "voting_contact"
-      collection = collection.where(is_voting_contact: true)
-      @contact_type = ["voting_contact", User.where(is_voting_contact: true).count]
-    when "billing_contact"
-      collection = collection.where(is_billing_contact: true)
-      @contact_type = ["billing_contact", User.where(is_billing_contact: true).count]
-    when "business_contact"
-      collection = collection.where(is_business_contact: true)
-      @contact_type = ["business_contact", User.where(is_business_contact: true).count]
-    when "technical_contact"
-      collection = collection.where(is_technical_contact: true)
-      @contact_type = ["technical_contact", User.where(is_technical_contact: true).count]
-    when "metadata_contact"
-      collection = collection.where(is_metadata_contact: true)
-      @contact_type = ["metadata_contact", User.where(is_metadata_contact: true).count]
-    end
-
     if params[:organization]
       collection = collection.where(:organization => params[:organization])
       @organization = User.where(organization: params[:organization]).group(:organization).count.first
@@ -107,13 +89,6 @@ class UsersController < ApplicationController
     collection = collection.query(params[:query]) if params[:query]
     collection = collection.ordered
 
-    @contact_types = [
-      ["voting_contact", User.where(is_voting_contact: true).count],
-      ["billing_contact", User.where(is_billing_contact: true).count],
-      ["business_contact", User.where(is_business_contact: true).count],
-      ["technical_contact", User.where(is_technical_contact: true).count],
-      ["metadata_contact", User.where(is_metadata_contact: true).count],
-    ].select { |contact| contact.last > 0 }
     @organizations = User.where.not(organization: nil).group(:organization).count
     @roles = User.group(:role).count
     @users = collection.paginate(:page => params[:page])
@@ -127,11 +102,6 @@ class UsersController < ApplicationController
                                  :unconfirmed_email,
                                  :auto_update,
                                  :role,
-                                 :is_voting_contact,
-                                 :is_billing_contact,
-                                 :is_business_contact,
-                                 :is_technical_contact,
-                                 :is_metadata_contact,
                                  :is_public,
                                  :member_id,
                                  :datacenter_id,

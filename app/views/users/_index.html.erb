@@ -28,17 +28,8 @@
                   <div class="panel-body">
                     <%= f.input :member_id, collection: Member.all, label_method: :title, value_method: :name, input_html: { class: "form-user" } %>
                     <% if user.id != current_user.id %>
-                      <%= f.input :role, collection: roles.map { |role| [role.titleize, role] }, include_blank: false, input_html: { class: "form-user" } %>                <% end %>
-                    <div class="form-group">
-                      <label for="contact">Contact Information</label>
-                      <% unless user.datacenter_id.present? %>
-                        <%= f.input :is_voting_contact, label: "Voting contact", input_html: { class: "form-user" } %>
-                        <%= f.input :is_billing_contact, label: "Billing contact", input_html: { class: "form-user" } %>
-                      <% end %>
-                      <%= f.input :is_business_contact, label: "Business contact", input_html: { class: "form-user" } %>
-                      <%= f.input :is_technical_contact, label: "Technical contact", input_html: { class: "form-user" } %>
-                      <%= f.input :is_metadata_contact, label: "Metadata contact", input_html: { class: "form-user" } %>
-                    </div>
+                      <%= f.input :role, collection: roles.map { |role| [role.titleize, role] }, include_blank: false, input_html: { class: "form-user" } %>
+                    <% end %>
                     <div class="form-group">
                       <label for="other">Other</label>
                       <%= f.input :is_public, label: "Public record", input_html: { class: "form-user" } %>
@@ -70,14 +61,6 @@
                   <% if user.member.present? %>
                     <h5>Member</h5>
                     <%= link_to h(user.member.title), member_path(user.member.name) %>
-                  <% end %>
-
-                  <% if user.contact_list.present? %>
-                    <p>
-                      <% user.contact_list.each do |contact| %>
-                        <%= contact %></br>
-                      <% end %>
-                    </p>
                   <% end %>
 
                   <h5>Role</h5>
@@ -144,7 +127,7 @@
           <ul>
             <% if @organization %>
               <li class="active">
-                <%= link_to icon('check-square-o').html_safe, users_path(contact_type: params[:contact_type], role: params[:role]) %>
+                <%= link_to icon('check-square-o').html_safe, users_path(role: params[:role]) %>
                 <div class="facet-title"><%= @organization.first.titleize %></div>
                 <span class="number pull-right"><%= number_with_delimiter(@organization.last) %></span>
                 <div class="clearfix"/>
@@ -152,7 +135,7 @@
             <% else %>
               <% @organizations.each do |organization| %>
                 <li>
-                  <%= link_to icon('square-o').html_safe, users_path(contact_type: params[:contact_type], organization: organization.first, role: params[:role]) %>
+                  <%= link_to icon('square-o').html_safe, users_path(organization: organization.first, role: params[:role]) %>
                   <div class="facet-title"><%= organization.first.titleize %></div>
                   <span class="number pull-right"><%= number_with_delimiter(organization.last) %></span>
                   <div class="clearfix"/>
@@ -162,32 +145,11 @@
           </ul>
         <% end %>
 
-        <h4>Contact Types</h4>
-        <ul>
-          <% if @contact_type %>
-            <li class="active">
-              <%= link_to icon('check-square-o').html_safe, users_path(organization: params[:organization], role: params[:role]) %>
-              <div class="facet-title"><%= @contact_type.first.titleize %></div>
-              <span class="number pull-right"><%= number_with_delimiter(@contact_type.last) %></span>
-              <div class="clearfix"/>
-            </li>
-          <% else %>
-            <% @contact_types.each do |contact_type| %>
-              <li>
-                <%= link_to icon('square-o').html_safe, users_path(organization: params[:organization], contact_type: contact_type.first, role: params[:role]) %>
-                <div class="facet-title"><%= contact_type.first.titleize %></div>
-                <span class="number pull-right"><%= number_with_delimiter(contact_type.last) %></span>
-                <div class="clearfix"/>
-              </li>
-            <% end %>
-          <% end %>
-        </ul>
-
         <h4>Roles</h4>
         <ul>
           <% if @role %>
             <li class="active">
-              <%= link_to icon('check-square-o').html_safe, users_path(organization: params[:organization], contact_type: params[:contact_type]) %>
+              <%= link_to icon('check-square-o').html_safe, users_path(organization: params[:organization]) %>
               <div class="facet-title"><%= @role.first.titleize %></div>
               <span class="number pull-right"><%= number_with_delimiter(@role.last) %></span>
               <div class="clearfix"/>
@@ -195,7 +157,7 @@
           <% else %>
             <% @roles.each do |role| %>
               <li>
-                <%= link_to icon('square-o').html_safe, users_path(organization: params[:organization], contact_type: params[:contact_type], role: role.first) %>
+                <%= link_to icon('square-o').html_safe, users_path(organization: params[:organization], role: role.first) %>
                 <div class="facet-title"><%= role.first.titleize %></div>
                 <span class="number pull-right"><%= number_with_delimiter(role.last) %></span>
                 <div class="clearfix"/>

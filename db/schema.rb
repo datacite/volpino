@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170702121818) do
+ActiveRecord::Schema.define(version: 20170706063219) do
 
   create_table "claims", force: :cascade do |t|
     t.string   "uuid",           limit: 191
@@ -139,11 +139,6 @@ ActiveRecord::Schema.define(version: 20170702121818) do
     t.string   "member_id",            limit: 255
     t.string   "datacenter_id",        limit: 255
     t.string   "organization",         limit: 255
-    t.boolean  "is_billing_contact",                 default: false
-    t.boolean  "is_voting_contact",                  default: false
-    t.boolean  "is_business_contact",                default: false
-    t.boolean  "is_technical_contact",               default: false
-    t.boolean  "is_metadata_contact",                default: false
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

@@ -38,40 +38,6 @@
         <% end %>
       </dl>
     </div>
-    <div class="panel-body">
-      <dl class="dl-horizontal">
-        <% if @member.users.voting_contacts.present? %>
-          <dt><%= "Voting Contact".pluralize(@member.users.voting_contacts.count) %></dt>
-          <% @member.users.voting_contacts.each do |contact| %>
-            <dd><%= link_to h(contact.name), users_path(query: contact.uid) %></dd>
-          <% end %>
-        <% end %>
-        <% if @member.users.billing_contacts.present? %>
-          <dt><%= "Billing Contact".pluralize(@member.users.billing_contacts.count) %></dt>
-          <% @member.users.billing_contacts.each do |contact| %>
-            <dd><%= link_to h(contact.name), users_path(query: contact.uid) %></dd>
-          <% end %>
-        <% end %>
-        <% if @member.users.business_contacts.present? %>
-          <dt><%= "Business Contact".pluralize(@member.users.business_contacts.count) %></dt>
-          <% @member.users.business_contacts.each do |contact| %>
-            <dd><%= link_to h(contact.name), users_path(query: contact.uid) %></dd>
-          <% end %>
-        <% end %>
-        <% if @member.users.technical_contacts.present? %>
-          <dt><%= "Technical Contact".pluralize(@member.users.technical_contacts.count) %></dt>
-          <% @member.users.technical_contacts.each do |contact| %>
-            <dd><%= link_to h(contact.name), users_path(query: contact.uid) %></dd>
-          <% end %>
-        <% end %>
-        <% if @member.users.metadata_contacts.present? %>
-          <dt><%= "Metadata Contact".pluralize(@member.users.metadata_contacts.count) %></dt>
-          <% @member.users.metadata_contacts.each do |contact| %>
-            <dd><%= link_to h(contact.name), users_path(query: contact.uid) %></dd>
-          <% end %>
-        <% end %>
-      </dl>
-    </div>
     <div class="panel-footer">
       <%= icon("info-circle") %>
       <%= @member.name.upcase %>

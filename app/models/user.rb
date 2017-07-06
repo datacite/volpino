@@ -38,11 +38,6 @@ class User < ActiveRecord::Base
   scope :order_by_name, -> { order("ISNULL(family_name), family_name") }
   scope :is_public, -> { where("is_public = 1") }
   scope :with_github, -> { where("github IS NOT NULL AND github_put_code IS NULL") }
-  scope :voting_contacts, -> { where(is_voting_contact: true) }
-  scope :billing_contacts, -> { where(is_billing_contact: true) }
-  scope :business_contacts, -> { where(is_business_contact: true) }
-  scope :technical_contacts, -> { where(is_technical_contact: true) }
-  scope :metadata_contacts, -> { where(is_metadata_contact: true) }
 
   serialize :other_names, JSON
 
@@ -61,35 +56,6 @@ class User < ActiveRecord::Base
   # Helper method to check for admin user
   def is_admin?
     role == "staff_admin"
-  end
-
-  # user is contact person for member or data center
-  def contact_list
-    [human_voting_contact,
-     human_billing_contact,
-     human_business_contact,
-     human_technical_contact,
-     human_metadata_contact].compact
-  end
-
-  def human_voting_contact
-    is_voting_contact ? "Voting contact" : nil
-  end
-
-  def human_billing_contact
-    is_billing_contact ? "Billing contact" : nil
-  end
-
-  def human_business_contact
-    is_business_contact ? "Business contact" : nil
-  end
-
-  def human_technical_contact
-    is_technical_contact ? "Technical contact" : nil
-  end
-
-  def human_metadata_contact
-    is_metadata_contact ? "Metadata contact" : nil
   end
 
   #alias_method :is_admin?, :is_admin
