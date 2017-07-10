@@ -33,15 +33,6 @@ FactoryGirl.define do
     initialize_with { User.where(uid: uid).first_or_initialize }
   end
 
-  factory :service do
-    name 'search'
-    title 'Search'
-    redirect_uri 'http://search.labs.datacite.org/auth/jwt/callback'
-    url 'http://search.labs.datacite.org'
-
-    initialize_with { Service.where(name: name).first_or_initialize }
-  end
-
   factory :member do
     name 'ANDS'
     title 'Australian National Data Service (ANDS)'
@@ -49,13 +40,6 @@ FactoryGirl.define do
     year 2009
 
     initialize_with { Member.where(name: name).first_or_initialize }
-  end
-
-  factory :tag do
-    name 'search'
-    title 'Search'
-
-    initialize_with { Tag.where(name: name).first_or_initialize }
   end
 
   factory :claim do

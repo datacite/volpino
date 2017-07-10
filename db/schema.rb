@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170706063219) do
+ActiveRecord::Schema.define(version: 20170710050348) do
 
   create_table "claims", force: :cascade do |t|
     t.string   "uuid",           limit: 191
@@ -60,24 +60,6 @@ ActiveRecord::Schema.define(version: 20170706063219) do
 
   add_index "members", ["name"], name: "index_members_on_name", using: :btree
 
-  create_table "services", force: :cascade do |t|
-    t.string   "name",         limit: 255,   null: false
-    t.string   "title",        limit: 255,   null: false
-    t.text     "redirect_uri", limit: 255,   null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "logo",         limit: 191
-    t.string   "url",          limit: 255
-    t.text     "summary",      limit: 65535
-    t.text     "description",  limit: 65535
-    t.string   "image",        limit: 255
-  end
-
-  create_table "services_tags", id: false, force: :cascade do |t|
-    t.integer "service_id", limit: 4
-    t.integer "tag_id",     limit: 4
-  end
-
   create_table "status", force: :cascade do |t|
     t.string   "uuid",                    limit: 191
     t.integer  "users_count",             limit: 4,   default: 0
@@ -98,15 +80,6 @@ ActiveRecord::Schema.define(version: 20170706063219) do
 
   add_index "status", ["created_at"], name: "index_status_created_at", using: :btree
 
-  create_table "tags", force: :cascade do |t|
-    t.string   "name",       limit: 191, null: false
-    t.string   "title",      limit: 191, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  add_index "tags", ["name"], name: "index_tags_on_name", using: :btree
-
   create_table "users", force: :cascade do |t|
     t.string   "name",                 limit: 191
     t.string   "family_name",          limit: 191
@@ -121,7 +94,6 @@ ActiveRecord::Schema.define(version: 20170706063219) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "other_names",          limit: 65535
-    t.boolean  "skip_info",                          default: false
     t.string   "confirmation_token",   limit: 191
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
