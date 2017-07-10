@@ -1,29 +1,27 @@
 class Api::V1::MembersController < Api::BaseController
+  before_filter :load_member, only: [:show, :update, :destroy]
+  before_filter :new_member, only: [:create]
+  before_filter :authenticate_user_from_token!
+  load_and_authorize_resource :except => [:index, :show]
+
   def index
     collection = Member
-    collection = collection.query(params[:query]) if params[:query]
 
     if params[:id].present?
       collection = collection.where(name: params[:id])
-    end
-    if params[:member_type].present?
-      collection = collection.where(member_type: params[:member_type])
-      @member_type = collection.where(member_type: params[:member_type]).group(:member_type).count.first
-    end
-    if params[:region].present?
-      collection = collection.where(region: params[:region])
-      @region = collection.where(region: params[:region]).group(:region).count.first
-    end
-    if params[:year].present?
-      collection = collection.where(year: params[:year])
-      @year = collection.where(year: params[:year]).group(:year).count.first
+    elsif params[:query].present?
+      collection = collection.query(params[:query])
     end
 
+    collection = collection.where(member_type: params[:member_type]) if params[:member_type].present?
+    collection = collection.where(region: params[:region]) if params[:region].present?
+    collection = collection.where(year: params[:year]) if params[:year].present?
+
     # calculate facet counts after filtering
-    if params[:member_type].present?
-      member_types = [{ id: params[:member_type],
-                        title: params[:member_type].humanize,
-                        count: collection.where(member_type: params[:member_type]).count }]
+    if params["member-type"].present?
+      member_types = [{ id: params["member-type"],
+                        title: params["member-type"].humanize,
+                        count: collection.where(member_type: params["member-type"]).count }]
     else
       member_types = collection.where.not(member_type: nil).group(:member_type).count
       member_types = member_types.map { |k,v| { id: k, title: k.humanize, count: v } }
@@ -45,7 +43,9 @@ class Api::V1::MembersController < Api::BaseController
       years = years.map { |k,v| { id: k.to_s, title: k.to_s, count: v } }
     end
 
-    page = params[:page] || { number: 1, size: 1000 }
+    page = params[:page] || {}
+    page[:number] = page[:number] && page[:number].to_i > 0 ? page[:number].to_i : 1
+    page[:size] = page[:size] && (1..1000).include?(page[:size].to_i) ? page[:size].to_i : 1000
 
     @members = collection.order(:title).page(page[:number]).per_page(page[:size])
 
@@ -55,6 +55,7 @@ class Api::V1::MembersController < Api::BaseController
              member_types: member_types,
              regions: regions,
              years: years }
+
     render json: @members, meta: meta
   end
 
@@ -63,5 +64,22 @@ class Api::V1::MembersController < Api::BaseController
     fail ActiveRecord::RecordNotFound unless @member.present?
 
     render json: @member
+  end
+
+  protected
+
+  def new_member
+    @member = Member.new(safe_params)
+  end
+
+  def load_member
+    @member = Member.where(name: params[:id]).first
+    fail ActiveRecord::RecordNotFound unless @member.present?
+  end
+
+  private
+
+  def safe_params
+    params.fetch(:member, {}).permit(:title, :name, :description, :member_type, :country_code, :website, :year, :email, :phone, :logo, :image, :image_cache)
   end
 end

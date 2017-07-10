@@ -1,6 +1,11 @@
 class MemberSerializer < ActiveModel::Serializer
   cache key: 'member'
-  attributes :id, :title, :description, :member_type, :region, :country, :year, :logo_url, :email, :website, :phone, :updated
+  attributes :id, :title, :description, :member_type, :region, :country, :year, :logo_url, :email, :website, :phone, :created, :updated
+
+  def can_read
+    # `scope` is current ability
+    scope.can?(:read, object)
+  end
 
   def id
     object.name
@@ -22,7 +27,11 @@ class MemberSerializer < ActiveModel::Serializer
     object.image_url
   end
 
+  def created
+    object.created_at.iso8601
+  end
+
   def updated
-    object.updated_at
+    object.updated_at.iso8601
   end
 end

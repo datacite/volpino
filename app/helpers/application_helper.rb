@@ -124,9 +124,17 @@ module ApplicationHelper
       "EMEA" => "EMEA" }
   end
 
+  def human_source_name(source_id)
+    sources.fetch(source_id, nil)
+  end
+
   def sources
     { "orcid_search" => "ORCID Search and Link",
       "orcid_update" => "ORCID Auto-Update" }
+  end
+
+  def human_state_name(state)
+    state_names.fetch(state, nil)
   end
 
   def state_names

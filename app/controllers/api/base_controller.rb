@@ -2,6 +2,9 @@ class Api::BaseController < ActionController::Base
   # include base controller methods
   include Authenticable
 
+  # pass ability into serializer
+  serialization_scope :current_ability
+
   before_filter :default_format_json
   after_filter :cors_set_access_control_headers, :set_jsonp_format
 
@@ -73,7 +76,15 @@ class Api::BaseController < ActionController::Base
 
   protected
 
-  def is_admin_or_staff?
-    current_user && current_user.is_admin_or_staff? ? 1 : 0
+  def current_ability
+    @current_ability ||= Ability.new(current_user)
   end
+
+  # def is_admin?
+  #   current_user && current_user.role == "staff_admin"
+  # end
+  #
+  # def is_admin_or_staff?
+  #   current_user && %w(staff_admin staff_user).include?(current_user.role)
+  # end
 end
