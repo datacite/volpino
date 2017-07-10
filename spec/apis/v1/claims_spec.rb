@@ -3,14 +3,18 @@ require "rails_helper"
 describe "/api/v1/claims", :type => :api do
   before(:each) { allow(Time.zone).to receive(:now).and_return(Time.mktime(2015, 4, 8)) }
 
-  let(:claim) { FactoryGirl.build(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: "0000-0002-1825-0097") }
+  let(:claim) { FactoryGirl.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: "0000-0002-1825-0097") }
   let(:error) { { "errors" => [{"status"=>"401", "title"=>"You are not authorized to access this page."}] } }
   let(:success) { { "orcid"=>claim.orcid,
                     "doi"=>claim.doi,
                     "source-id"=>claim.source_id,
                     "state"=>"waiting",
                     "claim-action"=>"create",
-                    "claimed-at"=>nil }}
+                    "error-messages"=>nil,
+                    "put-code"=>nil,
+                    "claimed"=>nil,
+                    "created"=>claim.created_at.iso8601,
+                    "updated"=>claim.updated_at.iso8601 }}
   let(:user) { FactoryGirl.create(:admin_user, uid: "0000-0002-1825-0097") }
   let(:uuid) { SecureRandom.uuid }
   let(:headers) do
@@ -31,7 +35,7 @@ describe "/api/v1/claims", :type => :api do
     context "as admin user" do
       it "JSON" do
         post uri, params, headers
-        #expect(last_response.status).to eq(202)
+        expect(last_response.status).to eq(202)
 
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
@@ -96,6 +100,7 @@ describe "/api/v1/claims", :type => :api do
     end
 
     context "without source_id" do
+      let(:claim) { FactoryGirl.build(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: "0000-0002-1825-0097", source_id: nil) }
       let(:params) do
         { "claim" => { "uuid" => claim.uuid,
                        "orcid" => claim.orcid,
@@ -129,9 +134,9 @@ describe "/api/v1/claims", :type => :api do
     context "with missing claim param" do
       let(:params) do
         { "data" => { "uuid" => claim.uuid,
-                       "orcid" => claim.orcid,
-                       "doi" => claim.doi,
-                       "source_id" => claim.source_id } }
+                      "orcid" => claim.orcid,
+                      "doi" => claim.doi,
+                      "source_id" => claim.source_id } }
       end
 
       it "JSON" do
@@ -242,7 +247,7 @@ describe "/api/v1/claims", :type => :api do
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
         expect(response["data"]).to be_empty
-        expect(response["meta"]).to eq("total"=>0, "total-pages"=>1, "page"=>1)
+        expect(response["meta"]).to eq("total"=>0, "total-pages"=>1, "page"=>1, "sources"=>[], "claim-actions"=>[], "states"=>[])
       end
     end
   end
