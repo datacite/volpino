@@ -1,9 +1,9 @@
 require "rails_helper"
 
 describe Work, type: :model, vcr: true do
-  let(:doi) { "10.6084/M9.FIGSHARE.1066168"}
+  let(:doi) { "10.5438/VQ2T-VR4K"}
   let(:user) { FactoryGirl.create(:valid_user) }
-  let(:put_code) { "837849" }
+  let(:put_code) { "861230" }
 
   subject { Work.new(doi: doi, orcid: user.uid, access_token: user.authentication_token, put_code: put_code) }
 
@@ -21,9 +21,9 @@ describe Work, type: :model, vcr: true do
       it 'should get works' do
         response = subject.get_works(sandbox: true)
         works = response.body.fetch("data", {}).fetch("group", {})
-        expect(works.length).to eq(27)
+        expect(works.length).to eq(25)
         work = works.first
-        expect(work["external-ids"]).to eq("external-id"=>[{"external-id-type"=>"doi", "external-id-value"=>"10.5281/ZENODO.49516", "external-id-url"=>nil, "external-id-relationship"=>"SELF"}])
+        expect(work["external-ids"]).to eq("external-id"=>[{"external-id-type"=>"doi", "external-id-value"=>"10.5438/53NZ-N4G7", "external-id-url"=>nil, "external-id-relationship"=>"SELF"}])
       end
     end
 
@@ -60,22 +60,12 @@ describe Work, type: :model, vcr: true do
 
   describe 'contributors' do
     it 'valid' do
-      expect(subject.contributors).to eq([{:credit_name=>"Zohreh Zahedi"}, {:orcid=>"http://orcid.org/0000-0002-2184-6094", :credit_name=>"Martin Fenner"}, {:credit_name=>"Rodrigo Costas"}])
-    end
-
-    it 'literal' do
-      subject = Work.new(doi: "10.1594/PANGAEA.745083", orcid: "0000-0003-3235-5933", access_token: user.authentication_token, put_code: put_code)
-      expect(subject.contributors).to eq([{:credit_name=>"EPOCA Arctic Experiment 2009 Team"}])
-    end
-
-    it 'multiple titles' do
-      subject = Work.new(doi: "10.6084/M9.FIGSHARE.1537331.V1", orcid: "0000-0003-0811-2536", access_token: user.authentication_token, put_code: put_code)
-      expect(subject.contributors).to eq([{:credit_name=>"Iosr Journals"}, {:credit_name=>"Dr. Rohit Arora, MDS"}, {:credit_name=>"Dr. Shalya Raj*.MDS"}])
+      expect(subject.contributors).to eq([{:orcid=>"http://orcid.org/0000-0003-1419-2405", :credit_name=>"Fenner, Martin"}])
     end
   end
 
   it 'publication_date' do
-    expect(subject.publication_date).to eq("year" => "2014")
+    expect(subject.publication_date).to eq("year"=>"2016", "month"=>"07", "day"=>"05")
   end
 
   it 'data' do

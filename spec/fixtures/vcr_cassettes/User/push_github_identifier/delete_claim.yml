@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: delete
-    uri: https://api.sandbox.orcid.org/v2.0/0000-0001-6528-2027/external-identifiers/3826
+    uri: https://api.sandbox.orcid.org/v2.0/0000-0001-6528-2027/external-identifiers/3877
     body:
       encoding: US-ASCII
       string: ''
@@ -17,13 +17,13 @@ http_interactions:
       - Bearer <ACCESS_TOKEN>
   response:
     status:
-      code: 404
-      message: Not Found
+      code: 204
+      message: No Content
     headers:
       Server:
       - nginx/1.10.0
       Date:
-      - Mon, 03 Jul 2017 21:36:06 GMT
+      - Mon, 10 Jul 2017 06:27:47 GMT
       Content-Type:
       - application/vnd.orcid+xml; qs=5;charset=UTF-8
       Connection:
@@ -44,15 +44,7 @@ http_interactions:
       - nosniff
     body:
       encoding: UTF-8
-      string: |
-        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-        <error xmlns="http://www.orcid.org/ns/error">
-            <response-code>404</response-code>
-            <developer-message>404 Not Found: The resource was not found.</developer-message>
-            <user-message>The resource was not found.</user-message>
-            <error-code>9016</error-code>
-            <more-info>https://members.orcid.org/api/resources/troubleshooting</more-info>
-        </error>
+      string: ''
     http_version: 
-  recorded_at: Mon, 03 Jul 2017 21:36:06 GMT
+  recorded_at: Mon, 10 Jul 2017 06:27:47 GMT
 recorded_with: VCR 3.0.3
