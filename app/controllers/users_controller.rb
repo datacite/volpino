@@ -106,8 +106,6 @@ class UsersController < ApplicationController
                                  :member_id,
                                  :datacenter_id,
                                  :expires_at,
-                                 :facebook_uid,
-                                 :facebook_token,
                                  :google_uid,
                                  :google_token,
                                  :github,

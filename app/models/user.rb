@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   has_many :claims, primary_key: "uid", foreign_key: "orcid", inverse_of: :user
   belongs_to :member, primary_key: "name", foreign_key: "member_id"
 
-  devise :omniauthable, :omniauth_providers => [:orcid, :github, :google_oauth2, :facebook]
+  devise :omniauthable, :omniauth_providers => [:orcid, :github, :google_oauth2]
 
   validates :uid, presence: true, uniqueness: true
   validates :provider, presence: true
@@ -112,8 +112,6 @@ class User < ActiveRecord::Base
       google_uid: options.fetch("google_uid", nil),
       google_token: options.fetch("google_token", nil),
       email: options.fetch("email", nil),
-      facebook_uid: options.fetch("facebook_uid", nil),
-      facebook_token: options.fetch("facebook_token", nil),
       github: options.fetch("github", nil),
       github_uid: options.fetch("github_uid", nil),
       github_token: options.fetch("github_token", nil) }.compact

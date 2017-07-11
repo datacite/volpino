@@ -62,29 +62,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
-  def facebook
-    auth = request.env["omniauth.auth"]
-
-    if current_user.present?
-      @user = current_user
-      @user.update_attributes(facebook_uid: auth.uid,
-                              facebook_token: auth.credentials.token)
-      flash[:notice] = "Account successfully linked with Facebook account."
-      redirect_to user_path("me", panel: "login")
-    elsif @user = User.where(facebook_uid: auth.uid).first
-      cookies[:_datacite_jwt] = { value: @user.jwt,
-                                 expires: 14.days.from_now.utc,
-                                 secure: !Rails.env.development? && !Rails.env.test?,
-                                 domain: :all }
-      sign_in @user
-      redirect_to stored_location_for(:user) || user_path("me")
-    else
-      flash[:omniauth] = { "facebook_uid" => auth.uid,
-                           "facebook_token" => auth.credentials.token }
-      redirect_to "/link_orcid"
-    end
-  end
-
   def orcid
     auth = request.env["omniauth.auth"]
     omniauth = flash[:omniauth] || {}

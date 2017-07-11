@@ -38,7 +38,6 @@ gem 'lograge', '~> 0.3.5'
 
 gem 'devise', '~> 3.5', '>= 3.5.2'
 gem 'omniauth-google-oauth2', '~> 0.4.1'
-gem 'omniauth-facebook', '~> 3.0'
 gem 'omniauth-github', '~> 1.1.2'
 gem "omniauth-orcid", '~> 1.2'
 gem 'omniauth', '~> 1.3', '>= 1.3.1'
