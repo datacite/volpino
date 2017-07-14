@@ -22,6 +22,7 @@ Rails.application.configure do
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
 
+  config.action_controller.asset_host = ENV['CDN_URL']
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
@@ -48,6 +49,13 @@ Rails.application.configure do
 
   # for devise
   config.action_mailer.default_url_options = { :host => "localhost" }
+
+  # send email via mailgun
+  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.mailgun_settings = {
+    api_key: ENV['MAILGUN_API_KEY'],
+    domain: ENV['MAILGUN_DOMAIN']
+  }
 
   config.web_console.whitelisted_ips = ENV['TRUSTED_IP']
 end

@@ -16,6 +16,6 @@ class Funder < ActiveRecord::Base
 
 
     def image_url
-      "https://#{ENV['CDN_HOST']}/images/funders/#{name.downcase}.png"
+      "#{ENV['CDN_URL']}/images/funders/#{name.downcase}.png"
     end
   end
