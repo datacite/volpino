@@ -83,7 +83,7 @@ Rails.application.configure do
     api_key: ENV['MAILGUN_API_KEY'],
     domain: ENV['MAILGUN_DOMAIN']
   }
-  
+
   # use ssl with Devise
-  config.to_prepare { Devise::SessionsController.force_ssl }
+  # config.to_prepare { Devise::SessionsController.force_ssl }
 end
