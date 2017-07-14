@@ -15,7 +15,7 @@
                 <div class="line r"></div>
               </div>
 
-              <%= simple_form_for :user, url: create_session_path, html: { class: "form-horizontal", role: "form" } do |f| %>
+              <%= simple_form_for :user, url: new_session_path, html: { class: "form-horizontal", role: "form" } do |f| %>
                 <%= f.input :email, required: false, label: false, :autofocus => true, placeholder: "Email Address", html: { class: "form-control" } %>
                 Enter your email address to sign in or create an account with DataCite.
                 <button type="submit" class="btn btn-primary btn-fill pull-right">Submit</button>
