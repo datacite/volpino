@@ -1,14 +1,14 @@
 <div class="wrapper">
-  <div class="register-background" style="background-image: url('//<%= ENV['CDN_HOST'] %>/images/profiles/landing.jpg');">
+  <div class="register-background" style="background-image: url('<%= ENV['CDN_URL'] %>/images/profiles/landing.jpg');">
       <div class="container">
         <div class="row">
           <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 ">
             <div class="register-card">
               <h3 class="title">Link ORCID Account</h3>
-              <p>Link your new DataCite account with your ORCID account.</p>
+              <p>Link your DataCite account with your ORCID account.</p>
               <p>This has to be done only once and is required for all DataCite accounts.</p>
 
-              <%= link_to "<span></span> Sign in with ORCID".html_safe, user_omniauth_authorize_path(:orcid), :id => "link-orcid", class: 'btn btn-block btn-social btn-orcid' %>
+              <%= link_to "<span></span> Sign in with ORCID".html_safe, user_omniauth_authorize_path(:orcid), :id => "link-orcid", class: 'btn btn-block btn-social btn-orcid btn-fill' %>
             </div>
           </div>
         </div>
