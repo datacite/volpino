@@ -11,10 +11,10 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">
-          <%= content_tag :span,  ENV['SITE_TITLE'], data_tags_for_api %>
-        </a>
       </div>
+      <a class="navbar-brand" href="/">
+        <%= content_tag :span,  ENV['SITE_TITLE'], data_tags_for_api %>
+      </a>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
           <% if can?(:manage, User) %>
