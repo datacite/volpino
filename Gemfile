@@ -37,15 +37,16 @@ gem 'namae', '~> 0.11.3'
 gem 'lograge', '~> 0.3.5'
 
 gem 'devise', '~> 4.3'
-gem 'devise_custom_authenticatable', '~> 0.3.1'
 gem 'omniauth-google-oauth2', '~> 0.4.1'
 gem 'omniauth-github', '~> 1.1.2'
-gem "omniauth-orcid", '~> 1.2'
+gem "omniauth-orcid", '~> 2.0'
 gem 'omniauth', '~> 1.3', '>= 1.3.1'
 gem 'oauth2', '~> 1.2', git: "https://github.com/fjg/oauth2.git", branch: "invalid_encoding"
+gem 'validates_email_format_of', '~> 1.6', '>= 1.6.3'
 gem 'jwt', '~> 1.5', '>= 1.5.1'
 gem 'cancancan', '~> 1.9.2'
 gem 'mailgun-ruby', '~> 1.1'
+gem 'gravtastic', '~> 3.2', '>= 3.2.6'
 
 gem 'sprockets-rails', '~> 2.2.0', :require => 'sprockets/railtie'
 gem 'coffee-rails', '~> 4.1', '>= 4.1.1'

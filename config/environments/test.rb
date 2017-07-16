@@ -44,7 +44,7 @@ Rails.application.configure do
   config.cache_store = :dalli_store, nil, { :namespace => ENV['APPLICATION'], :compress => true }
 
   # for devise
-  config.action_mailer.default_url_options = { :host => "localhost" }
+  config.action_mailer.default_url_options = { :host => "#{ENV['SERVER_NAME']}:#{ENV['SERVER_PORT']}" }
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true

@@ -15,10 +15,11 @@
                 <div class="line r"></div>
               </div>
 
-              <%= simple_form_for :user, url: new_session_path, html: { class: "form-horizontal", role: "form" } do |f| %>
-                <%= f.input :email, required: false, label: false, :autofocus => true, placeholder: "Email Address", html: { class: "form-control" } %>
-                Enter your email address to sign in or create an account with DataCite.
-                <button type="submit" class="btn btn-primary btn-fill pull-right">Submit</button>
+              <%= simple_form_for :user, url: user_registration_path(:user), html: { class: "form-horizontal", role: "form" } do |f| %>
+                <%= f.input :email, required: true, label: false, :autofocus => true, placeholder: "Email Address", html: { class: "form-control" } %>
+                <%= f.input :password, required: true, label: false, :autofocus => true, placeholder: "Password", html: { class: "form-control" } %>
+                <p>Sign in or create an account with DataCite.</p>
+                <button type="submit" class="btn btn-primary btn-fill pull-right bottom">Submit</button>
               <% end %>
             </div>
           </div>

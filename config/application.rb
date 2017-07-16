@@ -37,6 +37,9 @@ module Volpino
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    # autoload files in lib folder
+    config.autoload_paths << Rails.root.join('lib')
+
     # add assets installed via bower
     config.assets.paths << "#{Rails.root}/vendor/bower_components"
 

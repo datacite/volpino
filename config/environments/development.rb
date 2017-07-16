@@ -47,10 +47,8 @@ Rails.application.configure do
   # dalli uses ENV['MEMCACHE_SERVERS']
   config.cache_store = :dalli_store, nil, { :namespace => ENV['APPLICATION'], :compress => true }
 
-  # for devise
-  config.action_mailer.default_url_options = { :host => "localhost" }
-
-  # send email via mailgun
+  # for devise, send email via mailgun
+  config.action_mailer.default_url_options = { :host => "#{ENV['SERVER_NAME']}:#{ENV['SERVER_PORT']}" }
   config.action_mailer.delivery_method = :mailgun
   config.action_mailer.mailgun_settings = {
     api_key: ENV['MAILGUN_API_KEY'],

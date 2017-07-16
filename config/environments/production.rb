@@ -75,7 +75,7 @@ Rails.application.configure do
   config.cache_store = :dalli_store, nil, { :namespace => ENV['APPLICATION'], :compress => true }
 
   # for devise
-  config.action_mailer.default_url_options = { :host => "localhost" }
+  config.action_mailer.default_url_options = { :host => "#{ENV['SERVER_NAME']}:#{ENV['SERVER_PORT']}" }
 
   # send email via mailgun
   config.action_mailer.delivery_method = :mailgun

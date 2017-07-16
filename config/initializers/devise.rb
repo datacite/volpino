@@ -219,7 +219,8 @@ Devise.setup do |config|
                           sandbox: ENV['ORCID_SANDBOX']
 
   config.omniauth :github, ENV['GITHUB_CLIENT_ID'],
-                           ENV['GITHUB_CLIENT_SECRET']
+                           ENV['GITHUB_CLIENT_SECRET'],
+                           scope: "user"
 
   config.omniauth :google_oauth2, ENV["GOOGLE_CLIENT_ID"],
                                   ENV["GOOGLE_CLIENT_SECRET"]
@@ -227,10 +228,8 @@ Devise.setup do |config|
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
-  #
   # config.warden do |manager|
-  #   manager.intercept_401 = false
-  #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
+  #   manager.failure_app = CustomFailure
   # end
 end
 
