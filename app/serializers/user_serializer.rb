@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   cache key: 'user'
-  attributes :given_names, :family_name, :credit_name, :orcid, :github, :role, :created, :updated
+  attributes :given_names, :family_name, :credit_name, :orcid, :github, :image_url, :role, :created, :updated
   attribute :role, if: :can_read
   has_many :claims, if: :can_read
 
@@ -15,6 +15,10 @@ class UserSerializer < ActiveModel::Serializer
 
   def github
     "https://github.com/#{object.github}" if object.github.present?
+  end
+
+  def image_url
+    object.gravatar_url
   end
 
   def created
