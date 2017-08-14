@@ -5,17 +5,17 @@
         <% if @user.google_uid.present? %>
           <%= link_to '<span class="fa fa-google"></span> Unlink Google'.html_safe, user_path(@user, user: { email: nil, google_uid: nil, google_token: nil }, panel: 'login'), { method: :put, remote: true, class: 'btn btn-social btn-google' } %>
         <% else %>
-          <%= link_to '<span class="fa fa-google"></span> Sign in with Google'.html_safe, user_omniauth_authorize_path(:google_oauth2), :id => "sign-in-google", class: 'btn btn-social btn-google btn-fill' %>
+          <%= link_to '<span class="fa fa-google"></span> Sign in with Google'.html_safe, user_google_oauth2_omniauth_authorize_path, :id => "sign-in-google", class: 'btn btn-social btn-google btn-fill' %>
         <% end %>
         <% if Time.zone.now < @user.expires_at %>
           <%= link_to "<span></span> Expire ORCID Token".html_safe, user_path(@user, user: { expires_at: Time.zone.now }, panel: 'login'), { method: :put, remote: true, class: 'btn btn-social btn-orcid' } %>
         <% else %>
-          <%= link_to "<span></span> Refresh ORCID Token".html_safe, user_omniauth_authorize_path(:orcid), :id => "sign-in-orcid", class: 'btn btn-social btn-orcid btn-fill' %>
+          <%= link_to "<span></span> Refresh ORCID Token".html_safe, user_orcid_omniauth_authorize_path, :id => "sign-in-orcid", class: 'btn btn-social btn-orcid btn-fill' %>
         <% end %>
         <% if @user.github_uid.present? %>
           <%= link_to '<span class="fa fa-github"></span> Unlink Github'.html_safe, user_path(@user, user: { github_uid: nil, github_token: nil }, panel: 'login'), { method: :put, remote: true, class: 'btn btn-social btn-github' } %>
         <% else %>
-          <%= link_to '<span class="fa fa-github"></span> Sign in with Github'.html_safe, user_omniauth_authorize_path(:github), :id => "sign-in-github", class: 'btn btn-social btn-github btn-fill' %>
+          <%= link_to '<span class="fa fa-github"></span> Sign in with Github'.html_safe, user_github_omniauth_authorize_path, :id => "sign-in-github", class: 'btn btn-social btn-github btn-fill' %>
         <% end %>
       </div>
     </div>
