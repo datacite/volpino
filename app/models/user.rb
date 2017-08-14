@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   validates :provider, presence: true
   validate :validate_email
 
-  scope :query, ->(query) { where("name like ? OR uid like ? OR github like ?", "%#{query}%", "%#{query}%", "%#{query}%") }
+  scope :query, ->(query) { where("name like ? OR uid like ? OR email like ? OR github like ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%") }
   scope :ordered, -> { order("created_at DESC") }
   scope :order_by_name, -> { order("ISNULL(family_name), family_name") }
   scope :is_public, -> { where("is_public = 1") }

@@ -6,7 +6,7 @@ class Api::BaseController < ActionController::Base
   serialization_scope :current_ability
 
   before_filter :default_format_json
-  after_filter :cors_set_access_control_headers, :set_jsonp_format
+  after_filter :set_jsonp_format
 
   # from https://github.com/spree/spree/blob/master/api/app/controllers/spree/api/base_controller.rb
   def set_jsonp_format
@@ -14,13 +14,6 @@ class Api::BaseController < ActionController::Base
       self.response_body = "#{params[:callback]}(#{response.body})"
       headers["Content-Type"] = 'application/javascript'
     end
-  end
-
-  def cors_set_access_control_headers
-    headers['Access-Control-Allow-Origin'] = '*'
-    headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS'
-    headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept, Authorization, Token'
-    headers['Access-Control-Max-Age'] = "1728000"
   end
 
   def default_format_json
@@ -32,13 +25,17 @@ class Api::BaseController < ActionController::Base
     return false unless token.present?
 
     payload = decode_token(token)
-    raise CanCan::AccessDenied unless payload.present?
+    return false unless payload.present?
 
     # find user associated with token
     user = User.where(uid: payload["uid"]).first
-    raise CanCan::AccessDenied unless user && Devise.secure_compare(user.uid, payload["uid"])
+    return false unless user && Devise.secure_compare(user.uid, payload["uid"])
 
     sign_in user, store: false
+  end
+
+  def current_ability
+    @current_ability ||= Ability.new(current_user)
   end
 
   # from https://github.com/nsarno/knock/blob/master/lib/knock/authenticable.rb

@@ -70,10 +70,6 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # Use a different cache store
-  # dalli uses ENV['MEMCACHE_SERVERS']
-  config.cache_store = :dalli_store, nil, { :namespace => ENV['APPLICATION'], :compress => true }
-
   # for devise
   config.action_mailer.default_url_options = { :host => "#{ENV['SERVER_NAME']}:#{ENV['SERVER_PORT']}" }
 
