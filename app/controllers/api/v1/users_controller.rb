@@ -17,6 +17,7 @@ class Api::V1::UsersController < Api::BaseController
     end
 
     collection = collection.where(role: params[:role]) if params[:role].present?
+    collection = collection.where(member_id: params['member-id']) if params['member-id'].present?
 
     if params['from-created-date'].present? || params['until-created-date'].present?
       from_date = params['from-created-date'].presence || '2015-11-01'
@@ -43,6 +44,8 @@ class Api::V1::UsersController < Api::BaseController
     page[:size] = page[:size] && (1..1000).include?(page[:size].to_i) ? page[:size].to_i : 1000
 
     @users = collection.is_public.order_by_name.page(page[:number]).per_page(page[:size])
+
+    response.headers['X-Consumer-Role'] = current_user && current_user.role || 'anonymous'
 
     meta = { total: @users.total_entries,
              total_pages: @users.total_pages,

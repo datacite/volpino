@@ -8,6 +8,8 @@ class Api::BaseController < ActionController::Base
   before_filter :default_format_json
   after_filter :set_jsonp_format
 
+  helper_method :current_user, :devise_current_user
+
   # from https://github.com/spree/spree/blob/master/api/app/controllers/spree/api/base_controller.rb
   def set_jsonp_format
     if params[:callback] && request.get?
