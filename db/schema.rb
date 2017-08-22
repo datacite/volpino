@@ -81,40 +81,35 @@ ActiveRecord::Schema.define(version: 20170711182102) do
   add_index "status", ["created_at"], name: "index_status_created_at", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",                   limit: 191
-    t.string   "family_name",            limit: 191
-    t.string   "given_names",            limit: 191
-    t.string   "email",                  limit: 191
-    t.string   "provider",               limit: 255
-    t.string   "uid",                    limit: 191
-    t.string   "authentication_token",   limit: 191
-    t.string   "role",                   limit: 255,   default: "user"
-    t.boolean  "auto_update",                          default: true
-    t.datetime "expires_at",                           default: '1970-01-01 00:00:00', null: false
+    t.string   "name",                 limit: 191
+    t.string   "family_name",          limit: 191
+    t.string   "given_names",          limit: 191
+    t.string   "email",                limit: 191
+    t.string   "provider",             limit: 255
+    t.string   "uid",                  limit: 191
+    t.string   "authentication_token", limit: 191
+    t.string   "role",                 limit: 255,   default: "user"
+    t.boolean  "auto_update",                        default: true
+    t.datetime "expires_at",                         default: '1970-01-01 00:00:00', null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "other_names",            limit: 65535
-    t.string   "confirmation_token",     limit: 191
+    t.text     "other_names",          limit: 65535
+    t.boolean  "skip_info",                          default: false
+    t.string   "confirmation_token",   limit: 191
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email",      limit: 255
-    t.integer  "member",                 limit: 4
-    t.string   "github",                 limit: 191
-    t.string   "github_uid",             limit: 191
-    t.string   "github_token",           limit: 191
-    t.string   "google_uid",             limit: 191
-    t.string   "google_token",           limit: 191
-    t.integer  "github_put_code",        limit: 4
-    t.boolean  "is_public",                            default: true
-    t.string   "member_id",              limit: 255
-    t.string   "datacenter_id",          limit: 255
-    t.string   "organization",           limit: 255
-    t.string   "encrypted_password",     limit: 255,   default: "",                    null: false
-    t.string   "reset_password_token",   limit: 255
-    t.datetime "reset_password_sent_at"
-    t.string   "country_code",           limit: 255
-    t.string   "region",                 limit: 255
-    t.text     "description",            limit: 65535
+    t.string   "unconfirmed_email",    limit: 255
+    t.integer  "member",               limit: 4
+    t.string   "github",               limit: 191
+    t.string   "github_uid",           limit: 191
+    t.string   "github_token",         limit: 191
+    t.string   "google_uid",           limit: 191
+    t.string   "google_token",         limit: 191
+    t.integer  "github_put_code",      limit: 4
+    t.boolean  "is_public",                          default: true
+    t.string   "member_id",            limit: 255
+    t.string   "datacenter_id",        limit: 255
+    t.string   "organization",         limit: 255
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
@@ -122,7 +117,6 @@ ActiveRecord::Schema.define(version: 20170711182102) do
   add_index "users", ["github"], name: "index_users_on_github", unique: true, using: :btree
   add_index "users", ["github_put_code"], name: "index_users_on_github_put_code", using: :btree
   add_index "users", ["is_public"], name: "index_users_on_is_public", using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, length: {"reset_password_token"=>191}, using: :btree
   add_index "users", ["uid"], name: "index_users_on_uid", unique: true, using: :btree
 
 end

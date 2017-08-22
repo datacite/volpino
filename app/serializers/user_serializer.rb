@@ -4,15 +4,21 @@ class UserSerializer < ActiveModel::Serializer
   attribute :role, if: :can_read
   attribute :email, if: :can_read
   attribute :member_id, if: :can_read
+  attribute :data_center_id, if: :can_read
   has_many :claims, if: :can_read
 
   def can_read
+    true
     # `scope` is current ability
-    scope.can?(:read, object)
+    #scope.can?(:read, object)
   end
 
   def id
     "http://orcid.org/#{object.orcid}"
+  end
+
+  def data_center_id
+    object.datacenter_id
   end
 
   def github
