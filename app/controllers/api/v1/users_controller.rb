@@ -1,7 +1,7 @@
 class Api::V1::UsersController < Api::BaseController
   prepend_before_filter :load_user, only: [:show, :destroy]
   before_filter :authenticate_user_from_token!
-  load_and_authorize_resource :except => [:create]
+  load_and_authorize_resource :except => [:index, :create]
 
   def show
     render json: @user
@@ -16,12 +16,16 @@ class Api::V1::UsersController < Api::BaseController
       collection = collection.query(params[:query])
     end
 
-    # filter by member or data center
-    member_id = current_user && current_user.member_id.presence || params['member-id']
-    collection = collection.where(member_id: member_id) if member_id.present?
+    # filter by current user
+    if current_user.present?
+      member_id = current_user.member_id.presence || params['member-id']
+      collection = collection.where(member_id: member_id) if member_id.present?
 
-    data_center_id = current_user.try(:datacenter_id) || params['data-center-id']
-    collection = collection.where(datacenter_id: data_center_id) if data_center_id.present?
+      data_center_id = current_user.datacenter_id.presence  || params['data-center-id']
+      collection = collection.where(datacenter_id: data_center_id) if data_center_id.present?
+    else
+      collection = collection.none
+    end
 
     collection = collection.where(role: params[:role]) if params[:role].present?
 

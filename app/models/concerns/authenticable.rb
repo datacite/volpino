@@ -20,6 +20,9 @@ module Authenticable
       return {} unless Time.now.to_i < payload["exp"]
 
       payload
+    rescue JWT::DecodeError => error
+      logger.error "JWT::DecodeError: " + error.message + " for " + token
+      return {}
     end
   end
 end
