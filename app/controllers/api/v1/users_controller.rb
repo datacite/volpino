@@ -50,8 +50,6 @@ class Api::V1::UsersController < Api::BaseController
 
     @users = collection.is_public.order_by_name.page(page[:number]).per_page(page[:size])
 
-    response.headers['X-Consumer-Role'] = current_user && current_user.role || 'anonymous'
-
     meta = { total: @users.total_entries,
              total_pages: @users.total_pages,
              page: page[:number].to_i,

@@ -8,13 +8,21 @@ class Api::BaseController < ActionController::Base
   serialization_scope :current_ability
 
   before_filter :default_format_json
-  after_filter :set_jsonp_format
+  after_filter :set_jsonp_format, :set_consumer_header
 
   # from https://github.com/spree/spree/blob/master/api/app/controllers/spree/api/base_controller.rb
   def set_jsonp_format
     if params[:callback] && request.get?
       self.response_body = "#{params[:callback]}(#{response.body})"
       headers["Content-Type"] = 'application/javascript'
+    end
+  end
+
+  def set_consumer_header
+    if current_user
+      response.headers['X-Credential-Username'] = current_user.uid
+    else
+      response.headers['X-Anonymous-Consumer'] = true
     end
   end
 
