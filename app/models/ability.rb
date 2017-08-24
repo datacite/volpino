@@ -10,16 +10,19 @@ class Ability
       can :read, :all
       can [:update], User, :id => user.id
     elsif user.role == "member_admin"
-      can [:read], Claim
+      can [:read], Phrase
+      can [:read], User
+      can [:update], User, :id => user.id
       can [:manage], Claim, :orcid => user.uid
-      can [:update, :show], User, :id => user.id
       can [:update, :show], Member, :id => user.member_id
     elsif user.role == "member_user"
-      can [:read], Claim
+      can [:read], Phrase
+      can [:read], User
+      can [:update], User, :id => user.id
       can [:manage], Claim, :orcid => user.uid
-      can [:update, :show], User, :id => user.id
       can [:read], Member, :id => user.member_id
     elsif user.role == "user"
+      can [:read], Phrase
       can [:read], Claim
       can [:manage], Claim, :orcid => user.uid
       can [:update, :show], User, :id => user.id

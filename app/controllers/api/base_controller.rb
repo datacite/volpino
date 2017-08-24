@@ -2,13 +2,13 @@ class Api::BaseController < ActionController::Base
   # include base controller methods
   include Authenticable
 
+  attr_accessor :current_user
+
   # pass ability into serializer
   serialization_scope :current_ability
 
   before_filter :default_format_json
   after_filter :set_jsonp_format
-
-  helper_method :current_user, :devise_current_user
 
   # from https://github.com/spree/spree/blob/master/api/app/controllers/spree/api/base_controller.rb
   def set_jsonp_format
@@ -33,7 +33,7 @@ class Api::BaseController < ActionController::Base
     user = User.where(uid: payload["uid"]).first
     return false unless user && Devise.secure_compare(user.uid, payload["uid"])
 
-    sign_in user, store: false
+    @current_user = user
   end
 
   def current_ability
