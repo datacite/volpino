@@ -1,7 +1,7 @@
 class Api::V1::UsersController < Api::BaseController
   prepend_before_filter :load_user, only: [:show, :destroy]
-  load_resource
-  authorize_resource :except => [:index, :show]
+  before_filter :authenticate_user_from_token!
+  load_and_authorize_resource :except => [:create]
 
   def show
     render json: @user
@@ -16,9 +16,14 @@ class Api::V1::UsersController < Api::BaseController
       collection = collection.query(params[:query])
     end
 
+    # filter by member or data center
+    member_id = current_user && current_user.member_id.presence || params['member-id']
+    collection = collection.where(member_id: member_id) if member_id.present?
+
+    data_center_id = current_user.try(:datacenter_id) || params['data-center-id']
+    collection = collection.where(datacenter_id: data_center_id) if data_center_id.present?
+
     collection = collection.where(role: params[:role]) if params[:role].present?
-    collection = collection.where(member_id: params['member-id']) if params['member-id'].present?
-    collection = collection.where(datacenter_id: params['data-center-id']) if params['data-center-id'].present?
 
     if params['from-created-date'].present? || params['until-created-date'].present?
       from_date = params['from-created-date'].presence || '2015-11-01'
@@ -26,23 +31,18 @@ class Api::V1::UsersController < Api::BaseController
       collection = collection.where(created_at: from_date..until_date)
     end
 
-    # show role count in meta only to permitted users
-    if 1 == 1 # can?(:read, User)
-      if params[:role].present?
-        roles = [{ id: params[:role],
-                   title: params[:role].humanize,
-                   count: collection.where(role: params[:role]).count }]
-      else
-        roles = collection.where.not(role: nil).group(:role).count
-        roles = roles.map { |k,v| { id: k, title: k.titleize, count: v } }
-      end
+    if params[:role].present?
+      roles = [{ id: params[:role],
+                 title: params[:role].humanize,
+                 count: collection.where(role: params[:role]).count }]
     else
-      roles = nil
+      roles = collection.where.not(role: nil).group(:role).count
+      roles = roles.map { |k,v| { id: k, title: k.titleize, count: v } }
     end
 
     page = params[:page] || {}
     page[:number] = page[:number] && page[:number].to_i > 0 ? page[:number].to_i : 1
-    page[:size] = page[:size] && (1..1000).include?(page[:size].to_i) ? page[:size].to_i : 1000
+    page[:size] = page[:size] && (1..1000).include?(page[:size].to_i) ? page[:size].to_i : 25
 
     @users = collection.is_public.order_by_name.page(page[:number]).per_page(page[:size])
 
