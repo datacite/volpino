@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     scope module: :v1, constraints: ApiConstraint.new(version: 1, default: :true) do
       resources :claims
       resources :members
+      resources :random, only: [:index]
       resources :services
       resources :status, only: [:index]
       resources :tags

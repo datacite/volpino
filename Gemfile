@@ -21,6 +21,7 @@ gem "state_machine", "~> 1.2.0", :git => 'https://github.com/fly1tkg/state_machi
 gem 'active_model_serializers', '~> 0.10.4'
 gem 'librato-rails', '~> 1.4.2'
 gem 'colorize', '~> 0.8.1'
+gem 'pwqgen.rb', '~> 0.1.0'
 
 gem "haml-rails", "~> 0.9"
 gem "dalli", "~> 2.7.0"
