@@ -24,7 +24,7 @@ class Api::V1::UsersController < Api::BaseController
       data_center_id = current_user.datacenter_id.presence  || params['data-center-id']
       collection = collection.where(datacenter_id: data_center_id) if data_center_id.present?
     else
-      collection = collection.none
+      collection = collection.is_public
     end
 
     collection = collection.where(role: params[:role]) if params[:role].present?
@@ -35,7 +35,9 @@ class Api::V1::UsersController < Api::BaseController
       collection = collection.where(created_at: from_date..until_date)
     end
 
-    if params[:role].present?
+    if current_user.blank?
+      roles = nil
+    elsif  params[:role].present?
       roles = [{ id: params[:role],
                  title: params[:role].humanize,
                  count: collection.where(role: params[:role]).count }]

@@ -1,6 +1,16 @@
 class UserSerializer < ActiveModel::Serializer
-  cache key: 'user'
-  attributes :given_names, :family_name, :credit_name, :orcid, :github, :role, :email, :member_id, :data_center_id, :claims, :created, :updated
+  #cache key: 'user'
+  attributes :given_names, :family_name, :credit_name, :orcid, :github, :created, :updated
+  attribute :role, if: :can_read
+  attribute :email, if: :can_read
+  attribute :member_id, if: :can_read
+  attribute :data_center_id, if: :can_read
+  has_many :claims, if: :can_read
+
+  def can_read
+    # `scope` is current ability
+    scope.can?(:read, object)
+  end
 
   def id
     object.uid
