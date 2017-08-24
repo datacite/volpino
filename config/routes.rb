@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   resources :docs, :only => [:index, :show], :constraints => { :id => /[0-z\-\.\(\)]+/ }
   resources :heartbeat, only: [:index]
   resources :members
+  resources :people, only: [:show, :index]
   resources :services
   resources :status, :only => [:index]
   resources :tags
