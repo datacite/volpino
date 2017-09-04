@@ -13,7 +13,7 @@ class Api::V1::MembersController < Api::BaseController
       collection = collection.query(params[:query])
     end
 
-    collection = collection.where(member_type: params[:member_type]) if params[:member_type].present?
+    collection = collection.where(member_type: params['member-type']) if params['member-type'].present?
     collection = collection.where(region: params[:region]) if params[:region].present?
     collection = collection.where(year: params[:year]) if params[:year].present?
 
