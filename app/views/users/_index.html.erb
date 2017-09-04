@@ -57,13 +57,18 @@
                   <h5>ORCID</h5>
                   <%= link_to h(user.orcid), user.orcid_as_url %>
 
-                  <% if user.provider.present? %>
-                    <h5>Provider</h5>
-                    <%= h(user.provider.title) %>
-                  <% end %>
-
                   <h5>Role</h5>
                   <%= user.role.titleize %>
+
+                  <% if user.provider_name.present? %>
+                    <h5>Provider</h5>
+                    <%= h(user.provider_name) %>
+                  <% end %>
+
+                  <% if user.client_name.present? %>
+                    <h5>Client</h5>
+                    <%= h(user.client_name) %>
+                  <% end %>
 
                   <% unless user.is_public %>
                     <h5>Record public</h5>

@@ -10,6 +10,9 @@ class User < ActiveRecord::Base
   # include helper module for JWT encode and decode
   include Authenticable
 
+  # include helper module for caching infrequently changing resources
+  include Cacheable
+
   nilify_blanks
 
   # include hash helper
@@ -24,8 +27,6 @@ class User < ActiveRecord::Base
   after_commit :queue_claim_jobs, :on => :create
 
   has_many :claims, primary_key: "uid", foreign_key: "orcid", inverse_of: :user
-  belongs_to :provider, primary_key: "name", foreign_key: "provider_id"
-  belongs_to :client, primary_key: "name", foreign_key: "client_id"
 
   devise :omniauthable, :omniauth_providers => [:orcid, :github, :google_oauth2]
 
@@ -91,6 +92,14 @@ class User < ActiveRecord::Base
 
   def credit_name
     name
+  end
+
+  def provider_name
+    cached_provider_response(provider_id).name if provider_id.present?
+  end
+
+  def client_name
+    cached_client_response(client_id).name if client_id.present?
   end
 
   def validate_email

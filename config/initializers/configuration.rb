@@ -24,7 +24,6 @@ ENV['LUPO_URL'] ||= "https://api.datacite.org"
 ENV['CDN_URL'] ||= "https://assets.datacite.org"
 ENV['GITHUB_URL'] ||= "https://github.com/datacite/volpino"
 ENV['TRUSTED_IP'] ||= "127.0.0.0/8"
-ENV['MEMCACHE_SERVERS'] ||= "127.0.0.1"
 
 Rails.application.config.log_level = ENV['LOG_LEVEL'].to_sym
 

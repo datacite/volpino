@@ -37,12 +37,12 @@
   </div>
   <div class="panel-body">
     <dl class="dl-horizontal">
-      <% if @user.member.present? %>
-        <dt>Member</dt>
-        <dd><%= link_to @user.member.title, member_path(@user.member.name) %></dd>
-      <% end %>
       <dt>Role</dt>
       <dd><%= @user.role.titleize %></dd>
+      <% if @user.provider_name %>
+        <dt>Provider</dt>
+        <dd><%= h(@user.provider_name) %></dd>
+      <% end %>
       <dt>Record Public</dt>
       <% if @user.is_public %>
         <dd><%= @user.is_public %></dd>

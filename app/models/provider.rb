@@ -39,7 +39,7 @@ class Provider < Base
     return nil if result.blank? || result['errors']
 
     if options[:id].present?
-      item = result.fetch("data", {})
+      item = result.body.fetch("data", {})
       return nil unless item.present?
 
       { data: parse_item(item) }
