@@ -107,11 +107,7 @@ module ApplicationHelper
   end
 
   def roles
-    %w(user data_center_user data_center_admin member_user member_admin staff_user staff_admin)
-  end
-
-  def organizations
-    %w(staff member data_center)
+    %w(user client_user client_admin provider_user provider_admin staff_user staff_admin)
   end
 
   def member_types

@@ -9,18 +9,26 @@ class Ability
     elsif user.role == "staff_user"
       can :read, :all
       can [:update], User, :id => user.id
-    elsif user.role == "member_admin"
+    elsif user.role == "provider_admin"
       can [:read], Phrase
       can [:read], User
       can [:update], User, :id => user.id
       can [:manage], Claim, :orcid => user.uid
-      can [:update, :show], Member, :id => user.member_id
-    elsif user.role == "member_user"
+    elsif user.role == "provider_user"
       can [:read], Phrase
       can [:read], User
       can [:update], User, :id => user.id
       can [:manage], Claim, :orcid => user.uid
-      can [:read], Member, :id => user.member_id
+    elsif user.role == "client_admin"
+      can [:read], Phrase
+      can [:read], User
+      can [:update], User, :id => user.id
+      can [:manage], Claim, :orcid => user.uid
+    elsif user.role == "client_user"
+      can [:read], Phrase
+      can [:read], User
+      can [:update], User, :id => user.id
+      can [:manage], Claim, :orcid => user.uid
     elsif user.role == "user"
       can [:read], Phrase
       can [:read], Claim
