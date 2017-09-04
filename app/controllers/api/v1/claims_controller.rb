@@ -23,7 +23,7 @@ class Api::V1::ClaimsController < Api::BaseController
       collection = collection.where(doi: params[:dois].split(','))
     end
 
-    collection = collection.where(user_id: params[:user_id]) if params[:user_id].present?
+    collection = collection.where(orcid: params[:user_id]) if params[:user_id].present?
     collection = collection.where(source_id: params[:source_id]) if params[:source_id].present?
     collection = collection.where(claim_action: params[:claim_action]) if params[:claim_action].present?
     collection = collection.where(status: params[:status]) if params[:status].present?
@@ -31,7 +31,7 @@ class Api::V1::ClaimsController < Api::BaseController
     if params[:user_id].present?
       users = [{ id: params[:user_id],
                  title: params[:user_id],
-                 count: collection.where(user_id: params[:user_id]).count }]
+                 count: collection.where(orcid: params[:user_id]).count }]
     else
       users = nil
     end

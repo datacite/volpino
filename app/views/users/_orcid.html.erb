@@ -34,7 +34,7 @@
       <%= pluralize(@user.claims.failed.count, "failed claim") %>.
     </p>
     <div class="graphs" id="chart_claims"></div>
-    <div class="text-muted" id="chart_claims-loading">Loading … <img src="<%= asset_path('/images/spinner.gif', host: ENV['CDN_HOST']) %>"></div>
+    <div class="text-muted" id="chart_claims-loading">Loading … <img src="<%= ENV['CDN_URL'] + '/images/spinner.gif' %>"></div>
   </div>
   <div class="panel-footer">
     <div class="btn-toolbar">

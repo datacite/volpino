@@ -15,7 +15,7 @@ if (!params.empty()) {
 // load the data from the API
 if (query) {
   d3.json(query)
-    .header("Accept", "application/json; version=1")
+    .header("Accept", "application/json")
     .header("Authorization", "Bearer " + jwt)
     .get(function(error, json) {
       if (error) { return console.warn(error); }
