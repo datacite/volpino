@@ -95,11 +95,11 @@ class User < ActiveRecord::Base
   end
 
   def provider_name
-    cached_provider_response(provider_id).name if provider_id.present?
+    cached_provider_response(provider_id).try(:name) if provider_id.present?
   end
 
   def client_name
-    cached_client_response(client_id).name if client_id.present?
+    cached_client_response(client_id).try(:name) if client_id.present?
   end
 
   def validate_email

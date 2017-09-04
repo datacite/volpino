@@ -3,14 +3,14 @@ module Cacheable
 
   included do
     def cached_provider_response(id, options={})
-      Rails.cache.fetch("provider_response/#{id}", expires_in: 1.minute) do
+      Rails.cache.fetch("provider_response/#{id}", expires_in: 1.day) do
         provider = Provider.where(id: id)
         provider[:data] if provider.present?
       end
     end
 
     def cached_client_response(id, options={})
-      Rails.cache.fetch("client_response/#{id}", expires_in: 1.minute) do
+      Rails.cache.fetch("client_response/#{id}", expires_in: 1.day) do
         client = Client.where(id: id)
         client[:data] if client.present?
       end
