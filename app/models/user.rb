@@ -19,13 +19,13 @@ class User < ActiveRecord::Base
   include OrcidClient::Api
 
   before_create :set_role
-  before_save :set_organization
 
   after_commit :queue_user_job, :on => :create
   after_commit :queue_claim_jobs, :on => :create
 
   has_many :claims, primary_key: "uid", foreign_key: "orcid", inverse_of: :user
-  belongs_to :member, primary_key: "name", foreign_key: "member_id"
+  belongs_to :provider, primary_key: "name", foreign_key: "provider_id"
+  belongs_to :client, primary_key: "name", foreign_key: "client_id"
 
   devise :omniauthable, :omniauth_providers => [:orcid, :github, :google_oauth2]
 
@@ -127,8 +127,8 @@ class User < ActiveRecord::Base
       uid: uid,
       name: name,
       email: email,
-      member_id: member_id,
-      datacenter_id: datacenter_id,
+      provider_id: provider_id,
+      client_id: client_id,
       role: role,
       iat: Time.now.to_i,
       exp: Time.now.to_i + 14 * 24 * 3600
@@ -239,18 +239,6 @@ class User < ActiveRecord::Base
     elsif github_to_be_deleted?
       external_identifier.delete_external_identifier(options)
     end
-  end
-
-  def set_organization
-    if member_id.present?
-      org = "member"
-    elsif datacenter_id.present?
-      org = "data_center"
-    elsif %w(staff_user staff_admin).include?(role)
-      org = "staff"
-    end
-
-    write_attribute(:organization, org) if organization.blank?
   end
 
   def set_role

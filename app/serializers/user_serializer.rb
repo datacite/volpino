@@ -3,8 +3,8 @@ class UserSerializer < ActiveModel::Serializer
   attributes :given_names, :family_name, :credit_name, :orcid, :github, :created, :updated
   attribute :role, if: :can_read
   attribute :email, if: :can_read
-  attribute :member_id, if: :can_read
-  attribute :data_center_id, if: :can_read
+  attribute :provider_id, if: :can_read
+  attribute :client_id, if: :can_read
   has_many :claims, if: :can_read
 
   def can_read
@@ -18,10 +18,6 @@ class UserSerializer < ActiveModel::Serializer
 
   def orcid
     "http://orcid.org/#{object.orcid}"
-  end
-
-  def data_center_id
-    object.datacenter_id
   end
 
   def github

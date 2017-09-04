@@ -60,7 +60,6 @@ class UsersController < ApplicationController
   def load_user
     if user_signed_in?
       @user = current_user
-      @member = @user.member
 
       panels = %w(auto public login account orcid impactstory)
       @panel = panels.find { |p| p == params[:panel] } || "account"
@@ -72,15 +71,6 @@ class UsersController < ApplicationController
   def load_index
     collection = User
 
-    if params[:member_id]
-      collection = collection.where(:member_id => params[:member_id])
-    end
-
-    if params[:organization]
-      collection = collection.where(:organization => params[:organization])
-      @organization = User.where(organization: params[:organization]).group(:organization).count.first
-    end
-
     if params[:role]
       collection = collection.where(:role => params[:role])
       @role = User.where(role: params[:role]).group(:role).count.first
@@ -89,7 +79,6 @@ class UsersController < ApplicationController
     collection = collection.query(params[:query]) if params[:query]
     collection = collection.ordered
 
-    @organizations = User.where.not(organization: nil).group(:organization).count
     @roles = User.group(:role).count
     @users = collection.paginate(:page => params[:page])
   end
@@ -103,8 +92,8 @@ class UsersController < ApplicationController
                                  :auto_update,
                                  :role,
                                  :is_public,
-                                 :member_id,
-                                 :datacenter_id,
+                                 :provider_id,
+                                 :client_id,
                                  :expires_at,
                                  :google_uid,
                                  :google_token,

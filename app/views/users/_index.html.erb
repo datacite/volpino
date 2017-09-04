@@ -26,7 +26,6 @@
               <div id="user_<%= user.id %>" class="panel-collapse collapse.in">
                 <%= simple_form_for user, url: user_path(user), html: { role: "form", remote: true } do |f| %>
                   <div class="panel-body">
-                    <%= f.input :member_id, collection: Member.all, label_method: :title, value_method: :name, input_html: { class: "form-user" } %>
                     <% if user.id != current_user.id %>
                       <%= f.input :role, collection: roles.map { |role| [role.titleize, role] }, include_blank: false, input_html: { class: "form-user" } %>
                     <% end %>
@@ -58,9 +57,9 @@
                   <h5>ORCID</h5>
                   <%= link_to h(user.orcid), user.orcid_as_url %>
 
-                  <% if user.member.present? %>
-                    <h5>Member</h5>
-                    <%= link_to h(user.member.title), member_path(user.member.name) %>
+                  <% if user.provider.present? %>
+                    <h5>Provider</h5>
+                    <%= h(user.provider.title) %>
                   <% end %>
 
                   <h5>Role</h5>
@@ -122,34 +121,11 @@
   <div class='col-md-3'>
     <div class="panel facets">
       <div class="panel-body">
-        <% if @organizations.present? %>
-          <h4>Organization</h4>
-          <ul>
-            <% if @organization %>
-              <li class="active">
-                <%= link_to icon('check-square-o').html_safe, users_path(role: params[:role]) %>
-                <div class="facet-title"><%= @organization.first.titleize %></div>
-                <span class="number pull-right"><%= number_with_delimiter(@organization.last) %></span>
-                <div class="clearfix"/>
-              </li>
-            <% else %>
-              <% @organizations.each do |organization| %>
-                <li>
-                  <%= link_to icon('square-o').html_safe, users_path(organization: organization.first, role: params[:role]) %>
-                  <div class="facet-title"><%= organization.first.titleize %></div>
-                  <span class="number pull-right"><%= number_with_delimiter(organization.last) %></span>
-                  <div class="clearfix"/>
-                </li>
-              <% end %>
-            <% end %>
-          </ul>
-        <% end %>
-
         <h4>Roles</h4>
         <ul>
           <% if @role %>
             <li class="active">
-              <%= link_to icon('check-square-o').html_safe, users_path(organization: params[:organization]) %>
+              <%= link_to icon('check-square-o').html_safe, users_path %>
               <div class="facet-title"><%= @role.first.titleize %></div>
               <span class="number pull-right"><%= number_with_delimiter(@role.last) %></span>
               <div class="clearfix"/>
@@ -157,7 +133,7 @@
           <% else %>
             <% @roles.each do |role| %>
               <li>
-                <%= link_to icon('square-o').html_safe, users_path(organization: params[:organization], role: role.first) %>
+                <%= link_to icon('square-o').html_safe, users_path(role: role.first) %>
                 <div class="facet-title"><%= role.first.titleize %></div>
                 <span class="number pull-right"><%= number_with_delimiter(role.last) %></span>
                 <div class="clearfix"/>

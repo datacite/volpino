@@ -1,6 +1,4 @@
 class Member < ActiveRecord::Base
-  has_many :users, primary_key: "name", foreign_key: "member_id"
-
   validates :name, presence: true, uniqueness: true
   validates :title, presence: true
   validates :member_type, presence: true

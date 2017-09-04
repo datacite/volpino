@@ -18,11 +18,11 @@ class Api::V1::UsersController < Api::BaseController
 
     # filter by current user
     if current_user.present?
-      member_id = current_user.member_id.presence || params['member-id']
-      collection = collection.where(member_id: member_id) if member_id.present?
+      provider_id = current_user.provider_id.presence || params['provider-id']
+      collection = collection.where(provider_id: provider_id) if provider_id.present?
 
-      data_center_id = current_user.datacenter_id.presence  || params['data-center-id']
-      collection = collection.where(datacenter_id: data_center_id) if data_center_id.present?
+      client_id = current_user.client_id.presence  || params['client-id']
+      collection = collection.where(client_id: client_id) if client_id.present?
     else
       collection = collection.is_public
     end
@@ -51,13 +51,14 @@ class Api::V1::UsersController < Api::BaseController
     page[:size] = page[:size] && (1..1000).include?(page[:size].to_i) ? page[:size].to_i : 25
 
     @users = collection.is_public.order_by_name.page(page[:number]).per_page(page[:size])
+    @include = ['provider', 'client']
 
     meta = { total: @users.total_entries,
              total_pages: @users.total_pages,
              page: page[:number].to_i,
              roles: roles }.compact
 
-    render json: @users, meta: meta
+    render json: @users, meta: meta, include: @include
   end
 
   protected
