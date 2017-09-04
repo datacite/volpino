@@ -68,6 +68,6 @@ class Client < Base
   end
 
   def self.url
-    "#{ENV["LUPO_URL"]}/data-centers"
+    "#{ENV["LUPO_URL"]}/clients"
   end
 end

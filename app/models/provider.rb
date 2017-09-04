@@ -52,6 +52,6 @@ class Provider < Base
   end
 
   def self.url
-    "#{ENV["LUPO_URL"]}/members"
+    "#{ENV["LUPO_URL"]}/providers"
   end
 end
