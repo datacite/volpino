@@ -38,7 +38,7 @@
   <div class="panel-body">
     <dl class="dl-horizontal">
       <dt>Role</dt>
-      <dd><%= @user.role.titleize %></dd>
+      <dd><%= @user.role.name %></dd>
       <% if @user.provider_name %>
         <dt>Provider</dt>
         <dd><%= h(@user.provider_name) %></dd>
