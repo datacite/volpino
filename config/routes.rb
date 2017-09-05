@@ -34,6 +34,7 @@ Rails.application.routes.draw do
       resources :members
       resources :providers, only: [:show, :index]
       resources :random, only: [:index]
+      resources :roles, only: [:show, :index]
       resources :services
       resources :status, only: [:index]
       resources :tags

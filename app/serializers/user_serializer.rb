@@ -2,12 +2,12 @@ class UserSerializer < ActiveModel::Serializer
   cache key: 'user'
 
   attributes :given_names, :family_name, :credit_name, :orcid, :github, :created, :updated
-  attribute :role, if: :can_read
   attribute :email, if: :can_read
   attribute :provider_id, if: :can_read
   attribute :client_id, if: :can_read
 
   has_many :claims, if: :can_read
+  belongs_to :role, serializer: RoleSerializer, if: :can_read
   belongs_to :client, serializer: ClientSerializer, if: :can_read
   belongs_to :provider, serializer: ProviderSerializer, if: :can_read
 

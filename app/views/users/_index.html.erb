@@ -27,7 +27,7 @@
                 <%= simple_form_for user, url: user_path(user), html: { role: "form", remote: true } do |f| %>
                   <div class="panel-body">
                     <% if user.id != current_user.id %>
-                      <%= f.input :role, collection: roles.map { |role| [role.titleize, role] }, include_blank: false, input_html: { class: "form-user" } %>
+                      <%= f.input :role_id, collection: roles.map { |role| [role.titleize, role] }, include_blank: false, input_html: { class: "form-user" } %>
                     <% end %>
                     <div class="form-group">
                       <label for="other">Other</label>
@@ -58,7 +58,7 @@
                   <%= link_to h(user.orcid), user.orcid_as_url %>
 
                   <h5>Role</h5>
-                  <%= user.role.titleize %>
+                  <%= user.role_name %>
 
                   <% if user.provider_name.present? %>
                     <h5>Provider</h5>
@@ -91,11 +91,11 @@
                   <% if can?(:manage, user) %>
                     <div class="btn-toolbar">
                       <div class="btn-group btn-group-sm pull-right">
-                        <%= link_to icon("pencil").html_safe, edit_user_path(user, query: params[:query], role: params[:role], page: params[:page]), remote: true, class: 'btn btn-neutral btn-fill btn-sm', id: "#{user.id}-edit" %>
+                        <%= link_to icon("pencil").html_safe, edit_user_path(user, query: params[:query], 'role-id' => params['role-id'], page: params[:page]), remote: true, class: 'btn btn-neutral btn-fill btn-sm', id: "#{user.id}-edit" %>
                       </div>
                       <% if user.id != current_user.id %>
                         <div class="btn-group btn-group-sm pull-right">
-                          <%= link_to icon("trash").html_safe, user_path(user, query: params[:query], role: params[:role], page: params[:page]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-neutral btn-fill btn-sm', id: "#{user.id}-delete" %>
+                          <%= link_to icon("trash").html_safe, user_path(user, query: params[:query], 'role-id' => params['role-id'], page: params[:page]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-neutral btn-fill btn-sm', id: "#{user.id}-delete" %>
                         </div>
                       <% end %>
                     </div>
@@ -113,8 +113,8 @@
       <div class="alert alert-simple-info">
         <h5>
           There are currently no users
-          <% unless params[:role].blank? %>
-              with role "<%= params[:role].titleize %>"
+          <% unless params['role-id'].blank? %>
+              with role "<%= params['role-id'].titleize %>"
           <% end %>
           <% unless params[:query].blank? %>
               with <strong><%= params[:query] %></strong> in the name, email or API key

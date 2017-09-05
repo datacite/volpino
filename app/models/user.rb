@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   # include orcid_client
   include OrcidClient::Api
 
-  attr_reader :client, :doi_provider
+  attr_reader :role, :client, :doi_provider
 
   before_create :set_role
 
@@ -58,14 +58,14 @@ class User < ActiveRecord::Base
 
   # Helper method to check for admin user
   def is_admin?
-    role == "staff_admin"
+    role_id == "staff_admin"
   end
 
   #alias_method :is_admin?, :is_admin
 
   # Helper method to check for admin or staff user
   def is_admin_or_staff?
-    ["staff_admin", "staff_user"].include?(role)
+    ["staff_admin", "staff_user"].include?(role_id)
   end
 
   def has_email?
@@ -104,6 +104,14 @@ class User < ActiveRecord::Base
     doi_provider.name if provider_id.present?
   end
 
+  def role
+    cached_role_response(role_id) if role_id.present?
+  end
+
+  def role_name
+    role.name if role_id.present?
+  end
+
   def client
     cached_client_response(client_id) if client_id.present?
   end
@@ -127,7 +135,7 @@ class User < ActiveRecord::Base
       other_names: auth.extra.fetch(:raw_info, {}).fetch(:other_names, nil),
       authentication_token: auth.credentials.token,
       expires_at: timestamp(auth.credentials),
-      role: auth.extra.fetch(:raw_info, {}).fetch(:role, nil),
+      role_id: auth.extra.fetch(:raw_info, {}).fetch(:role_id, nil),
       google_uid: options.fetch("google_uid", nil),
       google_token: options.fetch("google_token", nil),
       email: options.fetch("email", nil),
@@ -148,7 +156,7 @@ class User < ActiveRecord::Base
       email: email,
       provider_id: provider_id,
       client_id: client_id,
-      role: role,
+      role_id: role_id,
       iat: Time.now.to_i,
       exp: Time.now.to_i + 30 * 24 * 3600
     }.compact
@@ -262,6 +270,6 @@ class User < ActiveRecord::Base
 
   def set_role
     # use admin role for first user
-    write_attribute(:role, "staff_admin") if User.count == 0 && role.blank?
+    write_attribute(:role_id, "staff_admin") if User.count == 0 && role_id.blank?
   end
 end

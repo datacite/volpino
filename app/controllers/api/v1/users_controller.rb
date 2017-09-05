@@ -1,5 +1,5 @@
 class Api::V1::UsersController < Api::BaseController
-  prepend_before_filter :load_user, only: [:show, :destroy]
+  prepend_before_filter :load_user, only: [:show, :update, :destroy]
   before_filter :set_include, :authenticate_user_from_token!
   load_and_authorize_resource :except => [:index, :create]
 
@@ -28,7 +28,7 @@ class Api::V1::UsersController < Api::BaseController
       collection = collection.is_public
     end
 
-    collection = collection.where(role: params[:role]) if params[:role].present?
+    collection = collection.where(role_id: params['role-id']) if params['role-id'].present?
 
     if params['from-created-date'].present? || params['until-created-date'].present?
       from_date = params['from-created-date'].presence || '2015-11-01'
@@ -38,12 +38,12 @@ class Api::V1::UsersController < Api::BaseController
 
     if current_user.blank?
       roles = nil
-    elsif  params[:role].present?
-      roles = [{ id: params[:role],
-                 title: params[:role].humanize,
-                 count: collection.where(role: params[:role]).count }]
+    elsif  params['role-id'].present?
+      roles = [{ id: params['role-id'],
+                 title: cached_role_response(params['role-id']).name,
+                 count: collection.where(role_id: params['role-id']).count }]
     else
-      roles = collection.where.not(role: nil).group(:role).count
+      roles = collection.where.not(role_id: nil).group(:role_id).count
       roles = roles.map { |k,v| { id: k, title: k.titleize, count: v } }
     end
 
@@ -61,6 +61,17 @@ class Api::V1::UsersController < Api::BaseController
     render jsonapi: @users, meta: meta, include: @include
   end
 
+  def update
+    Rails.logger.info safe_params.inspect
+    @user.update_attributes(safe_params)
+
+    render jsonapi: @user, include: @include
+  end
+
+  def destroy
+
+  end
+
   protected
 
   def load_user
@@ -73,7 +84,17 @@ class Api::V1::UsersController < Api::BaseController
       @include = params[:include].split(",").map { |i| i.downcase.underscore }.join(",")
       @include = [@include]
     else
-      @include = ['client','provider']
+      @include = ['role', 'client', 'provider']
     end
+  end
+
+  private
+
+  def safe_params
+    Rails.logger.info params.inspect
+    ActiveModelSerializers::Deserialization.jsonapi_parse!(
+      params, only: [:credit_name, :given_names, :family_name, :email, :role, :provider, :client],
+              keys: { credit_name: :name }
+    )
   end
 end

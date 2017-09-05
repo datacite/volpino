@@ -71,15 +71,15 @@ class UsersController < ApplicationController
   def load_index
     collection = User
 
-    if params[:role]
-      collection = collection.where(:role => params[:role])
-      @role = User.where(role: params[:role]).group(:role).count.first
+    if params['role-id']
+      collection = collection.where(:role_id => params['role-id'])
+      @role = User.where(role_id: params['role-id']).group(:role_id).count.first
     end
 
     collection = collection.query(params[:query]) if params[:query]
     collection = collection.ordered
 
-    @roles = User.group(:role).count
+    @roles = User.group(:role_id).count
     @users = collection.paginate(:page => params[:page])
   end
 
@@ -90,7 +90,7 @@ class UsersController < ApplicationController
                                  :email,
                                  :unconfirmed_email,
                                  :auto_update,
-                                 :role,
+                                 :role_id,
                                  :is_public,
                                  :provider_id,
                                  :client_id,
