@@ -1,10 +1,10 @@
 class Api::V1::UsersController < Api::BaseController
   prepend_before_filter :load_user, only: [:show, :destroy]
-  before_filter :authenticate_user_from_token!
+  before_filter :set_include, :authenticate_user_from_token!
   load_and_authorize_resource :except => [:index, :create]
 
   def show
-    render json: @user
+    render jsonapi: @user, include: @include
   end
 
   def index
@@ -16,13 +16,14 @@ class Api::V1::UsersController < Api::BaseController
       collection = collection.query(params[:query])
     end
 
-    # filter by current user
-    if current_user.present?
-      provider_id = current_user.provider_id.presence || params['provider-id']
-      collection = collection.where(provider_id: provider_id) if provider_id.present?
-
-      client_id = current_user.client_id.presence  || params['client-id']
-      collection = collection.where(client_id: client_id) if client_id.present?
+    # filter by current user, provider or client
+    if params['provider-id'].present?
+      collection = collection.where(provider_id: params['provider-id'])
+    elsif params['client-id'].present?
+      collection = collection.where(client_id: params['client-id'])
+    elsif current_user.present?
+      collection = collection.where(provider_id: current_user.provider_id) if current_user.provider_id.present?
+      collection = collection.where(client_id: current_user.client_id) if current_user.client_id.present?
     else
       collection = collection.is_public
     end
@@ -51,14 +52,13 @@ class Api::V1::UsersController < Api::BaseController
     page[:size] = page[:size] && (1..1000).include?(page[:size].to_i) ? page[:size].to_i : 25
 
     @users = collection.is_public.order_by_name.page(page[:number]).per_page(page[:size])
-    @include = ['provider', 'client']
 
     meta = { total: @users.total_entries,
              total_pages: @users.total_pages,
              page: page[:number].to_i,
              roles: roles }.compact
 
-    render json: @users, meta: meta, include: @include
+    render jsonapi: @users, meta: meta, include: @include
   end
 
   protected
@@ -66,5 +66,14 @@ class Api::V1::UsersController < Api::BaseController
   def load_user
     @user = User.is_public.where(uid: params[:id]).first
     fail ActiveRecord::RecordNotFound unless @user.present?
+  end
+
+  def set_include
+    if params[:include].present?
+      @include = params[:include].split(",").map { |i| i.downcase.underscore }.join(",")
+      @include = [@include]
+    else
+      @include = ['client','provider']
+    end
   end
 end

@@ -6,7 +6,7 @@ class Api::V1::ClientsController < Api::BaseController
       @include = params[:include].split(",").map { |i| i.downcase.underscore }.join(",")
       @include = [@include]
     else
-      @include = nil
+      @include = ['provider']
     end
   end
 

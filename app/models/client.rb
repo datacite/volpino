@@ -1,5 +1,5 @@
 class Client < Base
-  attr_reader :id, :name, :domains, :provider_id, :ids, :year, :created_at, :updated_at
+  attr_reader :id, :name, :domains, :provider_id, :provider, :year, :created_at, :updated_at
 
   # include helper module for caching infrequently changing resources
   include Cacheable
@@ -9,7 +9,7 @@ class Client < Base
     attributes = item.fetch('attributes', {})
 
     @name = attributes.fetch("name", nil)
-    @provider_id = attributes.fetch("member-id", nil)
+    @provider_id = attributes.fetch("provider-id", nil)
     @domains = attributes.fetch("domains", []).presence
     @created_at = attributes.fetch("created", nil)
     @updated_at = attributes.fetch("updated", nil)
@@ -50,17 +50,10 @@ class Client < Base
       total = meta.fetch("total", 0)
       total_pages = (total.to_f / per_page).ceil
 
-      providers = meta.fetch("providers", [])
-                    .sort { |a, b| b.fetch(:count) <=> a.fetch(:count) }
-                    .map do |i|
-                           provider = cached_providers.find { |m| m.id == i.fetch(:symbol, nil) } || OpenStruct.new(title: i.fetch(:name, nil))
-                           { id: i.fetch(:symbol).downcase, title: provider.title, count: i.fetch(:count) }
-                         end
-
       meta = { total: total,
                total_pages: total_pages,
                page: page,
-               providers: providers,
+               providers: meta.fetch("providers", []),
                years: meta.fetch("years", []) }
 
       { data: parse_items(items, providers: cached_providers), meta: meta }

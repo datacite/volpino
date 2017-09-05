@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
   # include orcid_client
   include OrcidClient::Api
 
+  attr_reader :client, :doi_provider
+
   before_create :set_role
 
   after_commit :queue_user_job, :on => :create
@@ -94,12 +96,20 @@ class User < ActiveRecord::Base
     name
   end
 
+  def doi_provider
+    cached_provider_response(provider_id) if provider_id.present?
+  end
+
   def provider_name
-    cached_provider_response(provider_id).try(:name) if provider_id.present?
+    doi_provider.name if provider_id.present?
+  end
+
+  def client
+    cached_client_response(client_id) if client_id.present?
   end
 
   def client_name
-    cached_client_response(client_id).try(:name) if client_id.present?
+    client.name if client_id.present?
   end
 
   def validate_email
@@ -140,7 +150,7 @@ class User < ActiveRecord::Base
       client_id: client_id,
       role: role,
       iat: Time.now.to_i,
-      exp: Time.now.to_i + 14 * 24 * 3600
+      exp: Time.now.to_i + 30 * 24 * 3600
     }.compact
 
     encode_token(payload)
