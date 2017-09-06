@@ -91,7 +91,6 @@ class Api::V1::UsersController < Api::BaseController
   private
 
   def safe_params
-    Rails.logger.info params.inspect
     ActiveModelSerializers::Deserialization.jsonapi_parse!(
       params, only: [:credit_name, :given_names, :family_name, :email, :role, :provider, :client],
               keys: { credit_name: :name }
