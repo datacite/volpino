@@ -57,6 +57,10 @@
           <dt>Provider</dt>
           <dd><%= h(@user.provider_name) %></dd>
         <% end %>
+        <% if @user.client_name %>
+          <dt>Client</dt>
+          <dd><%= h(@user.client_name) %></dd>
+        <% end %>
         <dt>Record Public</dt>
         <% if @user.is_public %>
           <dd><%= @user.is_public %></dd>

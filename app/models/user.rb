@@ -117,7 +117,7 @@ class User < ActiveRecord::Base
   end
 
   def client_name
-    client.name if client_id.present?
+    client.name if client.present?
   end
 
   def validate_email
