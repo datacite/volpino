@@ -60,6 +60,7 @@ class UsersController < ApplicationController
   def load_user
     if user_signed_in?
       @user = current_user
+      @providers = User.cached_providers
 
       panels = %w(auto public login account orcid impactstory)
       @panel = panels.find { |p| p == params[:panel] } || "account"
@@ -79,6 +80,7 @@ class UsersController < ApplicationController
     collection = collection.query(params[:query]) if params[:query]
     collection = collection.ordered
 
+    @providers = User.cached_providers
     @roles = User.group(:role_id).count
     @users = collection.paginate(:page => params[:page])
   end
