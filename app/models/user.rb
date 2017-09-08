@@ -101,7 +101,7 @@ class User < ActiveRecord::Base
   end
 
   def provider_name
-    doi_provider.name if provider_id.present?
+    doi_provider.name if doi_provider.present?
   end
 
   def role
