@@ -68,6 +68,7 @@ RUN mkdir -p /etc/my_init.d
 COPY vendor/docker/70_precompile.sh /etc/my_init.d/70_precompile.sh
 COPY vendor/docker/80_cron.sh /etc/my_init.d/80_cron.sh
 COPY vendor/docker/90_migrate.sh /etc/my_init.d/90_migrate.sh
+COPY vendor/docker/100_flush_cache.sh /etc/my_init.d/100_flush_cache.sh
 
 # Expose web
 EXPOSE 80
