@@ -12,11 +12,13 @@ class Ability
     elsif user.role_id == "provider_admin"
       can [:read], Phrase
       can [:read], User
+      can [:update], Member, :name => user.provider_id
       can [:update], User, :id => user.id
       can [:manage], Claim, :orcid => user.uid
     elsif user.role_id == "provider_user"
       can [:read], Phrase
       can [:read], User
+      can [:read], Member, :name => user.provider_id
       can [:update], User, :id => user.id
       can [:manage], Claim, :orcid => user.uid
     elsif user.role_id == "client_admin"

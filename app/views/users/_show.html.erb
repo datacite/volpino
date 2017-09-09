@@ -7,6 +7,11 @@
       <div class="tab-pane panel-list" id="login">
         <%= render :partial => 'users/login' %>
       </div>
+      <% if @member.present? %>
+       <div class="tab-pane" id="member">
+         <%= render :partial => 'members/show' %>
+       </div>
+     <% end %>
       <div class="tab-pane panel-list" id="orcid">
         <%= render :partial => 'users/orcid' %>
       </div>
@@ -16,6 +21,9 @@
     <ul class="nav nav-tabs nav-stacked" id="user-tabs" data-active="<%= @panel %>">
       <li><a href="#account" data-toggle="tab">Your Account</a></li>
       <li><a href="#login" data-toggle="tab">Social Login</a></li>
+      <% if @member.present? %>
+        <li><a href="#member" data-toggle="tab">Member Record</a></li>
+      <% end %>
       <li><a href="#orcid" data-toggle="tab">ORCID Claims</a></li>
     </ul>
   </div>

@@ -60,6 +60,7 @@ class UsersController < ApplicationController
   def load_user
     if user_signed_in?
       @user = current_user
+      @member = Member.where(name: @user.provider_id).first if @user.provider_id.present? && %w(staff_admin provider_admin provider_user).include?(@user.role_id)
       @providers = User.cached_providers
 
       panels = %w(auto public login account orcid impactstory)
