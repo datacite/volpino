@@ -16,18 +16,9 @@ class Api::V1::UsersController < Api::BaseController
       collection = collection.query(params[:query])
     end
 
-    # filter by current user, provider or client
-    if params['provider-id'].present?
-      collection = collection.where(provider_id: params['provider-id'])
-    elsif params['client-id'].present?
-      collection = collection.where(client_id: params['client-id'])
-    elsif current_user.present?
-      collection = collection.where(provider_id: current_user.provider_id) if current_user.provider_id.present?
-      collection = collection.where(client_id: current_user.client_id) if current_user.client_id.present?
-    else
-      collection = collection.is_public
-    end
-
+    collection = collection.is_public if current_user.blank?
+    collection = collection.where(provider_id: params['provider-id']) if params['provider-id'].present?
+    collection = collection.where(client_id: params['client-id']) if params['client-id'].present?
     collection = collection.where(role_id: params['role-id']) if params['role-id'].present?
 
     if params['from-created-date'].present? || params['until-created-date'].present?
