@@ -51,7 +51,14 @@ class Api::V1::UsersController < Api::BaseController
     page[:number] = page[:number] && page[:number].to_i > 0 ? page[:number].to_i : 1
     page[:size] = page[:size] && (1..1000).include?(page[:size].to_i) ? page[:size].to_i : 25
 
-    @users = collection.is_public.order_by_name.page(page[:number]).per_page(page[:size])
+    order = case params[:sort]
+              when "name" then "ISNULL(family_name), family_name"
+              when "-name" then "family_name DESC"
+              when "created" then "created_at"
+              else "created_at DESC"
+            end
+
+    @users = collection.is_public.order(order).page(page[:number]).per_page(page[:size])
 
     meta = { total: @users.total_entries,
              total_pages: @users.total_pages,
