@@ -1,4 +1,7 @@
 class Api::V1::UsersController < Api::BaseController
+  # include helper module for caching infrequently changing resources
+  include Cacheable
+  
   prepend_before_filter :load_user, only: [:show, :update, :destroy]
   before_filter :set_include, :authenticate_user_from_token!
   load_and_authorize_resource :except => [:index, :create]
