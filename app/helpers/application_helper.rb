@@ -106,10 +106,6 @@ module ApplicationHelper
     end
   end
 
-  def roles
-    %w(user client_user client_admin provider_user provider_admin staff_user staff_admin)
-  end
-
   def member_types
     %w(allocating non-allocating)
   end
