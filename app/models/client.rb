@@ -40,7 +40,7 @@ class Client < Base
       Rails.logger.info item.inspect
       return nil if item.blank?
 
-      { data: parse_item(item, providers: cached_providers) }
+      { data: parse_item(item) }
     else
       items = result.body.fetch("data", [])
       meta = result.body.fetch("meta", {})
@@ -56,7 +56,7 @@ class Client < Base
                providers: meta.fetch("providers", []),
                years: meta.fetch("years", []) }
 
-      { data: parse_items(items, providers: cached_providers), meta: meta }
+      { data: parse_items(items), meta: meta }
     end
   end
 

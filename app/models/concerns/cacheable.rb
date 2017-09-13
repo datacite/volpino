@@ -23,12 +23,4 @@ module Cacheable
       end
     end
   end
-
-  module ClassMethods
-    def cached_providers
-      Rails.cache.fetch("providers", expires_in: 1.day) do
-        Provider.all[:data]
-      end
-    end
-  end
 end

@@ -26,10 +26,10 @@ class Provider < Base
       "#{url}/#{options[:id]}"
     else
       params = { query: options.fetch(:query, nil),
-                 member_type: "allocating",
                  region: options.fetch(:region, nil),
                  year: options.fetch(:year, nil),
-                 "page[size]" => options.dig(:page, :size),
+                 sort: options.fetch(:sort, nil) || 'name',
+                 "page[size]" => options.dig(:page, :size) || 100,
                  "page[number]" => options.dig(:page, :number) }.compact
       url + "?" + URI.encode_www_form(params)
     end

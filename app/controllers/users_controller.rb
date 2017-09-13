@@ -61,7 +61,7 @@ class UsersController < ApplicationController
     if user_signed_in?
       @user = current_user
       @member = Member.where(name: @user.provider_id).first if @user.provider_id.present? && %w(staff_admin provider_admin provider_user).include?(@user.role_id)
-      @providers = User.cached_providers
+      @providers = Provider.all[:data]
 
       panels = %w(auto public login account orcid impactstory)
       @panel = panels.find { |p| p == params[:panel] } || "account"
@@ -81,7 +81,7 @@ class UsersController < ApplicationController
     collection = collection.query(params[:query]) if params[:query]
     collection = collection.ordered
 
-    @providers = User.cached_providers
+    @providers = Provider.all[:data]
     @roles = User.group(:role_id).count
     @users = collection.paginate(:page => params[:page])
   end

@@ -2,7 +2,7 @@
   <% if can?(:update, @user) && (controller.action_name == "edit" || (controller.action_name == "update" && !@user.errors.empty?)) %>
     <%= simple_form_for @user, url: user_path(@user, panel: "account"), html: { role: "form", remote: true } do |f| %>
       <div class="panel-body">
-        <%= f.input :provider_id, collection: @providers, label_method: :name, value_method: :id, hint: "DOI Service Provider you work with.", input_html: { class: "form-user" } %>
+        <%= f.input :provider_id, collection: @providers, label_method: :name, value_method: :id, hint: "DOI Registration Provider you work with.", input_html: { class: "form-user" } %>
       </div>
       <div class="panel-footer">
         <div class="form-group pull-right">
