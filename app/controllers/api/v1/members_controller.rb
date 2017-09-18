@@ -13,15 +13,15 @@ class Api::V1::MembersController < Api::BaseController
       collection = collection.query(params[:query])
     end
 
-    collection = collection.where(member_type: params['member-type']) if params['member-type'].present?
+    collection = collection.where(member_type: params[:member_type]) if params[:member_type].present?
     collection = collection.where(region: params[:region]) if params[:region].present?
     collection = collection.where(year: params[:year]) if params[:year].present?
 
     # calculate facet counts after filtering
-    if params["member-type"].present?
-      member_types = [{ id: params["member-type"],
-                        title: params["member-type"].humanize,
-                        count: collection.where(member_type: params["member-type"]).count }]
+    if params[:member_type].present?
+      member_types = [{ id: params[:member_type],
+                        title: params[:member_type].humanize,
+                        count: collection.where(member_type: params[:member_type]).count }]
     else
       member_types = collection.where.not(member_type: nil).group(:member_type).count
       member_types = member_types.map { |k,v| { id: k, title: k.humanize, count: v } }

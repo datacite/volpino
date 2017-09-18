@@ -1,7 +1,7 @@
 class Api::V1::UsersController < Api::BaseController
   # include helper module for caching infrequently changing resources
   include Cacheable
-  
+
   prepend_before_filter :load_user, only: [:show, :update, :destroy]
   before_filter :set_include, :authenticate_user_from_token!
   load_and_authorize_resource :except => [:index, :create]
@@ -20,22 +20,22 @@ class Api::V1::UsersController < Api::BaseController
     end
 
     collection = collection.is_public if current_user.blank?
-    collection = collection.where(provider_id: params['provider-id']) if params['provider-id'].present?
-    collection = collection.where(client_id: params['client-id']) if params['client-id'].present?
-    collection = collection.where(role_id: params['role-id']) if params['role-id'].present?
+    collection = collection.where(provider_id: params[:provider_id]) if params[:provider_id].present?
+    collection = collection.where(client_id: params[:client_id]) if params[:client_id].present?
+    collection = collection.where(role_id: params[:role_id]) if params[:role_id].present?
 
-    if params['from-created-date'].present? || params['until-created-date'].present?
-      from_date = params['from-created-date'].presence || '2015-11-01'
-      until_date = params['until-created-date'].presence || Time.zone.now.to_date.iso8601
+    if params[:from_created_date].present? || params[:until_created_date].present?
+      from_date = params[:from_created_date].presence || '2015-11-01'
+      until_date = params[:until_created_date].presence || Time.zone.now.to_date.iso8601
       collection = collection.where(created_at: from_date..until_date)
     end
 
     if current_user.blank?
       roles = nil
-    elsif  params['role-id'].present?
-      roles = [{ id: params['role-id'],
-                 title: cached_role_response(params['role-id']).name,
-                 count: collection.where(role_id: params['role-id']).count }]
+    elsif  params[:role_id].present?
+      roles = [{ id: params[:role_id],
+                 title: cached_role_response(params[:role_id]).name,
+                 count: collection.where(role_id: params[:role_id]).count }]
     else
       roles = collection.where.not(role_id: nil).group(:role_id).count
       roles = roles.map { |k,v| { id: k, title: k.titleize, count: v } }
@@ -46,10 +46,10 @@ class Api::V1::UsersController < Api::BaseController
     page[:size] = page[:size] && (1..1000).include?(page[:size].to_i) ? page[:size].to_i : 25
 
     order = case params[:sort]
-              when "name" then "ISNULL(family_name), family_name"
-              when "-name" then "family_name DESC"
-              when "created" then "created_at"
-              else "created_at DESC"
+              when "name" then "ISNULL(users.family_name), users.family_name"
+              when "-name" then "users.family_name DESC"
+              when "created" then "users.created_at"
+              else "users.created_at DESC"
             end
 
     @users = collection.is_public.order(order).page(page[:number]).per_page(page[:size])
