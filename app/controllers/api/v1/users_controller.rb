@@ -21,13 +21,14 @@ class Api::V1::UsersController < Api::BaseController
 
     collection = collection.is_public if current_user.blank?
 
-    # exclude users from search result, needed to manage users by provider or client
+    # exclude users from search result, needed to manage users by provider
     if params.has_key?(:exclude) && params[:provider_id].present?
       collection = collection.where('provider_id is NULL')
     elsif params[:provider_id].present?
       collection = collection.where(provider_id: params[:provider_id])
     end
 
+    # exclude users from search result, needed to manage users by client
     if params.has_key?(:exclude) && params[:client_id].present?
       provider_id = params[:client_id].split('.').first
       collection = collection.where(provider_id: provider_id).where('client_id is NULL')
