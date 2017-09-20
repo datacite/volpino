@@ -28,6 +28,10 @@ class Api::V1::ClaimsController < Api::BaseController
     collection = collection.where(claim_action: params[:claim_action]) if params[:claim_action].present?
     collection = collection.where(status: params[:status]) if params[:status].present?
 
+    if @user
+      users = [{ id: @user.orcid,
+                 title: @user.orcid,
+                 count: collection.count }]
     if params[:user_id].present?
       users = [{ id: params[:user_id],
                  title: params[:user_id],
@@ -36,19 +40,19 @@ class Api::V1::ClaimsController < Api::BaseController
       users = nil
     end
 
-    if params["source-id"].present?
-      sources = [{ id: params["source-id"],
-                   title: human_source_name(params["source-id"]),
-                   count: collection.where(source_id: params["source-id"]).count }]
+    if params[:source_id].present?
+      sources = [{ id: params[:source_id],
+                   title: human_source_name(params[:source_id]),
+                   count: collection.where(source_id: params[:source_id]).count }]
     else
       sources = collection.where.not(source_id: nil).group(:source_id).count
       sources = sources.map { |k,v| { id: k.to_s, title: human_source_name(k), count: v } }
     end
 
-    if params["claim-action"].present?
-      claim_actions = [{ id: params["claim-action"],
-                         title: params["claim-action"].humanize,
-                         count: collection.where(claim_action: params["claim-action"]).count }]
+    if params[:claim_action].present?
+      claim_actions = [{ id: params[:claim_action],
+                         title: params[:claim_action].humanize,
+                         count: collection.where(claim_action: params[:claim_action]).count }]
     else
       claim_actions = collection.where.not(claim_action: nil).group(:claim_action).count
       claim_actions = claim_actions.map { |k,v| { id: k.to_s, title: k.humanize, count: v } }
