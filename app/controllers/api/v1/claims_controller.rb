@@ -32,7 +32,7 @@ class Api::V1::ClaimsController < Api::BaseController
       users = [{ id: @user.orcid,
                  title: @user.orcid,
                  count: collection.count }]
-    if params[:user_id].present?
+    elsif params[:user_id].present?
       users = [{ id: params[:user_id],
                  title: params[:user_id],
                  count: collection.where(orcid: params[:user_id]).count }]
