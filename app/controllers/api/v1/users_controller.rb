@@ -23,7 +23,7 @@ class Api::V1::UsersController < Api::BaseController
 
     # exclude users from search result, needed to manage users by provider
     if params.has_key?(:exclude) && params[:provider_id].present?
-      collection = collection.where('provider_id IS NULL')
+      collection = collection.where('provider_id IS NULL OR provider_id != ?', params[:provider_id])
     elsif params[:provider_id].present?
       collection = collection.where(provider_id: params[:provider_id])
     end
@@ -31,7 +31,7 @@ class Api::V1::UsersController < Api::BaseController
     # exclude users from search result, needed to manage users by client
     if params.has_key?(:exclude) && params[:client_id].present?
       provider_id = params[:client_id].split('.').first
-      collection = collection.where(provider_id: provider_id).where('client_id IS NULL')
+      collection = collection.where(provider_id: provider_id).where('client_id IS NULL OR client_id != ?', params[:client_id])
     elsif params[:client_id].present?
       collection = collection.where(client_id: params[:client_id])
     end
