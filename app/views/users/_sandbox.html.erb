@@ -5,7 +5,10 @@
       <div class="panel-body">
         <%= f.input :sandbox_id, :as => :hidden, :input_html => { :value => 'sandbox.'+ @user.random_suffix } %>
         <%= f.input :sandbox_name, label: "Sandbox Name", input_html: { class: "form-user" } %>
-        <%= f.input :email, label: "Contact Email", input_html: { class: "form-user" } %>
+
+        <% if @user.email.blank? %>
+          <%= f.input :email, label: "Contact Email", input_html: { class: "form-user" } %>
+        <% end %>
       </div>
       <div class="panel-footer">
         <div class="form-group pull-right">
