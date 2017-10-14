@@ -38,6 +38,7 @@ class User < ActiveRecord::Base
   validates :uid, presence: true, uniqueness: true
   validates :provider, presence: true
   validate :validate_email
+  validate :validate_sandbox
 
   scope :query, ->(query) { where("name like ? OR uid like ? OR email like ? OR github like ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%") }
   scope :ordered, -> { order("created_at DESC") }
@@ -107,6 +108,10 @@ class User < ActiveRecord::Base
     doi_provider.name if doi_provider.present?
   end
 
+  def provider_url
+    ENV['BRACCO_URL'] + '/providers/' + provider_id if doi_provider.present?
+  end
+
   def role
     cached_role_response(role_id) if role_id.present?
   end
@@ -123,8 +128,14 @@ class User < ActiveRecord::Base
     client.name if client.present?
   end
 
+  def client_url
+    ENV['BRACCO_URL'] + '/clients/' + client_id if client.present?
+  end
+
   def sandbox
-    cached_client_response(sandbox_id) if sandbox_id.present?
+    return nil unless sandbox_id.present?
+    s = Client.where(id: sandbox_id)
+    s[:data] if s.present?
   end
 
   def sandbox_name
@@ -132,7 +143,18 @@ class User < ActiveRecord::Base
   end
 
   def sandbox_name=(value)
-    write_sandbox(value)
+    write_sandbox(value, jwt: jwt)
+  end
+
+  def sandbox_url
+    SANDBOX_URL + '/' + sandbox_id if sandbox.present?
+  end
+
+  def validate_sandbox
+    return true if sandbox_id.blank?
+
+    errors.add :sandbox_name, "can't be blank" if sandbox_name.blank?
+    errors.add :email, "can't be blank" if email.blank?
   end
 
   def validate_email
@@ -171,6 +193,7 @@ class User < ActiveRecord::Base
       email: email,
       provider_id: provider_id,
       client_id: client_id,
+      sandbox_id: sandbox_id,
       role_id: role_id,
       iat: Time.now.to_i,
       exp: Time.now.to_i + 30 * 24 * 3600

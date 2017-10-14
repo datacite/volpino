@@ -20,6 +20,8 @@ QUEUE_OPTIONS = ["high", "default", "low"]
 # Version of ORCID API
 ORCID_VERSION = '2.0'
 
+SANDBOX_URL = 'https://sandbox.datacite.org'
+
 # ORCID schema
 ORCID_SCHEMA = 'https://raw.githubusercontent.com/ORCID/ORCID-Source/master/orcid-model/src/main/resources/orcid-message-1.2.xsd'
 

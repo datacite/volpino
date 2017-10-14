@@ -64,17 +64,17 @@
 
                   <% if user.provider_name.present? %>
                     <h5>DOI Registration Provider</h5>
-                    <%= h(user.provider_name) %>
+                    <%= link_to h(user.provider_name), user.provider_url %>
                   <% end %>
 
                   <% if user.client_name.present? %>
                     <h5>Client</h5>
-                    <%= h(user.client_name) %>
+                    <%= link_to h(user.client_name), user.client_url %>
                   <% end %>
 
                   <% if user.sandbox_name.present? %>
                     <h5>Sandbox</h5>
-                    <%= h(user.sandbox_name) %>
+                    <%= link_to h(user.sandbox_name), user.sandbox_url %>
                   <% end %>
 
                   <% unless user.is_public %>

@@ -1,0 +1,28 @@
+<div class="panel panel-default" id="content-panel">
+  <% if can?(:update, @user) && (controller.action_name == "edit" || (controller.action_name == "update" && !@user.errors.empty?)) %>
+    <div class="panel-heading panel-title">Sandbox</div>
+    <%= simple_form_for @user, url: user_path(@user, panel: "sandbox"), html: { role: "form", remote: true } do |f| %>
+      <div class="panel-body">
+        <%= f.input :sandbox_id, :as => :hidden, :input_html => { :value => 'sandbox.'+ @user.random_suffix } %>
+        <%= f.input :sandbox_name, label: "Sandbox Name", input_html: { class: "form-user" } %>
+        <%= f.input :email, label: "Contact Email", input_html: { class: "form-user" } %>
+      </div>
+      <div class="panel-footer">
+        <div class="form-group pull-right">
+          <%= link_to 'Cancel', user_path(@user, panel: "sandbox"), { :remote => true, :class => 'btn btn-sm' } %>
+          <%= f.submit "Save ", class: "btn btn-sm btn-fill" %>
+        </div>
+        <div class="clearfix"/>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="panel-heading panel-title">DataCite Sandbox</div>
+    <div class="panel-body">
+      <% if @user.sandbox %>
+        Use your sandbox <%= link_to h(@user.sandbox_name), @user.sandbox_url %> to test DOI registration in a <a href="https://en.wikipedia.org/wiki/Sandbox_(software_development)">sandboxed</a> environment. Ask <a href="mailto:support@datacite.org">DataCite Support</a> if you want to add other users to your sandbox.
+      <% else %>
+        <%= link_to "Create your sandbox", edit_user_path(@user, panel: "sandbox"), remote: true %> to test DOI registration in a <a href="https://en.wikipedia.org/wiki/Sandbox_(software_development)">sandboxed</a> environment. Or ask <a href="mailto:support@datacite.org">DataCite Support</a> to be added to the sandbox of another user.
+      <% end %>
+    </div>
+  <% end %>
+</div>

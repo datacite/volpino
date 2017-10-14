@@ -1,5 +1,5 @@
 class Client < Base
-  attr_reader :id, :name, :domains, :provider_id, :provider, :year, :created_at, :updated_at
+  attr_reader :id, :name, :domains, :provider_id, :provider, :contact_name, :contact_email, :year, :created_at, :updated_at
 
   # include helper module for caching infrequently changing resources
   include Cacheable
@@ -10,6 +10,8 @@ class Client < Base
 
     @name = attributes.fetch("name", nil)
     @provider_id = attributes.fetch("provider-id", nil)
+    @contact_name = attributes.fetch("contact-name", nil)
+    @contact_email = attributes.fetch("contact-email", nil)
     @domains = attributes.fetch("domains", []).presence
     @created_at = attributes.fetch("created", nil)
     @updated_at = attributes.fetch("updated", nil)

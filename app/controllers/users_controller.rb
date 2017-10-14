@@ -64,7 +64,7 @@ class UsersController < ApplicationController
       @providers = Provider.all[:data]
       @sandboxes = Client.where("provider-id" => "SANDBOX")[:data]
 
-      panels = %w(auto public login account orcid impactstory)
+      panels = %w(auto public login account orcid sandbox)
       @panel = panels.find { |p| p == params[:panel] } || "account"
     else
       fail CanCan::AccessDenied.new("Please sign in first.", :read, User)

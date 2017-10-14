@@ -295,7 +295,7 @@ GEM
       mime-types (>= 1.16, < 4)
     mailgun-ruby (1.1.8)
       rest-client (~> 2.0)
-    maremma (3.5.11)
+    maremma (3.6)
       activesupport (>= 4.2.5, < 6)
       addressable (>= 2.3.6)
       builder (~> 3.2, >= 3.2.2)
