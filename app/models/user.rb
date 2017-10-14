@@ -147,7 +147,7 @@ class User < ActiveRecord::Base
   end
 
   def sandbox_url
-    SANDBOX_URL + '/' + sandbox_id if sandbox.present?
+    ENV['SANDBOX_URL'] + '/' + sandbox_id if sandbox.present?
   end
 
   def validate_sandbox
