@@ -4,7 +4,7 @@ class Api::V1::UsersController < Api::BaseController
 
   prepend_before_filter :load_user, only: [:show, :update, :destroy]
   before_filter :set_include, :authenticate_user_from_token!
-  load_and_authorize_resource :except => [:index, :create]
+  load_and_authorize_resource :except => [:index, :show, :create]
 
   def show
     render jsonapi: @user, include: @include
@@ -90,7 +90,11 @@ class Api::V1::UsersController < Api::BaseController
   protected
 
   def load_user
-    @user = User.is_public.where(uid: params[:id]).first
+    if current_user.present?
+      @user = User.where(uid: params[:id]).first
+    else
+      @user = User.is_public.where(uid: params[:id]).first
+    end
     fail ActiveRecord::RecordNotFound unless @user.present?
   end
 
