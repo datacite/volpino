@@ -13,6 +13,9 @@ class User < ActiveRecord::Base
   # include helper module for caching infrequently changing resources
   include Cacheable
 
+  # include helper module for Sandbox
+  include Sandboxable
+
   nilify_blanks
 
   # include hash helper
@@ -118,6 +121,18 @@ class User < ActiveRecord::Base
 
   def client_name
     client.name if client.present?
+  end
+
+  def sandbox
+    cached_client_response(sandbox_id) if sandbox_id.present?
+  end
+
+  def sandbox_name
+    sandbox.name if sandbox.present?
+  end
+
+  def sandbox_name=(value)
+    write_sandbox(value)
   end
 
   def validate_email

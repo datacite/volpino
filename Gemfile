@@ -22,6 +22,7 @@ gem 'active_model_serializers', '~> 0.10.4'
 gem 'librato-rails', '~> 1.4.2'
 gem 'colorize', '~> 0.8.1'
 gem 'pwqgen.rb', '~> 0.1.0'
+gem 'base32-crockford-checksum', '~> 0.2.3'
 
 gem "haml-rails", "~> 0.9"
 gem "dalli", "~> 2.7.0"

@@ -24,7 +24,7 @@ class Client < Base
       "#{url}/#{options[:id]}"
     else
       params = { query: options.fetch(:query, nil),
-                 "member-id": options.fetch("provider-id", nil),
+                 "provider-id": options.fetch("provider-id", nil),
                  year: options.fetch(:year, nil),
                  "page[size]" => options.dig(:page, :size),
                  "page[number]" => options.dig(:page, :number) }.compact

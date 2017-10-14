@@ -62,6 +62,7 @@ class UsersController < ApplicationController
       @user = current_user
       @member = Member.where(name: @user.provider_id).first if @user.provider_id.present? && %w(staff_admin provider_admin provider_user).include?(@user.role_id)
       @providers = Provider.all[:data]
+      @sandboxes = Client.where("provider-id" => "SANDBOX")[:data]
 
       panels = %w(auto public login account orcid impactstory)
       @panel = panels.find { |p| p == params[:panel] } || "account"
@@ -97,6 +98,8 @@ class UsersController < ApplicationController
                                  :is_public,
                                  :provider_id,
                                  :client_id,
+                                 :sandbox_id,
+                                 :sandbox_name,
                                  :expires_at,
                                  :google_uid,
                                  :google_token,
