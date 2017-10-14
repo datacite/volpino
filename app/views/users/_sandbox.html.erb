@@ -19,7 +19,14 @@
     <div class="panel-heading panel-title">DataCite Sandbox</div>
     <div class="panel-body">
       <% if @user.sandbox %>
-        Use your sandbox <%= link_to h(@user.sandbox_name), @user.sandbox_url %> to test DOI registration in a <a href="https://en.wikipedia.org/wiki/Sandbox_(software_development)">sandboxed</a> environment. Ask <a href="mailto:support@datacite.org">DataCite Support</a> if you want to add other users to your sandbox.
+        <dl class="dl-horizontal">
+          <dt>Sandbox Name</dt>
+          <dd><%= link_to h(@user.sandbox_name), @user.sandbox_url %></dd>
+        </dl>
+        <br/>
+        <div>
+          Use your sandbox to test DOI registration in a <a href="https://en.wikipedia.org/wiki/Sandbox_(software_development)">sandboxed</a> environment. Contact <a href="mailto:support@datacite.org">DataCite Support</a> if you want to add other users to your sandbox.
+        </div>
       <% else %>
         <%= link_to "Create your sandbox", edit_user_path(@user, panel: "sandbox"), remote: true %> to test DOI registration in a <a href="https://en.wikipedia.org/wiki/Sandbox_(software_development)">sandboxed</a> environment. Or ask <a href="mailto:support@datacite.org">DataCite Support</a> to be added to the sandbox of another user.
       <% end %>
