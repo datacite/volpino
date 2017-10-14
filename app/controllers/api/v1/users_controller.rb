@@ -4,7 +4,7 @@ class Api::V1::UsersController < Api::BaseController
 
   prepend_before_filter :load_user, only: [:show, :update, :destroy]
   before_filter :set_include, :authenticate_user_from_token!
-  load_and_authorize_resource :except => [:index, :show, :create]
+  load_and_authorize_resource :except => [:index, :create]
 
   def show
     render jsonapi: @user, include: @include
@@ -103,7 +103,7 @@ class Api::V1::UsersController < Api::BaseController
       @include = params[:include].split(",").map { |i| i.downcase.underscore }.join(",")
       @include = [@include]
     else
-      @include = ['role', 'client', 'provider']
+      @include = ['role', 'client', 'provider', 'sandbox']
     end
   end
 
@@ -111,7 +111,7 @@ class Api::V1::UsersController < Api::BaseController
 
   def safe_params
     ActiveModelSerializers::Deserialization.jsonapi_parse!(
-      params, only: [:name, :given_names, :family_name, :email, :role, :provider, :sandbox_id, :client]
+      params, only: [:name, :given_names, :family_name, :email, :role, :provider, :sandbox, :client]
     )
   end
 end
