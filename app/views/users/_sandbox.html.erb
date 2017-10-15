@@ -1,6 +1,6 @@
 <div class="panel panel-default" id="content-panel">
   <% if can?(:update, @user) && (controller.action_name == "edit" || (controller.action_name == "update" && !@user.errors.empty?)) %>
-    <div class="panel-heading panel-title">Sandbox</div>
+    <div class="panel-heading panel-title">DataCite Sandbox</div>
     <%= simple_form_for @user, url: user_path(@user, panel: "sandbox"), html: { role: "form", remote: true } do |f| %>
       <div class="panel-body">
         <%= f.input :sandbox_id, :as => :hidden, :input_html => { :value => 'sandbox.'+ @user.random_suffix } %>
