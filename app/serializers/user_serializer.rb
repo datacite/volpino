@@ -10,7 +10,7 @@ class UserSerializer < ActiveModel::Serializer
   has_many :claims, if: :can_read
   belongs_to :role, serializer: RoleSerializer, if: :can_read
   belongs_to :client, serializer: ClientSerializer, if: :can_read
-  belongs_to :sandbox, serializer: ClientSerializer, if: :can_read
+  belongs_to :sandbox, serializer: SandboxSerializer, if: :can_read
   belongs_to :provider, serializer: ProviderSerializer, if: :can_read
 
   def can_read
