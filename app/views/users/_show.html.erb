@@ -28,7 +28,9 @@
         <li><a href="#member" data-toggle="tab">Member Record</a></li>
       <% end %>
       <li><a href="#orcid" data-toggle="tab">ORCID Claims</a></li>
-      <li><a href="#sandbox" data-toggle="tab">Sandbox</a></li>
+      <% unless Rails.env.production? %>
+        <li><a href="#sandbox" data-toggle="tab">Sandbox</a></li>
+      <% end %>
     </ul>
   </div>
 </div>
