@@ -13,6 +13,7 @@ module Authenticable
 
     # decode token using SHA-256 hash algorithm
     def decode_token(token)
+      Rails.logger.info token
       public_key = OpenSSL::PKey::RSA.new(ENV['JWT_PUBLIC_KEY'].to_s.gsub('\n', "\n"))
       payload = (JWT.decode token, public_key, true, { :algorithm => 'RS256' }).first
 

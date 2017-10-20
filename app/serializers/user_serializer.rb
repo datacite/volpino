@@ -6,6 +6,7 @@ class UserSerializer < ActiveModel::Serializer
   attribute :provider_id, if: :can_read
   attribute :client_id, if: :can_read
   attribute :sandbox_id, if: :can_read
+  attribute :is_not_configured, if: :can_read
 
   has_many :claims, if: :can_read
   belongs_to :role, serializer: RoleSerializer, if: :can_read
