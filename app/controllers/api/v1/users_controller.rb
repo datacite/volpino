@@ -4,7 +4,7 @@ class Api::V1::UsersController < Api::BaseController
 
   prepend_before_filter :load_user, only: [:show, :update, :destroy]
   before_filter :set_include, :authenticate_user_from_token!
-  load_and_authorize_resource :except => [:index, :create]
+  load_and_authorize_resource :except => [:index, :show, :create]
 
   def show
     render jsonapi: @user, include: @include
