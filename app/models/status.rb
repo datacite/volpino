@@ -50,23 +50,20 @@ class Status < ActiveRecord::Base
     Gem::Version.new(current_version) > Gem::Version.new(version)
   end
 
-  def services_ok?
-    # web, mysql and memcached must be running if you can see services panel on status page
-    if redis == "OK" && sidekiq == "OK" && postfix == "OK"
-      true
-    else
-      false
-    end
+  def services_up?
+    [memcached_up?, sidekiq_up?].all?
   end
 
-  def redis
-    redis_client = Redis.new
-    redis_client.ping == "PONG" ? "OK" : "failed"
+  def memcached_up?
+    host = ENV["MEMCACHE_SERVERS"]
+    memcached_client = Dalli::Client.new("#{host}:11211")
+    memcached_client.alive!
+    true
   rescue
-    "failed"
+    false
   end
 
-  def sidekiq
+  def sidekiq_up?
     sidekiq_client = Sidekiq::ProcessSet.new
     sidekiq_client.size > 0 ? "OK" : "failed"
   rescue

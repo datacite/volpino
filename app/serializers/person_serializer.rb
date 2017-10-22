@@ -4,11 +4,11 @@ class PersonSerializer < ActiveModel::Serializer
   attributes :given, :family, :literal, :orcid, :github, :updated
 
   def id
-    object.uid
+    "https://orcid.org/#{object.orcid}"
   end
 
   def orcid
-    "http://orcid.org/#{object.orcid}"
+    "https://orcid.org/#{object.orcid}"
   end
 
   def literal

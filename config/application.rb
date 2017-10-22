@@ -33,6 +33,7 @@ ENV['SANDBOX_URL'] ||= "https://sandbox.datacite.org"
 ENV['BRACCO_URL'] ||= "https://doi.datacite.org"
 ENV['LUPO_URL'] ||= "https://api.datacite.org"
 ENV['CDN_URL'] ||= "https://assets.datacite.org"
+ENV['REDIS_URL'] ||= "redis://redis:6379/12"
 ENV['GITHUB_URL'] ||= "https://github.com/datacite/volpino"
 ENV['TRUSTED_IP'] ||= "127.0.0.0/8"
 
