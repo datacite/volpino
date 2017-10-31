@@ -84,12 +84,26 @@ class Api::V1::UsersController < Api::BaseController
     render jsonapi: @users, meta: meta, include: @include
   end
 
-  def update
-    Rails.logger.info safe_params.inspect
-    @user.update_attributes(safe_params)
+  def create
+      @user = User.new(safe_params)
+      authorize! :create, @user
 
+      if @user.save
+        render jsonapi: @user, status: :created
+      else
+        Rails.logger.warn @user.errors.inspect
+        render jsonapi: serialize(@user.errors), status: :unprocessable_entity
+      end
+    end
+
+  def update
+  if @user.update_attributes(safe_params)
     render jsonapi: @user, include: @include
+  else
+    Rails.logger.warn @user.errors.inspect
+    render json: serialize(@user.errors), status: :unprocessable_entity
   end
+end
 
   def destroy
 
@@ -119,7 +133,7 @@ class Api::V1::UsersController < Api::BaseController
 
   def safe_params
     ActiveModelSerializers::Deserialization.jsonapi_parse!(
-      params, only: [:name, :given_names, :family_name, :email, :role, :provider, :sandbox, :client]
+      params, only: [:uid, :name, :given_names, :family_name, :email, :role, :provider, :sandbox, :client]
     )
   end
 end
