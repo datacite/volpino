@@ -16,7 +16,8 @@ class OrcidUser < Base
   end
 
   def self.get_query_url(options={})
-    params = { q: options.fetch(:query, nil),
+    query = options.fetch(:query, nil).present? ? "#{options.fetch(:query)}" : nil
+    params = { q: query,
                rows: options.dig(:page, :size) || 25,
                offset: options.dig(:page, :number) || 0 }.compact
     url + "?" + URI.encode_www_form(params)
