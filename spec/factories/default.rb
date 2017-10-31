@@ -2,21 +2,21 @@ FactoryGirl.define do
   factory :user do
     sequence(:name) { |n| "Josiah Carberry{n}" }
     provider "orcid"
-    role "user"
+    role_id "user"
     sequence(:uid) { |n| "0000-0002-1825-000#{n}" }
 
     factory :admin_user do
-      role "staff_admin"
+      role_id "staff_admin"
       uid "0000-0002-1825-0003"
     end
 
     factory :staff_user do
-      role "staff_user"
+      role_id "staff_user"
       uid "0000-0002-1825-0004"
     end
 
     factory :regular_user do
-      role "user"
+      role_id "user"
       uid "0000-0002-1825-0001"
     end
 

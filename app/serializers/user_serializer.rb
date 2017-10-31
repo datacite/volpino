@@ -27,7 +27,7 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def orcid
-    "http://orcid.org/#{object.orcid}"
+    "https://orcid.org/#{object.orcid}"
   end
 
   def github

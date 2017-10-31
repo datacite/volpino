@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       resources :claims
       resources :clients, only: [:show, :index], constraints: { :id => /.+/ }
       resources :members
+      resources :orcid_users, only: [:show, :index], path: "orcid-users"
       resources :providers, only: [:show, :index]
       resources :random, only: [:index]
       resources :roles, only: [:show, :index]
