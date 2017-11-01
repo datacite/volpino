@@ -82,9 +82,9 @@ class User < ActiveRecord::Base
 
   def orcid_as_url
     if ENV['ORCID_SANDBOX'].present?
-      "http://sandbox.orcid.org/#{orcid}"
+      "https://sandbox.orcid.org/#{orcid}"
     else
-      "http://orcid.org/#{orcid}"
+      "https://orcid.org/#{orcid}"
     end
   end
 

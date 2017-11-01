@@ -35,7 +35,7 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def created
-    object.created_at.iso8601
+    object.created_at.iso8601 if object.created_at.present?
   end
 
   def updated

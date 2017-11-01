@@ -84,7 +84,7 @@ class UsersController < ApplicationController
 
     @providers = Provider.all[:data]
     @roles = User.where.not(role_id: nil).group(:role_id).count
-    @users = collection.paginate(:page => params[:page])
+    @users = collection.page(params[:page])
   end
 
   private

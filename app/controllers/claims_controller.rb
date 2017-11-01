@@ -50,7 +50,7 @@ class ClaimsController < ApplicationController
     @sources = collection.where.not(source_id: nil).group(:source_id).count
     @claim_actions = collection.where.not(claim_action: nil).group(:claim_action).count
     @states = collection.where.not(state: nil).group(:state).count
-    @claims = collection.order_by_date.paginate(:page => params[:page])
+    @claims = collection.order_by_date.page(params[:page])
     @page = params[:page] || 1
   end
 

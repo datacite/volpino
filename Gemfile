@@ -26,8 +26,7 @@ gem 'base32-crockford-checksum', '~> 0.2.3'
 
 gem "haml-rails", "~> 0.9"
 gem "dalli", "~> 2.7.0"
-gem 'will_paginate', '3.0.7'
-gem "will_paginate-bootstrap", "~> 1.0.1"
+gem 'kaminari', '~> 1.0', '>= 1.0.1'
 gem "simple_form", "~> 3.1.0"
 gem 'country_select', '~> 2.5', '>= 2.5.1'
 gem 'nokogiri', '>= 1.6.8', '~> 1.6'

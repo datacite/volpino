@@ -49,7 +49,7 @@
         </div>
       <% end %>
       <div class="text-center">
-        <%= will_paginate @claims, :params => { :controller => claims_path }, :renderer => BootstrapPagination::Rails, inner_window: 1 %>
+        <%= paginate @claims %>
       </div>
     <% else %>
       <div class="alert alert-simple-info">

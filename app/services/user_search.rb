@@ -1,8 +1,8 @@
-class OrcidUser < Base
-  attr_reader :id, :name, :family_name, :given_names, :updated_at
+class UserSearch < Base
+  attr_reader :uid, :name, :family_name, :given_names, :github, :created_at, :updated_at
 
   def initialize(item, options={})
-    @id = item.dig("orcid-profile", "orcid-identifier", "path")
+    @uid = item.dig("orcid-profile", "orcid-identifier", "path")
     @family_name = item.dig("orcid-profile", "orcid-bio", "personal-details", "family-name", "value")
     @given_names = item.dig("orcid-profile", "orcid-bio", "personal-details", "given-names", "value")
     if item.dig("orcid-bio", "personal-details", "credit-name").present?
@@ -12,14 +12,22 @@ class OrcidUser < Base
     else
       @name = @uid
     end
-    @updated_at = Date.today.to_s + "T00:00:00Z"
+    @github = nil
+    @created_at = nil
+    @updated_at = Date.today
+  end
+
+  def orcid
+    uid
   end
 
   def self.get_query_url(options={})
     query = options.fetch(:query, nil).present? ? "#{options.fetch(:query)}" : nil
+    rows = options.dig(:page, :size)
+    offset = (options.dig(:page, :number) - 1) * rows
     params = { q: query,
-               rows: options.dig(:page, :size) || 25,
-               offset: options.dig(:page, :number) || 0 }.compact
+               rows: rows,
+               start:  offset }.compact
     url + "?" + URI.encode_www_form(params)
   end
 
@@ -38,8 +46,9 @@ class OrcidUser < Base
       { data: parse_item(item) }
     else
       items = result.body.dig("data", "orcid-search-results", "orcid-search-result") || []
+      total = result.body.dig("data", "orcid-search-results", "num-found")
 
-      { data: parse_items(items) }
+      { data: parse_items(items), meta: { total: total } }
     end
   end
 
