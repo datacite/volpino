@@ -1,0 +1,49 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.sandbox.orcid.org/v1.2/0000-0002-8568-5429/orcid-bio/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Maremma - http://profiles.local
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer <ORCID_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.10.0
+      Date:
+      - Wed, 01 Nov 2017 19:59:58 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
+      Expires:
+      - '0'
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - DENY
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: '{"message-version":"1.2","orcid-profile":{"orcid":null,"orcid-id":null,"orcid-identifier":{"value":null,"uri":"http://sandbox.orcid.org/0000-0002-8568-5429","path":"0000-0002-8568-5429","host":"sandbox.orcid.org"},"orcid-deprecated":null,"orcid-preferences":{"locale":"EN"},"orcid-history":{"creation-method":"WEBSITE","completion-date":null,"submission-date":{"value":1360744990232},"last-modified-date":{"value":1450385269629},"claimed":{"value":true},"source":null,"deactivation-date":null,"verified-email":{"value":false},"verified-primary-email":{"value":false},"visibility":null},"orcid-bio":{"personal-details":{"given-names":{"value":"Martin","visibility":null},"family-name":{"value":"Fenner","visibility":null},"credit-name":null,"other-names":{"other-name":[{"value":"Martin
+        H Fenner"}],"visibility":"PUBLIC"}},"biography":null,"researcher-urls":null,"contact-details":null,"keywords":null,"external-identifiers":null,"delegation":null,"scope":null},"orcid-activities":null,"orcid-internal":null,"type":"USER","group-type":null,"client-type":null},"orcid-search-results":null,"error-desc":null}'
+    http_version: 
+  recorded_at: Wed, 01 Nov 2017 19:59:31 GMT
+recorded_with: VCR 3.0.3

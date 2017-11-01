@@ -14,14 +14,14 @@ describe User, type: :model, vcr: true do
     it 'is user' do
       payload = subject.decode_token(subject.jwt)
       expect(payload["uid"]).to eq(subject.uid)
-      expect(payload["role"]).to eq("user")
+      expect(payload["role_id"]).to eq("user")
     end
 
     it 'is admin' do
       subject = FactoryGirl.create(:admin_user)
       payload = subject.decode_token(subject.jwt)
       expect(payload["uid"]).to eq(subject.uid)
-      expect(payload["role"]).to eq("staff_admin")
+      expect(payload["role_id"]).to eq("staff_admin")
     end
   end
 
@@ -87,6 +87,27 @@ describe User, type: :model, vcr: true do
       expect(subject.claims.count).to eq(1)
       updated_claim = subject.claims.first
       expect(updated_claim.human_state_name).to eq("notified")
+    end
+  end
+
+  describe 'query ORCID API' do
+    it "users query name" do
+      users = UserSearch.where(query: "fenner")[:data]
+      expect(users.length).to eq(4)
+      user = users.first
+      expect(user.name).to eq("Martin Fenner")
+    end
+
+    it "users query orcid id" do
+      users = UserSearch.where(query: "0000-0002-8568-5429")[:data]
+      expect(users.length).to eq(25)
+      user = users.first
+      expect(user.name).to eq("Martin Fenner")
+    end
+
+    it "user" do
+      user = UserSearch.where(id: "0000-0002-8568-5429")[:data]
+      expect(user.name).to eq("Martin Fenner")
     end
   end
 end

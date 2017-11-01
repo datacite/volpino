@@ -7,7 +7,7 @@ class Api::V1::UsersController < Api::BaseController
   load_and_authorize_resource :except => [:index, :show, :create]
 
   def show
-    render jsonapi: @user, include: @include
+    render jsonapi: @user, include: @include, serializer: UserSerializer
   end
 
   def index
@@ -130,6 +130,8 @@ end
     else
       @user = User.is_public.where(uid: params[:id]).first
     end
+
+    @user = UserSearch.where(id: params[:id]).to_h.fetch(:data, nil) unless @user.present?
     fail ActiveRecord::RecordNotFound unless @user.present?
   end
 

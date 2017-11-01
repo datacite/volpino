@@ -1,5 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   # cache key: 'user'
+  type 'user'
 
   attributes :given_names, :family_name, :name, :orcid, :github, :created, :updated
   attribute :email, if: :can_read
