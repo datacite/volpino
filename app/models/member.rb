@@ -11,10 +11,6 @@ class Member < ActiveRecord::Base
 
   scope :query, ->(query) { where("name like ? OR title like ?", "%#{query}%", "%#{query}%") }
 
-  def self.per_page
-    100
-  end
-
   def to_param
     name
   end

@@ -17,7 +17,7 @@ class Api::V1::FundersController < Api::BaseController
 
     page = params[:page] || { number: 1, size: 1000 }
 
-    @funders = collection.order(:fundref_id).page(page[:name]).per_page(page[:size])
+    @funders = collection.order(:fundref_id).page(page[:name]).per(page[:size])
 
     meta = { total: @funders.total_entries,
              total_pages: @funders.total_pages ,

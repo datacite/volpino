@@ -26,9 +26,9 @@ class PeopleController < Api::BaseController
     page[:number] = page[:number] && page[:number].to_i > 0 ? page[:number].to_i : 1
     page[:size] = page[:size] && (1..1000).include?(page[:size].to_i) ? page[:size].to_i : 25
 
-    @users = collection.order_by_name.page(page[:number]).per_page(page[:size])
+    @users = collection.order_by_name.page(page[:number]).per(page[:size])
 
-    meta = { total: @users.total_entries,
+    meta = { total: @users.total_count,
              total_pages: @users.total_pages,
              page: page[:number].to_i }.compact
 

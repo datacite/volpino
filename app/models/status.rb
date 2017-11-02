@@ -5,10 +5,6 @@ class Status < ActiveRecord::Base
 
   default_scope { order("status.created_at DESC") }
 
-  def self.per_page
-    1000
-  end
-
   def to_param
     uuid
   end

@@ -71,9 +71,9 @@ class Api::V1::ClaimsController < Api::BaseController
     page[:number] = page[:number] && page[:number].to_i > 0 ? page[:number].to_i : 1
     page[:size] = page[:size] && (1..1000).include?(page[:size].to_i) ? page[:size].to_i : 1000
 
-    @claims = collection.order_by_date.page(page[:number]).per_page(page[:size])
+    @claims = collection.order_by_date.page(page[:number]).per_(page[:size])
 
-    meta = { total: @claims.total_entries,
+    meta = { total: @claims.total_count,
              total_pages: @claims.total_pages ,
              page: page[:number].to_i,
              users: users,

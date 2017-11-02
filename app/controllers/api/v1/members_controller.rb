@@ -47,9 +47,9 @@ class Api::V1::MembersController < Api::BaseController
     page[:number] = page[:number] && page[:number].to_i > 0 ? page[:number].to_i : 1
     page[:size] = page[:size] && (1..1000).include?(page[:size].to_i) ? page[:size].to_i : 1000
 
-    @members = collection.order(:title).page(page[:number]).per_page(page[:size])
+    @members = collection.order(:title).page(page[:number]).per(page[:size])
 
-    meta = { total: @members.total_entries,
+    meta = { total: @members.total_count,
              total_pages: @members.total_pages ,
              page: page[:number].to_i,
              member_types: member_types,

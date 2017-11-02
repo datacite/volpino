@@ -52,10 +52,6 @@ class User < ActiveRecord::Base
     where(provider: auth.provider, uid: auth.uid).first_or_create
   end
 
-  def per_page
-    15
-  end
-
   def queue_user_job
     UserJob.perform_later(self)
   end
@@ -64,8 +60,6 @@ class User < ActiveRecord::Base
   def is_admin?
     role_id == "staff_admin"
   end
-
-  #alias_method :is_admin?, :is_admin
 
   # Helper method to check for admin or staff user
   def is_admin_or_staff?
@@ -231,10 +225,7 @@ class User < ActiveRecord::Base
 
     works = response.body.fetch("data", {}).fetch("group", {})
 
-    # make sure works with lengh 1 is an array
-    works = [works] if works.is_a?(Hash)
-
-    works.select do |work|
+    Array.wrap(works).select do |work|
       work.extend Hashie::Extensions::DeepFetch
       work.deep_fetch('work-summary', 0, 'source', 'source-client-id', 'path') { nil } == ENV['ORCID_CLIENT_ID']
     end

@@ -97,26 +97,25 @@ class Api::V1::UsersController < Api::BaseController
     render jsonapi: @users, meta: meta, include: @include, each_serializer: UserSerializer
   end
 
-  def create
-      @user = User.new(safe_params)
-      authorize! :create, @user
-
-      if @user.save
-        render jsonapi: @user, status: :created
+  def update
+    if @user.created_at
+      if @user.update_attributes(safe_params)
+        render jsonapi: @user, include: @include
       else
         Rails.logger.warn @user.errors.inspect
-        render jsonapi: serialize(@user.errors), status: :unprocessable_entity
+        render json: @user, status: 422, serializer: ActiveModel::Serializer::ErrorSerializer
+      end
+    else
+      @user = User.new(safe_params)
+
+      if @user.save
+        render jsonapi: @user, include: @include
+      else
+        Rails.logger.warn @user.errors.inspect
+        render json: @user, status: 422, serializer: ActiveModel::Serializer::ErrorSerializer
       end
     end
-
-  def update
-  if @user.update_attributes(safe_params)
-    render jsonapi: @user, include: @include
-  else
-    Rails.logger.warn @user.errors.inspect
-    render json: serialize(@user.errors), status: :unprocessable_entity
   end
-end
 
   def destroy
 
