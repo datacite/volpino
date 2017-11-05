@@ -90,6 +90,10 @@ class User < ActiveRecord::Base
     authentication_token
   end
 
+  def is_active
+    authentication_token.present?
+  end
+
   def credit_name
     name
   end

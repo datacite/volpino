@@ -2,7 +2,7 @@ class UserSerializer < ActiveModel::Serializer
   # cache key: 'user'
   type 'user'
 
-  attributes :given_names, :family_name, :name, :uid, :orcid, :github, :created, :updated
+  attributes :given_names, :family_name, :name, :uid, :orcid, :github, :is_active, :created, :updated
   attribute :email, if: :can_read
   attribute :provider_id, if: :can_read
   attribute :client_id, if: :can_read
