@@ -4,7 +4,7 @@ class Api::V1::UsersController < Api::BaseController
 
   prepend_before_filter :load_user, only: [:show, :update, :destroy]
   before_filter :set_include, :authenticate_user_from_token!
-  load_and_authorize_resource :except => [:index, :show, :create]
+  load_and_authorize_resource :only => [:destroy]
 
   def show
     render jsonapi: @user, include: @include, serializer: UserSerializer
@@ -98,7 +98,9 @@ class Api::V1::UsersController < Api::BaseController
   end
 
   def update
-    if @user.created_at
+    if @user.created_at.present?
+      authorize! :update, @user
+
       if @user.update_attributes(safe_params)
         render jsonapi: @user, include: @include
       else
@@ -107,6 +109,7 @@ class Api::V1::UsersController < Api::BaseController
       end
     else
       @user = User.new(safe_params)
+      authorize! :create, @user
 
       if @user.save
         render jsonapi: @user, include: @include

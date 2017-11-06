@@ -11,9 +11,8 @@ class Ability
       can [:update], User, :id => user.id
     elsif user.role_id == "provider_admin"
       can [:read], Phrase
-      can [:read], User
       can [:update], Member#, :name => user.provider_id
-      can [:update], User#, :id => user.id
+      can [:manage], User#, :id => user.id
       can [:manage], Claim, :orcid => user.uid
     elsif user.role_id == "provider_user"
       can [:read], Phrase
@@ -23,8 +22,7 @@ class Ability
       can [:manage], Claim, :orcid => user.uid
     elsif user.role_id == "client_admin"
       can [:read], Phrase
-      can [:read], User
-      can [:update], User#, :id => user.id
+      can [:manage], User#, :id => user.id
       can [:manage], Claim, :orcid => user.uid
     elsif user.role_id == "client_user"
       can [:read], Phrase
