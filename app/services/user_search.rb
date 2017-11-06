@@ -24,6 +24,10 @@ class UserSearch < Base
     uid
   end
 
+  def is_active
+    false
+  end
+
   def email
     nil
   end
