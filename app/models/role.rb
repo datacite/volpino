@@ -29,9 +29,9 @@ class Role < Base
       { data: parse_item(item) }
     else
       if options[:scope] == "provider"
-        items = items.select { |i| %w(provider_admin provider_user client_admin client_user user).include?(i["id"]) }
+        items = items.select { |i| %w(provider_admin provider_user client_admin client_user).include?(i["id"]) }
       elsif options[:scope] == "client"
-        items = items.select { |i| %w(client_admin client_user user).include?(i["id"]) }
+        items = items.select { |i| %w(client_admin client_user).include?(i["id"]) }
       end
 
       { data: parse_items(items), meta: { total: items.length } }
