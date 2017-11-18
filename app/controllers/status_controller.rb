@@ -4,7 +4,9 @@ class StatusController < ApplicationController
 
     collection = Status.order("created_at DESC")
     @current_status = collection.first
-    @status = collection.paginate(:page => params[:page])
+
+    page = params[:page] || { number: 1, size: 1000 }
+    @status = collection.page(page[:number]).per(page[:size])
 
     @process = SidekiqProcess.new
 

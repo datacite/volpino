@@ -106,8 +106,8 @@ ActiveRecord::Schema.define(version: 20171101232513) do
     t.string   "google_token",         limit: 191
     t.integer  "github_put_code",      limit: 4
     t.boolean  "is_public",                          default: true
-    t.string   "client_id",            limit: 255
     t.string   "provider_id",          limit: 255
+    t.string   "client_id",            limit: 255
     t.string   "sandbox_id",           limit: 255
   end
 
