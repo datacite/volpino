@@ -1,14 +1,21 @@
 language: ruby
-cache: bundler
-sudo: false
 rvm:
   - 2.4.1
+
+sudo: required
+
+services:
+  - docker
+  - redis-server
+
+cache: bundler
 
 env:
   - DB=mysql
 
-services:
-  - redis-server
+before_install:
+  - docker build -t datacite/volpino .
+  - docker run datacite/volpino /bin/sh -c "bundle exec rake test"
 
 before_script:
   - memcached -p 11211 &
@@ -21,7 +28,7 @@ before_script:
   - bundle exec sidekiq -d -e production --config config/sidekiq.yml -L log/sidekiq.log
 
 script:
-  - bundle exec rspec
+  - docker run datacite/volpino /bin/sh -c "bundle exec rspec"
 
 addons:
   code_climate:
