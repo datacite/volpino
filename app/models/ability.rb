@@ -13,6 +13,7 @@ class Ability
       can [:read], Phrase
       can [:update], Member, :name => user.provider_id
       can [:manage], User, :provider_id => user.provider_id
+      can [:manage], User, :provider_id => nil
       can [:manage], Claim, :orcid => user.uid
     elsif user.role_id == "provider_user"
       can [:read], Phrase
@@ -23,6 +24,7 @@ class Ability
     elsif user.role_id == "client_admin"
       can [:read], Phrase
       can [:manage], User, :client_id => user.client_id
+      can [:manage], User, :client_id => nil
       can [:manage], Claim, :orcid => user.uid
     elsif user.role_id == "client_user"
       can [:read], Phrase
