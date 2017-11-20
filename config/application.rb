@@ -26,7 +26,7 @@ end
 ENV['APPLICATION'] ||= "volpino"
 ENV['HOSTNAME'] ||= "profiles.local"
 ENV['SESSION_KEY'] ||= "_#{ENV['APPLICATION']}_session"
-ENV['MEMCACHE_SERVERS'] ||= "localhost:11211"
+ENV['MEMCACHE_SERVERS'] ||= "memcached:11211"
 ENV['SITE_TITLE'] ||= "DataCite Profiles"
 ENV['LOG_LEVEL'] ||= "info"
 ENV['SANDBOX_URL'] ||= "https://sandbox.datacite.org"
@@ -35,7 +35,13 @@ ENV['LUPO_URL'] ||= "https://api.datacite.org"
 ENV['CDN_URL'] ||= "https://assets.datacite.org"
 ENV['REDIS_URL'] ||= "redis://redis:6379/12"
 ENV['GITHUB_URL'] ||= "https://github.com/datacite/volpino"
+ENV['MODE'] ||= "datacite"
 ENV['TRUSTED_IP'] ||= "127.0.0.0/8"
+ENV['MYSQL_DATABASE'] ||= "profiles"
+ENV['MYSQL_USER'] ||= "root"
+ENV['MYSQL_PASSWORD'] ||= ""
+ENV['MYSQL_HOST'] ||= "mysql"
+ENV['MYSQL_PORT'] ||= "3306"
 
 module Volpino
   class Application < Rails::Application
