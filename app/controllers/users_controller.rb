@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :load_user, only: [:show, :edit, :destroy]
-  load_and_authorize_resource
+  load_and_authorize_resource except: [:index]
 
   def show
     @title = 'Settings'
@@ -72,6 +72,8 @@ class UsersController < ApplicationController
   end
 
   def load_index
+    authorize! :read, Client
+
     collection = User
 
     if params['role-id']

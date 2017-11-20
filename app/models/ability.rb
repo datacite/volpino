@@ -11,22 +11,22 @@ class Ability
       can [:update], User, :id => user.id
     elsif user.role_id == "provider_admin"
       can [:read], Phrase
-      can [:update], Member#, :name => user.provider_id
-      can [:manage], User#, :id => user.id
+      can [:update], Member, :name => user.provider_id
+      can [:manage], User, :provider_id => user.provider_id
       can [:manage], Claim, :orcid => user.uid
     elsif user.role_id == "provider_user"
       can [:read], Phrase
       can [:read], User
-      can [:read], Member#, :name => user.provider_id
-      can [:update], User, :id => user.id
+      can [:read], Member, :name => user.provider_id
+      can [:read], User, :provider_id => user.provider_id
       can [:manage], Claim, :orcid => user.uid
     elsif user.role_id == "client_admin"
       can [:read], Phrase
-      can [:manage], User#, :id => user.id
+      can [:manage], User, :client_id => user.client_id
       can [:manage], Claim, :orcid => user.uid
     elsif user.role_id == "client_user"
       can [:read], Phrase
-      can [:read], User
+      can [:read], User, :client_id => user.client_id
       can [:update], User, :id => user.id
       can [:manage], Claim, :orcid => user.uid
     elsif user.role_id == "user"

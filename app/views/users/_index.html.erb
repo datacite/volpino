@@ -88,26 +88,30 @@
                   <h5>Claims</h5>
                   <%= link_to_if user.claims.count > 0, pluralize(user.claims.count, "Claim"), claims_path(source: params[:source], state: params[:state], user_id: user.orcid) %>
 
-                  <div class="btn-toolbar">
-                    <div class="btn-group btn-group-sm pull-right">
-                      <%= link_to 'expire token', user_path(user, user: { expires_at: Time.zone.now }), { method: :put, remote: true, class: 'btn btn-warning' } %>
-                    </div>
-                  </div>
-                </div>
-                <div class="panel-footer">
                   <% if can?(:manage, user) %>
+                    <div class="btn-toolbar">
+                      <div class="btn-group btn-group-sm pull-right">
+                        <%= link_to 'expire token', user_path(user, user: { expires_at: Time.zone.now }), { method: :put, remote: true, class: 'btn btn-warning' } %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+                <% if can?(:manage, user) %>
+                  <div class="panel-footer">
                     <div class="btn-toolbar">
                       <div class="btn-group btn-group-sm pull-right">
                         <%= link_to icon("pencil").html_safe, edit_user_path(user, query: params[:query], 'role-id' => params['role-id'], page: params[:page]), remote: true, class: 'btn btn-neutral btn-fill btn-sm', id: "#{user.id}-edit" %>
                       </div>
-                      <% if user.id != current_user.id %>
-                        <div class="btn-group btn-group-sm pull-right">
-                          <%= link_to icon("trash").html_safe, user_path(user, query: params[:query], 'role-id' => params['role-id'], page: params[:page]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-neutral btn-fill btn-sm', id: "#{user.id}-delete" %>
-                        </div>
+                      <% if can?(:manage, Client) %>
+                        <% if user.id != current_user.id %>
+                          <div class="btn-group btn-group-sm pull-right">
+                            <%= link_to icon("trash").html_safe, user_path(user, query: params[:query], 'role-id' => params['role-id'], page: params[:page]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-neutral btn-fill btn-sm', id: "#{user.id}-delete" %>
+                          </div>
+                        <% end %>
                       <% end %>
                     </div>
-                  <% end %>
-                </div>
+                  </div>
+                <% end %>
               </div>
             <% end %>
           </div>
