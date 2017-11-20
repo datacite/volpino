@@ -35,6 +35,7 @@ gem "rouge", "~> 1.7.2"
 gem 'hashie', '~> 3.5.0'
 gem 'bolognese', '~> 0.9.22'
 gem 'bergamasco', '~> 0.3'
+gem 'httplog', '~> 1.0'
 gem 'namae', '~> 0.11.3'
 gem 'lograge', '~> 0.3.5'
 
