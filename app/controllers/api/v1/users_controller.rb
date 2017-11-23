@@ -80,10 +80,10 @@ class Api::V1::UsersController < Api::BaseController
       total_pages = collection.page(1).total_pages
 
       order = case params[:sort]
-                when "name" then "ISNULL(users.family_name), users.family_name"
                 when "-name" then "users.family_name DESC"
                 when "created" then "users.created_at"
-                else "users.created_at DESC"
+                when "-created" then "users.created_at DESC"
+                else "ISNULL(users.family_name), users.family_name"
               end
 
       @users = collection.is_public.order(order).page(page[:number]).per(page[:size])
