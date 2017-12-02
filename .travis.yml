@@ -1,24 +1,52 @@
 language: ruby
 rvm:
-  - 2.4.1
-
+- 2.4.1
 sudo: required
 
 services:
+  - mysql
   - docker
+  - memcached
   - redis-server
-
-cache: bundler
-
-before_install:
-  - docker build -t datacite/volpino .
-
-script:
-  - docker run datacite/volpino /bin/sh -c "bundle exec rspec"
 
 addons:
   code_climate:
-    repo_token: 8c899becf0595e2aeef04e628dc3d9e352f1d7ac9f6ef56b0ca8577c546bac90
+    repo_token: $CODECLIMATE_REPO_TOKEN
+
+before_install:
+  - mysql -e 'CREATE DATABASE volpino_test;'
+
+install:
+  - travis_retry bundle install
+
+before_script:
+  - memcached -p 11211 &
+  - cp .env.travis .env
+  - mkdir -p tmp/pids
+  - mkdir -p log
+  - bundle exec sidekiq -d -e production --config config/sidekiq.yml -L log/sidekiq.log
+  - bundle exec rake db:setup RAILS_ENV=test
+
+script:
+  # - bundle exec rspec spec
+  # - bundle exec codeclimate-test-reporter
+
+after_success:
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
+  - export REPO=datacite/volpino;
+  - if [ "${TRAVIS_TAG?}" ]; then
+      docker build -f Dockerfile -t $REPO:$TRAVIS_TAG .;
+      docker push $REPO:$TRAVIS_TAG;
+      echo "Pushed to" $REPO:$TRAVIS_TAG;
+    elif [ "$TRAVIS_BRANCH" == "master" ]; then
+      docker build -f Dockerfile -t $REPO .;
+      docker push $REPO;
+      echo "Pushed to" $REPO;
+    else
+      docker build -f Dockerfile -t $REPO:$TRAVIS_BRANCH .;
+      docker push $REPO:$TRAVIS_BRANCH;
+      echo "Pushed to" $REPO:$TRAVIS_BRANCH;
+    fi
 
 notifications:
   slack: datacite:Wt8En0ALoTA6Kjc5EOKNDWxN
