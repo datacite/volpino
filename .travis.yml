@@ -27,7 +27,7 @@ before_script:
   - bundle exec sidekiq -d -e production --config config/sidekiq.yml -L log/sidekiq.log
   - bundle exec rake db:setup RAILS_ENV=test
 
-script:
+#script:
   # - bundle exec rspec spec
   # - bundle exec codeclimate-test-reporter
 
