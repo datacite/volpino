@@ -5,9 +5,9 @@ defaults: &defaults
   pool: <%= ENV['CONCURRENCY'].to_i + 5 %>
   timeout: 5000
   encoding: utf8mb4
-  database: <%= ENV['MYSQL_DATABASE'] %>
   username: <%= ENV['MYSQL_USER'] %>
   password: <%= ENV['MYSQL_PASSWORD'] %>
+  database: <%= ENV['MYSQL_DATABASE'] %>
   host: <%= ENV['MYSQL_HOST'] %>
   port: <%= ENV['MYSQL_PORT'] %>
 
@@ -18,7 +18,7 @@ development:
 
 test:
   <<: *defaults
-  database: <%= ENV['DB_NAME'] %>_test
+  database: <%= ENV['MYSQL_DATABASE'] %>_test
 
 production:
   <<: *defaults
