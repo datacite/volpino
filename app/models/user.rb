@@ -87,6 +87,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def flipper_id
+    uid
+  end
+
   def external_identifier
     ExternalIdentifier.new(type: "GitHub", value: github, url: github_as_url(github), orcid: orcid, access_token: authentication_token, put_code: github_put_code)
   end
