@@ -11,8 +11,8 @@ Flipper.configure do |config|
   end
 end
 
-Flipper.register(:staff_admins) do |actor|
-  actor.respond_to?(:is_admin?) && actor.is_admin?
+Flipper.register(:staff) do |actor|
+  actor.respond_to?(:is_admin_or_staff?) && actor.is_admin_or_staff?
 end
 
 Flipper.register(:beta_testers) do |actor|
@@ -20,6 +20,3 @@ Flipper.register(:beta_testers) do |actor|
 end
 
 Flipper::Instrumentation::LogSubscriber.logger = ActiveSupport::Logger.new(STDOUT)
-
-# Rails.application.config.flipper = flipper
-# Rails.application.config.middleware.use "FlipperEnabledMiddleware", flipper
