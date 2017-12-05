@@ -67,6 +67,10 @@
           <dt>Client</dt>
           <dd><%= link_to h(@user.client_name), @user.client_url %></dd>
         <% end %>
+        <% if @user.beta_tester %>
+          <dt>Beta Tester</dt>
+          <dd>true</dd>
+        <% end %>
       </dl>
     </div>
   <% end %>
