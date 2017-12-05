@@ -66,6 +66,11 @@ class User < ActiveRecord::Base
     ["staff_admin", "staff_user"].include?(role_id)
   end
 
+  # Helper method to check for beta tester
+  def is_beta_tester?
+    beta_tester
+  end
+
   def has_email?
     email.present? && errors.empty?
   end

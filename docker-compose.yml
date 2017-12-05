@@ -1,8 +1,5 @@
 version: '2'
 
-# when sharing the host folder, you need to reinstall Ruby gems
-# and npm modules into the vendor folder
-
 services:
   profiles:
     env_file: .env
@@ -16,12 +13,31 @@ services:
       - ./spec:/home/app/webapp/spec
       - ./lib/seeds:/home/app/webapp/lib/seeds
       - ./vendor/docker:/home/app/webapp/vendor/docker
-  db:
-    env_file: .env
-    image: mysql:5.6
+    networks:
+      - public
+  mysql:
+    environment:
+      MYSQL_DATABASE: datacite
+      MYSQL_USER: root
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    image: mysql:5.7
     ports:
-      - "3307:3306"
+      - "3311:3306"
+    networks:
+      - public
   redis:
-    image: redis:2.8
+    image: redis
+    networks:
+      - public
   memcached:
     image: memcached:1.4.31
+    networks:
+      - public
+networks:
+  public:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 10.0.60.0/24
+        gateway: 10.0.60.1

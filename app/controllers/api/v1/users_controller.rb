@@ -150,7 +150,7 @@ class Api::V1::UsersController < Api::BaseController
 
   def safe_params
     ActiveModelSerializers::Deserialization.jsonapi_parse!(
-      params, only: [:uid, :name, :given_names, :family_name, :email, :role, :provider, :sandbox, :client]
+      params, only: [:uid, :name, :given_names, :family_name, :email, :beta_tester, :role, :provider, :sandbox, :client]
     )
   end
 end

@@ -81,11 +81,17 @@ class UsersController < ApplicationController
       @role = User.where(role_id: params['role-id']).group(:role_id).count.first
     end
 
+    if params['beta-tester']
+      collection = collection.where(:beta_tester => true)
+      @group = User.where(:beta_tester => true).group(:beta_tester).count.first
+    end
+
     collection = collection.query(params[:query]) if params[:query]
     collection = collection.ordered
 
     @providers = Provider.all[:data]
     @roles = User.where.not(role_id: nil).group(:role_id).count
+    @groups = User.where(:beta_tester => true).group(:beta_tester).count.first
     @users = collection.page(params[:page])
   end
 
@@ -98,6 +104,7 @@ class UsersController < ApplicationController
                                  :auto_update,
                                  :role_id,
                                  :is_public,
+                                 :beta_tester,
                                  :provider_id,
                                  :client_id,
                                  :sandbox_id,

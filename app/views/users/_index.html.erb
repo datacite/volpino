@@ -34,6 +34,7 @@
                     <div class="form-group">
                       <label for="other">Other</label>
                       <%= f.input :is_public, label: "Public record", input_html: { class: "form-user" } %>
+                      <%= f.input :beta_tester, label: "Beta Tester", input_html: { class: "form-user" } %>
                     </div>
                   </div>
                   <div class="panel-footer">
@@ -80,6 +81,11 @@
                   <% unless user.is_public %>
                     <h5>Record public</h5>
                     <%= user.is_public %>
+                  <% end %>
+
+                  <% if user.beta_tester %>
+                    <h5>Beta Tester</h5>
+                    <%= user.beta_tester %>
                   <% end %>
 
                   <h5>Account created</h5>
@@ -141,7 +147,7 @@
         <ul>
           <% if @role %>
             <li class="active">
-              <%= link_to icon('check-square-o').html_safe, users_path %>
+              <%= link_to icon('check-square-o').html_safe, users_path('beta-tester' => params['beta-tester']) %>
               <div class="facet-title"><%= @role.first.titleize %></div>
               <span class="number pull-right"><%= number_with_delimiter(@role.last) %></span>
               <div class="clearfix"/>
@@ -149,12 +155,34 @@
           <% else %>
             <% @roles.each do |role| %>
               <li>
-                <%= link_to icon('square-o').html_safe, users_path('role-id' => role.first) %>
+                <%= link_to icon('square-o').html_safe, users_path('role-id' => role.first, 'beta-tester' => params['beta-tester']) %>
                 <div class="facet-title"><%= role.first.titleize %></div>
                 <span class="number pull-right"><%= number_with_delimiter(role.last) %></span>
                 <div class="clearfix"/>
               </li>
             <% end %>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <div class="panel facets">
+      <div class="panel-body">
+        <h4>Groups</h4>
+        <ul>
+          <% if @group %>
+            <li class="active">
+              <%= link_to icon('check-square-o').html_safe, users_path('role-id' => params['role-id']) %>
+              <div class="facet-title">Beta Testers</div>
+              <span class="number pull-right"><%= number_with_delimiter(@group.last) %></span>
+              <div class="clearfix"/>
+            </li>
+          <% else %>
+            <li class="active">
+              <%= link_to icon('square-o').html_safe, users_path('role-id' => params['role-id'], 'beta-tester' => true) %>
+              <div class="facet-title">Beta Testers</div>
+              <span class="number pull-right"><%= number_with_delimiter(@groups.last) %></span>
+              <div class="clearfix"/>
+            </li>
           <% end %>
         </ul>
       </div>

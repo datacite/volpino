@@ -23,6 +23,11 @@ gem 'librato-rails', '~> 1.4.2'
 gem 'colorize', '~> 0.8.1'
 gem 'pwqgen.rb', '~> 0.1.0'
 gem 'base32-crockford-checksum', '~> 0.2.3'
+gem 'flipper', '~> 0.11.0'
+gem 'flipper-redis'
+gem 'flipper-api'
+gem 'flipper-ui'
+gem 'flipper-active_support_cache_store'
 
 gem "haml-rails", "~> 0.9"
 gem "dalli", "~> 2.7.0"
@@ -57,6 +62,7 @@ gem 'sass-rails', '~> 4.0.4'
 gem 'uglifier', '~> 2.7', '>= 2.7.2'
 gem 'mini_magick', '~> 4.5', '>= 4.5.1'
 gem 'remotipart', '~> 1.2'
+gem 'rack-jwt'
 
 group :development do
   gem 'pry-rails', '~> 0.3.2'
@@ -72,7 +78,7 @@ group :development, :test do
   gem 'spring'
   gem 'teaspoon-jasmine', '~> 2.2.0'
   gem "brakeman", "~> 2.6.0", :require => false
-  gem 'rubocop', '~> 0.27.0'
+  gem 'rubocop', '~> 0.49.1'
 end
 
 group :test do
