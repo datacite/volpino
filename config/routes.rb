@@ -1,4 +1,5 @@
 require 'sidekiq/web'
+#require 'rack-jwt'
 
 Rails.application.routes.draw do
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
@@ -11,8 +12,23 @@ Rails.application.routes.draw do
     get 'link_orcid', :to => 'users/sessions#link_orcid', :as => :link_orcid_session
   end
 
+  # enable feature flags api
+  flipper_app = Flipper::Api.app(Flipper) do |builder|
+    public_key = OpenSSL::PKey::RSA.new(ENV['JWT_PUBLIC_KEY'].to_s.gsub('\n', "\n"))
+    builder.use Rack::JWT::Auth, { secret: public_key, verify: true, options: { :algorithm => 'RS256' }} do |payload|
+      return false unless payload.present?
+
+      # check whether token has expired
+      return false unless Time.now.to_i < payload["exp"]
+
+      ["staff_admin", "staff_user"].include?(payload["role_id"])
+    end
+  end
+  mount flipper_app, at: '/flipper/api'
+
   authenticate :user, lambda { |u| u.is_admin? } do
     mount Sidekiq::Web => '/sidekiq'
+    mount Flipper::UI.app(Flipper) => '/flipper'
   end
 
   root :to => 'index#index'
