@@ -198,6 +198,7 @@ class User < ActiveRecord::Base
       client_id: client_id,
       sandbox_id: sandbox_id,
       role_id: role_id,
+      beta_tester: beta_tester,
       iat: Time.now.to_i,
       exp: Time.now.to_i + 30 * 24 * 3600
     }.compact
