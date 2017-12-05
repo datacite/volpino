@@ -24,7 +24,7 @@ Rails.application.routes.draw do
       ["staff_admin", "staff_user"].include?(payload["role_id"])
     end
   end
-  mount flipper_app, at: '/flipper/api'
+  mount flipper_app, at: '/api/flipper'
 
   authenticate :user, lambda { |u| u.is_admin? } do
     mount Sidekiq::Web => '/sidekiq'
