@@ -165,27 +165,29 @@
         </ul>
       </div>
     </div>
-    <div class="panel facets">
-      <div class="panel-body">
-        <h4>Groups</h4>
-        <ul>
-          <% if @group %>
-            <li class="active">
-              <%= link_to icon('check-square-o').html_safe, users_path('role-id' => params['role-id']) %>
-              <div class="facet-title">Beta Testers</div>
-              <span class="number pull-right"><%= number_with_delimiter(@group.last) %></span>
-              <div class="clearfix"/>
-            </li>
-          <% else %>
-            <li class="active">
-              <%= link_to icon('square-o').html_safe, users_path('role-id' => params['role-id'], 'beta-tester' => true) %>
-              <div class="facet-title">Beta Testers</div>
-              <span class="number pull-right"><%= number_with_delimiter(@groups.last) %></span>
-              <div class="clearfix"/>
-            </li>
-          <% end %>
-        </ul>
+    <% if @groups.count > 0 %>
+      <div class="panel facets">
+        <div class="panel-body">
+          <h4>Groups</h4>
+          <ul>
+            <% if @group %>
+              <li class="active">
+                <%= link_to icon('check-square-o').html_safe, users_path('role-id' => params['role-id']) %>
+                <div class="facet-title">Beta Testers</div>
+                <span class="number pull-right"><%= number_with_delimiter(@group.count) %></span>
+                <div class="clearfix"/>
+              </li>
+            <% else %>
+              <li class="active">
+                <%= link_to icon('square-o').html_safe, users_path('role-id' => params['role-id'], 'beta-tester' => true) %>
+                <div class="facet-title">Beta Testers</div>
+                <span class="number pull-right"><%= number_with_delimiter(@groups.count) %></span>
+                <div class="clearfix"/>
+              </li>
+            <% end %>
+          </ul>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>

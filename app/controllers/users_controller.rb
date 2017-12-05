@@ -83,7 +83,7 @@ class UsersController < ApplicationController
 
     if params['beta-tester']
       collection = collection.where(:beta_tester => true)
-      @group = User.where(:beta_tester => true).group(:beta_tester).count.first
+      @group = User.where(:beta_tester => true)
     end
 
     collection = collection.query(params[:query]) if params[:query]
@@ -91,7 +91,7 @@ class UsersController < ApplicationController
 
     @providers = Provider.all[:data]
     @roles = User.where.not(role_id: nil).group(:role_id).count
-    @groups = User.where(:beta_tester => true).group(:beta_tester).count.first
+    @groups = User.where(:beta_tester => true)
     @users = collection.page(params[:page])
   end
 
