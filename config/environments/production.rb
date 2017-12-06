@@ -82,4 +82,7 @@ Rails.application.configure do
 
   # use ssl with Devise
   # config.to_prepare { Devise::SessionsController.force_ssl }
+
+  require 'flipper/middleware/memoizer'
+  config.middleware.use Flipper::Middleware::Memoizer
 end

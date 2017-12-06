@@ -52,6 +52,9 @@ Rails.application.configure do
   }
 
   config.web_console.whitelisted_ips = ENV['TRUSTED_IP']
+
+  require 'flipper/middleware/memoizer'
+  config.middleware.use Flipper::Middleware::Memoizer
 end
 
 BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP']
