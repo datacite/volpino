@@ -92,7 +92,7 @@ class User < ActiveRecord::Base
   end
 
   def features
-    [{ delete_doi: Flipper[:delete_doi].enabled?(self) }]
+    { "delete-doi" => Flipper[:delete_doi].enabled?(self) }
   end
 
   def external_identifier
