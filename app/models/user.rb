@@ -91,6 +91,10 @@ class User < ActiveRecord::Base
     uid
   end
 
+  def features
+    [{ delete_doi: Flipper[:delete_doi].enabled?(self) }]
+  end
+
   def external_identifier
     ExternalIdentifier.new(type: "GitHub", value: github, url: github_as_url(github), orcid: orcid, access_token: authentication_token, put_code: github_put_code)
   end
@@ -203,6 +207,7 @@ class User < ActiveRecord::Base
       sandbox_id: sandbox_id,
       role_id: role_id,
       beta_tester: beta_tester,
+      features: features,
       iat: Time.now.to_i,
       exp: Time.now.to_i + 30 * 24 * 3600
     }.compact
