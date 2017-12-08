@@ -22,6 +22,7 @@ describe User, type: :model, vcr: true do
       payload = subject.decode_token(subject.jwt)
       expect(payload["uid"]).to eq(subject.uid)
       expect(payload["role_id"]).to eq("staff_admin")
+      expect(payload["features"]).to eq("delete-doi"=>false)
     end
   end
 
