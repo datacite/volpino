@@ -55,17 +55,17 @@ after_success:
     fi
 
   - if [ "$AUTO_DEPLOY" == "true" ]; then
-      git clone "https://${TRAVIS_SECURE_TOKEN}@$github.com/datacite/${TERRAFORM_REPO}.git"
-      cd ${TERRAFORM_REPO}
-      GIT_SHA=$(git rev-parse --short HEAD)
-      GIT_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
-      ../dockerize -template vendor/docker/_volpino.auto.tfvars.tmpl:_volpino.auto.tfvars
-      git remote
-      git config user.email ${DOCKER_EMAIL}
-      git config user.name ${DOCKER_USERNAME}
-      git add _volpino.auto.tfvars
-      git commit -m "Adding volpino git variables for latest commit"
-      git push "https://${TRAVIS_SECURE_TOKEN}@github.com/datacite/${TERRAFORM_REPO}.git" master
+      git clone "https://${TRAVIS_SECURE_TOKEN}@$github.com/datacite/${TERRAFORM_REPO}.git";
+      cd ${TERRAFORM_REPO};
+      GIT_SHA=$(git rev-parse --short HEAD);
+      GIT_TAG=$(git describe --tags $(git rev-list --tags --max-count=1));
+      ../dockerize -template vendor/docker/_volpino.auto.tfvars.tmpl:_volpino.auto.tfvars;
+      git remote;
+      git config user.email ${DOCKER_EMAIL};
+      git config user.name ${DOCKER_USERNAME};
+      git add _volpino.auto.tfvars;
+      git commit -m "Adding volpino git variables for latest commit";
+      git push "https://${TRAVIS_SECURE_TOKEN}@github.com/datacite/${TERRAFORM_REPO}.git" master;
     fi
 
 notifications:
