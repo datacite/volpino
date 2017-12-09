@@ -517,9 +517,9 @@ GEM
     simple_form (3.1.1)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
-    simplecov (0.10.0)
+    simplecov (0.13.0)
       docile (~> 1.1.0)
-      json (~> 1.8)
+      json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
     sinatra (1.4.8)
@@ -664,7 +664,7 @@ DEPENDENCIES
   shoulda-matchers (~> 2.7.0)
   sidekiq (~> 4.0, >= 4.0.1)
   simple_form (~> 3.1.0)
-  simplecov (~> 0.10.0)
+  simplecov
   sinatra
   spring
   sprockets-rails (~> 2.2.0)
