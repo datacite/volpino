@@ -38,32 +38,37 @@ after_success:
   - set -e
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
   - REPO=datacite/volpino;
+  - AUTO_DEPLOY=false
   - if [ "${TRAVIS_TAG?}" ]; then
       docker build -f Dockerfile -t $REPO:$TRAVIS_TAG .;
       docker push $REPO:$TRAVIS_TAG;
       echo "Pushed to" $REPO:$TRAVIS_TAG;
+      AUTO_DEPLOY=true
     elif [ "$TRAVIS_BRANCH" == "master" ]; then
       docker build -f Dockerfile -t $REPO .;
       docker push $REPO;
       echo "Pushed to" $REPO;
+      AUTO_DEPLOY=true
     else
       docker build -f Dockerfile -t $REPO:$TRAVIS_BRANCH .;
       docker push $REPO:$TRAVIS_BRANCH;
       echo "Pushed to" $REPO:$TRAVIS_BRANCH;
     fi
 
-  - git clone "https://${TRAVIS_SECURE_TOKEN}@$github.com/datacite/${TERRAFORM_REPO}.git" > /dev/null 2>&1
-  - cd ${TERRAFORM_REPO}
-  - GIT_SHA=$(git rev-parse --short HEAD)
-  - GIT_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
-  - ../dockerize -template vendor/docker/_volpino.auto.tfvars.tmpl:_volpino.auto.tfvars
-  - git remote
-  - git config user.email ${EMAIL}
-  - git config user.name ${DOCKER_USERNAME}
-  - git add _volpino.auto.tfvars
-  - git commit -m "Adding volpino git variables for latest commit"
-  - git push "https://${TRAVIS_SECURE_TOKEN}@$github.com/datacite/${TERRAFORM_REPO}.git" master > /dev/null 2>&1
-
+    if [ "$AUTO_DEPLOY" == "true" ]; then
+      git clone "https://${TRAVIS_SECURE_TOKEN}@$github.com/datacite/${TERRAFORM_REPO}.git" > /dev/null 2>&1
+      cd ${TERRAFORM_REPO}
+      GIT_SHA=$(git rev-parse --short HEAD)
+      GIT_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+      ../dockerize -template vendor/docker/_volpino.auto.tfvars.tmpl:_volpino.auto.tfvars
+      git remote
+      git config user.email ${DOCKER_EMAIL}
+      git config user.name ${DOCKER_USERNAME}
+      git add _volpino.auto.tfvars
+      git commit -m "Adding volpino git variables for latest commit"
+      git push "https://${TRAVIS_SECURE_TOKEN}@github.com/datacite/${TERRAFORM_REPO}.git" master > /dev/null 2>&1
+    fi
+    
 notifications:
   slack: datacite:Wt8En0ALoTA6Kjc5EOKNDWxN
   email: false
