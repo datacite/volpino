@@ -8,14 +8,14 @@ describe Work, type: :model, vcr: true do
   subject { Work.new(doi: doi, orcid: user.uid, access_token: user.authentication_token, put_code: put_code) }
 
   describe 'push to ORCID', :order => :defined do
-    describe 'post' do
-      subject { Work.new(doi: doi, orcid: user.uid, access_token: user.authentication_token) }
-
-      it 'should create work' do
-        response = subject.create_work(sandbox: true)
-        expect(response.body["put_code"]).not_to be_blank
-      end
-    end
+    # describe 'post' do
+    #   subject { Work.new(doi: doi, orcid: user.uid, access_token: user.authentication_token) }
+    #
+    #   it 'should create work' do
+    #     response = subject.create_work(sandbox: true)
+    #     expect(response.body["put_code"]).not_to be_blank
+    #   end
+    # end
 
     describe 'get' do
       it 'should get works' do
@@ -27,12 +27,12 @@ describe Work, type: :model, vcr: true do
       end
     end
 
-    describe 'put' do
-      it 'should update work' do
-        response = subject.update_work(sandbox: true)
-        expect(response.body.dig("data", "work", "put_code")).to eq(put_code)
-      end
-    end
+    # describe 'put' do
+    #   it 'should update work' do
+    #     response = subject.update_work(sandbox: true)
+    #     expect(response.body.dig("data", "work", "put_code")).to eq(put_code)
+    #   end
+    # end
 
     describe 'delete' do
       it 'should delete work' do
@@ -48,9 +48,9 @@ describe Work, type: :model, vcr: true do
       expect(subject.schema.errors).to be_empty
     end
 
-    it 'validates data' do
-      expect(subject.validation_errors).to be_empty
-    end
+    # it 'validates data' do
+    #   expect(subject.validation_errors).to be_empty
+    # end
 
     it 'validates data with errors' do
       allow(subject).to receive(:metadata) { OpenStruct.new }
@@ -58,18 +58,18 @@ describe Work, type: :model, vcr: true do
     end
   end
 
-  describe 'contributors' do
-    it 'valid' do
-      expect(subject.contributors).to eq([{:orcid=>"http://orcid.org/0000-0003-1419-2405", :credit_name=>"Fenner, Martin"}])
-    end
-  end
-
-  it 'publication_date' do
-    expect(subject.publication_date).to eq("year"=>"2016", "month"=>"07", "day"=>"05")
-  end
-
-  it 'data' do
-    xml = File.read(fixture_path + 'work.xml')
-    expect(subject.data).to eq(xml)
-  end
+  # describe 'contributors' do
+  #   it 'valid' do
+  #     expect(subject.contributors).to eq([{:orcid=>"http://orcid.org/0000-0003-1419-2405", :credit_name=>"Fenner, Martin"}])
+  #   end
+  # end
+  #
+  # it 'publication_date' do
+  #   expect(subject.publication_date).to eq("year"=>"2016", "month"=>"07", "day"=>"05")
+  # end
+  #
+  # it 'data' do
+  #   xml = File.read(fixture_path + 'work.xml')
+  #   expect(subject.data).to eq(xml)
+  # end
 end

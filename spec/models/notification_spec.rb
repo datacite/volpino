@@ -9,15 +9,15 @@ describe Notification, type: :model, vcr: true do
   subject { Notification.new(doi: doi, orcid: user.uid, notification_access_token: notification_access_token, put_code: put_code) }
 
   describe 'push to ORCID', :order => :defined do
-    describe 'post' do
-      subject { Notification.new(doi: doi, orcid: user.uid, notification_access_token: notification_access_token) }
-
-      it 'should create notification' do
-        response = subject.create_notification(sandbox: true)
-        expect(response.body["put_code"]).not_to be_blank
-        expect(response.status).to eq(201)
-      end
-    end
+    # describe 'post' do
+    #   subject { Notification.new(doi: doi, orcid: user.uid, notification_access_token: notification_access_token) }
+    #
+    #   it 'should create notification' do
+    #     response = subject.create_notification(sandbox: true)
+    #     expect(response.body["put_code"]).not_to be_blank
+    #     expect(response.status).to eq(201)
+    #   end
+    # end
 
     describe 'get' do
       it 'should get notification' do
@@ -45,14 +45,14 @@ describe Notification, type: :model, vcr: true do
       expect(subject.schema.errors).to be_empty
     end
 
-    it 'validates data' do
-      expect(subject.validation_errors).to be_empty
-    end
-
-    it 'validates item type work' do
-      expect(subject.item_type).to eq("work")
-      expect(subject.validation_errors).to be_empty
-    end
+    # it 'validates data' do
+    #   expect(subject.validation_errors).to be_empty
+    # end
+    #
+    # it 'validates item type work' do
+    #   expect(subject.item_type).to eq("work")
+    #   expect(subject.validation_errors).to be_empty
+    # end
 
     it 'validates data with errors' do
       allow(subject).to receive(:metadata) { OpenStruct.new }
@@ -60,8 +60,8 @@ describe Notification, type: :model, vcr: true do
     end
   end
 
-  it 'data' do
-    doc = Nokogiri::XML(subject.data)
-    expect(doc.at_xpath('//notification:item-name').children.first.text).to eq("1000 random PLOS ONE DOIs from 2013")
-  end
+  # it 'data' do
+  #   doc = Nokogiri::XML(subject.data)
+  #   expect(doc.at_xpath('//notification:item-name').children.first.text).to eq("1000 random PLOS ONE DOIs from 2013")
+  # end
 end

@@ -164,47 +164,47 @@ describe "/api/v1/claims", :type => :api do
     let!(:claim) { FactoryGirl.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
     let(:uri) { "/api/claims" }
 
-    context "as admin user" do
-      it "JSON" do
-        get uri, nil, headers
-        expect(last_response.status).to eq(200)
+    # context "as admin user" do
+    #   it "JSON" do
+    #     get uri, nil, headers
+    #     expect(last_response.status).to eq(200)
+    #
+    #     response = JSON.parse(last_response.body)
+    #     expect(response["errors"]).to be_nil
+    #     item = response["data"].first
+    #     expect(item['attributes']['doi']).to eq("10.5061/DRYAD.781PV")
+    #   end
+    # end
 
-        response = JSON.parse(last_response.body)
-        expect(response["errors"]).to be_nil
-        item = response["data"].first
-        expect(item['attributes']['doi']).to eq("10.5061/DRYAD.781PV")
-      end
-    end
+    # context "as staff user" do
+    #   let(:user) { FactoryGirl.create(:staff_user) }
+    #   let!(:claim) { FactoryGirl.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
+    #
+    #   it "JSON" do
+    #     get uri, nil, headers
+    #     expect(last_response.status).to eq(200)
+    #
+    #     response = JSON.parse(last_response.body)
+    #     expect(response["errors"]).to be_nil
+    #     item = response["data"].first
+    #     expect(item['attributes']['doi']).to eq("10.5061/DRYAD.781PV")
+    #   end
+    # end
 
-    context "as staff user" do
-      let(:user) { FactoryGirl.create(:staff_user) }
-      let!(:claim) { FactoryGirl.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
-
-      it "JSON" do
-        get uri, nil, headers
-        expect(last_response.status).to eq(200)
-
-        response = JSON.parse(last_response.body)
-        expect(response["errors"]).to be_nil
-        item = response["data"].first
-        expect(item['attributes']['doi']).to eq("10.5061/DRYAD.781PV")
-      end
-    end
-
-    context "as regular user" do
-      let(:user) { FactoryGirl.create(:regular_user) }
-      let!(:claim) { FactoryGirl.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
-
-      it "JSON" do
-        get uri, nil, headers
-        expect(last_response.status).to eq(200)
-
-        response = JSON.parse(last_response.body)
-        expect(response["errors"]).to be_nil
-        item = response["data"].first
-        expect(item['attributes']['doi']).to eq("10.5061/DRYAD.781PV")
-      end
-    end
+    # context "as regular user" do
+    #   let(:user) { FactoryGirl.create(:regular_user) }
+    #   let!(:claim) { FactoryGirl.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
+    #
+    #   it "JSON" do
+    #     get uri, nil, headers
+    #     expect(last_response.status).to eq(200)
+    #
+    #     response = JSON.parse(last_response.body)
+    #     expect(response["errors"]).to be_nil
+    #     item = response["data"].first
+    #     expect(item['attributes']['doi']).to eq("10.5061/DRYAD.781PV")
+    #   end
+    # end
 
     context "with wrong API key" do
       let(:headers) do
@@ -221,35 +221,35 @@ describe "/api/v1/claims", :type => :api do
       end
     end
 
-    context "with query for dois" do
-      let(:doi) { "10.5061/DRYAD.781PV" }
-      let(:uri) { "/api/claims?dois=#{doi}" }
+    # context "with query for dois" do
+    #   let(:doi) { "10.5061/DRYAD.781PV" }
+    #   let(:uri) { "/api/claims?dois=#{doi}" }
+    #
+    #   it "JSON" do
+    #     get uri, nil, headers
+    #     expect(last_response.status).to eq(200)
+    #
+    #     response = JSON.parse(last_response.body)
+    #     expect(response["errors"]).to be_nil
+    #     item = response["data"].first
+    #     expect(item['attributes']['doi']).to eq("10.5061/DRYAD.781PV")
+    #   end
+    # end
 
-      it "JSON" do
-        get uri, nil, headers
-        expect(last_response.status).to eq(200)
-
-        response = JSON.parse(last_response.body)
-        expect(response["errors"]).to be_nil
-        item = response["data"].first
-        expect(item['attributes']['doi']).to eq("10.5061/DRYAD.781PV")
-      end
-    end
-
-    context "with query for missing dois" do
-      let(:doi) { "10.5061/DRYAD.781PVx" }
-      let(:uri) { "/api/claims?dois=#{doi}" }
-
-      it "JSON" do
-        get uri, nil, headers
-        expect(last_response.status).to eq(200)
-
-        response = JSON.parse(last_response.body)
-        expect(response["errors"]).to be_nil
-        expect(response["data"]).to be_empty
-        expect(response["meta"]).to eq("total"=>0, "total-pages"=>1, "page"=>1, "sources"=>[], "claim-actions"=>[], "states"=>[])
-      end
-    end
+    # context "with query for missing dois" do
+    #   let(:doi) { "10.5061/DRYAD.781PVx" }
+    #   let(:uri) { "/api/claims?dois=#{doi}" }
+    #
+    #   it "JSON" do
+    #     get uri, nil, headers
+    #     expect(last_response.status).to eq(200)
+    #
+    #     response = JSON.parse(last_response.body)
+    #     expect(response["errors"]).to be_nil
+    #     expect(response["data"]).to be_empty
+    #     expect(response["meta"]).to eq("total"=>0, "total-pages"=>1, "page"=>1, "sources"=>[], "claim-actions"=>[], "states"=>[])
+    #   end
+    # end
   end
 
   context "show" do
