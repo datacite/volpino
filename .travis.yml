@@ -55,7 +55,7 @@ after_success:
     fi
 
   - if [ "$AUTO_DEPLOY" == "true" ]; then
-      git clone "https://${TRAVIS_SECURE_TOKEN}@$github.com/datacite/${TERRAFORM_REPO}.git";
+      git clone "https://${TRAVIS_SECURE_TOKEN}@github.com/datacite/${TERRAFORM_REPO}.git";
       cd ${TERRAFORM_REPO};
       GIT_SHA=$(git rev-parse --short HEAD);
       GIT_TAG=$(git describe --tags $(git rev-list --tags --max-count=1));
