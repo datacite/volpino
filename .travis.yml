@@ -14,9 +14,6 @@ addons:
     repo_token: $CODECLIMATE_REPO_TOKEN
 
 before_install:
-  - wget https://github.com/jwilder/dockerize/releases/download/v0.6.0/dockerize-linux-amd64-v0.6.0.tar.gz
-  - tar -xzvf dockerize-linux-amd64-v0.6.0.tar.gz
-  - rm dockerize-linux-amd64-v0.6.0.tar.gz
   - mysql -e 'CREATE DATABASE profiles_test;'
 
 install:
@@ -55,11 +52,14 @@ after_success:
     fi
 
   - if [ "$AUTO_DEPLOY" == "true" ]; then
-      git clone "https://${TRAVIS_SECURE_TOKEN}@github.com/datacite/${TERRAFORM_REPO}.git";
-      cd ${TERRAFORM_REPO};
+      wget https://github.com/jwilder/dockerize/releases/download/v0.6.0/dockerize-linux-amd64-v0.6.0.tar.gz;
+      tar -xzvf dockerize-linux-amd64-v0.6.0.tar.gz;
+      rm dockerize-linux-amd64-v0.6.0.tar.gz;
       GIT_SHA=$(git rev-parse --short HEAD);
       GIT_TAG=$(git describe --tags $(git rev-list --tags --max-count=1));
-      ../dockerize -template vendor/docker/_volpino.auto.tfvars.tmpl:_volpino.auto.tfvars;
+      git clone "https://${TRAVIS_SECURE_TOKEN}@github.com/datacite/${TERRAFORM_REPO}.git";
+      ./dockerize -template vendor/docker/_volpino.auto.tfvars.tmpl:${TERRAFORM_REPO}/_volpino.auto.tfvars;
+      cd ${TERRAFORM_REPO};
       git remote;
       git config user.email ${DOCKER_EMAIL};
       git config user.name ${DOCKER_USERNAME};
