@@ -54,7 +54,7 @@ after_success:
       echo "Pushed to" $REPO:$TRAVIS_BRANCH;
     fi
 
-    if [ "$AUTO_DEPLOY" == "true" ]; then
+  - if [ "$AUTO_DEPLOY" == "true" ]; then
       git clone "https://${TRAVIS_SECURE_TOKEN}@$github.com/datacite/${TERRAFORM_REPO}.git"
       cd ${TERRAFORM_REPO}
       GIT_SHA=$(git rev-parse --short HEAD)
