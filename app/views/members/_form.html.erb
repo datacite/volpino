@@ -17,6 +17,7 @@
       <% if can?(:manage, @member) %>
         <%= f.input :member_type, collection: member_types.map { |member_type| [member_type.humanize.titleize, member_type] }, include_blank: false, input_html: { class: "form-user" } %>
       <% end %>
+      <%= f.input :institution_type, collection: institution_types.map { |institution_type| [institution_type.humanize.titleize, institution_type] }, include_blank: true, input_html: { class: "form-user" } %>
       <%= f.input :country_code, label: "Country", input_html: { class: "form-user" } %>
       <%= f.input :year, label: "Year joined", collection: 2009..Date.today.year, selected: @member.year || Date.today.year, include_blank: false, input_html: { class: "form-user" } %>
     </div>
@@ -33,9 +34,9 @@
 <div class="panel-footer">
   <div class="form-group submit pull-right">
     <% if @user.present? %>
-      <%= link_to 'Cancel', member_path(@member, user_id: @user), { remote: true, class: "btn btn-sm" } %>
+      <%= link_to 'Cancel', member_path(@member, user_id: @user.id), { remote: true, class: "btn btn-sm" } %>
     <% else %>
-      <%= link_to 'Cancel', members_path, { remote: true, class: "btn btn-sm" } %>
+      <%= link_to 'Cancel', member_path(@member), { remote: true, class: "btn btn-sm" } %>
     <% end %>
     <%= f.submit "Save ", class: "btn btn-sm btn-fill" %>
   </div>

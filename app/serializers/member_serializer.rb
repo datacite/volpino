@@ -1,6 +1,6 @@
 class MemberSerializer < ActiveModel::Serializer
   cache key: 'member'
-  attributes :id, :title, :description, :member_type, :region, :country, :year, :logo_url, :email, :website, :phone, :created, :updated
+  attributes :id, :title, :description, :member_type, :institution_type, :region, :country, :year, :logo_url, :email, :website, :phone, :created, :updated
 
   def can_read
     # `scope` is current ability

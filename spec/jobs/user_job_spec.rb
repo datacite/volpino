@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe UserJob, :type => :job do
-  let(:user) { FactoryGirl.create(:valid_user) }
+  let(:user) { FactoryBot.create(:valid_user) }
   let(:job) { user.queue_user_job }
 
   it "enqueue jobs" do

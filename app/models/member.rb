@@ -4,6 +4,7 @@ class Member < ActiveRecord::Base
   validates :member_type, presence: true
   validates :country_code, presence: true
   validates :year, presence: true
+  validates_inclusion_of :institution_type, :in => %w(national_organization academic_institution research_institution government_organization publisher association service_provider), :message => "Institution type %s is not included in the list", if: :institution_type?
 
   before_validation :set_region
 

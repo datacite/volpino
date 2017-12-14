@@ -14,6 +14,7 @@ class Api::V1::MembersController < Api::BaseController
     end
 
     collection = collection.where(member_type: params[:member_type]) if params[:member_type].present?
+    collection = collection.where(institution_type: params[:institution_type]) if params[:institution_type].present?
     collection = collection.where(region: params[:region]) if params[:region].present?
     collection = collection.where(year: params[:year]) if params[:year].present?
 
@@ -25,6 +26,14 @@ class Api::V1::MembersController < Api::BaseController
     else
       member_types = collection.where.not(member_type: nil).group(:member_type).count
       member_types = member_types.map { |k,v| { id: k, title: k.humanize, count: v } }
+    end
+    if params[:institution_type].present?
+      institution_types = [{ id: params[:institution_type],
+                             title: params[:institution_type].humanize,
+                             count: collection.where(institution_type: params[:institution_type]).count }]
+    else
+      institution_types = collection.where.not(institution_type: nil).group(:institution_type).count
+      institution_types = institution_types.map { |k,v| { id: k, title: k.humanize, count: v } }
     end
     if params[:region].present?
       regions = [{ id: params[:region],
@@ -47,7 +56,18 @@ class Api::V1::MembersController < Api::BaseController
     page[:number] = page[:number] && page[:number].to_i > 0 ? page[:number].to_i : 1
     page[:size] = page[:size] && (1..1000).include?(page[:size].to_i) ? page[:size].to_i : 1000
 
-    @members = collection.order(:title).page(page[:number]).per(page[:size])
+    order = case params[:sort]
+              when "-title" then "members.title DESC"
+              when "created" then "members.created_at"
+              when "-created" then "members.created_at DESC"
+              when "country" then "members.country_code, members.title"
+              when "-country" then "members.country_code DESC, members.title"
+              when "institution-type" then "members.institution_type, members.title"
+              when "-institution-type" then "members.institution_type DESC, members.title"
+              else "members.title"
+            end
+
+    @members = collection.order(order).page(page[:number]).per(page[:size])
 
     meta = { total: @members.total_count,
              total_pages: @members.total_pages ,
@@ -80,6 +100,6 @@ class Api::V1::MembersController < Api::BaseController
   private
 
   def safe_params
-    params.fetch(:member, {}).permit(:title, :name, :description, :member_type, :country_code, :website, :year, :email, :phone, :logo, :image, :image_cache)
+    params.fetch(:member, {}).permit(:title, :name, :description, :member_type, :institution_type, :country_code, :website, :year, :email, :phone, :logo, :image, :image_cache)
   end
 end

@@ -110,6 +110,10 @@ module ApplicationHelper
     %w(allocating non-allocating)
   end
 
+  def institution_types
+    %w(national_organization academic_institution research_institution government_organization publisher association service_provider)
+  end
+
   def regions
     { "AMER" => "Americas",
       "APAC" => "Asia Pacific",

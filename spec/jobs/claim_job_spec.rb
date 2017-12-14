@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe ClaimJob, :type => :job do
-  let(:user) { FactoryGirl.create(:user) }
-  let(:claim) { FactoryGirl.create(:claim, orcid: user.uid) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:claim) { FactoryBot.create(:claim, orcid: user.uid) }
   let(:job) { claim.queue_claim_job }
 
   it "enqueue jobs" do

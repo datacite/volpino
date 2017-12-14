@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171204193041) do
+ActiveRecord::Schema.define(version: 20171214060400) do
 
   create_table "claims", force: :cascade do |t|
     t.string   "uuid",           limit: 191
@@ -42,22 +42,24 @@ ActiveRecord::Schema.define(version: 20171204193041) do
   end
 
   create_table "members", force: :cascade do |t|
-    t.string   "name",         limit: 191,                    null: false
-    t.string   "title",        limit: 255,                    null: false
-    t.text     "description",  limit: 65535
-    t.string   "member_type",  limit: 191,   default: "full"
-    t.integer  "year",         limit: 4
-    t.string   "region",       limit: 255
-    t.string   "country_code", limit: 255
-    t.string   "logo",         limit: 255
-    t.string   "email",        limit: 255
-    t.string   "website",      limit: 255
-    t.string   "phone",        limit: 255
+    t.string   "name",             limit: 191,                    null: false
+    t.string   "title",            limit: 255,                    null: false
+    t.text     "description",      limit: 65535
+    t.string   "member_type",      limit: 191,   default: "full"
+    t.integer  "year",             limit: 4
+    t.string   "region",           limit: 255
+    t.string   "country_code",     limit: 255
+    t.string   "logo",             limit: 255
+    t.string   "email",            limit: 255
+    t.string   "website",          limit: 255
+    t.string   "phone",            limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "image",        limit: 255
+    t.string   "image",            limit: 255
+    t.string   "institution_type", limit: 191
   end
 
+  add_index "members", ["institution_type"], name: "index_member_institution_type", using: :btree
   add_index "members", ["name"], name: "index_members_on_name", using: :btree
 
   create_table "status", force: :cascade do |t|

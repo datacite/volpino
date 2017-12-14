@@ -9,7 +9,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require "rspec/rails"
 require "shoulda-matchers"
 require "email_spec"
-require "factory_girl_rails"
+require "factory_bot_rails"
 require "capybara/rspec"
 require "capybara/rails"
 require "capybara/poltergeist"
@@ -86,7 +86,7 @@ RSpec.configure do |config|
   config.order = :random
 
   # config.include WebMock::API
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 
   config.include Rack::Test::Methods, :type => :api
 
@@ -106,7 +106,7 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
-    FactoryGirl.lint
+    FactoryBot.lint
   end
 
   config.before(:each) do

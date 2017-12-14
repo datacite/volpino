@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Claim, type: :model, vcr: true do
 
-  subject { FactoryGirl.create(:claim) }
+  subject { FactoryBot.create(:claim) }
 
   context "HTTP" do
     let(:url) { "http://127.0.0.1/api/claims/#{subject.uuid}" }
