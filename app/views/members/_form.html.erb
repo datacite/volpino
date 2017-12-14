@@ -36,7 +36,7 @@
     <% if @user.present? %>
       <%= link_to 'Cancel', member_path(@member, user_id: @user.id), { remote: true, class: "btn btn-sm" } %>
     <% else %>
-      <%= link_to 'Cancel', member_path(@member), { remote: true, class: "btn btn-sm" } %>
+      <%= link_to 'Cancel', members_path, { remote: true, class: "btn btn-sm" } %>
     <% end %>
     <%= f.submit "Save ", class: "btn btn-sm btn-fill" %>
   </div>
