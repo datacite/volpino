@@ -2,14 +2,14 @@ require "rails_helper"
 require "cancan/matchers"
 
 describe User, type: :model, vcr: true do
-  subject { FactoryGirl.create(:valid_user, github: "mfenner", github_put_code: nil) }
+  subject { FactoryBot.create(:valid_user, github: "mfenner", github_put_code: nil) }
 
   it { is_expected.to validate_uniqueness_of(:uid) }
   it { is_expected.to validate_presence_of(:provider) }
   it { is_expected.to have_many(:claims) }
 
   describe "jwt" do
-    subject { FactoryGirl.create(:regular_user) }
+    subject { FactoryBot.create(:regular_user) }
 
     it 'is user' do
       payload = subject.decode_token(subject.jwt)
@@ -18,7 +18,7 @@ describe User, type: :model, vcr: true do
     end
 
     it 'is admin' do
-      subject = FactoryGirl.create(:admin_user)
+      subject = FactoryBot.create(:admin_user)
       payload = subject.decode_token(subject.jwt)
       expect(payload["uid"]).to eq(subject.uid)
       expect(payload["role_id"]).to eq("staff_admin")
@@ -35,7 +35,7 @@ describe User, type: :model, vcr: true do
     end
 
     it 'delete claim' do
-      subject = FactoryGirl.create(:valid_user, github: "mfenner", github_put_code: "3877")
+      subject = FactoryBot.create(:valid_user, github: "mfenner", github_put_code: "3877")
       expect(subject.github_to_be_deleted?).to be true
       response = subject.push_github_identifier
       expect(response.body["data"]).to be_blank
@@ -46,20 +46,20 @@ describe User, type: :model, vcr: true do
 
   describe 'process_data', :order => :defined do
     it 'no errors' do
-      subject = FactoryGirl.create(:valid_user, github: "mfenner", github_put_code: nil)
+      subject = FactoryBot.create(:valid_user, github: "mfenner", github_put_code: nil)
       expect(subject.process_data).to be true
       expect(subject.github_put_code).to eq(3878)
     end
 
     it 'delete claim' do
-      subject = FactoryGirl.create(:valid_user, github: "mfenner", github_put_code: "3878")
+      subject = FactoryBot.create(:valid_user, github: "mfenner", github_put_code: "3878")
       expect(subject.process_data).to be true
       expect(subject.github_put_code).to be nil
     end
   end
 
   describe "claims from ORCID" do
-    subject { FactoryGirl.create(:valid_user) }
+    subject { FactoryBot.create(:valid_user) }
 
     it 'get data' do
       result = subject.get_data
@@ -79,9 +79,9 @@ describe User, type: :model, vcr: true do
   end
 
   describe "claims from notifications" do
-    subject { FactoryGirl.create(:valid_user) }
+    subject { FactoryBot.create(:valid_user) }
 
-    let!(:claim) { FactoryGirl.create(:claim, user: subject, orcid: "0000-0001-6528-2027", doi: "10.6084/M9.FIGSHARE.1041821", state: 6) }
+    let!(:claim) { FactoryBot.create(:claim, user: subject, orcid: "0000-0001-6528-2027", doi: "10.6084/M9.FIGSHARE.1041821", state: 6) }
 
     it 'queue_claims_jobs' do
       subject.queue_claim_jobs

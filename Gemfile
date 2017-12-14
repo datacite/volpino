@@ -82,7 +82,7 @@ group :development, :test do
 end
 
 group :test do
-  gem "factory_girl_rails", "~> 4.5.0", :require => false
+  gem "factory_bot_rails", "~> 4.8", :require => false
   gem "capybara", "~> 2.4.4"
   gem 'capybara-screenshot', '~> 1.0.3'
   gem "database_cleaner", "~> 1.3.0"

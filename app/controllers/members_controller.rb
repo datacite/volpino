@@ -74,6 +74,10 @@ class MembersController < ApplicationController
       collection = collection.where(member_type: params[:member_type])
       @member_type = Member.where(member_type: params[:member_type]).group(:member_type).count.first
     end
+    if params[:institution_type].present?
+      collection = collection.where(institution_type: params[:institution_type])
+      @institution_type = Member.where(institution_type: params[:institution_type]).group(:institution_type).count.first
+    end
     if params[:region].present?
       collection = collection.where(region: params[:region])
       @region = Member.where(region: params[:region]).group(:region).count.first
@@ -86,6 +90,7 @@ class MembersController < ApplicationController
     collection = collection.query(params[:query]) if params[:query]
 
     @member_types = collection.where.not(member_type: nil).group(:member_type).count
+    @institution_types = collection.where.not(institution_type: nil).group(:institution_type).count
     @regions = collection.where.not(region: nil).group(:region).count
     @years = collection.where.not(year: nil).group(:year).count
 
@@ -95,6 +100,6 @@ class MembersController < ApplicationController
   private
 
   def safe_params
-    params.fetch(:member, {}).permit(:title, :name, :description, :member_type, :country_code, :website, :year, :email, :phone, :logo, :image, :image_cache)
+    params.fetch(:member, {}).permit(:title, :name, :description, :member_type, :institution_type, :country_code, :website, :year, :email, :phone, :logo, :image, :image_cache)
   end
 end

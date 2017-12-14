@@ -18,6 +18,10 @@
     </div>
     <div class="panel-body">
       <dl class="dl-horizontal">
+        <% if @member.institution_type %>
+          <dt>Institution Type</dt>
+          <dd><%= @member.institution_type.humanize %></dd>
+        <% end %>
         <dt>Country</dt>
         <dd><%= @member.country_name %></dd>
         <dt>Year joined</dt>

@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe Work, type: :model, vcr: true do
   let(:doi) { "10.5438/VQ2T-VR4K"}
-  let(:user) { FactoryGirl.create(:valid_user) }
+  let(:user) { FactoryBot.create(:valid_user) }
   let(:put_code) { "861230" }
 
   subject { Work.new(doi: doi, orcid: user.uid, access_token: user.authentication_token, put_code: put_code) }

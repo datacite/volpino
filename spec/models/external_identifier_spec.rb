@@ -4,7 +4,7 @@ describe ExternalIdentifier, type: :model, vcr: true do
   let(:type) { "Github" }
   let(:value) { "mfenner" }
   let(:url) { "https://github.com/#{value}" }
-  let(:user) { FactoryGirl.create(:valid_user) }
+  let(:user) { FactoryBot.create(:valid_user) }
   let(:put_code) { "3879" }
 
   subject { ExternalIdentifier.new(type: type, value: value, url: url, orcid: user.uid, access_token: user.authentication_token, put_code: put_code) }

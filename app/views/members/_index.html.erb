@@ -75,16 +75,40 @@
           <ul>
             <% if @member_type %>
               <li class="active">
-                <%= link_to icon('check-square-o').html_safe, members_path(query: params[:query], region: params[:region], year: params[:year]) %>
+                <%= link_to icon('check-square-o').html_safe, members_path(query: params[:query], institution_type: params[:institution_type], region: params[:region], year: params[:year]) %>
                 <%= @member_type.first.humanize %>
                 <span class="number pull-right"><%= number_with_delimiter(@member_type.last) %></span>
               </li>
             <% else %>
               <% @member_types.each do |member_type| %>
                 <li>
-                  <%= link_to icon('square-o').html_safe, members_path(query: params[:query], member_type: member_type.first, region: params[:region], year: params[:year]) %>
+                  <%= link_to icon('square-o').html_safe, members_path(query: params[:query], member_type: member_type.first, institution_type: params[:institution_type], region: params[:region], year: params[:year]) %>
                   <%= member_type.first.humanize %>
                   <span class="number pull-right"><%= number_with_delimiter(member_type.last) %></span>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+    <% if @institution_types.size > 0 %>
+      <div class="panel facets">
+        <div class="panel-body">
+          <h4>Institution Types</h4>
+          <ul>
+            <% if @institution_type %>
+              <li class="active">
+                <%= link_to icon('check-square-o').html_safe, members_path(query: params[:query], member_type: params[:member_type], region: params[:region], year: params[:year]) %>
+                <%= @institution_type.first.humanize  %>
+                <span class="number pull-right"><%= number_with_delimiter(@institution_type.last) %></span>
+              </li>
+            <% else %>
+              <% @institution_types.each do |institution_type| %>
+                <li>
+                  <%= link_to icon('square-o').html_safe, members_path(query: params[:query], institution_type: institution_type.first, member_type: params[:member_type], region: params[:region], year: params[:year]) %>
+                  <%= institution_type.first.humanize %>
+                  <span class="number pull-right"><%= number_with_delimiter(institution_type.last) %></span>
                 </li>
               <% end %>
             <% end %>
@@ -99,14 +123,14 @@
           <ul>
             <% if @region %>
               <li class="active">
-                <%= link_to icon('check-square-o').html_safe, members_path(query: params[:query], member_type: params[:member_type], year: params[:year]) %>
+                <%= link_to icon('check-square-o').html_safe, members_path(query: params[:query], member_type: params[:member_type], institution_type: params[:institution_type], year: params[:year]) %>
                 <%= regions[@region.first] %>
                 <span class="number pull-right"><%= number_with_delimiter(@region.last) %></span>
               </li>
             <% else %>
               <% @regions.each do |region| %>
                 <li>
-                  <%= link_to icon('square-o').html_safe, members_path(query: params[:query], region: region.first, member_type: params[:member_type], year: params[:year]) %>
+                  <%= link_to icon('square-o').html_safe, members_path(query: params[:query], region: region.first, member_type: params[:member_type], institution_type: params[:institution_type], year: params[:year]) %>
                   <%= regions[region.first] %>
                   <span class="number pull-right"><%= number_with_delimiter(region.last) %></span>
                 </li>
@@ -123,7 +147,7 @@
           <ul>
             <% if @year %>
               <li class="active">
-                <%= link_to icon('check-square-o').html_safe, members_path(query: params[:query], member_type: params[:member_type], region: params[:region]) %>
+                <%= link_to icon('check-square-o').html_safe, members_path(query: params[:query], member_type: params[:member_type], institution_type: params[:institution_type], region: params[:region]) %>
                 <div class="facet-title"><%= @year.first %></div>
                 <span class="number pull-right"><%= number_with_delimiter(@year.last) %></span>
                 <div class="clearfix"/>
@@ -131,7 +155,7 @@
             <% else %>
               <% @years.each do |year| %>
                 <li>
-                  <%= link_to icon('square-o').html_safe, members_path(query: params[:query], year: year.first, member_type: params[:member_type], region: params[:region]) %>
+                  <%= link_to icon('square-o').html_safe, members_path(query: params[:query], year: year.first, member_type: params[:member_type], institution_type: params[:institution_type], region: params[:region]) %>
                   <div class="facet-title"><%= year.first %></div>
                   <span class="number pull-right"><%= number_with_delimiter(year.last) %></span>
                   <div class="clearfix"/>

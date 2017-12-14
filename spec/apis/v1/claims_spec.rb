@@ -3,7 +3,7 @@ require "rails_helper"
 describe "/api/v1/claims", :type => :api do
   before(:each) { allow(Time.zone).to receive(:now).and_return(Time.mktime(2015, 4, 8)) }
 
-  let(:claim) { FactoryGirl.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: "0000-0002-1825-0097") }
+  let(:claim) { FactoryBot.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: "0000-0002-1825-0097") }
   let(:error) { { "errors" => [{"status"=>"401", "title"=>"You are not authorized to access this page."}] } }
   let(:success) { { "orcid"=>claim.orcid,
                     "doi"=>claim.doi,
@@ -15,7 +15,7 @@ describe "/api/v1/claims", :type => :api do
                     "claimed"=>nil,
                     "created"=>claim.created_at.iso8601,
                     "updated"=>claim.updated_at.iso8601 }}
-  let(:user) { FactoryGirl.create(:admin_user, uid: "0000-0002-1825-0097") }
+  let(:user) { FactoryBot.create(:admin_user, uid: "0000-0002-1825-0097") }
   let(:uuid) { SecureRandom.uuid }
   let(:headers) do
     { "HTTP_ACCEPT" => "application/json; version=1",
@@ -44,7 +44,7 @@ describe "/api/v1/claims", :type => :api do
     end
 
     context "as staff user" do
-      let(:user) { FactoryGirl.create(:staff_user) }
+      let(:user) { FactoryBot.create(:staff_user) }
 
       it "JSON" do
         post uri, params, headers
@@ -56,7 +56,7 @@ describe "/api/v1/claims", :type => :api do
     end
 
     context "as regular user" do
-      let(:user) { FactoryGirl.create(:regular_user) }
+      let(:user) { FactoryBot.create(:regular_user) }
 
       it "JSON" do
         post uri, params, headers
@@ -100,7 +100,7 @@ describe "/api/v1/claims", :type => :api do
     end
 
     context "without source_id" do
-      let(:claim) { FactoryGirl.build(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: "0000-0002-1825-0097", source_id: nil) }
+      let(:claim) { FactoryBot.build(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: "0000-0002-1825-0097", source_id: nil) }
       let(:params) do
         { "claim" => { "uuid" => claim.uuid,
                        "orcid" => claim.orcid,
@@ -161,7 +161,7 @@ describe "/api/v1/claims", :type => :api do
   end
 
   context "index" do
-    let!(:claim) { FactoryGirl.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
+    let!(:claim) { FactoryBot.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
     let(:uri) { "/api/claims" }
 
     # context "as admin user" do
@@ -177,8 +177,8 @@ describe "/api/v1/claims", :type => :api do
     # end
 
     # context "as staff user" do
-    #   let(:user) { FactoryGirl.create(:staff_user) }
-    #   let!(:claim) { FactoryGirl.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
+    #   let(:user) { FactoryBot.create(:staff_user) }
+    #   let!(:claim) { FactoryBot.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
     #
     #   it "JSON" do
     #     get uri, nil, headers
@@ -192,8 +192,8 @@ describe "/api/v1/claims", :type => :api do
     # end
 
     # context "as regular user" do
-    #   let(:user) { FactoryGirl.create(:regular_user) }
-    #   let!(:claim) { FactoryGirl.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
+    #   let(:user) { FactoryBot.create(:regular_user) }
+    #   let!(:claim) { FactoryBot.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
     #
     #   it "JSON" do
     #     get uri, nil, headers
@@ -253,7 +253,7 @@ describe "/api/v1/claims", :type => :api do
   end
 
   context "show" do
-    let(:claim) { FactoryGirl.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
+    let(:claim) { FactoryBot.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
     let(:uri) { "/api/claims/#{claim.uuid}" }
 
     context "as admin user" do
@@ -268,7 +268,7 @@ describe "/api/v1/claims", :type => :api do
     end
 
     context "as staff user" do
-      let(:user) { FactoryGirl.create(:staff_user) }
+      let(:user) { FactoryBot.create(:staff_user) }
 
       it "JSON" do
         get uri, nil, headers
@@ -281,7 +281,7 @@ describe "/api/v1/claims", :type => :api do
     end
 
     context "as regular user" do
-      let(:user) { FactoryGirl.create(:regular_user) }
+      let(:user) { FactoryBot.create(:regular_user) }
 
       it "JSON" do
         get uri, nil, headers
@@ -322,7 +322,7 @@ describe "/api/v1/claims", :type => :api do
   end
 
   context "delete" do
-    let(:claim) { FactoryGirl.create(:claim) }
+    let(:claim) { FactoryBot.create(:claim) }
     let(:uri) { "/api/claims/#{claim.uuid}" }
 
     context "as admin user" do
@@ -336,7 +336,7 @@ describe "/api/v1/claims", :type => :api do
     end
 
     context "as staff user" do
-      let(:user) { FactoryGirl.create(:staff_user) }
+      let(:user) { FactoryBot.create(:staff_user) }
 
       it "JSON" do
         delete uri, nil, headers
@@ -348,7 +348,7 @@ describe "/api/v1/claims", :type => :api do
     end
 
     # context "as regular user" do
-    #   let(:user) { FactoryGirl.create(:regular_user) }
+    #   let(:user) { FactoryBot.create(:regular_user) }
 
     #   it "JSON" do
     #     delete uri, nil, headers
