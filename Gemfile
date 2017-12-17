@@ -15,7 +15,7 @@ gem 'bugsnag', '~> 2.8.6'
 gem 'maremma', '~> 3.0'
 gem 'orcid_client', '~> 0.3', '>= 0.3.3'
 gem 'addressable', "~> 2.3.8"
-gem 'postrank-uri', '~> 1.0', '>= 1.0.22'
+gem 'postrank-uri', '~> 1.0', '>= 1.0.23'
 gem 'nilify_blanks', '~> 1.2.0'
 gem "state_machine", "~> 1.2.0", :git => 'https://github.com/fly1tkg/state_machine.git', :branch => 'issue/334'
 gem 'active_model_serializers', '~> 0.10.4'
@@ -34,13 +34,12 @@ gem "dalli", "~> 2.7.0"
 gem 'kaminari', '~> 1.0', '>= 1.0.1'
 gem "simple_form", "~> 3.1.0"
 gem 'country_select', '~> 2.5', '>= 2.5.1'
-gem 'nokogiri', '>= 1.6.8', '~> 1.6'
+gem 'nokogiri', '~> 1.8.1'
 gem "github-markdown", "~> 0.6.3"
 gem "rouge", "~> 1.7.2"
 gem 'hashie', '~> 3.5.0'
 gem 'bolognese', '~> 0.9.22'
 gem 'bergamasco', '~> 0.3'
-gem 'httplog', '~> 1.0'
 gem 'namae', '~> 0.11.3'
 gem 'lograge', '~> 0.3.5'
 
@@ -70,6 +69,7 @@ group :development do
   gem 'binding_of_caller', '~> 0.7.2'
   gem 'hologram', '~> 1.3.1'
   gem 'web-console', '~> 2.0'
+  gem 'httplog', '~> 1.0'
 end
 
 group :development, :test do

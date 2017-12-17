@@ -56,7 +56,7 @@ describe Notification, type: :model, vcr: true do
 
     it 'validates data with errors' do
       allow(subject).to receive(:metadata) { OpenStruct.new }
-      expect(subject.validation_errors).to eq(["The document has no document element."])
+      expect(subject.validation_errors).to eq(["-1:0: ERROR: The document has no document element."])
     end
   end
 
