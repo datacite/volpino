@@ -8,7 +8,6 @@
     "test": "tests"
   },
   "scripts": {
-    "postinstall": "node_modules/.bin/bower install"
   },
   "repository": "",
   "engines": {
@@ -17,6 +16,11 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "bower": "1.8.0"
+    "jquery-ujs": "~1.0.3",
+    "bootpag": "~1.0.7",
+    "lodash": "~3.10.0",
+    "d3": "~3.5.5",
+    "bootstrap-sass": "~3.3.6",
+    "queue-async": "~1.0.7"
   }
 }

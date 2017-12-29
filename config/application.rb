@@ -51,8 +51,8 @@ module Volpino
     # autoload files in lib folder
     config.autoload_paths << Rails.root.join('lib')
 
-    # add assets installed via bower
-    config.assets.paths << "#{Rails.root}/vendor/bower_components"
+    # add assets installed via node
+    config.assets.paths << "#{Rails.root}/vendor/node_modules"
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
