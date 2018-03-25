@@ -13,7 +13,7 @@ module Sandboxable
     end
 
     def write_sandbox(client_name, jwt: nil)
-      url = "#{ENV["LUPO_URL"]}/clients"
+      url = "#{ENV["APP_URL"]}/clients"
       data = { "data" => { "attributes" => {
                              "name" => client_name,
                              "symbol" => sandbox_id.upcase,
