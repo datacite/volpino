@@ -60,9 +60,6 @@ class UsersController < ApplicationController
   def load_user
     if user_signed_in?
       @user = current_user
-      @member = Member.where(name: @user.provider_id).first if @user.provider_id.present? && %w(staff_admin provider_admin provider_user).include?(@user.role_id)
-      @providers = Provider.all[:data]
-      @sandboxes = Client.where("provider-id" => "SANDBOX")[:data]
 
       panels = %w(auto public login account orcid sandbox)
       @panel = panels.find { |p| p == params[:panel] } || "account"
@@ -72,7 +69,7 @@ class UsersController < ApplicationController
   end
 
   def load_index
-    authorize! :read, Client
+    authorize! :manage, Phrase
 
     collection = User
 
@@ -89,7 +86,6 @@ class UsersController < ApplicationController
     collection = collection.query(params[:query]) if params[:query]
     collection = collection.ordered
 
-    @providers = Provider.all[:data]
     @roles = User.where.not(role_id: nil).group(:role_id).count
     @groups = User.where(:beta_tester => true)
     @users = collection.page(params[:page])

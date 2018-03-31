@@ -16,18 +16,9 @@ class Status < ActiveRecord::Base
     self.claims_search_new_count = Claim.search_and_link.where("claimed_at >= ?", Time.zone.now.beginning_of_day).count
     self.claims_auto_count = Claim.auto_update.count
     self.claims_auto_new_count = Claim.auto_update.where("claimed_at >= ?", Time.zone.now.beginning_of_day).count
-    self.members_emea_count = Member.where(region: "EMEA").count
-    self.members_amer_count = Member.where(region: "AMER").count
-    self.members_apac_count = Member.where(region: "APAC").count
     self.db_size = get_db_size
     self.version = Volpino::VERSION
     self.current_version = get_current_version unless current_version.present?
-  end
-
-  def members_count
-    { "Americas" => members_amer_count,
-      "Asia and Pacific" => members_apac_count,
-      "EMEA" => members_emea_count }
   end
 
   def get_current_version

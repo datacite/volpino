@@ -33,15 +33,6 @@ FactoryBot.define do
     initialize_with { User.where(uid: uid).first_or_initialize }
   end
 
-  factory :member do
-    name 'ANDS'
-    title 'Australian National Data Service (ANDS)'
-    country_code 'AU'
-    year 2009
-
-    initialize_with { Member.where(name: name).first_or_initialize }
-  end
-
   factory :claim do
     uuid { SecureRandom.uuid }
     orcid "0000-0002-1825-0001"

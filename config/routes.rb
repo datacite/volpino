@@ -36,7 +36,6 @@ Rails.application.routes.draw do
   resources :claims
   resources :docs, :only => [:index, :show], :constraints => { :id => /[0-z\-\.\(\)]+/ }
   resources :heartbeat, only: [:index]
-  resources :members
   resources :people, only: [:show, :index]
   resources :services
   resources :status, :only => [:index]
@@ -46,9 +45,6 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: "json" } do
     scope module: :v1, constraints: ApiConstraint.new(version: 1, default: :true) do
       resources :claims
-      resources :clients, only: [:show, :index], constraints: { :id => /.+/ }
-      resources :members
-      resources :providers, only: [:show, :index]
       resources :random, only: [:index]
       resources :roles, only: [:show, :index]
       resources :services

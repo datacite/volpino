@@ -33,14 +33,9 @@ if (query) {
                   };})
         .entries(day_data);
 
-      var members = d3.entries(data[0].attributes["members-count"]);
-      var members_title = d3.sum(members, function(g) { return g.value; });
-
       barViz(by_day, "#chart_users", "users_count", "days");
       barViz(by_day, "#chart_search_claims", "claims_search_count", "days");
       barViz(by_day, "#chart_auto_claims", "claims_auto_count", "days");
       barViz(by_day, "#chart_db_size", "db_size", "days");
-
-      donutViz(members, "#chart_members", members_title, null, colors, "members");
   });
 }

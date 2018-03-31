@@ -59,14 +59,6 @@
       <dl class="dl-horizontal">
         <dt>Role</dt>
         <dd><%= @user.role.name %></dd>
-        <% if @user.provider_name %>
-          <dt>Provider</dt>
-          <dd><%= link_to h(@user.provider_name), @user.provider_url %></dd>
-        <% end %>
-        <% if @user.client_name %>
-          <dt>Client</dt>
-          <dd><%= link_to h(@user.client_name), @user.client_url %></dd>
-        <% end %>
         <% if @user.beta_tester %>
           <dt>Beta Tester</dt>
           <dd>true</dd>

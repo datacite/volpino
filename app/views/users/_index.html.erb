@@ -29,8 +29,6 @@
                     <% if user.id != current_user.id %>
                       <%= f.input :role_id, collection: Role.all[:data], include_blank: false, input_html: { class: "form-user" } %>
                     <% end %>
-                    <%= f.input :provider_id, collection: @providers, label_method: :name, value_method: :id, input_html: { class: "form-user" } %>
-                    <%= f.input :sandbox_id, collection: @sandboxes, label_method: :name, value_method: :id, input_html: { class: "form-user" } %>
                     <div class="form-group">
                       <label for="other">Other</label>
                       <%= f.input :is_public, label: "Public record", input_html: { class: "form-user" } %>
@@ -63,21 +61,6 @@
                   <h5>Role</h5>
                   <%= user.role_name %>
 
-                  <% if user.provider_name.present? %>
-                    <h5>DOI Registration Provider</h5>
-                    <%= link_to h(user.provider_name), user.provider_url %>
-                  <% end %>
-
-                  <% if user.client_name.present? %>
-                    <h5>Client</h5>
-                    <%= link_to h(user.client_name), user.client_url %>
-                  <% end %>
-
-                  <% if user.sandbox_name.present? %>
-                    <h5>Sandbox</h5>
-                    <%= link_to h(user.sandbox_name), user.sandbox_url %>
-                  <% end %>
-
                   <% unless user.is_public %>
                     <h5>Record public</h5>
                     <%= user.is_public %>
@@ -108,7 +91,7 @@
                       <div class="btn-group btn-group-sm pull-right">
                         <%= link_to icon("pencil").html_safe, edit_user_path(user, query: params[:query], 'role-id' => params['role-id'], page: params[:page]), remote: true, class: 'btn btn-neutral btn-fill btn-sm', id: "#{user.id}-edit" %>
                       </div>
-                      <% if can?(:manage, Client) %>
+                      <% if can?(:manage, Phrase) %>
                         <% if user.id != current_user.id %>
                           <div class="btn-group btn-group-sm pull-right">
                             <%= link_to icon("trash").html_safe, user_path(user, query: params[:query], 'role-id' => params['role-id'], page: params[:page]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-neutral btn-fill btn-sm', id: "#{user.id}-delete" %>

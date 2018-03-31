@@ -5,7 +5,6 @@ describe User, type: :model, vcr: true do
   subject { FactoryBot.create(:valid_user, github: "mfenner", github_put_code: nil) }
 
   it { is_expected.to validate_uniqueness_of(:uid) }
-  it { is_expected.to validate_presence_of(:provider) }
   it { is_expected.to have_many(:claims) }
 
   describe "jwt" do

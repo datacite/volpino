@@ -106,20 +106,6 @@ module ApplicationHelper
     end
   end
 
-  def member_types
-    %w(allocating non-allocating)
-  end
-
-  def institution_types
-    %w(national_organization academic_institution research_institution government_organization publisher association service_provider)
-  end
-
-  def regions
-    { "AMER" => "Americas",
-      "APAC" => "Asia Pacific",
-      "EMEA" => "EMEA" }
-  end
-
   def human_source_name(source_id)
     sources.fetch(source_id, nil)
   end

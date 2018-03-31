@@ -13,9 +13,6 @@ class User < ActiveRecord::Base
   # include helper module for caching infrequently changing resources
   include Cacheable
 
-  # include helper module for Sandbox
-  include Sandboxable
-
   nilify_blanks
 
   # include hash helper
@@ -24,7 +21,7 @@ class User < ActiveRecord::Base
   # include orcid_client
   include OrcidClient::Api
 
-  attr_reader :role, :client, :doi_provider
+  attr_reader :role
 
   before_create :set_role
 
@@ -36,9 +33,7 @@ class User < ActiveRecord::Base
   devise :omniauthable, :omniauth_providers => [:orcid, :github, :google_oauth2]
 
   validates :uid, presence: true, uniqueness: true
-  validates :provider, presence: true
   validate :validate_email
-  validate :validate_sandbox
 
   scope :query, ->(query) { where("name like ? OR uid like ? OR email like ? OR github like ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%") }
   scope :ordered, -> { order("created_at DESC") }
@@ -111,61 +106,12 @@ class User < ActiveRecord::Base
     name
   end
 
-  def doi_provider
-    cached_provider_response(provider_id) if provider_id.present?
-  end
-
-  def provider_name
-    doi_provider.name if doi_provider.present?
-  end
-
-  def provider_url
-    ENV['BRACCO_URL'] + '/providers/' + provider_id if doi_provider.present?
-  end
-
   def role
     cached_role_response(role_id) if role_id.present?
   end
 
   def role_name
     role.name if role_id.present?
-  end
-
-  def client
-    cached_client_response(client_id) if client_id.present?
-  end
-
-  def client_name
-    client.name if client.present?
-  end
-
-  def client_url
-    ENV['BRACCO_URL'] + '/clients/' + client_id if client.present?
-  end
-
-  def sandbox
-    return nil unless sandbox_id.present?
-    s = Client.where(id: sandbox_id)
-    s[:data] if s.present?
-  end
-
-  def sandbox_name
-    sandbox.name if sandbox.present?
-  end
-
-  def sandbox_name=(value)
-    write_sandbox(value, jwt: jwt)
-  end
-
-  def sandbox_url
-    ENV['BRACCO_URL'] + '/clients/' + sandbox_id if sandbox.present?
-  end
-
-  def validate_sandbox
-    return true if sandbox_id.blank?
-
-    errors.add :sandbox_name, "can't be blank" if sandbox_name.blank?
-    errors.add :email, "can't be blank" if email.blank?
   end
 
   def validate_email
@@ -202,9 +148,6 @@ class User < ActiveRecord::Base
       uid: uid,
       name: name,
       email: email,
-      provider_id: provider_id,
-      client_id: client_id,
-      sandbox_id: sandbox_id,
       role_id: role_id,
       beta_tester: beta_tester,
       features: features,

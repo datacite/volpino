@@ -17,14 +17,6 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="panel <%= @current_status.members_count.reduce(0) { |sum, region| sum + region.last } > 0 ? 'panel-default' : 'panel-warning' %>">
-          <div class="panel-heading">Members</div>
-          <div class="panel-body panel-chart" id="chart_members">
-            <div class="text-muted" id="chart_members-loading">Loading … <img src="<%= ENV['CDN_URL'] + '/images/spinner.gif' %>"></div>
-          </div>
-        </div>
-      </div>
     </div>
 
     <div class="row">
