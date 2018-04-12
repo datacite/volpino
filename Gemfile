@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 # ruby '2.4.1'
 
 gem 'rails', '~> 4.2', '>= 4.2.6'
-gem 'mysql2', '0.3.18'
+gem 'mysql2', '~> 0.4.4'
 
 gem "dotenv", '~> 2.1'
 gem 'sidekiq', '~> 4.0', '>= 4.0.1'
@@ -10,7 +10,6 @@ gem 'sinatra', :require => nil
 gem "config"
 gem 'tzinfo-data'
 gem 'rake', '~> 10.5'
-gem "whenever", "~> 0.9.0", require: false
 gem 'bugsnag', '~> 2.8.6'
 gem 'maremma', '~> 3.0'
 gem 'orcid_client', '~> 0.3', '>= 0.3.3'
@@ -42,6 +41,7 @@ gem 'bolognese', '~> 0.9.22'
 gem 'bergamasco', '~> 0.3'
 gem 'namae', '~> 0.11.3'
 gem 'lograge', '~> 0.3.5'
+gem 'rack-cors', '~> 1.0', '>= 1.0.2', :require => 'rack/cors'
 
 gem 'devise', '~> 4.3'
 gem 'omniauth-google-oauth2', '~> 0.4.1'

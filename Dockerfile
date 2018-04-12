@@ -1,4 +1,4 @@
-FROM phusion/passenger-full:0.9.22
+FROM phusion/passenger-full:0.9.30
 MAINTAINER Martin Fenner "mfenner@datacite.org"
 
 # Set correct environment variables
@@ -10,8 +10,8 @@ RUN usermod -a -G docker_env app
 # Use baseimage-docker's init process
 CMD ["/sbin/my_init"]
 
-# Install Ruby 2.4.1
-RUN bash -lc 'rvm --default use ruby-2.4.1'
+# Install Ruby 2.4.4
+RUN bash -lc 'rvm --default use ruby-2.4.4'
 
 # Update installed APT packages, clean up when done
 RUN apt-get update && \
@@ -66,7 +66,6 @@ ADD vendor/docker/sidekiq.sh /etc/service/sidekiq/run
 # Run additional scripts during container startup (i.e. not at build time)
 RUN mkdir -p /etc/my_init.d
 COPY vendor/docker/70_precompile.sh /etc/my_init.d/70_precompile.sh
-COPY vendor/docker/80_cron.sh /etc/my_init.d/80_cron.sh
 COPY vendor/docker/90_migrate.sh /etc/my_init.d/90_migrate.sh
 COPY vendor/docker/100_flush_cache.sh /etc/my_init.d/100_flush_cache.sh
 
