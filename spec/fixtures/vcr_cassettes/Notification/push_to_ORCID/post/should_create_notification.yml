@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.datacite.org/prefixes/10.6084
+    uri: https://app.datacite.org/prefixes/10.6084
     body:
       encoding: US-ASCII
       string: ''
@@ -16,62 +16,49 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Access-Control-Allow-Headers:
-      - Content-Type,Accept,Accept-Encoding,Origin,User-Agent,Cache-Control,Keep-Alive
-      Access-Control-Allow-Methods:
-      - GET, POST, OPTIONS
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Max-Age:
-      - '1728000'
-      Cache-Control:
-      - max-age=0, private, must-revalidate
+      Date:
+      - Thu, 12 Apr 2018 05:28:31 GMT
       Content-Type:
       - application/vnd.api+json; charset=utf-8
-      Date:
-      - Mon, 03 Jul 2017 21:34:50 GMT
-      Etag:
-      - W/"58c74e33ab541adc084b3eaeb81a81fd"
-      Server:
-      - openresty/1.11.2.2
-      Status:
-      - 200 OK
-      Vary:
-      - Accept-Encoding
-      Via:
-      - kong/0.10.3
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Kong-Proxy-Latency:
-      - '1'
-      X-Kong-Upstream-Latency:
-      - '546'
-      X-Powered-By:
-      - Phusion Passenger 5.1.5
-      X-Ratelimit-Limit-Hour:
-      - '100000'
-      X-Ratelimit-Remaining-Hour:
-      - '99993'
-      X-Request-Id:
-      - 8c65e418-186b-4ab9-86f0-8d05f766f6d2
-      X-Runtime:
-      - '0.544938'
-      X-Xss-Protection:
-      - 1; mode=block
-      Content-Length:
-      - '124'
       Connection:
       - keep-alive
+      Status:
+      - 200 OK
+      X-Anonymous-Consumer:
+      - 'true'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Vary:
+      - Accept-Encoding, Origin
+      X-Request-Id:
+      - 64c320a6-0fe8-4042-992a-fd4e02c780fb
+      Etag:
+      - W/"89ee6bf6fad26d3e39d4f229a6911022"
+      X-Runtime:
+      - '0.012533'
+      X-Powered-By:
+      - Phusion Passenger 5.2.3
+      Server:
+      - nginx/1.12.2 + Phusion Passenger 5.2.3
     body:
       encoding: UTF-8
-      string: '{"data":{"id":"10.6084","type":"prefixes","attributes":{"registration-agency":"DataCite","updated":"2016-09-21T20:27:26Z"}}}'
+      string: '{"data":{"id":"10.6084","type":"prefixes","attributes":{"registration-agency":"DataCite","created":"2011-12-09T07:47:16.000Z","updated":null},"relationships":{"clients":{"data":[{"id":"figshare.ars","type":"clients"}]},"providers":{"data":[{"id":"figshare","type":"providers"}]}}},"included":[{"id":"figshare.ars","type":"clients","attributes":{"name":"figshare
+        Academic Research System","symbol":"FIGSHARE.ARS","year":2016,"contact-name":"Gavrila
+        Daniel","contact-email":"danielduduta@figshare.com","domains":"figshare.com","url":null,"is-active":true,"has-password":true,"created":"2016-10-12T13:42:35Z","updated":"2018-04-12T02:30:39Z"},"relationships":{"prefixes":{"meta":{}},"provider":{"meta":{}},"repository":{"meta":{}}}},{"id":"figshare","type":"providers","attributes":{"name":"figshare","symbol":"FIGSHARE","website":"https://figshare.com","contact-name":"Daniel
+        Gavrila","contact-email":"danielduduta@figshare.com","phone":"+44 (0) 20 7418
+        5573","description":"figshare is a repository where users can make all of
+        their research outputs available in a citable, shareable and discoverable
+        manner.\n\nfigshare allows users to upload any file format to be previewed
+        in the browser so that any research output, from posters and presentations
+        to datasets and code, can be disseminated in a way that the current scholarly
+        publishing model does not allow.\n\nOur mission is to change the face of academic
+        publishing with the improved dissemination and discoverability and reusability
+        of all scholarly research.","country":"GB","logo-url":"https://assets.datacite.org/images/members/figshare.png","institution-type":null,"is-active":true,"has-password":true,"joined":"2016-09-12","created":"2016-10-04T12:19:14.000Z","updated":"2018-04-12T02:25:52.000Z"},"relationships":{"clients":{"meta":{}},"prefixes":{"meta":{}}}}]}'
     http_version: 
-  recorded_at: Mon, 03 Jul 2017 21:34:50 GMT
+  recorded_at: Thu, 12 Apr 2018 05:28:30 GMT
 - request:
     method: get
-    uri: https://search.datacite.org/api?fl=doi,xml,media,minted,updated&q=doi:10.6084/m9.figshare.1066168&wt=json
+    uri: https://search.datacite.org/api?fl=doi,url,xml,state,allocator_symbol,datacentre_symbol,media,minted,updated&q=doi:10.6084/m9.figshare.1066168&wt=json
     body:
       encoding: US-ASCII
       string: ''
@@ -85,35 +72,37 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Access-Control-Allow-Methods:
-      - GET, POST, OPTIONS
-      Access-Control-Allow-Origin:
-      - "*"
+      Date:
+      - Thu, 12 Apr 2018 05:28:31 GMT
       Content-Type:
       - application/json;charset=UTF-8
-      Date:
-      - Mon, 03 Jul 2017 21:34:52 GMT
-      Server:
-      - openresty/1.11.2.2
-      Content-Length:
-      - '1443'
       Connection:
       - keep-alive
+      Server:
+      - nginx/1.10.3 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, POST, PUT, DELETE, OPTIONS
+      Access-Control-Allow-Headers:
+      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range,Authorization
+      Access-Control-Expose-Headers:
+      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range,Authorization
     body:
       encoding: UTF-8
-      string: '{"responseHeader":{"status":0,"QTime":1},"response":{"numFound":1,"start":0,"docs":[{"xml":"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHJlc291cmNlIHhtbG5zPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyBodHRwOi8vc2NoZW1hLmRhdGFjaXRlLm9yZy9tZXRhL2tlcm5lbC0zL21ldGFkYXRhLnhzZCI+PGlkZW50aWZpZXIgaWRlbnRpZmllclR5cGU9IkRPSSI+MTAuNjA4NC9NOS5GSUdTSEFSRS4xMDY2MTY4PC9pZGVudGlmaWVyPjx0aXRsZXM+PHRpdGxlPjEwMDAgcmFuZG9tIFBMT1MgT05FIERPSXMgZnJvbSAyMDEzPC90aXRsZT48L3RpdGxlcz48cHVibGlzaGVyPkZpZ3NoYXJlPC9wdWJsaXNoZXI+PHB1YmxpY2F0aW9uWWVhcj4yMDE0PC9wdWJsaWNhdGlvblllYXI+PHJlc291cmNlVHlwZSByZXNvdXJjZVR5cGVHZW5lcmFsPSJEYXRhc2V0Ij5EYXRhc2V0PC9yZXNvdXJjZVR5cGU+PHJpZ2h0c0xpc3Q+PHJpZ2h0cyByaWdodHNVUkk9Imh0dHA6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LzMuMC91cy8iPkNDLUJZPC9yaWdodHM+PC9yaWdodHNMaXN0PjxjcmVhdG9ycz48Y3JlYXRvcj48Y3JlYXRvck5hbWU+Wm9ocmVoIFphaGVkaTwvY3JlYXRvck5hbWU+PC9jcmVhdG9yPjxjcmVhdG9yPjxjcmVhdG9yTmFtZT5NYXJ0aW4gRmVubmVyPC9jcmVhdG9yTmFtZT48bmFtZUlkZW50aWZpZXIgbmFtZUlkZW50aWZpZXJTY2hlbWU9Ik9SQ0lEIj4wMDAwLTAwMDItMjE4NC02MDk0PC9uYW1lSWRlbnRpZmllcj48L2NyZWF0b3I+PGNyZWF0b3I+PGNyZWF0b3JOYW1lPlJvZHJpZ28gQ29zdGFzPC9jcmVhdG9yTmFtZT48L2NyZWF0b3I+PC9jcmVhdG9ycz48L3Jlc291cmNlPg==","minted":"2014-06-22T10:41:15Z","updated":"2014-07-04T20:44:04Z","doi":"10.6084/M9.FIGSHARE.1066168"}]}}
+      string: '{"responseHeader":{"status":0,"QTime":2},"response":{"numFound":1,"start":0,"docs":[{"datacentre_symbol":"FIGSHARE.ARS","xml":"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHJlc291cmNlIHhtbG5zPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtMyBodHRwOi8vc2NoZW1hLmRhdGFjaXRlLm9yZy9tZXRhL2tlcm5lbC0zL21ldGFkYXRhLnhzZCI+PGlkZW50aWZpZXIgaWRlbnRpZmllclR5cGU9IkRPSSI+MTAuNjA4NC9NOS5GSUdTSEFSRS4xMDY2MTY4PC9pZGVudGlmaWVyPjx0aXRsZXM+PHRpdGxlPjEwMDAgcmFuZG9tIFBMT1MgT05FIERPSXMgZnJvbSAyMDEzPC90aXRsZT48L3RpdGxlcz48cHVibGlzaGVyPkZpZ3NoYXJlPC9wdWJsaXNoZXI+PHB1YmxpY2F0aW9uWWVhcj4yMDE0PC9wdWJsaWNhdGlvblllYXI+PHJlc291cmNlVHlwZSByZXNvdXJjZVR5cGVHZW5lcmFsPSJEYXRhc2V0Ij5EYXRhc2V0PC9yZXNvdXJjZVR5cGU+PHJpZ2h0c0xpc3Q+PHJpZ2h0cyByaWdodHNVUkk9Imh0dHA6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LzMuMC91cy8iPkNDLUJZPC9yaWdodHM+PC9yaWdodHNMaXN0PjxjcmVhdG9ycz48Y3JlYXRvcj48Y3JlYXRvck5hbWU+Wm9ocmVoIFphaGVkaTwvY3JlYXRvck5hbWU+PC9jcmVhdG9yPjxjcmVhdG9yPjxjcmVhdG9yTmFtZT5NYXJ0aW4gRmVubmVyPC9jcmVhdG9yTmFtZT48bmFtZUlkZW50aWZpZXIgbmFtZUlkZW50aWZpZXJTY2hlbWU9Ik9SQ0lEIj4wMDAwLTAwMDItMjE4NC02MDk0PC9uYW1lSWRlbnRpZmllcj48L2NyZWF0b3I+PGNyZWF0b3I+PGNyZWF0b3JOYW1lPlJvZHJpZ28gQ29zdGFzPC9jcmVhdG9yTmFtZT48L2NyZWF0b3I+PC9jcmVhdG9ycz48L3Jlc291cmNlPg==","allocator_symbol":"FIGSHARE","minted":"2014-06-22T10:41:15Z","state":"findable","updated":"2014-07-04T20:44:04Z","doi":"10.6084/M9.FIGSHARE.1066168"}]}}
 
 '
     http_version: 
-  recorded_at: Mon, 03 Jul 2017 21:34:52 GMT
+  recorded_at: Thu, 12 Apr 2018 05:28:30 GMT
 - request:
     method: post
-    uri: https://api.sandbox.orcid.org/v2.0/0000-0001-6528-2027/notification-permission
+    uri: https://api.sandbox.orcid.org/v2.1/0000-0001-6528-2027/notification-permission
     body:
       encoding: UTF-8
       string: |
         <?xml version="1.0" encoding="UTF-8"?>
-        <notification:notification xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:common="http://www.orcid.org/ns/common" xmlns:notification="http://www.orcid.org/ns/notification" xsi:schemaLocation="http://www.orcid.org/ns/notification ../notification-permission-2.0.xsd">
+        <notification:notification xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:common="http://www.orcid.org/ns/common" xmlns:notification="http://www.orcid.org/ns/notification" xsi:schemaLocation="http://www.orcid.org/ns/notification ../notification-permission-2.1.xsd">
           <notification:notification-type>permission</notification:notification-type>
           <notification:authorization-url>
             <notification:path>/oauth/authorize?client_id=<ORCID_CLIENT_ID>&amp;response_type=code&amp;scope=/read-limited%20/activities/update%20/person/update&amp;redirect_uri=http://localhost:8080/users/auth/orcid/callback</notification:path>
@@ -150,7 +139,7 @@ http_interactions:
       Server:
       - nginx/1.10.0
       Date:
-      - Mon, 03 Jul 2017 21:34:56 GMT
+      - Thu, 12 Apr 2018 05:28:32 GMT
       Content-Type:
       - application/vnd.orcid+xml; qs=5;charset=UTF-8
       Content-Length:
@@ -172,10 +161,10 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Location:
-      - http://api.sandbox.orcid.org:443/orcid-api-web/v2.0/0000-0001-6528-2027/notification-permission/255645
+      - http://api.sandbox.orcid.org:443/orcid-api-web/v2.1/0000-0001-6528-2027/notification-permission/292016
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Mon, 03 Jul 2017 21:34:56 GMT
+  recorded_at: Thu, 12 Apr 2018 05:28:31 GMT
 recorded_with: VCR 3.0.3
