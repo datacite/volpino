@@ -217,7 +217,7 @@ Devise.setup do |config|
                           ENV['ORCID_CLIENT_SECRET'],
                           member: ENV['ORCID_MEMBER'],
                           sandbox: ENV['ORCID_SANDBOX'],
-                          { :provider_ignores_state => true }
+                          provider_ignores_state: true
 
   config.omniauth :github, ENV['GITHUB_CLIENT_ID'],
                            ENV['GITHUB_CLIENT_SECRET'],
