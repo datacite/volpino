@@ -32,7 +32,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
       if stored_location_for(:user) == ENV['BLOG_URL'] + "/admin/"
         if @user.role_id == "staff_admin"
-          token = auth.credentials.token
+          token = @user.github_token
           content = nil
         else
           token = nil
