@@ -1,0 +1,20 @@
+<html>
+<body>
+  <script>
+    (function() {
+      function recieveMessage(e) {
+        console.log("recieveMessage %o", e)
+        // send message to main window with da app
+        window.opener.postMessage(
+          <%= @post_message.html_safe %>,
+          e.origin
+        )
+      }
+      window.addEventListener("message", recieveMessage, false)
+      // Start handshare with parent
+      console.log("Sending message: %o", "github")
+      window.opener.postMessage("authorizing:github", "*")
+    })()
+  </script>
+</body>
+</html>

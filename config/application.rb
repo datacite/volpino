@@ -1,7 +1,6 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
-require 'syslog/logger'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -34,6 +33,7 @@ ENV['APP_URL'] ||= "https://app.test.datacite.org"
 ENV['CDN_URL'] ||= "https://assets.test.datacite.org"
 ENV['REDIS_URL'] ||= "redis://redis:6379/12"
 ENV['GITHUB_URL'] ||= "https://github.com/datacite/volpino"
+ENV['BLOG_URL'] ||= "https://blog.test.datacite.org"
 ENV['MODE'] ||= "datacite"
 ENV['TRUSTED_IP'] ||= "10.0.60.0/24"
 ENV['MYSQL_DATABASE'] ||= "profiles"
@@ -65,9 +65,11 @@ module Volpino
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:jwt]
 
-    # Use a different logger for distributed setups
+    # configure logging
+    logger = ActiveSupport::Logger.new(STDOUT)
+    logger.formatter = config.log_formatter
+    config.logger = ActiveSupport::TaggedLogging.new(logger)
     config.lograge.enabled = true
-    config.logger = Syslog::Logger.new(ENV['APPLICATION'])
     config.log_level = ENV['LOG_LEVEL'].to_sym
 
     # Use memcached as cache store

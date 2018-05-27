@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     get 'sign_out', :to => 'users/sessions#destroy', :as => :destroy_user_session
 
     get 'link_orcid', :to => 'users/sessions#link_orcid', :as => :link_orcid_session
+
+    get 'auth', :to => 'users/omniauth_callbacks#forward'
   end
 
   # enable feature flags api

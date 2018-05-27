@@ -3,6 +3,17 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     redirect_to root_path, :alert => exception.message
   end
 
+  def forward
+    store_location_for(:user, request.referer)
+  
+    if params[:provider].present?
+      redirect_to "/users/auth/#{params[:provider]}" 
+    else
+      flash[:alert] = "Error signing in: no provider"
+      redirect_to root_path
+    end
+  end
+
   def failure
     flash[:alert] = "Error signing in: #{request.env["omniauth.error.type"].to_s.humanize}"
     redirect_to root_path
@@ -17,18 +28,41 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                               github_uid: auth.uid,
                               github_token: auth.credentials.token)
 
-      # push GitHub external identifier to ORCID if GitHub account is linked
-      GithubJob.perform_later(@user) if @user.github_put_code.blank? && @user.github.present?
-
       flash[:notice] = "Account successfully linked with GitHub account."
-      redirect_to user_path("me", panel: "login")
+
+      if stored_location_for(:user) == ENV['BLOG_URL'] + "/admin/"
+        if @user.role_id == "staff_admin"
+          token = auth.credentials.token
+          content = nil
+        else
+          token = nil
+          content = "No permission."
+        end
+
+        netlify_response(token: token, content: content)
+      else
+        redirect_to stored_location_for(:user) || user_path("me", panel: "login")
+      end
     elsif @user = User.where(github_uid: auth.uid).first
       cookies[:_datacite_jwt] = { value: @user.jwt,
-                                 expires: 14.days.from_now.utc,
-                                 secure: !Rails.env.development? && !Rails.env.test?,
-                                 domain: :all }
+                                  expires: 14.days.from_now.utc,
+                                  secure: !Rails.env.development? && !Rails.env.test?,
+                                  domain: :all }
       sign_in @user
-      redirect_to stored_location_for(:user) || user_path("me")
+
+      if stored_location_for(:user) == ENV['BLOG_URL'] + "/admin/"
+        if @user.role_id == "staff_admin"
+          token = @user.github_token
+          content = nil
+        else
+          token = nil
+          content = "No permission."
+        end
+
+        netlify_response(token: token, content: content)
+      else
+        redirect_to stored_location_for(:user) || user_path("me")
+      end
     else
       flash[:omniauth] = { "github" => auth.info.nickname,
                            "github_uid" => auth.uid,
@@ -89,10 +123,37 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                                  expires: 14.days.from_now.utc,
                                  secure: !Rails.env.development? && !Rails.env.test?,
                                  domain: :all }
-      redirect_to stored_location_for(:user) || user_path("me", panel: "orcid")
+
+      if stored_location_for(:user) == ENV['BLOG_URL'] + "/admin/"
+        if @user.github_token.blank?
+          token = nil
+          content = "No GitHub token found."
+        elsif @user.role_id == "staff_admin" 
+          token = @user.github_token
+          content = nil
+        else
+          token = nil
+          content = "No permission."
+        end
+
+        netlify_response(token: token, content: content)
+      else
+        redirect_to stored_location_for(:user) || user_path("me", panel: "orcid")
+      end
     else
       flash[:alert] = @user.errors.map { |k,v| "#{k}: #{v}" }.join("<br />").html_safe || "Error signing in with #{provider}"
       redirect_to root_path
     end
+  end
+
+  def netlify_response(token: nil, content: nil)
+    content = { token: token, provider: "github" } if token.present?
+    content ||= "Error authenticating user."
+    
+    message = "success" if token.present?
+    message ||= "error"
+
+    @post_message = "authorization:github:#{message}:#{content.to_json}".to_json
+    render "users/sessions/netlify", layout: false, status: :ok
   end
 end
