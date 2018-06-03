@@ -65,13 +65,6 @@ module Volpino
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:jwt]
 
-    # configure logging
-    logger = ActiveSupport::Logger.new(STDOUT)
-    logger.formatter = config.log_formatter
-    config.logger = ActiveSupport::TaggedLogging.new(logger)
-    config.lograge.enabled = true
-    config.log_level = ENV['LOG_LEVEL'].to_sym
-
     # Use memcached as cache store
     config.cache_store = :dalli_store, nil, { :namespace => ENV['APPLICATION'], :compress => true }
 
@@ -86,12 +79,5 @@ module Volpino
 
     # parameter keys that are not explicitly permitted will raise error
     config.action_controller.action_on_unpermitted_parameters = :raise
-
-    config.middleware.insert_before 0, Rack::Cors do
-      allow do
-        origins '*'
-        resource '*', :headers => :any, :methods => [:head, :get, :post, :put, :patch, :delete, :options]
-      end
-    end
   end
 end
