@@ -4,7 +4,7 @@ Rails.application.configure do
   config.lograge.logger = LogStashLogger.new(type: :stdout)
 
   config.lograge.ignore_actions = ['HeartbeatController#index', 'IndexController#index']
-  config.log_level = ENV['LOG_LEVEL'].to_sym
+  # config.log_level = ENV['LOG_LEVEL'].to_sym
 
   config.lograge.custom_options = lambda do |event|
     exceptions = %w(controller action format id)

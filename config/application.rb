@@ -65,6 +65,8 @@ module Volpino
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:jwt]
 
+    config.log_level = ENV['LOG_LEVEL'].to_sym
+
     # Use memcached as cache store
     config.cache_store = :dalli_store, nil, { :namespace => ENV['APPLICATION'], :compress => true }
 
