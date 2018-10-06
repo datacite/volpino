@@ -60,11 +60,22 @@ after_success:
       export GIT_TAG=$(git describe --tags $(git rev-list --tags --max-count=1));
       git clone "https://${TRAVIS_SECURE_TOKEN}@github.com/datacite/mastino.git";
       ./dockerize -template vendor/docker/_volpino.auto.tfvars.tmpl:mastino/stage/services/profiles/_volpino.auto.tfvars;
+
+      if [ "${TRAVIS_TAG?}" ]; then
+        ./dockerize -template vendor/docker/_spinone.auto.tfvars.tmpl:mastino/prod-eu-west/services/profiles/_volpino.auto.tfvars;
+      fi
+
       cd mastino;
       git remote;
       git config user.email ${DOCKER_EMAIL};
       git config user.name ${DOCKER_USERNAME};
-      git add stage/services/profiles/_volpino.auto.tfvars;
+      
+      if [ "${TRAVIS_TAG?}" ]; then
+        git add prod-eu-west/services/profiles/_volpino.auto.tfvars;
+      else
+        git add stage/services/profiles/_volpino.auto.tfvars;
+      fi
+
       git commit -m "Adding volpino git variables for latest commit";
       git push "https://${TRAVIS_SECURE_TOKEN}@github.com/datacite/mastino.git" master;
     fi
