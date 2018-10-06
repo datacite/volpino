@@ -35,7 +35,7 @@ FactoryBot.define do
 
   factory :claim do
     uuid { SecureRandom.uuid }
-    orcid { "0000-0002-1825-0001" }
+    orcid { "0000-0002-1825-0001" }
     doi { "10.5061/DRYAD.781PV" }
     source_id { "orcid_update" }
 
