@@ -62,7 +62,7 @@ after_success:
       ./dockerize -template vendor/docker/_volpino.auto.tfvars.tmpl:mastino/stage/services/profiles/_volpino.auto.tfvars;
 
       if [ "${TRAVIS_TAG?}" ]; then
-        ./dockerize -template vendor/docker/_spinone.auto.tfvars.tmpl:mastino/prod-eu-west/services/profiles/_volpino.auto.tfvars;
+        ./dockerize -template vendor/docker/_volpino.auto.tfvars.tmpl:mastino/prod-eu-west/services/profiles/_volpino.auto.tfvars;
       fi
 
       cd mastino;
