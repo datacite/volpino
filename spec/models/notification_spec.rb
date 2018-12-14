@@ -17,7 +17,7 @@ describe Notification, type: :model, vcr: true do
     #     expect(response.body["put_code"]).not_to be_blank
     #     expect(response.status).to eq(201)
     #   end
-    end
+    # end
 
     describe 'get' do
       it 'should get notification' do
