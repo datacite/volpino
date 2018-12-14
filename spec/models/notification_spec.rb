@@ -9,14 +9,14 @@ describe Notification, type: :model, vcr: true do
   subject { Notification.new(doi: doi, orcid: user.uid, notification_access_token: notification_access_token, put_code: put_code) }
 
   describe 'push to ORCID', :order => :defined do
-    describe 'post' do
-      subject { Notification.new(doi: doi, orcid: user.uid, notification_access_token: notification_access_token) }
+    # describe 'post' do
+    #   subject { Notification.new(doi: doi, orcid: user.uid, notification_access_token: notification_access_token) }
     
-      it 'should create notification' do
-        response = subject.create_notification(sandbox: true)
-        expect(response.body["put_code"]).not_to be_blank
-        expect(response.status).to eq(201)
-      end
+    #   it 'should create notification' do
+    #     response = subject.create_notification(sandbox: true)
+    #     expect(response.body["put_code"]).not_to be_blank
+    #     expect(response.status).to eq(201)
+    #   end
     end
 
     describe 'get' do
