@@ -5,10 +5,10 @@ class UserSearch < Base
   attr_reader :uid, :name, :family_name, :given_names, :github, :created_at, :updated_at
 
   def initialize(item, options={})
-    @uid = item.dig("orcid-profile", "orcid-identifier", "path")
-    @family_name = item.dig("orcid-profile", "orcid-bio", "personal-details", "family-name", "value")
-    @given_names = item.dig("orcid-profile", "orcid-bio", "personal-details", "given-names", "value")
-    if item.dig("orcid-profile", "orcid-bio", "personal-details", "credit-name").present?
+    @uid = item.dig("orcid-identifier", "path")
+    @family_name = item.dig("person", "name", "family-name", "value")
+    @given_names = item.dig("person", "name", "given-names", "value")
+    if item.dig("persom", "name", "credit-name", "value").present?
       @name = item.dig("orcid-profile", "orcid-bio", "personal-details", "credit-name", "value")
     elsif @given_names.present? || @family_name.present?
       @name = [@given_names, @family_name].join(" ")
@@ -80,7 +80,7 @@ class UserSearch < Base
 
   def self.get_query_url(options={})
     if options[:id].present?
-      "#{ENV["ORCID_API_URL"]}/v1.2/#{options[:id]}/orcid-bio/"
+      "#{ENV["ORCID_API_URL"]}/v#{ORCID_VERSION}/#{options[:id]}"
     else
       query = options.fetch(:query, nil).present? ? "#{options.fetch(:query)}" : nil
       rows = options.dig(:page, :size) || 25
@@ -106,14 +106,14 @@ class UserSearch < Base
 
       { data: parse_item(item) }
     else
-      items = result.body.dig("data", "orcid-search-results", "orcid-search-result") || []
-      total = result.body.dig("data", "orcid-search-results", "num-found")
+      items = result.body.dig("data", "result") || []
+      total = result.body.dig("data", "num-found")
 
       { data: parse_items(items), meta: { total: total } }
     end
   end
 
   def self.url
-    "#{ENV["ORCID_API_URL"]}/v1.2/search/orcid-bio/"
+    "#{ENV["ORCID_API_URL"]}/v#{ORCID_VERSION}/search/"
   end
 end

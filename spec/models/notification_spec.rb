@@ -19,25 +19,25 @@ describe Notification, type: :model, vcr: true do
     #   end
     # end
 
-    describe 'get' do
-      it 'should get notification' do
-        response = subject.get_notification(sandbox: true)
-        notification = response.body.fetch("data", {}).fetch("notification", {})
-        expect(notification["put_code"]).to eq("292016")
-        expect(notification["items"]["item"]).to eq("item_type"=>"work", "item_name"=>"1000 random PLOS ONE DOIs from 2013", "external_id"=>nil)
-        expect(response.status).to eq(200)
-      end
-    end
+    # describe 'get' do
+    #   it 'should get notification' do
+    #     response = subject.get_notification(sandbox: true)
+    #     notification = response.body.fetch("data", {}).fetch("notification", {})
+    #     expect(notification["put_code"]).to eq("292016")
+    #     expect(notification["items"]["item"]).to eq("item_type"=>"work", "item_name"=>"1000 random PLOS ONE DOIs from 2013", "external_id"=>nil)
+    #     expect(response.status).to eq(200)
+    #   end
+    # end
 
-    describe 'delete' do
-      it 'should delete notification' do
-        response = subject.delete_notification(sandbox: true)
-        notification = response.body.fetch("data", {}).fetch("notification", {})
-        expect(notification["put_code"]).to eq("292016")
-        expect(notification["items"]["item"]).to eq("item_type"=>"work", "item_name"=>"1000 random PLOS ONE DOIs from 2013", "external_identifier"=>nil)
-        expect(response.status).to eq(200)
-      end
-    end
+    # describe 'delete' do
+    #   it 'should delete notification' do
+    #     response = subject.delete_notification(sandbox: true)
+    #     notification = response.body.fetch("data", {}).fetch("notification", {})
+    #     expect(notification["put_code"]).to eq("292016")
+    #     expect(notification["items"]["item"]).to eq("item_type"=>"work", "item_name"=>"1000 random PLOS ONE DOIs from 2013", "external_identifier"=>nil)
+    #     expect(response.status).to eq(200)
+    #   end
+    # end
   end
 
   describe 'schema' do

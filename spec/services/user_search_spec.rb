@@ -5,13 +5,13 @@ describe UserSearch, type: :model, vcr: true do
     users = UserSearch.where(query: "fenner")[:data]
     expect(users.length).to eq(4)
     user = users.first
-    expect(user.name).to eq("Martin Fenner")
+    expect(user.name).to eq("0000-0002-8568-5429")
   end
 
   it "users query orcid id" do
     users = UserSearch.where(query: "0000-0001-6528-2027")[:data]
     expect(users.length).to eq(25)
     user = users.first
-    expect(user.name).to eq("Martin Fenner")
+    expect(user.name).to eq("0000-0001-6528-2027")
   end
 end
