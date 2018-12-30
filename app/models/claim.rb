@@ -158,7 +158,7 @@ class Claim < ActiveRecord::Base
     end
 
     # user has too many claims already
-    return OpenStruct.new(body: { "errors" => [{ "title" => "Too many claims. Only 18,000 claims allowed." }] }) if user.claims.total_count > 18000
+    return OpenStruct.new(body: { "errors" => [{ "title" => "Too many claims. Only 10,000 claims allowed." }] }) if user.claims.total_count > 10000
 
     # missing data raise errors
     return OpenStruct.new(body: { "errors" => [{ "title" => "Missing data" }] }) if work.data.nil?
