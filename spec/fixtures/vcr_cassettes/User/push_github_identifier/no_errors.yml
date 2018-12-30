@@ -15,7 +15,7 @@ http_interactions:
         </external-identifier:external-identifier>
     headers:
       User-Agent:
-      - Maremma - http://profiles.local
+      - Mozilla/5.0 (compatible; Maremma/4.1.1; +https://github.com/datacite/maremma)
       Content-Type:
       - application/vnd.orcid+xml
       Accept:
@@ -30,7 +30,7 @@ http_interactions:
       Server:
       - nginx/1.10.0
       Date:
-      - Sat, 15 Dec 2018 16:06:58 GMT
+      - Sun, 30 Dec 2018 16:32:09 GMT
       Content-Type:
       - application/vnd.orcid+xml; qs=5;charset=UTF-8
       Content-Length:
@@ -52,10 +52,10 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Location:
-      - http://api.sandbox.orcid.org:443/orcid-api-web/v2.1/0000-0001-6528-2027/external-identifiers/5217
+      - http://api.sandbox.orcid.org:443/orcid-api-web/v2.1/0000-0001-6528-2027/external-identifiers/5224
     body:
-      encoding: UTF-8
+      encoding: ASCII-8BIT
       string: ''
     http_version: 
-  recorded_at: Sat, 15 Dec 2018 16:06:58 GMT
+  recorded_at: Sun, 30 Dec 2018 16:32:10 GMT
 recorded_with: VCR 3.0.3

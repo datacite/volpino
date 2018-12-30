@@ -10,9 +10,8 @@ gem 'sinatra', :require => nil
 gem "config"
 gem 'tzinfo-data'
 gem 'rake', '~> 10.5'
-gem 'bugsnag', '~> 2.8.6'
-gem 'maremma', '~> 3.0'
-gem 'orcid_client', '~> 0.4.4', '>= 0.4.4'
+gem 'bugsnag', '~> 6.10'
+gem 'orcid_client', '~> 0.5'
 gem 'addressable', "~> 2.3.8"
 gem 'postrank-uri', '~> 1.0', '>= 1.0.23'
 gem 'nilify_blanks', '~> 1.2.0'
@@ -21,7 +20,7 @@ gem 'active_model_serializers', '~> 0.10.4'
 gem 'colorize', '~> 0.8.1'
 gem 'pwqgen.rb', '~> 0.1.0'
 gem 'base32-crockford-checksum', '~> 0.2.3'
-gem 'flipper', '~> 0.11.0'
+gem 'flipper', '~> 0.16'
 gem 'flipper-redis'
 gem 'flipper-api'
 gem 'flipper-ui'
@@ -36,7 +35,6 @@ gem 'nokogiri', '~> 1.8.1'
 gem "github-markdown", "~> 0.6.3"
 gem "rouge", "~> 1.7.2"
 gem 'hashie', '~> 3.5.0'
-gem 'bolognese', '~> 0.15'
 gem 'bergamasco', '~> 0.3'
 gem 'namae', '~> 1.0'
 gem 'lograge', '~> 0.10.0'

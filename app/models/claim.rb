@@ -65,7 +65,7 @@ class Claim < ActiveRecord::Base
   end
 
   scope :by_state, ->(state) { where("state = ?", state) }
-  scope :order_by_date, -> { order("claimed_at DESC") }
+  scope :order_by_date, -> { order("updated_at DESC") }
 
   scope :waiting, -> { by_state(0).order_by_date }
   scope :working, -> { by_state(1).order_by_date }

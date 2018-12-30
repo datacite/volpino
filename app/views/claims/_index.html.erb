@@ -37,11 +37,11 @@
             <div class="btn-toolbar pull-right">
               <div class="btn-group btn-group-sm">
                 <% if claim.failed? %>
-                  <%= link_to claim.human_state_name, claim_path(claim, :claim => { :resolve => true }, state: params[:state], source: params[:source]), :method => :put, :remote => true %>
+                  <%= link_to claim.human_state_name, claim_path(claim, :claim => { :resolve => true }, state: params[:state], source: params[:source]), :method => :put, :remote => true %> <%= l claim.updated_at, format: :medium %>
                 <% elsif claim.done? %>
                   <%= claim.claim_action + "d" %> <%= l claim.claimed_at, format: :medium %>
                 <% else %>
-                  <%= claim.human_state_name %>
+                  <%= claim.human_state_name %> <%= l claim.updated_at, format: :medium %>
                 <% end %>
               </div>
             </div>

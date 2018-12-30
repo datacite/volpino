@@ -22,6 +22,31 @@ describe "/api/v1/claims", :type => :api do
       "HTTP_AUTHORIZATION" => "Bearer #{user.jwt}" }
   end
 
+  context "create with doi" do
+    let(:uri) { "/api/claims" }
+    let(:orcid) { "0000-0001-6528-2027" }
+    let(:doi) { "10.23725/bc11-cqw8" }
+    let(:params) do
+      { "claim" => { "uuid" => uuid,
+                     "orcid" => orcid,
+                     "doi" => doi,
+                     "claim_action" => "create",
+                     "source_id" => "orcid_search" } }
+    end
+
+    it "admin user" do
+      post uri, params, headers
+      expect(last_response.status).to eq(202)
+
+      response = JSON.parse(last_response.body)
+      expect(response["errors"]).to be_nil
+      attributes = response["data"]["attributes"]
+      expect(attributes["orcid"]).to eq(orcid)
+      expect(attributes["doi"]).to eq(doi)
+      expect(attributes["state"]).to eq("waiting")
+    end
+  end
+
   context "create" do
     let(:uri) { "/api/claims" }
     let(:params) do
