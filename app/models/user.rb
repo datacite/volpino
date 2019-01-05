@@ -75,11 +75,7 @@ class User < ActiveRecord::Base
   end
 
   def orcid_as_url
-    if ENV['ORCID_SANDBOX'].present?
-      "https://sandbox.orcid.org/#{orcid}"
-    else
-      "https://orcid.org/#{orcid}"
-    end
+    ENV['ORCID_URL'] + "/" + orcid
   end
 
   def flipper_id
@@ -180,7 +176,7 @@ class User < ActiveRecord::Base
   end
 
   def get_data(options={})
-    options[:sandbox] = true if ENV['ORCID_SANDBOX'].present?
+    options[:sandbox] = (ENV['ORCID_URL'] == "https://sandbox.orcid.org")
 
     response = get_works(options)
     return nil if response.body["errors"]
@@ -249,7 +245,7 @@ class User < ActiveRecord::Base
     # validate data
     return OpenStruct.new(body: { "errors" => external_identifier.validation_errors.map { |error| { "title" => error } }}) if external_identifier.validation_errors.present?
 
-    options[:sandbox] = true if ENV['ORCID_SANDBOX'].present?
+    options[:sandbox] = (ENV['ORCID_URL'] == "https://sandbox.orcid.org")
 
     # create or delete entry in ORCID record
     if github_to_be_created?

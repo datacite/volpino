@@ -49,14 +49,6 @@ class Api::V1::UsersController < Api::BaseController
         collection = collection.where(client_id: params[:client_id])
       end
 
-      if params[:sandbox_id].present?
-        collection = collection.where(sandbox_id: params[:sandbox_id])
-      elsif params.has_key?(:exclude) && params.has_key?(:sandbox)
-        collection = collection.where(sandbox_id: nil)
-      elsif params.has_key?(:sandbox)
-        collection = collection.where.not(sandbox_id: nil)
-      end
-
       collection = collection.where(role_id: params[:role_id]) if params[:role_id].present?
 
       if params[:from_created_date].present? || params[:until_created_date].present?
