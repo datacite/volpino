@@ -26,9 +26,6 @@ RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x
     tar -xvf phantomjs-2.1.1-linux-x86_64.tar && \
     cp phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/bin/phantomjs
 
-# Remove unused SSH service
-RUN rm -rf /etc/service/sshd /etc/my_init.d/00_regen_ssh_host_keys.sh
-
 # Enable Passenger and Nginx and remove the default site
 # Preserve env variables for nginx
 RUN rm -f /etc/service/nginx/down && \
@@ -46,6 +43,10 @@ RUN mkdir -p /home/app/webapp/tmp/pids && \
     chown -R app:app /home/app/webapp && \
     chmod -R 755 /home/app/webapp
 
+# enable SSH
+RUN rm -f /etc/service/sshd/down && \
+    /etc/my_init.d/00_regen_ssh_host_keys.sh
+
 # Install npm packages
 WORKDIR /home/app/webapp/vendor
 RUN /sbin/setuser app npm install
@@ -61,6 +62,7 @@ ADD vendor/docker/sidekiq.sh /etc/service/sidekiq/run
 
 # Run additional scripts during container startup (i.e. not at build time)
 RUN mkdir -p /etc/my_init.d
+COPY vendor/docker/10_ssh.sh /etc/my_init.d/10_ssh.sh
 COPY vendor/docker/70_precompile.sh /etc/my_init.d/70_precompile.sh
 COPY vendor/docker/90_migrate.sh /etc/my_init.d/90_migrate.sh
 COPY vendor/docker/100_flush_cache.sh /etc/my_init.d/100_flush_cache.sh

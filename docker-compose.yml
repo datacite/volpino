@@ -6,6 +6,7 @@ services:
     image: datacite/volpino
     ports:
       - "8080:80"
+      - "2280:22"
     volumes:
       - ./app:/home/app/webapp/app
       - ./config:/home/app/webapp/config
