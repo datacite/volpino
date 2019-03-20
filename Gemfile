@@ -10,7 +10,7 @@ gem 'sinatra', :require => nil
 gem "config"
 gem 'tzinfo-data'
 gem 'rake', '~> 10.5'
-gem 'bugsnag', '~> 6.10'
+gem 'sentry-raven', '~> 2.9'
 gem 'orcid_client', '~> 0.5'
 gem 'addressable', "~> 2.3.8"
 gem 'postrank-uri', '~> 1.0', '>= 1.0.23'
@@ -61,6 +61,7 @@ gem 'uglifier', '~> 2.7', '>= 2.7.2'
 gem 'mini_magick', '~> 4.5', '>= 4.5.1'
 gem 'remotipart', '~> 1.2'
 gem 'rack-jwt'
+gem 'git', '~> 1.5'
 
 group :development do
   gem 'pry-rails', '~> 0.3.2'

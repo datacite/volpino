@@ -15,13 +15,6 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="//cdn.statuspage.io/se-v2.js"></script>
     <script src="<%= ENV['CDN_URL'] %>/javascripts/default.js"></script>
-
-    <% if ENV['BUGSNAG_JS_KEY'] %>
-      <script
-        src="//d2wy8f7a9ursnm.cloudfront.net/bugsnag-2.min.js"
-        data-apikey="<%= ENV['BUGSNAG_JS_KEY'] %>">
-      </script>
-    <% end %>
   </head>
 
   <body>

@@ -7,7 +7,7 @@ class Api::BaseController < ActionController::Base
   # pass ability into serializer
   serialization_scope :current_ability
 
-  before_filter :default_format_json, :transform_params
+  before_filter :default_format_json, :transform_params, :set_raven_context
   after_filter :set_jsonp_format, :set_consumer_header
 
   # from https://github.com/spree/spree/blob/master/api/app/controllers/spree/api/base_controller.rb
@@ -75,6 +75,8 @@ class Api::BaseController < ActionController::Base
       elsif status == 401
         message = "You are not authorized to access this page."
       else
+        Raven.capture_exception(exception)
+
         message = exception.message
       end
 
@@ -100,4 +102,18 @@ class Api::BaseController < ActionController::Base
   # def is_admin_or_staff?
   #   current_user && %w(staff_admin staff_user).include?(current_user.role)
   # end
+
+  def set_raven_context
+    if current_user.try(:uid)
+      Raven.user_context(
+        email: current_user.email,
+        id: current_user.uid,
+        ip_address: request.ip
+      )
+    else
+      Raven.user_context(
+        ip_address: request.ip
+      ) 
+    end
+  end
 end
