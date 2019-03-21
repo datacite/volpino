@@ -382,7 +382,7 @@ GEM
     orm_adapter (0.5.0)
     pandoc-ruby (2.0.2)
     parallel (1.14.0)
-    parser (2.6.0.0)
+    parser (2.6.2.0)
       ast (~> 2.4.0)
     poltergeist (1.18.1)
       capybara (>= 2.1, < 4)
@@ -437,7 +437,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.2.2)
       rake
-    rake (10.5.0)
+    rake (12.3.2)
     rdf (2.2.12)
       hamster (~> 3.0)
       link_header (~> 0.0, >= 0.0.8)
@@ -658,7 +658,7 @@ DEPENDENCIES
   rack-jwt
   rack-test (~> 0.6.2)
   rails (~> 4.2, >= 4.2.6)
-  rake (~> 10.5)
+  rake (~> 12.0)
   remotipart (~> 1.2)
   rouge (~> 1.7.2)
   rspec-rails (~> 3.1.0)

@@ -9,7 +9,7 @@ gem 'sidekiq', '~> 4.0', '>= 4.0.1'
 gem 'sinatra', :require => nil
 gem "config"
 gem 'tzinfo-data'
-gem 'rake', '~> 10.5'
+gem 'rake', '~> 12.0'
 gem 'sentry-raven', '~> 2.9'
 gem 'orcid_client', '~> 0.5'
 gem 'addressable', "~> 2.3.8"
