@@ -15,7 +15,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # GET /sign_out
   def destroy
-    cookies.delete :_datacite, domain: :all
+    cookies[:_datacite] = empty_cookie
     super
   end
 
@@ -27,5 +27,23 @@ class Users::SessionsController < Devise::SessionsController
 
     @show_image = true
     flash.keep(:omniauth)
+  end
+
+  def empty_cookie
+    value = '{"authenticated":{}}'
+    
+    domain = if Rails.env.production?
+               ".datacite.org"
+             elsif Rails.env.stage?
+               ".test.datacite.org"
+             else
+               ".lvh.me"
+             end
+    
+    # URI.encode optional parameter needed to encode colon
+    { value: URI.encode(value, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")),
+      expires: 30.days.from_now.utc,
+      secure: !Rails.env.development? && !Rails.env.test?,
+      domain: domain }
   end
 end
