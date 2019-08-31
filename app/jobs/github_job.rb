@@ -9,4 +9,5 @@ class GithubJob < ActiveJob::Base
     ActiveRecord::Base.connection_pool.with_connection do
       user.process_data
     end
+  end
 end

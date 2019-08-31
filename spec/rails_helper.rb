@@ -89,7 +89,7 @@ RSpec.configure do |config|
 
   config.include Rack::Test::Methods, :type => :api
 
-  config.include Devise::TestHelpers, :type => :controller
+  config.include Devise::Test::ControllerHelpers, :type => :controller
   config.include Rack::Test::Methods, :type => :controller
 
   config.include ActiveJob::TestHelper, type: :job

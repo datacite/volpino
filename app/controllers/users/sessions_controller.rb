@@ -15,7 +15,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # GET /sign_out
   def destroy
-    cookies.delete :_datacite_jwt, domain: :all
+    cookies.delete :_datacite, domain: :all
     super
   end
 

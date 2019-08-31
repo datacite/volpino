@@ -44,10 +44,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         redirect_to stored_location_for(:user) || user_path("me", panel: "login")
       end
     elsif @user = User.where(github_uid: auth.uid).first
-      cookies[:_datacite_jwt] = { value: @user.jwt,
-                                  expires: 14.days.from_now.utc,
-                                  secure: !Rails.env.development? && !Rails.env.test?,
-                                  domain: :all }
+      cookies[:_datacite] = encode_cookie(@user.jwt)
       sign_in @user
 
       if stored_location_for(:user) == ENV['BLOG_URL'] + "/admin/"
@@ -82,10 +79,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       flash[:notice] = "Account successfully linked with Google account."
       redirect_to user_path("me", panel: "login")
     elsif @user = User.where(google_uid: auth.uid).first
-      cookies[:_datacite_jwt] = { value: @user.jwt,
-                                 expires: 14.days.from_now.utc,
-                                 secure: !Rails.env.development? && !Rails.env.test?,
-                                 domain: :all }
+      cookies[:_datacite] = encode_cookie(@user.jwt)
       sign_in @user
       redirect_to stored_location_for(:user) || user_path("me")
     else
@@ -119,10 +113,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       sign_in @user
-      cookies[:_datacite_jwt] = { value: @user.jwt,
-                                 expires: 14.days.from_now.utc,
-                                 secure: !Rails.env.development? && !Rails.env.test?,
-                                 domain: :all }
+      cookies[:_datacite] = encode_cookie(@user.jwt)
 
       if stored_location_for(:user) == ENV['BLOG_URL'] + "/admin/"
         if @user.github_token.blank?
@@ -155,5 +146,17 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     @post_message = "authorization:github:#{message}:#{content.to_json}".to_json
     render "users/sessions/netlify", layout: false, status: :ok
+  end
+
+  def encode_cookie(jwt)
+    expires_in = 30 * 24 * 3600
+    expires_at = Time.now.to_i + expires_in
+    value = '{"authenticated":{"authenticator":"authenticator:oauth2","access_token":"' + jwt + '","expires_in":' + expires_in.to_s + ',"expires_at":' + expires_at.to_s + '}}'
+    
+    # URI.encode optional parameter needed to encode colon
+    { value: URI.encode(value, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")),
+      expires: 30.days.from_now.utc,
+      secure: !Rails.env.development? && !Rails.env.test?,
+      domain: :all }
   end
 end
