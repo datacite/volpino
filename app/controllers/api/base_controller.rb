@@ -7,8 +7,8 @@ class Api::BaseController < ActionController::Base
   # pass ability into serializer
   serialization_scope :current_ability
 
-  before_filter :default_format_json, :transform_params, :set_raven_context
-  after_filter :set_jsonp_format, :set_consumer_header
+  before_action :default_format_json, :transform_params, :set_raven_context
+  after_action :set_jsonp_format, :set_consumer_header
 
   # from https://github.com/spree/spree/blob/master/api/app/controllers/spree/api/base_controller.rb
   def set_jsonp_format
@@ -66,7 +66,7 @@ class Api::BaseController < ActionController::Base
       status = case exception.class.to_s
                when "CanCan::AccessDenied", "JWT::DecodeError" then 401
                when "ActiveRecord::RecordNotFound" then 404
-               when "ActiveModel::ForbiddenAttributesError", "ActionController::UnpermittedParameters", "NoMethodError" then 422
+               when "ActionController::UnpermittedParameters", "NoMethodError" then 422
                else 400
                end
 

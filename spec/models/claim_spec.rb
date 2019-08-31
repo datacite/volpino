@@ -73,13 +73,13 @@ describe Claim, type: :model, vcr: true do
     #   expect(subject.process_data).to be true
     #   expect(subject.put_code).not_to be_blank
     #   expect(subject.claimed_at).not_to be_blank
-    #   expect(subject.human_state_name).to eq("done")
+    #   expect(subject.state).to eq("done")
     # end
     #
     # it 'already exists' do
     #   FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.5438/SS2R-9CNS", claim_action: "create", put_code: "861229")
     #   expect(subject.process_data).to be true
-    #   expect(subject.human_state_name).to eq("failed")
+    #   expect(subject.state).to eq("failed")
     # end
     #
     # it 'delete claim' do
@@ -88,27 +88,27 @@ describe Claim, type: :model, vcr: true do
     #   expect(subject.process_data).to be true
     #   expect(subject.put_code).to be_blank
     #   expect(subject.claimed_at).to be_blank
-    #   expect(subject.human_state_name).to eq("deleted")
+    #   expect(subject.state).to eq("deleted")
     # end
 
     it 'no permission for auto-update' do
       user = FactoryBot.create(:valid_user, auto_update: false)
       subject = FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/v6e2-yc93", source_id: "orcid_update")
       expect(subject.process_data).to be true
-      expect(subject.human_state_name).to eq("ignored")
+      expect(subject.state).to eq("ignored")
     end
 
     it 'invalid token' do
       user = FactoryBot.create(:invalid_user)
       subject = FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/v6e2-yc93", source_id: "orcid_update")
       expect(subject.process_data).to be true
-      expect(subject.human_state_name).to eq("ignored")
+      expect(subject.state).to eq("ignored")
     end
 
     it 'no user' do
-      subject = FactoryBot.create(:claim, orcid: "0000-0001-6528-2027", doi: "10.14454/v6e2-yc93")
+      subject = FactoryBot.build(:claim, user: nil, orcid: "0000-0001-6528-2027", doi: "10.14454/v6e2-yc93")
       expect(subject.process_data).to be true
-      expect(subject.human_state_name).to eq("ignored")
+      expect(subject.state).to eq("ignored")
     end
   end
 end

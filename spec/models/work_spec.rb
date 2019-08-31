@@ -3,7 +3,7 @@ require "rails_helper"
 describe Work, type: :model, vcr: true do
   let(:doi) { "10.5438/mk65-3m12"}
   let(:user) { FactoryBot.create(:valid_user) }
-  let(:put_code) { "980507" }
+  let(:put_code) { "1058129" }
 
   subject { Work.new(doi: doi, orcid: user.uid, access_token: user.authentication_token, put_code: put_code) }
 
@@ -21,7 +21,7 @@ describe Work, type: :model, vcr: true do
       it 'should get works' do
         response = subject.get_works(sandbox: true)
         works = response.body.fetch("data", {}).fetch("group", {})
-        expect(works.length).to eq(26)
+        expect(works.length).to eq(28)
         work = works.first
         expect(work["external-ids"]).to eq("external-id"=>[{"external-id-type"=>"doi", "external-id-value"=>"10.5256/f1000research.67475.r16884", "external-id-url"=>nil, "external-id-relationship"=>"SELF"}])
       end
@@ -60,7 +60,7 @@ describe Work, type: :model, vcr: true do
 
   describe 'contributors' do
     it 'valid' do
-      expect(subject.contributors).to eq([{:orcid=>"https://orcid.org/0000-0001-6528-2027", :credit_name=>"Martin Fenner"}])
+      expect(subject.contributors).to eq([{:credit_name=>"Martin Fenner", :orcid=>"https://orcid.org/0000-0003-1419-2405"}])
     end
   end
   

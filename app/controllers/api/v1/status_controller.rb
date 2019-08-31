@@ -1,5 +1,5 @@
 class Api::V1::StatusController < Api::BaseController
-  before_filter :authenticate_user_from_token!
+  before_action :authenticate_user_from_token!
 
   def index
     Status.create unless Status.count > 0

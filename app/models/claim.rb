@@ -17,6 +17,9 @@ class Claim < ActiveRecord::Base
   # include helper module for work type
   include Typeable
 
+  # include state machine
+  include AASM
+
   SUBJECT = "Add your published work(s) to your ORCID record"
   INTRO =  "Hello, You may not be familiar with DataCite. Our data centers send us publication information (including ORCID iDs and DOIs), and we ensure that your work can be found, linked and cited. It looks like you have included your ORCID iD with a recent publication submission and that has been passed to us by your data center. We would like to auto-update your ORCID record with information about these published work(s) published, starting today with those listed below, so you don’t have to search for and add them manually, now or in the future. Please click ‘Grant permissions’ below to set this up."
 
@@ -30,51 +33,46 @@ class Claim < ActiveRecord::Base
   delegate :uid, to: :user, allow_nil: true
   delegate :access_token, to: :user, allow_nil: true
 
-  state_machine :initial => :waiting do
-    state :waiting, value: 0
-    state :working, value: 1
-    state :failed, value: 2
-    state :done, value: 3
-    state :ignored, value: 4
-    state :deleted, value: 5
-    state :notified, value: 6
+  alias_attribute :state, :aasm_state
+
+  aasm :whiny_transitions => false do
+    # waiting is initial state for new claims
+    state :waiting, :initial => true
+    state :working, :failed, :done, :ignored, :deleted, :notified
 
     event :start do
-      transition [:waiting, :ignored, :deleted, :notified] => :working
-      transition any => same
+      transitions from: [:waiting, :ignored, :deleted, :notified], to: :working
     end
 
     event :finish do
-      transition [:working] => :deleted, :if => :to_be_deleted?
-      transition [:waiting, :working, :failed] => :done
-      transition any => same
+      transitions from: [:working], to: :deleted, if: [:to_be_deleted?]
+      transitions from: [:waiting, :working, :failed], to: :done
     end
 
     event :notify do
-      transition [:working] => :notified
-      transition any => same
+      transitions from: [:working], to: :notified
     end
 
     event :error do
-      transition any => :failed
+      transitions from: [:waiting, :working, :ignored, :deleted, :notified], to: :failed
     end
 
     event :skip do
-      transition any => :ignored
+      transitions from: [:waiting, :working, :deleted, :notified], to: :ignored
     end
   end
 
-  scope :by_state, ->(state) { where("state = ?", state) }
+  scope :by_state, ->(state) { where(aasm_state: state) }
   scope :order_by_date, -> { order("updated_at DESC") }
 
-  scope :waiting, -> { by_state(0).order_by_date }
-  scope :working, -> { by_state(1).order_by_date }
-  scope :failed, -> { by_state(2).order_by_date }
-  scope :done, -> { by_state(3).order_by_date }
-  scope :ignored, -> { by_state(4).order_by_date }
-  scope :deleted, -> { by_state(5).order_by_date }
-  scope :notified, -> { by_state(6).order_by_date }
-  scope :stale, -> { where("state < 2").order_by_date }
+  scope :waiting, -> { by_state("waiting").order_by_date }
+  scope :working, -> { by_state("working").order_by_date }
+  scope :failed, -> { by_state("failes").order_by_date }
+  scope :done, -> { by_state("done").order_by_date }
+  scope :ignored, -> { by_state("ignored").order_by_date }
+  scope :deleted, -> { by_state("deleted").order_by_date }
+  scope :notified, -> { by_state("notified").order_by_date }
+  scope :stale, -> { where(aasm_state: ["waiting", "working"]).order_by_date }
   scope :total, ->(duration) { where(updated_at: (Time.zone.now.beginning_of_hour - duration.hours)..Time.zone.now.beginning_of_hour) }
 
   scope :query, ->(query) { where("doi like ?", "%#{query}%") }

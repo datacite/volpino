@@ -34,12 +34,12 @@ FactoryBot.define do
   end
 
   factory :claim do
+    user
+
     uuid { SecureRandom.uuid }
-    orcid { "0000-0002-1825-0001" }
+    orcid { user.uid }
     doi { "10.5061/DRYAD.781PV" }
     source_id { "orcid_update" }
-
-    # association :user, factory: :user
 
     initialize_with { Claim.where(orcid: orcid).where(doi: doi).first_or_initialize }
   end

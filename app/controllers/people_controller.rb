@@ -1,5 +1,5 @@
 class PeopleController < Api::BaseController
-  prepend_before_filter :load_user, only: [:show]
+  prepend_before_action :load_user, only: [:show]
 
   def show
     render json: @user, serializer: PersonSerializer

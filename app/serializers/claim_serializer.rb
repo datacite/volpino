@@ -11,10 +11,6 @@ class ClaimSerializer < ActiveModel::Serializer
     object.uuid
   end
 
-  def state
-    object.human_state_name
-  end
-
   def error_messages
     object.error_messages.presence
   end

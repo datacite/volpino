@@ -1,7 +1,7 @@
 class Api::V1::ClaimsController < Api::BaseController
-  prepend_before_filter :load_claim, only: [:show, :destroy]
-  prepend_before_filter :load_user, only: [:index]
-  before_filter :authenticate_user_from_token!
+  prepend_before_action :load_claim, only: [:show, :destroy]
+  prepend_before_action :load_user, only: [:index]
+  before_action :authenticate_user_from_token!
   load_and_authorize_resource :except => [:create]
 
   def show
@@ -59,12 +59,12 @@ class Api::V1::ClaimsController < Api::BaseController
     end
 
     if params[:state].present?
-      states = [{ id: human_state_name(params[:state]),
-                  title: human_state_name(params[:state]).humanize,
-                  count: collection.where(state: params[:state]).count }]
+      states = [{ id: params[:state],
+                  title: params[:state].humanize,
+                  count: collection.where(aasm_state: params[:state]).count }]
     else
-      states = collection.where.not(state: nil).group(:state).count
-      states = states.map { |k,v| { id: human_state_name(k), title: human_state_name(k).humanize, count: v } }
+      states = collection.where.not(aasm_state: nil).group(:aasm_state).count
+      states = states.map { |k,v| { id: k, title: k.humanize, count: v } }
     end
 
     page = params[:page] || {}
@@ -95,10 +95,10 @@ class Api::V1::ClaimsController < Api::BaseController
 
     if @claim.new_record? ||
       @claim.source_id == "orcid_search" ||
-      (claim_action == "create" && [2,4,5,6].include?(@claim.state)) ||
-      (claim_action == "delete" && [2,3,4,6].include?(@claim.state))
+      (claim_action == "create" && %w(failed ignored deleted notified).include?(@claim.state)) ||
+      (claim_action == "delete" && %w(done failed ignored notified).include?(@claim.state))
 
-      @claim.assign_attributes(state: 0,
+      @claim.assign_attributes(state: "waiting",
                                source_id: params.fetch(:claim, {}).fetch(:source_id, nil),
                                claim_action: claim_action)
 
@@ -145,20 +145,6 @@ class Api::V1::ClaimsController < Api::BaseController
   def sources
     { "orcid_search" => "ORCID Search and Link",
       "orcid_update" => "ORCID Auto-Update" }
-  end
-
-  def human_state_name(state)
-    state_names.fetch(state, nil)
-  end
-
-  def state_names
-    { 0 => "waiting",
-      1 => "working",
-      2 => "failed",
-      3 => "done",
-      4 => "ignored",
-      5 => "deleted",
-      6 => "notified" }
   end
 
   private

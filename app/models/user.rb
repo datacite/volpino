@@ -200,7 +200,7 @@ class User < ActiveRecord::Base
       if claim.put_code.blank?
         source_id = claim.new_record? ? "orcid_search" : claim.source_id
         claim.assign_attributes(source_id: source_id,
-                                state: 3,
+                                state: "done",
                                 put_code: put_code,
                                 claimed_at: claimed_at)
         claim.save!

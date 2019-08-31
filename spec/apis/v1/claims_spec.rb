@@ -24,11 +24,10 @@ describe "/api/v1/claims", :type => :api do
 
   context "create with doi" do
     let(:uri) { "/api/claims" }
-    let(:orcid) { "0000-0001-6528-2027" }
     let(:doi) { "10.23725/bc11-cqw8" }
     let(:params) do
       { "claim" => { "uuid" => uuid,
-                     "orcid" => orcid,
+                     "orcid" => user.orcid,
                      "doi" => doi,
                      "claim_action" => "create",
                      "source_id" => "orcid_search" } }
@@ -36,12 +35,12 @@ describe "/api/v1/claims", :type => :api do
 
     it "admin user" do
       post uri, params, headers
-      expect(last_response.status).to eq(202)
 
+      expect(last_response.status).to eq(202)
       response = JSON.parse(last_response.body)
       expect(response["errors"]).to be_nil
       attributes = response["data"]["attributes"]
-      expect(attributes["orcid"]).to eq(orcid)
+      expect(attributes["orcid"]).to eq(user.orcid)
       expect(attributes["doi"]).to eq(doi)
       expect(attributes["state"]).to eq("waiting")
     end
@@ -104,7 +103,7 @@ describe "/api/v1/claims", :type => :api do
         expect(last_response.status).to eq(400)
 
         response = JSON.parse(last_response.body)
-        expect(response).to eq("errors"=>[{"status"=>400, "title"=>"Orcid can't be blank"}])
+        expect(response).to eq("errors"=>[{"status"=>400, "title"=>"User must exist"}, {"status"=>400, "title"=>"Orcid can't be blank"}])
       end
     end
 
@@ -169,7 +168,7 @@ describe "/api/v1/claims", :type => :api do
         expect(last_response.status).to eq(400)
 
         response = JSON.parse(last_response.body)
-        expect(response).to eq("errors"=>[{"status"=>400, "title"=>"Orcid can't be blank"}, {"status"=>400, "title"=>"Doi can't be blank"}, {"status"=>400, "title"=>"Source can't be blank"}])
+        expect(response).to eq("errors" => [{"status"=>400, "title"=>"User must exist"}, {"status"=>400, "title"=>"Orcid can't be blank"}, {"status"=>400, "title"=>"Doi can't be blank"}, {"status"=>400, "title"=>"Source can't be blank"}])
       end
     end
 

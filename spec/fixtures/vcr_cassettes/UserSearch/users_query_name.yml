@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Mozilla/5.0 (compatible; Maremma/4.1.1; +https://github.com/datacite/maremma)
+      - Mozilla/5.0 (compatible; Maremma/4.2.6; +https://github.com/datacite/maremma)
       Accept:
       - application/json;charset=UTF-8
       Authorization:
@@ -21,7 +21,7 @@ http_interactions:
       Server:
       - nginx/1.10.0
       Date:
-      - Sun, 30 Dec 2018 16:17:21 GMT
+      - Sat, 31 Aug 2019 16:27:09 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Connection:
@@ -44,5 +44,5 @@ http_interactions:
       encoding: ASCII-8BIT
       string: '{"result":[{"orcid-identifier":{"uri":"http://sandbox.orcid.org/0000-0002-8568-5429","path":"0000-0002-8568-5429","host":"sandbox.orcid.org"}},{"orcid-identifier":{"uri":"http://sandbox.orcid.org/0000-0002-8282-6361","path":"0000-0002-8282-6361","host":"sandbox.orcid.org"}},{"orcid-identifier":{"uri":"http://sandbox.orcid.org/0000-0001-6528-2027","path":"0000-0001-6528-2027","host":"sandbox.orcid.org"}},{"orcid-identifier":{"uri":"http://sandbox.orcid.org/0000-0002-4246-0131","path":"0000-0002-4246-0131","host":"sandbox.orcid.org"}}],"num-found":4}'
     http_version: 
-  recorded_at: Sun, 30 Dec 2018 16:17:21 GMT
+  recorded_at: Sat, 31 Aug 2019 16:27:09 GMT
 recorded_with: VCR 3.0.3

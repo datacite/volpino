@@ -1,6 +1,7 @@
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
 require 'rails/all'
+require "active_job/logging"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -46,28 +47,25 @@ ENV['MYSQL_PORT'] ||= "3306"
 
 module Volpino
   class Application < Rails::Application
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
-
     # autoload files in lib folder
     config.autoload_paths << Rails.root.join('lib')
 
     # add assets installed via node
     config.assets.paths << "#{Rails.root}/vendor/node_modules"
 
-    # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
-    # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
-    # config.time_zone = 'Central Time (US & Canada)'
-
-    # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    # config.i18n.default_locale = :de
-
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:jwt]
 
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 5.0
+
+    # Write all logs to STDOUT instead of file
+    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger.formatter = config.log_formatter
+    config.logger    = ActiveSupport::TaggedLogging.new(logger)
     config.log_level = ENV['LOG_LEVEL'].to_sym
+
+    config.active_job.logger = config.logger
 
     # Use memcached as cache store
     config.cache_store = :dalli_store, nil, { :namespace => ENV['APPLICATION'], :compress => true }
@@ -78,10 +76,9 @@ module Volpino
     # set Active Job queueing backend
     config.active_job.queue_adapter = :sidekiq
 
-    # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
-
-    # parameter keys that are not explicitly permitted will raise error
-    config.action_controller.action_on_unpermitted_parameters = :raise
+    # Settings in config/environments/* take precedence over those specified here.
+    # Application configuration can go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded after loading
+    # the framework and any gems in your application.
   end
 end

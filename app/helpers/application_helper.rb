@@ -115,20 +115,6 @@ module ApplicationHelper
       "orcid_update" => "ORCID Auto-Update" }
   end
 
-  def human_state_name(state)
-    state_names.fetch(state, nil)
-  end
-
-  def state_names
-    { 0 => "waiting",
-      1 => "working",
-      2 => "failed",
-      3 => "done",
-      4 => "ignored",
-      5 => "deleted",
-      6 => "notified" }
-  end
-
   def settings
     Settings[ENV['MODE']]
   end

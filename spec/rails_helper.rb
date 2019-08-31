@@ -17,6 +17,7 @@ require "capybara-screenshot/rspec"
 require "database_cleaner"
 require "webmock/rspec"
 require "rack/test"
+require 'aasm/rspec'
 require "devise"
 require "sidekiq/testing"
 require "colorize"
@@ -74,12 +75,14 @@ RSpec.configure do |config|
     })
   end
 
+  # don't use transactions, use database_clear gem via support file
+  config.use_transactional_fixtures = false
+
   config.fixture_path = "#{::Rails.root}/spec/fixtures/"
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
   config.infer_base_class_for_anonymous_controllers = false
   config.infer_spec_type_from_file_location!
   config.order = :random
@@ -102,28 +105,7 @@ RSpec.configure do |config|
   config.after(:each) do
     ENV_VARS.each { |k,v| ENV[k] = v }
   end
-
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-    FactoryBot.lint
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
-  end
-
-  config.before(:each, js: true) do
-    DatabaseCleaner.strategy = :truncation
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.start
-  end
-
-  config.after(:each) do
-    DatabaseCleaner.clean
-  end
-
+  
   config.before(:each) do |example|
     # Clears out the jobs for tests using the fake testing
     Sidekiq::Worker.clear_all

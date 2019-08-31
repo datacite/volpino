@@ -37,11 +37,11 @@
             <div class="btn-toolbar pull-right">
               <div class="btn-group btn-group-sm">
                 <% if claim.failed? %>
-                  <%= link_to claim.human_state_name, claim_path(claim, :claim => { :resolve => true }, state: params[:state], source: params[:source]), :method => :put, :remote => true %> <%= l claim.updated_at, format: :medium %>
+                  <%= link_to claim.state, claim_path(claim, :claim => { :resolve => true }, state: params[:state], source: params[:source]), :method => :put, :remote => true %> <%= l claim.updated_at, format: :medium %>
                 <% elsif claim.done? %>
                   <%= claim.claim_action + "d" %> <%= l claim.claimed_at, format: :medium %>
                 <% else %>
-                  <%= claim.human_state_name %> <%= l claim.updated_at, format: :medium %>
+                  <%= claim.state %> <%= l claim.updated_at, format: :medium %>
                 <% end %>
               </div>
             </div>
@@ -144,7 +144,7 @@
             <% if @state %>
               <li class="active">
                 <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], source: params[:source], user_id: params[:user_id], claim_action: params[:claim_action]) %>
-                <div class="facet-title"><%= state_names[@state.first].humanize %></div>
+                <div class="facet-title"><%= @state.first.humanize %></div>
                 <span class="number pull-right"><%= number_with_delimiter(@state.last) %></span>
                 <div class="clearfix"/>
               </li>
@@ -152,7 +152,7 @@
               <% @states.each do |state| %>
                 <li>
                   <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], source: params[:source], user_id: params[:user_id], claim_action: params[:claim_action], state: state.first) %>
-                  <div class="facet-title"><%= state_names[state.first].humanize %></div>
+                  <div class="facet-title"><%= state.first.humanize %></div>
                   <span class="number pull-right"><%= number_with_delimiter(state.last) %></span>
                   <div class="clearfix"/>
                 </li>

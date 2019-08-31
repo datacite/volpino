@@ -21,28 +21,3 @@
 <div id="auto">
   <%= render :partial => 'users/auto' %>
 </div>
-
-<div class="panel <%= claim_text %>">
-  <div class="panel-heading panel-title">
-    Claim Status
-  </div>
-  <div class="panel-body">
-    <p>
-      You have <%= pluralize(number_with_delimiter(@user.claims.done.count), "successful claim") %>,
-      <%= pluralize(@user.claims.notified.count, "notification claim") %>,
-      <%= pluralize(@user.claims.stale.count, "queued claim") %> and
-      <%= pluralize(@user.claims.failed.count, "failed claim") %>.
-    </p>
-    <div class="graphs" id="chart_claims"></div>
-    <div class="text-muted" id="chart_claims-loading">Loading … <img src="<%= ENV['CDN_URL'] + '/images/spinner.gif' %>"></div>
-  </div>
-  <div class="panel-footer">
-    <div class="btn-toolbar">
-      <div class="btn-group btn-group-sm pull-right">
-        <%= link_to "more info", claims_path, class: 'btn btn-default btn-sm' %>
-      </div>
-    </div>
-  </div>
-</div>
-
-<%= javascript_include_tag 'users/claims' %>

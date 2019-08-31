@@ -3,7 +3,6 @@ RESCUABLE_EXCEPTIONS = [ActiveRecord::RecordNotFound,
                         JWT::DecodeError,
                         JWT::VerificationError,
                         ActionController::ParameterMissing,
-                        ActiveModel::ForbiddenAttributesError,
                         ActionController::UnpermittedParameters,
                         NoMethodError]
 
