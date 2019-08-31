@@ -34,7 +34,7 @@ describe User, type: :model, vcr: true do
     end
 
     it 'delete claim' do
-      subject = FactoryBot.create(:valid_user, github: "mfenner", github_put_code: "5510")
+      subject = FactoryBot.create(:valid_user, github: "mfenner", github_put_code: "5514")
       expect(subject.github_to_be_deleted?).to be true
       response = subject.push_github_identifier
       expect(response.body["data"]).to be_blank
@@ -47,11 +47,11 @@ describe User, type: :model, vcr: true do
     it 'no errors' do
       subject = FactoryBot.create(:valid_user, github: "mfenner", github_put_code: nil)
       expect(subject.process_data).to be true
-      expect(subject.github_put_code).to eq(5511)
+      expect(subject.github_put_code).to eq(5515)
     end
 
     it 'delete claim' do
-      subject = FactoryBot.create(:valid_user, github: "mfenner", github_put_code: "5511")
+      subject = FactoryBot.create(:valid_user, github: "mfenner", github_put_code: "5515")
       expect(subject.process_data).to be true
       expect(subject.github_put_code).to be nil
     end
@@ -62,7 +62,7 @@ describe User, type: :model, vcr: true do
 
     it 'get data' do
       result = subject.get_data
-      expect(result.length).to eq(28)
+      expect(result.length).to eq(27)
       work = result.first
       path = work.fetch('work-summary', [{}]).first.fetch("source", {}).fetch('source-client-id', {}).fetch('path', nil)
       expect(path).to eq(ENV['ORCID_CLIENT_ID'])
@@ -72,7 +72,7 @@ describe User, type: :model, vcr: true do
       result = subject.get_data
 
       result = subject.parse_data(result)
-      expect(result.length).to eq(28)
+      expect(result.length).to eq(27)
       expect(result.first).to eq("10.5256/f1000research.67475.r16884")
     end
   end
@@ -84,9 +84,9 @@ describe User, type: :model, vcr: true do
 
     it 'queue_claims_jobs' do
       subject.queue_claim_jobs
-      expect(subject.claims.count).to eq(1)
+      expect(subject.claims.count).to eq(28)
       updated_claim = subject.claims.first
-      expect(updated_claim.state).to eq("notified")
+      expect(updated_claim.state).to eq("done")
     end
   end
 

@@ -5,8 +5,6 @@ gem 'bootsnap', '~> 1.4', '>= 1.4.4', require: false
 gem 'mysql2', '~> 0.4.4'
 
 gem "dotenv", '~> 2.1'
-gem 'sidekiq', '~> 4.0', '>= 4.0.1'
-gem 'sinatra', :require => nil
 gem "config"
 gem 'tzinfo-data'
 gem 'rake', '~> 12.0'
@@ -16,6 +14,9 @@ gem 'addressable', "~> 2.3.8"
 gem 'postrank-uri', '~> 1.0', '>= 1.0.23'
 gem 'nilify_blanks', '~> 1.3'
 gem 'aasm', '~> 5.0', '>= 5.0.1'
+gem 'shoryuken', '~> 4.0'
+gem "aws-sdk-s3", require: false
+gem 'aws-sdk-sqs', '~> 1.3'
 gem 'active_model_serializers', '~> 0.10.4'
 gem 'fast_jsonapi', '~> 1.3'
 gem 'colorize', '~> 0.8.1'
@@ -27,7 +28,6 @@ gem 'flipper-api'
 gem 'flipper-ui'
 gem 'flipper-active_support_cache_store'
 
-gem "dalli", "~> 2.7.0"
 gem 'kaminari', '~> 1.0', '>= 1.0.1'
 gem "simple_form", "~> 4.1.0"
 gem 'country_select', '~> 2.5', '>= 2.5.1'
@@ -36,6 +36,7 @@ gem "github-markdown", "~> 0.6.3"
 gem 'rouge', '~> 3.9'
 gem 'hashie', '~> 3.5.0'
 gem 'bergamasco', '~> 0.3.17'
+gem 'dalli', '~> 2.7', '>= 2.7.6'
 gem 'namae', '~> 1.0'
 gem 'lograge', '~> 0.10.0'
 gem 'logstash-event', '~> 1.2', '>= 1.2.02'
@@ -69,7 +70,7 @@ group :development do
   gem 'binding_of_caller', '~> 0.7.2'
   gem 'hologram', '~> 1.4'
   gem 'web-console', '~> 3.7'
-  gem 'httplog', '~> 1.0'
+  # gem 'httplog', '~> 1.0'
 end
 
 group :development, :test do

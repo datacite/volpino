@@ -50,9 +50,9 @@ Rails.application.configure do
   
   BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP']
   
-  HttpLog.configure do |config|
-    config.logger = ActiveSupport::Logger.new(STDOUT)
-  end
+  # HttpLog.configure do |config|
+  #   config.logger = ActiveSupport::Logger.new(STDOUT)
+  # end
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -70,6 +70,9 @@ Rails.application.configure do
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true
+
+  # set Active Job queueing backend
+  config.active_job.queue_adapter = :inline
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true

@@ -19,7 +19,6 @@ require "webmock/rspec"
 require "rack/test"
 require 'aasm/rspec'
 require "devise"
-require "sidekiq/testing"
 require "colorize"
 require "maremma"
 
@@ -104,21 +103,6 @@ RSpec.configure do |config|
   # restore application-specific ENV variables after each example
   config.after(:each) do
     ENV_VARS.each { |k,v| ENV[k] = v }
-  end
-  
-  config.before(:each) do |example|
-    # Clears out the jobs for tests using the fake testing
-    Sidekiq::Worker.clear_all
-
-    if example.metadata[:sidekiq] == :fake
-      Sidekiq::Testing.fake!
-    elsif example.metadata[:sidekiq] == :inline
-      Sidekiq::Testing.inline!
-    elsif example.metadata[:type] == :feature
-      Sidekiq::Testing.inline!
-    else
-      Sidekiq::Testing.fake!
-    end
   end
 
   def capture_stdout(&block)

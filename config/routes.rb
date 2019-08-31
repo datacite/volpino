@@ -1,4 +1,3 @@
-require 'sidekiq/web'
 #require 'rack-jwt'
 
 Rails.application.routes.draw do
@@ -29,7 +28,6 @@ Rails.application.routes.draw do
   mount flipper_app, at: '/api/flipper'
 
   authenticate :user, lambda { |u| u.is_admin? } do
-    mount Sidekiq::Web => '/sidekiq'
     mount Flipper::UI.app(Flipper) => '/flipper'
   end
 
@@ -40,7 +38,6 @@ Rails.application.routes.draw do
   resources :heartbeat, only: [:index]
   resources :people, only: [:show, :index]
   resources :services
-  resources :status, :only => [:index]
   resources :tags
   resources :users
 
@@ -50,9 +47,7 @@ Rails.application.routes.draw do
       resources :random, only: [:index]
       resources :roles, only: [:show, :index]
       resources :services
-      resources :status, only: [:index]
       resources :tags
-      resources :funders
       resources :users do
         resources :claims
       end

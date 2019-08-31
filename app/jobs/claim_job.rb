@@ -1,8 +1,8 @@
 class ClaimJob < ActiveJob::Base
-  queue_as :default
+  queue_as :volpino
 
   rescue_from ActiveJob::DeserializationError, ActiveRecord::ConnectionTimeoutError, Faraday::TimeoutError do
-    retry_job wait: 5.minutes, queue: :default
+    retry_job wait: 5.minutes, queue: :volpino
   end
 
   def perform(claim)

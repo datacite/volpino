@@ -7,7 +7,6 @@ services:
   - mysql
   - docker
   - memcached
-  - redis-server
 
 addons:
   code_climate:
@@ -26,7 +25,6 @@ before_script:
   - cp .env.travis .env
   - mkdir -p tmp/pids
   - mkdir -p log
-  - bundle exec sidekiq -d -e production --config config/sidekiq.yml -L log/sidekiq.log
   - bundle exec rake db:setup RAILS_ENV=test
 
 script:
