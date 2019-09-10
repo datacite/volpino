@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/datacite/omniauth-globus
-  revision: 8952235e4deb21371be380e48a41c8cc6eaf0129
+  revision: 3f2603894a4909608acdcce70562617074aa12bf
   specs:
-    omniauth-globus (0.8.0)
+    omniauth-globus (0.8.2)
       jwt (>= 2.0)
       omniauth (~> 1.9)
       omniauth-oauth2 (~> 1.6)
@@ -63,8 +63,8 @@ GEM
     arel (9.0.0)
     ast (2.4.0)
     aws-eventstream (1.0.3)
-    aws-partitions (1.210.0)
-    aws-sdk-core (3.66.0)
+    aws-partitions (1.211.0)
+    aws-sdk-core (3.67.0)
       aws-eventstream (~> 1.0, >= 1.0.2)
       aws-partitions (~> 1.0)
       aws-sigv4 (~> 1.1)
@@ -557,7 +557,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    sentry-raven (2.11.0)
+    sentry-raven (2.11.1)
       faraday (>= 0.7.6, < 1.0)
     sexp_processor (4.12.1)
     shoryuken (4.0.3)

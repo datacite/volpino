@@ -75,7 +75,7 @@ class User < ActiveRecord::Base
   end
 
   def orcid_as_url
-    ENV['ORCID_URL'] + "/" + orcid
+    Rails.env.test? ? ENV['ORCID_URL'] + "/" + orcid : "https://orcid.org/" + orcid
   end
 
   def flipper_id

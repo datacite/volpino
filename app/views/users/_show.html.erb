@@ -35,7 +35,7 @@
         <div class="panel-body">
           <dl class="dl-horizontal">
             <dt>ORCID ID</dt>
-            <dd><%= link_to @user.orcid, @user.orcid %></dd>  
+            <dd><%= link_to @user.orcid_as_url, @user.orcid %></dd>  
             <% if @user.name.present? %>
               <dt>Name</dt>
               <dd><%= @user.name %></dd>

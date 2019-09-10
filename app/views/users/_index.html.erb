@@ -29,6 +29,7 @@
                     <% if user.id != current_user.id %>
                       <%= f.input :role_id, collection: Role.all[:data], include_blank: false, input_html: { class: "form-user" } %>
                     <% end %>
+
                     <div class="form-group">
                       <label for="other">Other</label>
                       <%= f.input :is_public, label: "Record is public", input_html: { class: "form-user" } %>
@@ -86,10 +87,10 @@
                     </div>
                   <% end %>
                 </div>
-                <% if user.uid != current_user.uid && can?(:manage, user) %>
+                <% if can?(:manage, user) %>
                   <div class="panel-footer">
                     <div class="btn-toolbar">
-                      <% if can?(:manage, Phrase) %>
+                      <% if user.uid != current_user.uid && can?(:manage, Phrase) %>
                         <div class="btn-group btn-group-sm pull-right">
                           <%= link_to "Delete".html_safe, user_path(user, query: params[:query], 'role-id' => params['role-id'], page: params[:page]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-fill btn-sm', id: "#{user.id}-delete" %>
                         </div>

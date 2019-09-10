@@ -18,6 +18,7 @@ class UsersController < ApplicationController
     else
       # admin updates user account
       load_index
+
       render :index
     end
   end
@@ -53,7 +54,7 @@ class UsersController < ApplicationController
     if user_signed_in? && params[:id] == "me"
       @user = current_user
     elsif user_signed_in?
-      @user = User.find(params[:id])
+      @user = User.where(uid: params[:id]).first
     else
       fail CanCan::AccessDenied.new("Please sign in first.", :read, User)
     end
