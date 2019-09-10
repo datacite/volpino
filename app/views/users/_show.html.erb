@@ -5,7 +5,7 @@
         <%= simple_form_for @user, url: user_path(@user), html: { role: "form", remote: true } do |f| %>
           <div class="panel-body">
             <dl class="dl-horizontal">
-              <dd><h3 class="work">Personal Settings</h3></dd>
+              <dd><h3 class="work">Settings</h3></dd>
             </dl>
           </div>
           <div class="panel-body">
@@ -22,7 +22,7 @@
       <% else %>
         <div class="panel-body">          
           <dl class="dl-horizontal">
-            <dd><h3 class="work">Personal Settings</h3></dd>
+            <dd><h3 class="work">Settings</h3></dd>
           </dl>
         </div>
         <div class="panel-body">
@@ -34,6 +34,10 @@
             <% if @user.other_names.present? %>
               <dt>Other Names</dt>
               <dd><%= h(@user.other_names.join(', ')) %></dd>
+            <% end %>
+            <% if @user.organization.present? %>
+              <dt>Organization</dt>
+              <dd><%= @user.organization %></dd>
             <% end %>
             <% if @user.email.present? %>
               <dt>Email</dt>
