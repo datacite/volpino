@@ -76,7 +76,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       @user = current_user
       @user.update_attributes(email: auth.info.email)
       flash[:notice] = "Account successfully linked with Globus Auth account."
-      redirect_to user_path("me")
+      redirect_to user_path("me") && return
     else
       @user = User.from_omniauth(auth, uid: auth.extra.id_info.preferred_username[0..18])
     end
