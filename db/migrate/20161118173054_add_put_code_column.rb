@@ -1,4 +1,4 @@
-class AddPutCodeColumn < ActiveRecord::Migration
+class AddPutCodeColumn < ActiveRecord::Migration[4.2]
   def change
     add_column :claims, :put_code, :integer
     add_index "claims", ["put_code"]

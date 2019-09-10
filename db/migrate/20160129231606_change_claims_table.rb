@@ -1,4 +1,4 @@
-class ChangeClaimsTable < ActiveRecord::Migration
+class ChangeClaimsTable < ActiveRecord::Migration[4.2]
   def up
     remove_foreign_key "claims", "users"
     remove_index "claims", name: "index_claims_user_id"

@@ -1,4 +1,4 @@
-class AddGithubFields < ActiveRecord::Migration
+class AddGithubFields < ActiveRecord::Migration[4.2]
   def up
     add_column :users, :github, :string, limit: 191
     add_column :users, :github_uid, :string, limit: 191

@@ -1,4 +1,4 @@
-class RemoveTagsTable < ActiveRecord::Migration
+class RemoveTagsTable < ActiveRecord::Migration[4.2]
   def up
     drop_table :tags
     drop_table :services

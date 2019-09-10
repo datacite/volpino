@@ -1,4 +1,4 @@
-class AddEmailConfirmation < ActiveRecord::Migration
+class AddEmailConfirmation < ActiveRecord::Migration[4.2]
   def up
     add_column :users, :confirmation_token, :string, limit: 191
     add_column :users, :confirmed_at, :datetime

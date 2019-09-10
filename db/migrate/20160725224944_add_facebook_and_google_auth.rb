@@ -1,4 +1,4 @@
-class AddFacebookAndGoogleAuth < ActiveRecord::Migration
+class AddFacebookAndGoogleAuth < ActiveRecord::Migration[4.2]
   def up
     add_column :users, :facebook_uid, :string, limit: 191
     add_column :users, :facebook_token, :string, limit: 191

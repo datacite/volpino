@@ -1,4 +1,4 @@
-class AddDepositsTable < ActiveRecord::Migration
+class AddDepositsTable < ActiveRecord::Migration[4.2]
   def change
     create_table "deposits", force: :cascade do |t|
       t.string   "uuid",           limit: 191,                           null: false

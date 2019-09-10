@@ -1,4 +1,4 @@
-class AddContactTypeColumns < ActiveRecord::Migration
+class AddContactTypeColumns < ActiveRecord::Migration[4.2]
   def change
     rename_column :users, :member_id, :member
     add_column :users, :member_id, :string

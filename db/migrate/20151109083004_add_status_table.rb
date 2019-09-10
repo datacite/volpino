@@ -1,4 +1,4 @@
-class AddStatusTable < ActiveRecord::Migration
+class AddStatusTable < ActiveRecord::Migration[4.2]
   def change
     create_table "status", force: :cascade do |t|
       t.string   "uuid",                  limit: 191

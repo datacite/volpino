@@ -1,4 +1,4 @@
-class AddClaimsTable < ActiveRecord::Migration
+class AddClaimsTable < ActiveRecord::Migration[4.2]
   def change
     create_table "claims", force: :cascade do |t|
       t.string   "uuid",         limit: 191

@@ -1,4 +1,4 @@
-class CreateFunders < ActiveRecord::Migration
+class CreateFunders < ActiveRecord::Migration[4.2]
   def change
     create_table :funders do |t|
       t.string :fundref_id

@@ -50,9 +50,12 @@ Rails.application.configure do
   
   BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP']
   
-  # HttpLog.configure do |config|
-  #   config.logger = ActiveSupport::Logger.new(STDOUT)
-  # end
+  HttpLog.configure do |config|
+    config.enabled = true
+    config.logger = ActiveSupport::Logger.new(STDOUT)
+    config.url_blacklist_pattern = /sqs\.eu-west-1\.amazonaws\.com/
+    config.filter_parameters = %w(client_id access_token)
+  end
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

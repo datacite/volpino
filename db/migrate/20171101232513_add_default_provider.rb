@@ -1,4 +1,4 @@
-class AddDefaultProvider < ActiveRecord::Migration
+class AddDefaultProvider < ActiveRecord::Migration[4.2]
   def change
     change_column_default :users, :provider, "orcid"
   end

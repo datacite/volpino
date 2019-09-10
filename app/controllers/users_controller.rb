@@ -4,10 +4,7 @@ class UsersController < ApplicationController
 
   def show
     @title = 'Settings'
-    respond_to do |format|
-      format.js { render @panel }
-      format.html
-    end
+    render :show
   end
 
   def index
@@ -15,15 +12,15 @@ class UsersController < ApplicationController
   end
 
   def edit
-    if params[:panel].present?
-      # user updates his account
-      render @panel
-    else
-      # admin updates user account
-      @user = User.find(params[:id])
-      load_index
-      render :index
-    end
+    # user updates his account
+    render :edit
+    
+    # else
+    #   # admin updates user account
+    #   @user = User.find(params[:id])
+    #   load_index
+    #   render :index
+    # end
   end
 
   def update
@@ -60,9 +57,6 @@ class UsersController < ApplicationController
   def load_user
     if user_signed_in?
       @user = current_user
-
-      panels = %w(auto public login account orcid sandbox)
-      @panel = panels.find { |p| p == params[:panel] } || "account"
     else
       fail CanCan::AccessDenied.new("Please sign in first.", :read, User)
     end
@@ -96,18 +90,13 @@ class UsersController < ApplicationController
   def safe_params
     params.require(:user).permit(:name,
                                  :email,
-                                 :unconfirmed_email,
                                  :auto_update,
                                  :role_id,
                                  :is_public,
                                  :beta_tester,
                                  :provider_id,
                                  :client_id,
-                                 :sandbox_id,
-                                 :sandbox_name,
                                  :expires_at,
-                                 :google_uid,
-                                 :google_token,
                                  :github,
                                  :github_uid,
                                  :github_token,

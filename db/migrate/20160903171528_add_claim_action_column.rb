@@ -1,4 +1,4 @@
-class AddClaimActionColumn < ActiveRecord::Migration
+class AddClaimActionColumn < ActiveRecord::Migration[4.2]
   def up
     add_column :claims, :claim_action, :string, limit: 191, default: "create"
     remove_index "claims", ["orcid", "doi"]

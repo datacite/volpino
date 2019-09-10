@@ -1,4 +1,4 @@
-class DropContactTypes < ActiveRecord::Migration
+class DropContactTypes < ActiveRecord::Migration[4.2]
   def change
     # contact types
     remove_column :users, :is_billing_contact, :boolean, default: false

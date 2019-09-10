@@ -1,4 +1,4 @@
-class AddServicesTable < ActiveRecord::Migration
+class AddServicesTable < ActiveRecord::Migration[4.2]
   def change
     create_table "services", force: :cascade do |t|
       t.string   "name",         limit: 255, null: false

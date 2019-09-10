@@ -1,24 +1,85 @@
 <div class="row">
   <div class='col-md-9'>
-    <div class="tab-content">
-      <div class="tab-pane" id="account">
-        <%= render :partial => 'users/account' %>
-      </div>
-      <div class="tab-pane panel-list" id="login">
-        <%= render :partial => 'users/login' %>
-      </div>
-      <div class="tab-pane panel-list" id="orcid">
-        <%= render :partial => 'users/orcid' %>
-      </div>
+    <div class="panel panel-default" id="content-account">
+      <% if can?(:update, @user) && (controller.action_name == "edit" || (controller.action_name == "update" && !@user.errors.empty?)) %>
+        <%= simple_form_for @user, url: user_path(@user), html: { role: "form", remote: true } do |f| %>
+          <div class="panel-body">
+            <dl class="dl-horizontal">
+              <dd><h3 class="work">Personal Settings</h3></dd>
+            </dl>
+          </div>
+          <div class="panel-body">
+            <%= link_to "<span></span> Expire ORCID Token".html_safe, user_path(@user, user: { expires_at: Time.zone.now }), { method: :put, remote: true, class: 'btn btn-social btn-orcid' } %>
+          </div>
+          <div class="panel-footer">
+            <div class="form-group pull-right">
+              <%= link_to 'Cancel', user_path(@user), { :remote => true, :class => 'btn btn-sm' } %>
+              <%= f.submit "Save ", class: "btn btn-sm btn-fill" %>
+            </div>
+            <div class="clearfix"/>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="panel-body">          
+          <dl class="dl-horizontal">
+            <dd><h3 class="work">Personal Settings</h3></dd>
+          </dl>
+        </div>
+        <div class="panel-body">
+          <dl class="dl-horizontal">
+            <% if @user.name.present? %>
+              <dt>Name</dt>
+              <dd><%= @user.name %></dd>
+            <% end %>
+            <% if @user.other_names.present? %>
+              <dt>Other Names</dt>
+              <dd><%= h(@user.other_names.join(', ')) %></dd>
+            <% end %>
+            <% if @user.email.present? %>
+              <dt>Email</dt>
+              <dd><%= @user.email %></dd>
+            <% end %>
+            <% if @user.github.present? %>
+              <dt>Github</dt>
+              <dd><%= link_to @user.github, "https://github.com/#{@user.github}" %></dd>
+            <% end %>
+          </dl>
+        </div>
+        <div class="panel-body">
+          <dl class="dl-horizontal">
+            <dt>ORCID ID</dt>
+            <dd><%= link_to @user.orcid, @user.orcid %></dd>           
+            <dt>Record</dt>
+            <% if @user.is_public %>
+              <dd>is public</dd>
+            <% else %>
+              <dd class="text-info">is private</dd>
+            <% end %>
+            <dt>Auto-Update</dt>
+            <% if @user.auto_update %>
+              <dd>is enabled</dd>
+            <% else %>
+              <dd class="text-info">is disabled</dd>
+            <% end %>
+          </dl>
+        </div>
+        <div class="panel-body">
+          <dl class="dl-horizontal">
+            <dt>Role</dt>
+            <dd><%= @user.role.name %></dd>
+            <% if @user.beta_tester %>
+              <dt>Beta Tester</dt>
+              <dd>is true</dd>
+            <% end %>
+          </dl>
+        </div>
+          <div class="panel-footer">
+            <div class="form-group pull-right">
+              <%= link_to 'Update', edit_user_path(@user), :remote => true, :class => 'btn btn-sm', id: "#{@user.id}-edit" %>
+            </div>
+            <div class="clearfix"/>
+          </div>
+      <% end %>
     </div>
   </div>
-  <div class='col-md-3'>
-    <ul class="nav nav-tabs nav-stacked" id="user-tabs" data-active="<%= @panel %>">
-      <li><a href="#account" data-toggle="tab">Your Account</a></li>
-      <li><a href="#login" data-toggle="tab">Social Login</a></li>
-      <li><a href="#orcid" data-toggle="tab">ORCID Claims</a></li>
-    </ul>
-  </div>
 </div>
-
-<%= javascript_include_tag 'users/tabs' %>

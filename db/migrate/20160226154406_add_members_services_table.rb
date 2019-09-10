@@ -1,4 +1,4 @@
-class AddMembersServicesTable < ActiveRecord::Migration
+class AddMembersServicesTable < ActiveRecord::Migration[4.2]
   def up
     add_column :claims, :error_messages, :text
     rename_column :claims, :uid, :orcid

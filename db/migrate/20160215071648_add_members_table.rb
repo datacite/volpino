@@ -1,4 +1,4 @@
-class AddMembersTable < ActiveRecord::Migration
+class AddMembersTable < ActiveRecord::Migration[4.2]
   def change
     create_table "members", force: :cascade do |t|
       t.string   "name",         limit: 191, null: false
