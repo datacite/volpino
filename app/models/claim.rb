@@ -31,7 +31,7 @@ class Claim < ActiveRecord::Base
   validates :orcid, :doi, :source_id, presence: true
 
   delegate :uid, to: :user, allow_nil: true
-  delegate :access_token, to: :user, allow_nil: true
+  delegate :orcid_token, to: :user, allow_nil: true
 
   alias_attribute :state, :aasm_state
 
@@ -136,16 +136,16 @@ class Claim < ActiveRecord::Base
     # already claimed
     return OpenStruct.new(body: { "skip" => true }) if to_be_created? && claimed_at.present?
 
-    # user has not signed up yet or access_token is missing
-    return OpenStruct.new(body: { "skip" => true }) unless user.present? && user.access_token.present?
+    # user has not signed up yet or orcid_token is missing
+    return OpenStruct.new(body: { "skip" => true }) unless user.present? && user.orcid_token.present?
 
     # user has not given permission for auto-update
     return OpenStruct.new(body: { "skip" => true }) if source_id == "orcid_update" && user && !user.auto_update
 
     options[:sandbox] = (ENV['ORCID_URL'] == "https://sandbox.orcid.org")
 
-    # user has not signed up yet or access_token is missing
-    unless (user.present? && user.access_token.present?)
+    # user has not signed up yet or orcid_token is missing
+    unless (user.present? && user.orcid_token.present?)
       if ENV['NOTIFICATION_ACCESS_TOKEN'].present?
         response = notification.create_notification(options)
         response.body["notification"] = true
@@ -177,7 +177,7 @@ class Claim < ActiveRecord::Base
   end
 
   def work
-    Work.new(doi: doi, orcid: orcid, access_token: access_token, put_code: put_code)
+    Work.new(doi: doi, orcid: orcid, access_token: orcid_token, put_code: put_code)
   end
 
   def notification
