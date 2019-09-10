@@ -12,15 +12,15 @@ class UsersController < ApplicationController
   end
 
   def edit
-    # user updates his account
-    render :edit
-    
-    # else
-    #   # admin updates user account
-    #   @user = User.find(params[:id])
-    #   load_index
-    #   render :index
-    # end
+    if @user.present?
+      # user updates his account
+      render :edit
+    else
+      # admin updates user account
+      @user = User.find(params[:id])
+      load_index
+      render :index
+    end
   end
 
   def update
