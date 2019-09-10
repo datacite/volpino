@@ -10,7 +10,7 @@ gem 'tzinfo-data'
 gem 'rake', '~> 12.0'
 gem 'sentry-raven', '~> 2.9'
 gem 'orcid_client', '~> 0.5'
-gem 'addressable', "~> 2.3.8"
+gem 'addressable', "~> 2.3"
 gem 'postrank-uri', '~> 1.0', '>= 1.0.23'
 gem 'nilify_blanks', '~> 1.3'
 gem 'aasm', '~> 5.0', '>= 5.0.1'
@@ -31,7 +31,7 @@ gem 'flipper-active_support_cache_store'
 gem 'kaminari', '~> 1.0', '>= 1.0.1'
 gem "simple_form", "~> 4.1.0"
 gem 'country_select', '~> 2.5', '>= 2.5.1'
-gem 'nokogiri', '~> 1.8.1'
+gem 'nokogiri', '~> 1.8'
 gem "github-markdown", "~> 0.6.3"
 gem 'rouge', '~> 3.9'
 gem 'hashie', '~> 3.5.0'
@@ -44,9 +44,9 @@ gem 'logstash-logger', '~> 0.26.1'
 gem 'rack-cors', '~> 1.0', '>= 1.0.2', :require => 'rack/cors'
 
 gem 'devise', '~> 4.7'
-gem 'omniauth-google-oauth2', '~> 0.8.0'
 gem 'omniauth-github', '~> 1.1.2'
 gem "omniauth-orcid", '~> 2.0'
+gem 'omniauth-globus', '~> 0.8', git: "https://github.com/datacite/omniauth-globus"
 gem 'omniauth', '~> 1.3', '>= 1.3.1'
 gem 'oauth2', '~> 1.4'
 gem 'validates_email_format_of', '~> 1.6', '>= 1.6.3'
@@ -70,7 +70,7 @@ group :development do
   gem 'binding_of_caller', '~> 0.7.2'
   gem 'hologram', '~> 1.4'
   gem 'web-console', '~> 3.7'
-  # gem 'httplog', '~> 1.0'
+  gem 'httplog', '~> 1.3'
 end
 
 group :development, :test do

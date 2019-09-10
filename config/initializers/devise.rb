@@ -223,8 +223,8 @@ Devise.setup do |config|
                            ENV['GITHUB_CLIENT_SECRET'],
                            scope: "user,repo"
 
-  config.omniauth :google_oauth2, ENV["GOOGLE_CLIENT_ID"],
-                                  ENV["GOOGLE_CLIENT_SECRET"]
+  config.omniauth :globus, ENV["GLOBUS_CLIENT_ID"], 
+                           ENV["GLOBUS_CLIENT_SECRET"]
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
@@ -234,4 +234,4 @@ Devise.setup do |config|
   # end
 end
 
-OmniAuth.config.logger = Rails.logger
+OmniAuth.config.logger = ActiveSupport::Logger.new(STDOUT) if Rails.env.development?

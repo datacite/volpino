@@ -68,25 +68,31 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
-  def google_oauth2
+  def globus
+    puts request.env["omniauth.auth"]
     auth = request.env["omniauth.auth"]
 
     if current_user.present?
       @user = current_user
-      @user.update_attributes(google_uid: auth.uid,
-                              google_token: auth.credentials.token,
-                              email: auth.info.email)
-      flash[:notice] = "Account successfully linked with Google account."
-      redirect_to user_path("me", panel: "login")
-    elsif @user = User.where(google_uid: auth.uid).first
-      cookies[:_datacite] = encode_cookie(@user.jwt)
+      @user.update_attributes(email: auth.info.email)
+      flash[:notice] = "Account successfully linked with Globus Auth account."
+      redirect_to user_path("me")
+    else
+      @user = User.from_omniauth(auth, uid: auth.extra.id_info.preferred_username[0..18])
+    end
+
+    if Time.zone.now > @user.expires_at
+      auth_hash = User.get_auth_hash(auth)
+      @user.update_attributes(auth_hash)
+    end
+
+    if @user.persisted?
       sign_in @user
+      cookies[:_datacite] = encode_cookie(@user.jwt)
       redirect_to stored_location_for(:user) || user_path("me")
     else
-      flash[:omniauth] = { "google_uid" => auth.uid,
-                           "google_token" => auth.credentials.token,
-                           "email" => auth.info.email }
-      redirect_to "/link_orcid"
+      flash[:alert] = @user.errors.map { |k,v| "#{k}: #{v}" }.join("<br />").html_safe || "Error signing in with #{provider}"
+      redirect_to root_path
     end
   end
 
@@ -96,8 +102,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if current_user.present?
       @user = current_user
-      @user.update_attributes(expires_at: User.timestamp(auth.credentials),
-                              authentication_token: auth.credentials.token)
+      @user.update_attributes(orcid_expires_at: User.timestamp(auth.credentials),
+                              orcid_token: auth.credentials.token)
       flash[:notice] = "ORCID token successfully refreshed."
     else
       @user = User.from_omniauth(auth)
@@ -129,7 +135,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
         netlify_response(token: token, content: content)
       else
-        redirect_to stored_location_for(:user) || user_path("me", panel: "orcid")
+        redirect_to stored_location_for(:user) || user_path("me")
       end
     else
       flash[:alert] = @user.errors.map { |k,v| "#{k}: #{v}" }.join("<br />").html_safe || "Error signing in with #{provider}"

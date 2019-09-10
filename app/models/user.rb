@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
 
   has_many :claims, primary_key: "uid", foreign_key: "orcid", inverse_of: :user
 
-  devise :omniauthable, :omniauth_providers => [:orcid, :github, :google_oauth2]
+  devise :omniauthable, :omniauth_providers => [:orcid, :github, :globus]
 
   validates :uid, presence: true, uniqueness: true
   validate :validate_email
@@ -43,8 +43,8 @@ class User < ActiveRecord::Base
 
   serialize :other_names, JSON
 
-  def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create
+  def self.from_omniauth(auth, options={})
+    where(provider: auth.provider, uid: options[:uid] || auth.uid).first_or_create
   end
 
   def queue_user_job
@@ -123,15 +123,14 @@ class User < ActiveRecord::Base
       family_name: auth.info.fetch(:last_name, "").to_s.strip,
       given_names: auth.info.fetch(:first_name, "").to_s.strip,
       other_names: auth.extra.fetch(:raw_info, {}).fetch(:other_names, nil),
+      organization: auth.extra.id_info.organization,
       authentication_token: auth.credentials.token,
       expires_at: timestamp(auth.credentials),
       role_id: auth.extra.fetch(:raw_info, {}).fetch(:role_id, nil),
-      google_uid: options.fetch("google_uid", nil),
-      google_token: options.fetch("google_token", nil),
-      email: options.fetch("email", nil),
       github: options.fetch("github", nil),
       github_uid: options.fetch("github_uid", nil),
-      github_token: options.fetch("github_token", nil) }.compact
+      github_token: options.fetch("github_token", nil),
+      email: auth.extra.id_info.email }.compact
   end
 
   def self.timestamp(credentials)
