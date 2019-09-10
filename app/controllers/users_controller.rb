@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :load_user, only: [:show, :edit, :destroy]
+  before_action :load_user, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource except: [:index]
 
   def show
@@ -12,32 +12,27 @@ class UsersController < ApplicationController
   end
 
   def edit
-    if @user.present?
+    if @user == current_user
       # user updates his account
       render :edit
     else
       # admin updates user account
-      @user = User.find(params[:id])
       load_index
       render :index
     end
   end
 
   def update
-    if params[:panel].present?
+    if @user == current_user
       # user updates his account
-
-      load_user
-
       @user.update_attributes(safe_params)
 
       # delete GitHub external identifier from ORCID if GitHub account is unlinked
       GithubJob.perform_later(@user) if @user.github_uid.blank? && @user.github_put_code.present?
 
-      render @panel
+      render :show
     else
       # admin updates user account
-      @user = User.find(params[:id])
       @user.update_attributes(safe_params)
 
       load_index
@@ -55,8 +50,10 @@ class UsersController < ApplicationController
   protected
 
   def load_user
-    if user_signed_in?
+    if user_signed_in? && params[:id] == "me"
       @user = current_user
+    elsif user_signed_in?
+      @user = User.find(params[:id])
     else
       fail CanCan::AccessDenied.new("Please sign in first.", :read, User)
     end
@@ -97,6 +94,8 @@ class UsersController < ApplicationController
                                  :provider_id,
                                  :client_id,
                                  :expires_at,
+                                 :orcid_token,
+                                 :orcid_expires_at,
                                  :github,
                                  :github_uid,
                                  :github_token,

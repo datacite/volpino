@@ -9,7 +9,14 @@
             </dl>
           </div>
           <div class="panel-body">
-            <%= link_to "<span></span> Expire ORCID Token".html_safe, user_path(@user, user: { expires_at: Time.zone.now }), { method: :put, remote: true, class: 'btn btn-social btn-orcid' } %>
+            <div class="row">
+              <div class='col-md-10 col-md-offset-2'>
+                <div class="form-group">
+                  <%= f.input :is_public, label: "Record is public", input_html: { class: "form-user" } %>
+                  <%= f.input :auto_update, label: "Auto-Update is enabled", input_html: { class: "form-user" } %>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="panel-footer">
             <div class="form-group pull-right">
@@ -27,6 +34,8 @@
         </div>
         <div class="panel-body">
           <dl class="dl-horizontal">
+            <dt>ORCID ID</dt>
+            <dd><%= link_to @user.orcid, @user.orcid %></dd>  
             <% if @user.name.present? %>
               <dt>Name</dt>
               <dd><%= @user.name %></dd>
@@ -51,8 +60,18 @@
         </div>
         <div class="panel-body">
           <dl class="dl-horizontal">
-            <dt>ORCID ID</dt>
-            <dd><%= link_to @user.orcid, @user.orcid %></dd>           
+            <dt>ORCID Token</dt>
+            <dd>
+              <% if Time.zone.now < @user.orcid_expires_at %>
+                <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Delete ORCID Token".html_safe, user_path(@user, user: { orcid_token: nil, orcid_expires_at: Time.zone.now }), { method: :put, remote: true, class: 'btn btn-social btn-orcid btn-fill' } %>
+              <% else %>
+                <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Get ORCID Token".html_safe, user_orcid_omniauth_authorize_path, :id => "sign-in-orcid", class: 'btn btn-social btn-orcid btn-fill' %>
+              <% end %>
+            </dd>
+          </dl>
+        </div>
+        <div class="panel-body">
+          <dl class="dl-horizontal">
             <dt>Record</dt>
             <% if @user.is_public %>
               <dd>is public</dd>

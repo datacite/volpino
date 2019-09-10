@@ -123,14 +123,14 @@ class User < ActiveRecord::Base
       family_name: auth.info.fetch(:last_name, "").to_s.strip,
       given_names: auth.info.fetch(:first_name, "").to_s.strip,
       other_names: auth.extra.fetch(:raw_info, {}).fetch(:other_names, nil),
-      organization: auth.extra.id_info.organization,
+      organization: auth.extra.id_info? ? auth.extra.id_info.organization : nil,
       authentication_token: auth.credentials.token,
       expires_at: timestamp(auth.credentials),
       role_id: auth.extra.fetch(:raw_info, {}).fetch(:role_id, nil),
       github: options.fetch("github", nil),
       github_uid: options.fetch("github_uid", nil),
       github_token: options.fetch("github_token", nil),
-      email: auth.extra.id_info.email }.compact
+      email: auth.extra.id_info? ? auth.extra.id_info.email : nil }.compact
   end
 
   def self.timestamp(credentials)
