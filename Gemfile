@@ -46,7 +46,7 @@ gem 'rack-cors', '~> 1.0', '>= 1.0.2', :require => 'rack/cors'
 gem 'devise', '~> 4.7'
 gem 'omniauth-github', '~> 1.1.2'
 gem "omniauth-orcid", '~> 2.0'
-gem 'omniauth-globus', '~> 0.8', git: "https://github.com/datacite/omniauth-globus"
+gem 'omniauth-globus', '~> 0.8.3'
 gem 'omniauth', '~> 1.3', '>= 1.3.1'
 gem 'oauth2', '~> 1.4'
 gem 'validates_email_format_of', '~> 1.6', '>= 1.6.3'
