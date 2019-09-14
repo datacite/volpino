@@ -74,7 +74,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if current_user.present?
       @user = current_user
-      @user.update_attributes(email: auth.info.email)
+      @user.update_attributes(email: auth.info.email, organization: auth.extra.id_info? ? auth.extra.id_info.organization : nil)
       flash[:notice] = "Account successfully linked with Globus account."
       redirect_to user_path("me") && return
     else
@@ -88,7 +88,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       sign_in @user
-      cookies[:_datacite] = encode_cookie(@user.jwt)
+      c = encode_cookie(@user.jwt)
+      puts "C:" + c.inspect
+      cookies[:_datacite] = c
       redirect_to stored_location_for(:user) || user_path("me")
     else
       flash[:alert] = @user.errors.map { |k,v| "#{k}: #{v}" }.join("<br />").html_safe || "Error signing in with #{provider}"
@@ -164,7 +166,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
              elsif Rails.env.stage?
                ".test.datacite.org"
              else
-               ".lvh.me"
+               nil
              end
     
     # URI.encode optional parameter needed to encode colon

@@ -145,6 +145,7 @@ class User < ActiveRecord::Base
       email: email,
       role_id: role_id,
       beta_tester: beta_tester,
+      has_orcid_token: has_orcid_token,
       features: features,
       iat: Time.now.to_i,
       exp: Time.now.to_i + 30 * 24 * 3600
@@ -165,6 +166,10 @@ class User < ActiveRecord::Base
     ([uid, name, reversed_name].compact + Array(other_names).compact).map { |n| '"' + n + '"' }.join(" OR ")
   end
 
+  def has_orcid_token
+    orcid_token.present?
+  end
+
   def collect_data(options={})
     result = get_data(options)
     result = parse_data(result, options)
@@ -175,7 +180,7 @@ class User < ActiveRecord::Base
   end
 
   def get_data(options={})
-    options[:sandbox] = (ENV['ORCID_URL'] == "https://sandbox.orcid.org")
+    options[:sandbox] = Rails.env.test?
 
     response = get_works(options)
     return nil if response.body["errors"]
@@ -244,7 +249,7 @@ class User < ActiveRecord::Base
     # validate data
     return OpenStruct.new(body: { "errors" => external_identifier.validation_errors.map { |error| { "title" => error } }}) if external_identifier.validation_errors.present?
 
-    options[:sandbox] = (ENV['ORCID_URL'] == "https://sandbox.orcid.org")
+    options[:sandbox] = Rails.env.test?
 
     # create or delete entry in ORCID record
     if github_to_be_created?

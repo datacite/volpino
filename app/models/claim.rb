@@ -142,7 +142,7 @@ class Claim < ActiveRecord::Base
     # user has not given permission for auto-update
     return OpenStruct.new(body: { "skip" => true }) if source_id == "orcid_update" && user && !user.auto_update
 
-    options[:sandbox] = (ENV['ORCID_URL'] == "https://sandbox.orcid.org")
+    options[:sandbox] = Rails.env.test?
 
     # user has not signed up yet or orcid_token is missing
     unless (user.present? && user.orcid_token.present?)

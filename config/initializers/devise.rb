@@ -216,7 +216,7 @@ Devise.setup do |config|
   config.omniauth :orcid, ENV['ORCID_CLIENT_ID'],
                           ENV['ORCID_CLIENT_SECRET'],
                           member: ENV['ORCID_MEMBER'],
-                          sandbox: (ENV['ORCID_URL'] == "https://sandbox.orcid.org"),
+                          sandbox: Rails.env.test?,
                           provider_ignores_state: true
 
   config.omniauth :github, ENV['GITHUB_CLIENT_ID'],
