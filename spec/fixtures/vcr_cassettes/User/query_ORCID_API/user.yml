@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Mozilla/5.0 (compatible; Maremma/4.2.6; +https://github.com/datacite/maremma)
+      - Mozilla/5.0 (compatible; Maremma/4.3; mailto:info@datacite.org)
       Accept:
       - application/json;charset=UTF-8
       Authorization:
@@ -21,7 +21,7 @@ http_interactions:
       Server:
       - nginx/1.10.0
       Date:
-      - Sat, 31 Aug 2019 20:30:31 GMT
+      - Sat, 14 Sep 2019 19:35:09 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Connection:
@@ -45,5 +45,5 @@ http_interactions:
       string: '{"orcid-identifier":{"uri":"http://sandbox.orcid.org/0000-0002-8568-5429","path":"0000-0002-8568-5429","host":"sandbox.orcid.org"},"preferences":{"locale":"EN"},"history":{"creation-method":"WEBSITE","completion-date":null,"submission-date":{"value":1360744990232},"last-modified-date":{"value":1450385269629},"claimed":true,"source":null,"deactivation-date":null,"verified-email":false,"verified-primary-email":false},"person":{"last-modified-date":{"value":1375351356230},"name":{"created-date":{"value":1460669275598},"last-modified-date":{"value":1460669275598},"given-names":{"value":"Martin"},"family-name":{"value":"Fenner"},"credit-name":null,"source":null,"visibility":"PUBLIC","path":"0000-0002-8568-5429"},"other-names":{"last-modified-date":{"value":1375351356230},"other-name":[{"created-date":{"value":1375351356230},"last-modified-date":{"value":1375351356230},"source":{"source-orcid":{"uri":"http://sandbox.orcid.org/0000-0002-8568-5429","path":"0000-0002-8568-5429","host":"sandbox.orcid.org"},"source-client-id":null,"source-name":{"value":"Martin
         Fenner"}},"content":"Martin H Fenner","visibility":"PUBLIC","path":"/0000-0002-8568-5429/other-names/3015","put-code":3015,"display-index":0}],"path":"/0000-0002-8568-5429/other-names"},"biography":{"created-date":{"value":1460669275600},"last-modified-date":{"value":1460669275600},"content":"","visibility":"PUBLIC","path":"/0000-0002-8568-5429/biography"},"researcher-urls":{"last-modified-date":null,"researcher-url":[],"path":"/0000-0002-8568-5429/researcher-urls"},"emails":{"last-modified-date":null,"email":[],"path":"/0000-0002-8568-5429/email"},"addresses":{"last-modified-date":null,"address":[],"path":"/0000-0002-8568-5429/address"},"keywords":{"last-modified-date":null,"keyword":[],"path":"/0000-0002-8568-5429/keywords"},"external-identifiers":{"last-modified-date":null,"external-identifier":[],"path":"/0000-0002-8568-5429/external-identifiers"},"path":"/0000-0002-8568-5429/person"},"activities-summary":{"last-modified-date":null,"educations":{"last-modified-date":null,"education-summary":[],"path":"/0000-0002-8568-5429/educations"},"employments":{"last-modified-date":null,"employment-summary":[],"path":"/0000-0002-8568-5429/employments"},"fundings":{"last-modified-date":null,"group":[],"path":"/0000-0002-8568-5429/fundings"},"peer-reviews":{"last-modified-date":null,"group":[],"path":"/0000-0002-8568-5429/peer-reviews"},"works":{"last-modified-date":null,"group":[],"path":"/0000-0002-8568-5429/works"},"path":"/0000-0002-8568-5429/activities"},"path":"/0000-0002-8568-5429"}'
     http_version: 
-  recorded_at: Sat, 31 Aug 2019 20:30:31 GMT
+  recorded_at: Sat, 14 Sep 2019 19:35:09 GMT
 recorded_with: VCR 3.0.3

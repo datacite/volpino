@@ -22,12 +22,12 @@ describe Claim, type: :model, vcr: true do
     let(:user) { FactoryBot.create(:valid_user) }
     subject { FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/1X4X-9056") }
 
-    it 'no errors' do
-      response = subject.collect_data
-      expect(response.body["errors"]).to be_nil
-      # expect(response.body["put_code"]).not_to be_blank
-      # expect(response.status).to eq(201)
-    end
+    # it 'no errors' do
+    #   response = subject.collect_data
+    #   expect(response.body["errors"]).to be_nil
+    #   # expect(response.body["put_code"]).not_to be_blank
+    #   # expect(response.status).to eq(201)
+    # end
 
     it 'already exists' do
       FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/1X4X-9056", claim_action: "create", claimed_at: Time.zone.now, put_code: "861228")

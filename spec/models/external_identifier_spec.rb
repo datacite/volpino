@@ -5,13 +5,13 @@ describe ExternalIdentifier, type: :model, vcr: true do
   let(:value) { "mfenner" }
   let(:url) { "https://github.com/#{value}" }
   let(:user) { FactoryBot.create(:valid_user) }
-  let(:put_code) { "5512" }
+  let(:put_code) { "5534" }
 
-  subject { ExternalIdentifier.new(type: type, value: value, url: url, orcid: user.uid, access_token: user.authentication_token, put_code: put_code) }
+  subject { ExternalIdentifier.new(type: type, value: value, url: url, orcid: user.uid, orcid_token: user.orcid_token, put_code: put_code) }
 
   describe 'push to ORCID', :order => :defined do
     describe 'post' do
-      subject { ExternalIdentifier.new(type: type, value: value, url: url, orcid: user.uid, access_token: user.authentication_token) }
+      subject { ExternalIdentifier.new(type: type, value: value, url: url, orcid: user.uid, orcid_token: user.orcid_token) }
 
       it 'should create external_identifier' do
         response = subject.create_external_identifier(sandbox: true)
@@ -19,9 +19,9 @@ describe ExternalIdentifier, type: :model, vcr: true do
       end
 
       it 'access_token missing' do
-        subject = ExternalIdentifier.new(type: type, value: value, url: url, orcid: user.uid, access_token: nil)
+        subject = ExternalIdentifier.new(type: type, value: value, url: url, orcid: user.uid, orcid_token: nil)
         response = subject.create_external_identifier(sandbox: true)
-        expect(response.body).to eq("errors"=>[{"title"=>"Access token missing"}])
+        expect(response.body).to eq("errors"=>[{"title"=>"ORCID access token missing"}])
       end
     end
 
@@ -34,9 +34,9 @@ describe ExternalIdentifier, type: :model, vcr: true do
       end
 
       it 'access_token missing' do
-        subject = ExternalIdentifier.new(type: type, value: value, url: url, orcid: user.uid, access_token: nil)
+        subject = ExternalIdentifier.new(type: type, value: value, url: url, orcid: user.uid, orcid_token: nil)
         response = subject.delete_external_identifier(sandbox: true)
-        expect(response.body).to eq("errors"=>[{"title"=>"Access token missing"}])
+        expect(response.body).to eq("errors"=>[{"title"=>"ORCID access token missing"}])
       end
     end
   end

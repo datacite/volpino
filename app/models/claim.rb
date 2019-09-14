@@ -107,9 +107,11 @@ class Claim < ActiveRecord::Base
     elsif result.body["errors"]
       write_attribute(:error_messages, result.body["errors"])
 
-      # send notification to Bugsnag
-      if ENV['BUGSNAG_KEY']
-        Bugsnag.notify(RuntimeError.new(result.body["errors"].first["title"]))
+      # send notification to Sentry
+      if ENV["SENTRY_DSN"]
+        Raven.capture_exception(RuntimeError.new(result.body["errors"].first["title"]))
+      else
+        logger.error result.body["errors"].first["title"]
       end
 
       self.error
@@ -177,7 +179,7 @@ class Claim < ActiveRecord::Base
   end
 
   def work
-    Work.new(doi: doi, orcid: orcid, access_token: orcid_token, put_code: put_code)
+    Work.new(doi: doi, orcid: orcid, orcid_token: orcid_token, put_code: put_code)
   end
 
   def notification

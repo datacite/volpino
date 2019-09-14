@@ -87,7 +87,7 @@ class User < ActiveRecord::Base
   end
 
   def external_identifier
-    ExternalIdentifier.new(type: "GitHub", value: github, url: github_as_url(github), orcid: orcid, access_token: authentication_token, put_code: github_put_code)
+    ExternalIdentifier.new(type: "GitHub", value: github, url: github_as_url(github), orcid: orcid, orcid_token: orcid_token, put_code: github_put_code)
   end
 
   def access_token
@@ -223,14 +223,18 @@ class User < ActiveRecord::Base
   end
 
   def process_data(options={})
+    logger = Logger.new(STDOUT)
+
     result = push_github_identifier(options)
     logger.info result.inspect
 
     if result.body["skip"]
     elsif result.body["errors"]
-      # send notification to Bugsnag
-      if ENV['BUGSNAG_KEY']
-        Bugsnag.notify(RuntimeError.new(result.body["errors"].first["title"]))
+      # send notification to Sentry
+      if ENV["SENTRY_DSN"]
+        Raven.capture_exception(RuntimeError.new(result.body["errors"].first["title"]))
+      else
+        logger.error result.body["errors"].first["title"]
       end
     else
       write_attribute(:github_put_code, result.body["put_code"])

@@ -36,34 +36,8 @@ class UserSearch < Base
     nil
   end
 
-  def doi_provider
-    cached_provider_response(provider_id) if provider_id.present?
-  end
-
-  def provider_name
-    doi_provider.name if doi_provider.present?
-  end
-
   def client_id
     nil
-  end
-
-  def client
-    cached_client_response(client_id) if client_id.present?
-  end
-
-  def client_name
-    client.name if client.present?
-  end
-
-  def sandbox_id
-    nil
-  end
-
-  def sandbox
-    return nil unless sandbox_id.present?
-    s = Client.where(id: sandbox_id)
-    s[:data] if s.present?
   end
 
   def role_id
@@ -80,7 +54,7 @@ class UserSearch < Base
 
   def self.get_query_url(options={})
     if options[:id].present?
-      "#{ENV["ORCID_API_URL"]}/v#{ORCID_VERSION}/#{options[:id]}"
+      url + options[:id]
     else
       query = options.fetch(:query, nil).present? ? "#{options.fetch(:query)}" : nil
       rows = options.dig(:page, :size) || 25
@@ -88,7 +62,7 @@ class UserSearch < Base
       params = { q: query,
                  rows: rows,
                  start:  offset }.compact
-      url + "?" + URI.encode_www_form(params)
+      url + "search/?" + URI.encode_www_form(params)
     end
   end
 
@@ -114,6 +88,10 @@ class UserSearch < Base
   end
 
   def self.url
-    "#{ENV["ORCID_API_URL"]}/v#{ORCID_VERSION}/search/"
+    if Rails.env.test?
+      "https://api.sandbox.orcid.org/v#{ORCID_VERSION}/"
+    else
+      "https://api.orcid.org/v#{ORCID_VERSION}/"
+    end
   end
 end

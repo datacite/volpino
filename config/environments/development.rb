@@ -54,7 +54,7 @@ Rails.application.configure do
     config.enabled = true
     config.logger = ActiveSupport::Logger.new(STDOUT)
     config.url_blacklist_pattern = /sqs\.eu-west-1\.amazonaws\.com/
-    config.filter_parameters = %w(client_id access_token)
+    config.filter_parameters = %w(client_id access_token orcid_token)
   end
 
   # Print deprecation notices to the Rails logger.

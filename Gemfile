@@ -9,7 +9,7 @@ gem "config"
 gem 'tzinfo-data'
 gem 'rake', '~> 12.0'
 gem 'sentry-raven', '~> 2.9'
-gem 'orcid_client', '~> 0.5'
+gem 'orcid_client', '~> 0.5', '>= 0.6.2'
 gem 'addressable', "~> 2.3"
 gem 'postrank-uri', '~> 1.0', '>= 1.0.23'
 gem 'nilify_blanks', '~> 1.3'
@@ -78,8 +78,8 @@ group :development, :test do
   gem 'byebug'
   gem 'spring'
   gem 'teaspoon-jasmine', '~> 2.2.0'
-  gem "brakeman", "~> 2.6.0", :require => false
-  gem 'rubocop', '~> 0.68.1', require: false
+  gem 'brakeman', '~> 4.6', '>= 4.6.1', :require => false
+  gem 'rubocop', '~> 0.68', require: false
   gem 'rubocop-performance', '~> 1.2', require: false
   gem 'listen', '~> 3.1', '>= 3.1.5'
 end
@@ -92,7 +92,7 @@ group :test do
   gem "launchy", "~> 2.4.2"
   gem "email_spec", "~> 1.6.0"
   gem 'rack-test', '~> 1.1', :require => "rack/test"
-  gem 'simplecov'
+  gem 'simplecov', '~> 0.1'
   gem 'codeclimate-test-reporter', '~> 1.0', '>= 1.0.8'
   gem "shoulda-matchers", "~> 2.7.0", :require => false
   gem 'webmock', '~> 3.7'

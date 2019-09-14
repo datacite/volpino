@@ -22,12 +22,12 @@ FactoryBot.define do
 
     factory :valid_user do
       uid { '0000-0001-6528-2027' }
-      authentication_token { ENV['ACCESS_TOKEN'] }
+      orcid_token { ENV['ACCESS_TOKEN'] }
     end
 
     factory :invalid_user do
       uid { '0000-0001-6528-2027' }
-      authentication_token { nil }
+      orcid_token { nil }
     end
 
     initialize_with { User.where(uid: uid).first_or_initialize }

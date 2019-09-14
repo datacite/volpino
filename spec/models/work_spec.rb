@@ -3,13 +3,13 @@ require "rails_helper"
 describe Work, type: :model, vcr: true do
   let(:doi) { "10.5438/mk65-3m12"}
   let(:user) { FactoryBot.create(:valid_user) }
-  let(:put_code) { "1058133" }
+  let(:put_code) { "1062217" }
 
-  subject { Work.new(doi: doi, orcid: user.uid, access_token: user.authentication_token, put_code: put_code) }
+  subject { Work.new(doi: doi, orcid: user.uid, orcid_token: user.orcid_token, put_code: put_code) }
 
   describe 'push to ORCID', :order => :defined do
     describe 'post' do
-      subject { Work.new(doi: doi, orcid: user.uid, access_token: user.authentication_token) }
+      subject { Work.new(doi: doi, orcid: user.uid, orcid_token: user.orcid_token) }
     
       it 'should create work' do
         response = subject.create_work(sandbox: true)
@@ -21,7 +21,7 @@ describe Work, type: :model, vcr: true do
       it 'should get works' do
         response = subject.get_works(sandbox: true)
         works = response.body.fetch("data", {}).fetch("group", {})
-        expect(works.length).to eq(27)
+        expect(works.length).to eq(24)
         work = works.first
         expect(work["external-ids"]).to eq("external-id"=>[{"external-id-type"=>"doi", "external-id-value"=>"10.5256/f1000research.67475.r16884", "external-id-url"=>nil, "external-id-relationship"=>"SELF"}])
       end
