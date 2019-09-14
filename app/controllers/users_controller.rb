@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  # include base controller methods
+  include Authenticable
+
   before_action :load_user, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource except: [:index]
 
@@ -27,6 +30,12 @@ class UsersController < ApplicationController
     if @user == current_user
       # user updates his account
       @user.update_attributes(safe_params)
+
+      # refresh cookie if ORCID token was deleted
+      if safe_params[:orcid_token].blank? && safe_params[:orcid_expires_at].present?
+        cookies[:_datacite] = encode_cookie(@user.jwt) 
+        flash[:notice] = "ORCID token successfully deleted."
+      end
 
       # delete GitHub external identifier from ORCID if GitHub account is unlinked
       GithubJob.perform_later(@user) if @user.github_uid.blank? && @user.github_put_code.present?

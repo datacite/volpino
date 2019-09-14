@@ -3,6 +3,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     redirect_to root_path, :alert => exception.message
   end
 
+  # include base controller methods
+  include Authenticable
+
   def forward
     store_location_for(:user, request.referer)
   
@@ -154,25 +157,5 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     @post_message = "authorization:github:#{message}:#{content.to_json}".to_json
     render "users/sessions/netlify", layout: false, status: :ok
-  end
-
-  def encode_cookie(jwt)
-    expires_in = 30 * 24 * 3600
-    expires_at = Time.now.to_i + expires_in
-    value = '{"authenticated":{"authenticator":"authenticator:oauth2","access_token":"' + jwt + '","expires_in":' + expires_in.to_s + ',"expires_at":' + expires_at.to_s + '}}'
-    
-    domain = if Rails.env.production?
-               ".datacite.org"
-             elsif Rails.env.stage?
-               ".test.datacite.org"
-             else
-               nil
-             end
-    
-    # URI.encode optional parameter needed to encode colon
-    { value: URI.encode(value, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")),
-      expires: 30.days.from_now.utc,
-      secure: !Rails.env.development? && !Rails.env.test?,
-      domain: domain }
   end
 end
