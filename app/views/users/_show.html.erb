@@ -18,12 +18,11 @@
               </div>
             </div>
           </div>
-          <div class="panel-footer">
+          <div class="panel-footer clearfix">
             <div class="form-group pull-right">
               <%= link_to 'Cancel', user_path(@user), { :remote => true, :class => 'btn btn-sm' } %>
               <%= f.submit "Save ", class: "btn btn-sm btn-fill" %>
             </div>
-            <div class="clearfix"/>
           </div>
         <% end %>
       <% else %>
@@ -96,13 +95,12 @@
             <% end %>
           </dl>
         </div>
-          <div class="panel-footer">
-            <div class="form-group pull-right">
-              <%= link_to 'Update', edit_user_path(@user), :remote => true, :class => 'btn btn-sm', id: "#{@user.id}-edit" %>
-            </div>
-            <div class="clearfix"/>
+        <div class="panel-footer clearfix">
+          <div class="form-group pull-right">
+            <%= link_to 'Update', edit_user_path(@user), :remote => true, :class => 'btn btn-sm', id: "#{@user.id}-edit" %>
           </div>
+        </div>
       <% end %>
     </div>
-  </div>
+  </div> 
 </div>
