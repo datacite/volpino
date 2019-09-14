@@ -84,7 +84,7 @@ describe User, type: :model, vcr: true do
 
     it 'queue_claims_jobs' do
       subject.queue_claim_jobs
-      expect(subject.claims.count).to eq(1)
+      expect(subject.claims.count).to eq(25)
       updated_claim = subject.claims.first
       expect(updated_claim.state).to eq("notified")
     end
