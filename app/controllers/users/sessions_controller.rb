@@ -37,7 +37,7 @@ class Users::SessionsController < Devise::SessionsController
              elsif Rails.env.stage?
                ".test.datacite.org"
              else
-               ".lvh.me"
+               nil
              end
     
     # URI.encode optional parameter needed to encode colon
