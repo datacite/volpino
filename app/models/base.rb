@@ -19,7 +19,6 @@ class Base
 
   def self.get_data(options={})
     query_url = get_query_url(options)
-    puts query_url
     Maremma.get(query_url, options)
   end
 

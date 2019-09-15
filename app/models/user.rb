@@ -180,7 +180,7 @@ class User < ActiveRecord::Base
   end
 
   def get_data(options={})
-    options[:sandbox] = Rails.env.test?
+    options[:sandbox] = (ENV['ORCID_URL'] == "https://sandbox.orcid.org")
 
     response = get_works(options)
     return nil if response.body["errors"]
@@ -253,7 +253,7 @@ class User < ActiveRecord::Base
     # validate data
     return OpenStruct.new(body: { "errors" => external_identifier.validation_errors.map { |error| { "title" => error } }}) if external_identifier.validation_errors.present?
 
-    options[:sandbox] = Rails.env.test?
+    options[:sandbox] = (ENV['ORCID_URL'] == "https://sandbox.orcid.org")
 
     # create or delete entry in ORCID record
     if github_to_be_created?

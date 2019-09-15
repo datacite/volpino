@@ -88,7 +88,7 @@ class UserSearch < Base
   end
 
   def self.url
-    if Rails.env.test?
+    if ENV['ORCID_URL'] == "https://sandbox.orcid.org"
       "https://api.sandbox.orcid.org/v#{ORCID_VERSION}/"
     else
       "https://api.orcid.org/v#{ORCID_VERSION}/"

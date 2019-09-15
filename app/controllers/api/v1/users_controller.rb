@@ -134,7 +134,7 @@ class Api::V1::UsersController < Api::BaseController
       @include = params[:include].split(",").map { |i| i.downcase.underscore }.join(",")
       @include = [@include]
     else
-      @include = ['role', 'client', 'provider', 'sandbox']
+      @include = ['role']
     end
   end
 
@@ -142,7 +142,7 @@ class Api::V1::UsersController < Api::BaseController
 
   def safe_params
     ActiveModelSerializers::Deserialization.jsonapi_parse!(
-      params, only: [:uid, :name, :given_names, :family_name, :email, :beta_tester, :role, :provider, :sandbox, :client]
+      params, only: [:uid, :name, :given_names, :family_name, :email, :beta_tester, :role, :provider, :client]
     )
   end
 end

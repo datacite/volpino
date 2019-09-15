@@ -1,5 +1,7 @@
 # set ENV variables for testing
 ENV["RAILS_ENV"] = "test"
+ENV['ORCID_URL'] = "https://sandbox.orcid.org"
+ENV['ORCID_API_URL'] = "https://api.sandbox.orcid.org"
 
 # set up Code Climate
 require 'simplecov'

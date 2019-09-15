@@ -31,7 +31,7 @@ namespace :claim do
     response = Claim.last.notification.get_notification_access_token(
       client_id: ENV['ORCID_CLIENT_ID'],
       client_secret: ENV['ORCID_CLIENT_SECRET'],
-      sandbox: Rails.env.test?)
+      sandbox: (ENV['ORCID_URL'] == "https://sandbox.orcid.org"))
     notification_access_token = response.body.fetch("data", {}).fetch("access_token", nil)
     puts "The new notification_access_token is #{notification_access_token}"
   end
