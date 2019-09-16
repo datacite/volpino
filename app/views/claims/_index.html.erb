@@ -1,6 +1,6 @@
 <div class="row">
   <div class='col-md-9 col-md-offset-3'>
-    <div class="search-wide">
+    <div id="search" class="search-wide">
       <%= form_tag(claims_path, :method => "get", :class => "form-horizontal", :role => "form") do %>
         <div class="input-group">
           <%= search_field_tag :query, params[:query], :placeholder => "Search claim", :class => "form-control" %>
