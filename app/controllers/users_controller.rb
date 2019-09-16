@@ -75,21 +75,20 @@ class UsersController < ApplicationController
     collection = User
 
     if params['role-id']
-      collection = collection.where(:role_id => params['role-id'])
+      collection = collection.where(role_id: params['role-id'])
       @role = User.where(role_id: params['role-id']).group(:role_id).count.first
     end
 
     if params['beta-tester']
-      collection = collection.where(:beta_tester => true)
-      @group = User.where(:beta_tester => true)
+      collection = collection.where(beta_tester: true)
+      @group = User.where(beta_tester: true)
     end
 
     collection = collection.query(params[:query]) if params[:query]
-    collection = collection.ordered
 
-    @roles = User.where.not(role_id: nil).group(:role_id).count
-    @groups = User.where(:beta_tester => true)
-    @users = collection.page(params[:page])
+    @roles = collection.where.not(role_id: nil).group(:role_id).count
+    @groups = collection.where(:beta_tester => true)
+    @users = collection.ordered.page(params[:page])
   end
 
   private
