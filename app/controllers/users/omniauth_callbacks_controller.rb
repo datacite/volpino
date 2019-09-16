@@ -81,6 +81,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       flash[:notice] = "Account successfully linked with Globus account."
       redirect_to user_path("me") && return
     else
+      # extract ORCID ID from preferred_username
       @user = User.from_omniauth(auth, uid: auth.extra.id_info.preferred_username[0..18])
     end
 

@@ -2,12 +2,10 @@
   <div class='col-md-9'>
     <div class="panel panel-default" id="content-account">
       <% if can?(:update, @user) && (controller.action_name == "edit" || (controller.action_name == "update" && !@user.errors.empty?)) %>
+        <div class="panel-heading">          
+          <h3 class="panel-title">Settings</h3>
+        </div>
         <%= simple_form_for @user, url: user_path(@user), html: { role: "form", remote: true } do |f| %>
-          <div class="panel-body">
-            <dl class="dl-horizontal">
-              <dd><h3 class="work">Settings</h3></dd>
-            </dl>
-          </div>
           <div class="panel-body">
             <div class="row">
               <div class='col-md-10 col-md-offset-2'>
@@ -26,10 +24,8 @@
           </div>
         <% end %>
       <% else %>
-        <div class="panel-body">          
-          <dl class="dl-horizontal">
-            <dd><h3 class="work">Settings</h3></dd>
-          </dl>
+        <div class="panel-heading">          
+          <h3 class="panel-title">Settings</h3>
         </div>
         <div class="panel-body">
           <dl class="dl-horizontal">

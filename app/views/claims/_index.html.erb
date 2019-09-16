@@ -1,5 +1,5 @@
 <div class="row">
-  <div class='col-md-9'>
+  <div class='col-md-9 col-md-offset-3'>
     <div class="search-wide">
       <%= form_tag(claims_path, :method => "get", :class => "form-horizontal", :role => "form") do %>
         <div class="input-group">
@@ -14,6 +14,108 @@
 </div>
 
 <div class="row">
+  <div class='col-md-3'>
+    <div class="panel facets">
+      <% if current_user.is_admin_or_staff? %>
+        <div class="panel-body">
+          <h4>Users</h4>
+          <ul>
+            <% if params[:user_id] == current_user.uid %>
+              <li>
+                <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], source: params[:source], state: params[:state]) %>
+                <div class="facet-title"><%= current_user.uid %></div>
+                <span class="number pull-right"><%= number_with_delimiter(@my_claim_count) %></span>
+                <div class="clearfix"/>
+              </li>
+            <% else %>
+              <li class="active">
+                <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], source: params[:source], state: params[:state], user_id: current_user.uid) %>
+                <div class="facet-title"><%= current_user.uid %></div>
+                <span class="number pull-right"><%= number_with_delimiter(@my_claim_count) %></span>
+                <div class="clearfix"/>
+              </li>
+            <% end %>
+            <% if params[:user_id].present? && params[:user_id] != current_user.uid %>
+              <li>
+                <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], source: params[:source], state: params[:state]) %>
+                <div class="facet-title"><%= params[:user_id] %></div>
+                <span class="number pull-right"><%= number_with_delimiter(@claim_count) %></span>
+                <div class="clearfix"/>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="panel-body">
+        <h4>Sources</h4>
+        <ul>
+          <% if @source %>
+            <li class="active">
+              <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], user_id: params[:user_id], state: params[:state]) %>
+              <div class="facet-title"><%= sources[@source.first] %></div>
+              <span class="number pull-right"><%= number_with_delimiter(@source.last) %></span>
+              <div class="clearfix"/>
+            </li>
+          <% else %>
+            <% @sources.each do |source| %>
+              <li>
+                <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], source: source.first, user_id: params[:user_id], state: params[:state]) %>
+                <div class="facet-title"><%= sources[source.first] %></div>
+                <span class="number pull-right"><%= number_with_delimiter(source.last) %></span>
+                <div class="clearfix"/>
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+      <div class="panel-body">
+        <h4>Actions</h4>
+        <ul>
+          <% if @claim_action %>
+            <li class="active">
+              <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], state: params[:state]) %>
+              <div class="facet-title"><%= @claim_action.first.humanize %></div>
+              <span class="number pull-right"><%= number_with_delimiter(@claim_action.last) %></span>
+              <div class="clearfix"/>
+            </li>
+          <% else %>
+            <% @claim_actions.each do |claim_action| %>
+              <li>
+                <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], claim_action: claim_action.first, state: params[:state]) %>
+                <div class="facet-title"><%= claim_action.first.humanize %></div>
+                <span class="number pull-right"><%= number_with_delimiter(claim_action.last) %></span>
+                <div class="clearfix"/>
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+      <div class="panel-body">
+        <h4>Status</h4>
+        <ul>
+          <% if @state %>
+            <li class="active">
+              <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], source: params[:source], user_id: params[:user_id], claim_action: params[:claim_action]) %>
+              <div class="facet-title"><%= @state.first.humanize %></div>
+              <span class="number pull-right"><%= number_with_delimiter(@state.last) %></span>
+              <div class="clearfix"/>
+            </li>
+          <% else %>
+            <% @states.each do |state| %>
+              <li>
+                <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], source: params[:source], user_id: params[:user_id], claim_action: params[:claim_action], state: state.first) %>
+                <div class="facet-title"><%= state.first.humanize %></div>
+                <span class="number pull-right"><%= number_with_delimiter(state.last) %></span>
+                <div class="clearfix"/>
+              </li>
+            <% end %>
+          <% end %>
+
+        </ul>
+      </div>
+    </div>
+  </div>
   <div class='col-md-9 panel-list' id="content">
     <% if @claims.size > 0 %>
       <% @claims.each do |claim| %>
@@ -52,116 +154,12 @@
         <%= paginate @claims %>
       </div>
     <% else %>
-      <div class="alert alert-simple-info">
-          <h5>There are currently no claims
-            <% unless params[:query].blank? %>
-                with <strong><%= params[:query] %></strong> in the DOI
-            <% end %>
-          </h5>
+      <div class="alert alert-warning">
+        There are currently no claims
+          <% unless params[:query].blank? %>
+            with <strong><%= params[:query] %></strong> in the DOI
+          <% end %>
       </div>
     <% end %>
-  </div>
-  <% if @claims.size > 0 %>
-    <div class='col-md-3'>
-      <div class="panel facets">
-      <% if current_user.is_admin_or_staff? %>
-        <div class="panel-body">
-          <h4>Users</h4>
-          <ul>
-            <% if params[:user_id] == current_user.uid %>
-              <li>
-                <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], source: params[:source], state: params[:state]) %>
-                <div class="facet-title"><%= current_user.uid %></div>
-                <span class="number pull-right"><%= number_with_delimiter(@my_claim_count) %></span>
-                <div class="clearfix"/>
-              </li>
-            <% else %>
-              <li class="active">
-                <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], source: params[:source], state: params[:state], user_id: current_user.uid) %>
-                <div class="facet-title"><%= current_user.uid %></div>
-                <span class="number pull-right"><%= number_with_delimiter(@my_claim_count) %></span>
-                <div class="clearfix"/>
-              </li>
-            <% end %>
-            <% if params[:user_id].present? && params[:user_id] != current_user.uid %>
-              <li>
-                <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], source: params[:source], state: params[:state]) %>
-                <div class="facet-title"><%= params[:user_id] %></div>
-                <span class="number pull-right"><%= number_with_delimiter(@claim_count) %></span>
-                <div class="clearfix"/>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-        <div class="panel-body">
-          <h4>Sources</h4>
-          <ul>
-            <% if @source %>
-              <li class="active">
-                <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], user_id: params[:user_id], state: params[:state]) %>
-                <div class="facet-title"><%= sources[@source.first] %></div>
-                <span class="number pull-right"><%= number_with_delimiter(@source.last) %></span>
-                <div class="clearfix"/>
-              </li>
-            <% else %>
-              <% @sources.each do |source| %>
-                <li>
-                  <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], source: source.first, user_id: params[:user_id], state: params[:state]) %>
-                  <div class="facet-title"><%= sources[source.first] %></div>
-                  <span class="number pull-right"><%= number_with_delimiter(source.last) %></span>
-                  <div class="clearfix"/>
-                </li>
-              <% end %>
-            <% end %>
-          </ul>
-        </div>
-        <div class="panel-body">
-          <h4>Actions</h4>
-          <ul>
-            <% if @claim_action %>
-              <li class="active">
-                <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], state: params[:state]) %>
-                <div class="facet-title"><%= @claim_action.first.humanize %></div>
-                <span class="number pull-right"><%= number_with_delimiter(@claim_action.last) %></span>
-                <div class="clearfix"/>
-              </li>
-            <% else %>
-              <% @claim_actions.each do |claim_action| %>
-                <li>
-                  <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], claim_action: claim_action.first, state: params[:state]) %>
-                  <div class="facet-title"><%= claim_action.first.humanize %></div>
-                  <span class="number pull-right"><%= number_with_delimiter(claim_action.last) %></span>
-                  <div class="clearfix"/>
-                </li>
-              <% end %>
-            <% end %>
-          </ul>
-        </div>
-        <div class="panel-body">
-          <h4>Status</h4>
-          <ul>
-            <% if @state %>
-              <li class="active">
-                <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], source: params[:source], user_id: params[:user_id], claim_action: params[:claim_action]) %>
-                <div class="facet-title"><%= @state.first.humanize %></div>
-                <span class="number pull-right"><%= number_with_delimiter(@state.last) %></span>
-                <div class="clearfix"/>
-              </li>
-            <% else %>
-              <% @states.each do |state| %>
-                <li>
-                  <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], source: params[:source], user_id: params[:user_id], claim_action: params[:claim_action], state: state.first) %>
-                  <div class="facet-title"><%= state.first.humanize %></div>
-                  <span class="number pull-right"><%= number_with_delimiter(state.last) %></span>
-                  <div class="clearfix"/>
-                </li>
-              <% end %>
-            <% end %>
-
-          </ul>
-        </div>
-      </div>
-  <% end %>
   </div>
 </div>

@@ -1,6 +1,6 @@
 <div class="row">
-  <div class='col-md-9'>
-    <div class="search-wide">
+  <div class='col-md-9 col-md-offset-3'>
+    <div id="search" class="search-wide">
       <%= form_tag(users_path, :method => "get", :class => "form-horizontal", :role => "form") do %>
         <div class="input-group">
           <%= search_field_tag :query, params[:query], :placeholder => "Search user", :class => "form-control" %>
@@ -14,6 +14,56 @@
 </div>
 
 <div class="row">
+  <div class='col-md-3'>
+    <div class="panel facets">
+      <div class="panel-body">
+        <h4>Roles</h4>
+        <ul>
+          <% if @role %>
+            <li class="active">
+              <%= link_to icon('check-square-o').html_safe, users_path('beta-tester' => params['beta-tester']) %>
+              <div class="facet-title"><%= @role.first.titleize %></div>
+              <span class="number pull-right"><%= number_with_delimiter(@role.last) %></span>
+              <div class="clearfix"/>
+            </li>
+          <% else %>
+            <% @roles.each do |role| %>
+              <li>
+                <%= link_to icon('square-o').html_safe, users_path('role-id' => role.first, 'beta-tester' => params['beta-tester']) %>
+                <div class="facet-title"><%= role.first.titleize %></div>
+                <span class="number pull-right"><%= number_with_delimiter(role.last) %></span>
+                <div class="clearfix"/>
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <% if @groups.count > 0 %>
+      <div class="panel facets">
+        <div class="panel-body">
+          <h4>Groups</h4>
+          <ul>
+            <% if @group %>
+              <li class="active">
+                <%= link_to icon('check-square-o').html_safe, users_path('role-id' => params['role-id']) %>
+                <div class="facet-title">Beta Testers</div>
+                <span class="number pull-right"><%= number_with_delimiter(@group.count) %></span>
+                <div class="clearfix"/>
+              </li>
+            <% else %>
+              <li class="active">
+                <%= link_to icon('square-o').html_safe, users_path('role-id' => params['role-id'], 'beta-tester' => true) %>
+                <div class="facet-title">Beta Testers</div>
+                <span class="number pull-right"><%= number_with_delimiter(@groups.count) %></span>
+                <div class="clearfix"/>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+  </div>
   <div class='col-md-9'>
     <% if @users.size > 0 %>
       <div class="panel-list" id="user">
@@ -110,66 +160,14 @@
         <%= paginate @users %>
       </div>
     <% else %>
-      <div class="alert alert-simple-info">
-        <h5>
-          There are currently no users
-          <% unless params['role-id'].blank? %>
-              with role "<%= params['role-id'].titleize %>"
-          <% end %>
-          <% unless params[:query].blank? %>
-              with <strong><%= params[:query] %></strong> in the name, email or API key
-          <% end %>
-        </h5>
-      </div>
-    <% end %>
-  </div>
-  <div class='col-md-3'>
-    <div class="panel facets">
-      <div class="panel-body">
-        <h4>Roles</h4>
-        <ul>
-          <% if @role %>
-            <li class="active">
-              <%= link_to icon('check-square-o').html_safe, users_path('beta-tester' => params['beta-tester']) %>
-              <div class="facet-title"><%= @role.first.titleize %></div>
-              <span class="number pull-right"><%= number_with_delimiter(@role.last) %></span>
-              <div class="clearfix"/>
-            </li>
-          <% else %>
-            <% @roles.each do |role| %>
-              <li>
-                <%= link_to icon('square-o').html_safe, users_path('role-id' => role.first, 'beta-tester' => params['beta-tester']) %>
-                <div class="facet-title"><%= role.first.titleize %></div>
-                <span class="number pull-right"><%= number_with_delimiter(role.last) %></span>
-                <div class="clearfix"/>
-              </li>
-            <% end %>
-          <% end %>
-        </ul>
-      </div>
-    </div>
-    <% if @groups.count > 0 %>
-      <div class="panel facets">
-        <div class="panel-body">
-          <h4>Groups</h4>
-          <ul>
-            <% if @group %>
-              <li class="active">
-                <%= link_to icon('check-square-o').html_safe, users_path('role-id' => params['role-id']) %>
-                <div class="facet-title">Beta Testers</div>
-                <span class="number pull-right"><%= number_with_delimiter(@group.count) %></span>
-                <div class="clearfix"/>
-              </li>
-            <% else %>
-              <li class="active">
-                <%= link_to icon('square-o').html_safe, users_path('role-id' => params['role-id'], 'beta-tester' => true) %>
-                <div class="facet-title">Beta Testers</div>
-                <span class="number pull-right"><%= number_with_delimiter(@groups.count) %></span>
-                <div class="clearfix"/>
-              </li>
-            <% end %>
-          </ul>
-        </div>
+      <div class="alert alert-warning">
+        There are currently no users
+        <% unless params['role-id'].blank? %>
+            with role "<%= params['role-id'].titleize %>"
+        <% end %>
+        <% unless params[:query].blank? %>
+            with <strong><%= params[:query] %></strong> in the name, email or API key
+        <% end %>
       </div>
     <% end %>
   </div>
