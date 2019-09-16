@@ -44,7 +44,6 @@ module Authenticable
       
       # URI.encode optional parameter needed to encode colon
       { value: value, #URI.encode(value, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")),
-        expires: 30.days.from_now.utc,
         secure: !Rails.env.development? && !Rails.env.test?,
         domain: domain }
     end
