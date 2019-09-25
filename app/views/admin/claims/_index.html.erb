@@ -1,7 +1,7 @@
 <div class="row">
   <div class='col-md-9 col-md-offset-3'>
     <div id="search" class="search-wide">
-      <%= form_tag(claims_path, :method => "get", :class => "form-horizontal", :role => "form") do %>
+      <%= form_tag(admin_claims_path, :method => "get", :class => "form-horizontal", :role => "form") do %>
         <div class="input-group">
           <%= search_field_tag :query, params[:query], :placeholder => "Search claim", :class => "form-control" %>
           <div class="input-group-btn">
@@ -22,14 +22,14 @@
           <ul>
             <% if params[:user_id] == current_user.uid %>
               <li>
-                <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], source: params[:source], state: params[:state]) %>
+                <%= link_to icon('check-square-o').html_safe, admin_claims_path(query: params[:query], source: params[:source], state: params[:state]) %>
                 <div class="facet-title"><%= current_user.uid %></div>
                 <span class="number pull-right"><%= number_with_delimiter(@my_claim_count) %></span>
                 <div class="clearfix"/>
               </li>
             <% else %>
               <li class="active">
-                <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], source: params[:source], state: params[:state], user_id: current_user.uid) %>
+                <%= link_to icon('square-o').html_safe, admin_claims_path(query: params[:query], source: params[:source], state: params[:state], user_id: current_user.uid) %>
                 <div class="facet-title"><%= current_user.uid %></div>
                 <span class="number pull-right"><%= number_with_delimiter(@my_claim_count) %></span>
                 <div class="clearfix"/>
@@ -37,7 +37,7 @@
             <% end %>
             <% if params[:user_id].present? && params[:user_id] != current_user.uid %>
               <li>
-                <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], source: params[:source], state: params[:state]) %>
+                <%= link_to icon('check-square-o').html_safe, admin_claims_path(query: params[:query], source: params[:source], state: params[:state]) %>
                 <div class="facet-title"><%= params[:user_id] %></div>
                 <span class="number pull-right"><%= number_with_delimiter(@claim_count) %></span>
                 <div class="clearfix"/>
@@ -52,7 +52,7 @@
         <ul>
           <% if @source %>
             <li class="active">
-              <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], user_id: params[:user_id], state: params[:state]) %>
+              <%= link_to icon('check-square-o').html_safe, admin_claims_path(query: params[:query], user_id: params[:user_id], state: params[:state]) %>
               <div class="facet-title"><%= sources[@source.first] %></div>
               <span class="number pull-right"><%= number_with_delimiter(@source.last) %></span>
               <div class="clearfix"/>
@@ -60,7 +60,7 @@
           <% else %>
             <% @sources.each do |source| %>
               <li>
-                <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], source: source.first, user_id: params[:user_id], state: params[:state]) %>
+                <%= link_to icon('square-o').html_safe, admin_claims_path(query: params[:query], source: source.first, user_id: params[:user_id], state: params[:state]) %>
                 <div class="facet-title"><%= sources[source.first] %></div>
                 <span class="number pull-right"><%= number_with_delimiter(source.last) %></span>
                 <div class="clearfix"/>
@@ -74,7 +74,7 @@
         <ul>
           <% if @claim_action %>
             <li class="active">
-              <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], state: params[:state]) %>
+              <%= link_to icon('check-square-o').html_safe, admin_claims_path(query: params[:query], state: params[:state]) %>
               <div class="facet-title"><%= @claim_action.first.humanize %></div>
               <span class="number pull-right"><%= number_with_delimiter(@claim_action.last) %></span>
               <div class="clearfix"/>
@@ -82,7 +82,7 @@
           <% else %>
             <% @claim_actions.each do |claim_action| %>
               <li>
-                <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], claim_action: claim_action.first, state: params[:state]) %>
+                <%= link_to icon('square-o').html_safe, admin_claims_path(query: params[:query], claim_action: claim_action.first, state: params[:state]) %>
                 <div class="facet-title"><%= claim_action.first.humanize %></div>
                 <span class="number pull-right"><%= number_with_delimiter(claim_action.last) %></span>
                 <div class="clearfix"/>
@@ -96,7 +96,7 @@
         <ul>
           <% if @state %>
             <li class="active">
-              <%= link_to icon('check-square-o').html_safe, claims_path(query: params[:query], source: params[:source], user_id: params[:user_id], claim_action: params[:claim_action]) %>
+              <%= link_to icon('check-square-o').html_safe, admin_claims_path(query: params[:query], source: params[:source], user_id: params[:user_id], claim_action: params[:claim_action]) %>
               <div class="facet-title"><%= @state.first.humanize %></div>
               <span class="number pull-right"><%= number_with_delimiter(@state.last) %></span>
               <div class="clearfix"/>
@@ -104,7 +104,7 @@
           <% else %>
             <% @states.each do |state| %>
               <li>
-                <%= link_to icon('square-o').html_safe, claims_path(query: params[:query], source: params[:source], user_id: params[:user_id], claim_action: params[:claim_action], state: state.first) %>
+                <%= link_to icon('square-o').html_safe, admin_claims_path(query: params[:query], source: params[:source], user_id: params[:user_id], claim_action: params[:claim_action], state: state.first) %>
                 <div class="facet-title"><%= state.first.humanize %></div>
                 <span class="number pull-right"><%= number_with_delimiter(state.last) %></span>
                 <div class="clearfix"/>
@@ -124,7 +124,7 @@
             <h3 class="work"><%= link_to h(claim.doi), "#{ENV['SEARCH_URL']}/works/#{claim.doi}" %></h3>
             <% if claim.error_messages.present? || current_user.is_admin_or_staff? %>
               <% if claim.user %>
-                <%= link_to h(claim.user.credit_name), users_path(query: claim.orcid) %>
+                <%= link_to h(claim.user.credit_name), admin_users_path(query: claim.orcid) %>
               <% end %>
               <% if claim.error_messages.present? %>
                 <% if current_user.is_admin_or_staff? %>
@@ -139,7 +139,7 @@
             <div class="btn-toolbar pull-right">
               <div class="btn-group btn-group-sm">
                 <% if claim.failed? %>
-                  <%= link_to claim.state, claim_path(claim, :claim => { :resolve => true }, state: params[:state], source: params[:source]), :method => :put, :remote => true %> <%= l claim.updated_at, format: :medium %>
+                  <%= link_to claim.state, admin_claim_path(claim, :claim => { :resolve => true }, state: params[:state], source: params[:source]), :method => :put, :remote => true %> <%= l claim.updated_at, format: :medium %>
                 <% elsif claim.done? %>
                   <%= claim.claim_action + "d" %> <%= l claim.claimed_at, format: :medium %>
                 <% else %>

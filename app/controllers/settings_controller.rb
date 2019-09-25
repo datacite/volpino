@@ -1,10 +1,16 @@
 class SettingsController < ApplicationController
   before_action :load_user
-  load_and_authorize_resource
 
-  def index
-    @title = 'Settings'
-    render :index
+  def show
+    render :show
+  end
+
+  def edit
+    render :show
+  end
+
+  def update
+    render :show
   end
 
   protected

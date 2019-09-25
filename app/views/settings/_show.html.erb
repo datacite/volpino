@@ -5,7 +5,7 @@
         <div class="panel-heading">          
           <h3 class="panel-title">Settings</h3>
         </div>
-        <%= simple_form_for @user, url: user_path(@user), html: { role: "form", remote: true } do |f| %>
+        <%= simple_form_for @user, url: setting_path("me"), html: { role: "form", remote: true } do |f| %>
           <div class="panel-body">
             <div class="row">
               <div class='col-md-10 col-md-offset-2'>
@@ -18,7 +18,7 @@
           </div>
           <div class="panel-footer clearfix">
             <div class="form-group pull-right">
-              <%= link_to 'Cancel', user_path(@user), { :remote => true, :class => 'btn btn-sm' } %>
+              <%= link_to 'Cancel', setting_path("me"), { :remote => true, :class => 'btn btn-sm' } %>
               <%= f.submit "Save ", class: "btn btn-sm btn-fill" %>
             </div>
           </div>
@@ -93,7 +93,7 @@
         </div>
         <div class="panel-footer clearfix">
           <div class="form-group pull-right">
-            <%= link_to 'Update', edit_user_path(@user), :remote => true, :class => 'btn btn-sm', id: "#{@user.id}-edit" %>
+            <%= link_to 'Update', edit_setting_path("me"), :remote => true, :class => 'btn btn-sm', id: "#{@user.id}-edit" %>
           </div>
         </div>
       <% end %>

@@ -1,7 +1,7 @@
 <div class="row">
   <div class='col-md-9 col-md-offset-3'>
     <div id="search" class="search-wide">
-      <%= form_tag(users_path, :method => "get", :class => "form-horizontal", :role => "form") do %>
+      <%= form_tag(admin_users_path, :method => "get", :class => "form-horizontal", :role => "form") do %>
         <div class="input-group">
           <%= search_field_tag :query, params[:query], :placeholder => "Search user", :class => "form-control" %>
           <div class="input-group-btn">
@@ -22,7 +22,7 @@
           <ul>
             <% if @role %>
               <li class="active">
-                <%= link_to icon('check-square-o').html_safe, users_path('beta-tester' => params['beta-tester']) %>
+                <%= link_to icon('check-square-o').html_safe, admin_users_path('beta-tester' => params['beta-tester']) %>
                 <div class="facet-title"><%= @role.first.titleize %></div>
                 <span class="number pull-right"><%= number_with_delimiter(@role.last) %></span>
                 <div class="clearfix"/>
@@ -30,7 +30,7 @@
             <% else %>
               <% @roles.each do |role| %>
                 <li>
-                  <%= link_to icon('square-o').html_safe, users_path('role-id' => role.first, 'beta-tester' => params['beta-tester']) %>
+                  <%= link_to icon('square-o').html_safe, admin_users_path('role-id' => role.first, 'beta-tester' => params['beta-tester']) %>
                   <div class="facet-title"><%= role.first.titleize %></div>
                   <span class="number pull-right"><%= number_with_delimiter(role.last) %></span>
                   <div class="clearfix"/>
@@ -48,14 +48,14 @@
           <ul>
             <% if @group %>
               <li class="active">
-                <%= link_to icon('check-square-o').html_safe, users_path('role-id' => params['role-id']) %>
+                <%= link_to icon('check-square-o').html_safe, admin_users_path('role-id' => params['role-id']) %>
                 <div class="facet-title">Beta Testers</div>
                 <span class="number pull-right"><%= number_with_delimiter(@group.count) %></span>
                 <div class="clearfix"/>
               </li>
             <% else %>
               <li class="active">
-                <%= link_to icon('square-o').html_safe, users_path('role-id' => params['role-id'], 'beta-tester' => true) %>
+                <%= link_to icon('square-o').html_safe, admin_users_path('role-id' => params['role-id'], 'beta-tester' => true) %>
                 <div class="facet-title">Beta Testers</div>
                 <span class="number pull-right"><%= number_with_delimiter(@groups.count) %></span>
                 <div class="clearfix"/>
@@ -76,7 +76,7 @@
             </div>
             <% if can?(:manage, user) && @user && @user.id == user.id && (controller.action_name == "edit" or (controller.action_name == "update" and !@user.errors.empty?)) %>
               <div id="user_<%= user.id %>" class="panel-collapse collapse.in">
-                <%= simple_form_for user, url: user_path(user), html: { role: "form", remote: true } do |f| %>
+                <%= simple_form_for user, url: admin_user_path(user), html: { role: "form", remote: true } do |f| %>
                   <div class="panel-body">
                     <% if user.id != current_user.id %>
                       <%= f.input :role_id, collection: Role.all[:data], include_blank: false, input_html: { class: "form-user" } %>
@@ -91,7 +91,7 @@
                   </div>
                   <div class="panel-footer">
                     <div class="form-group pull-right">
-                      <%= link_to 'Cancel', users_path(query: params[:query], 'role-id' => params['role-id']), { :remote => true, :class => 'btn btn-sm' } %>
+                      <%= link_to 'Cancel', admin_users_path(query: params[:query], 'role-id' => params['role-id']), { :remote => true, :class => 'btn btn-sm' } %>
                       <%= f.submit "Save ", class: "btn btn-sm btn-fill" %>
                     </div>
                     <div class="clearfix"/>
@@ -115,9 +115,18 @@
                   <h5>Role</h5>
                   <%= user.role_name %>
 
-                  <% unless user.is_public %>
-                    <h5>Record public</h5>
-                    <%= user.is_public %>
+                  <h5>Record</h5>
+                  <% if user.is_public %>
+                    is public
+                  <% else %>
+                    <span class="text-info">is private</span>
+                  <% end %>
+
+                  <h5>Auto-Update</h5>
+                  <% if user.auto_update %>
+                    is enabled
+                  <% else %>
+                    <span class="text-info">is disabled</span>
                   <% end %>
 
                   <% if user.beta_tester %>
@@ -129,12 +138,12 @@
                   <%= l user.created_at, format: :medium %>
 
                   <h5>Claims</h5>
-                  <%= link_to_if user.claims.count > 0, pluralize(user.claims.count, "Claim"), claims_path(source: params[:source], state: params[:state], user_id: user.orcid) %>
+                  <%= link_to_if user.claims.count > 0, pluralize(user.claims.count, "Claim"), admin_claims_path(source: params[:source], state: params[:state], user_id: user.orcid) %>
 
                   <% if can?(:manage, user) && Time.zone.now < user.orcid_expires_at %>
                     <div class="btn-toolbar">
                       <div class="btn-group btn-group-sm pull-right">
-                        <%= link_to 'delete token', user_path(user, user: { orcid_token: nil, orcid_expires_at: Time.zone.now }), { method: :put, remote: true, class: 'btn btn-warning' } %>
+                        <%= link_to 'delete token', admin_user_path(user, user: { orcid_token: nil, orcid_expires_at: Time.zone.now }), { method: :put, remote: true, class: 'btn btn-warning' } %>
                       </div>
                     </div>
                   <% end %>
@@ -144,11 +153,11 @@
                     <div class="btn-toolbar">
                       <% if user.uid != current_user.uid && can?(:manage, Phrase) %>
                         <div class="btn-group btn-group-sm pull-right">
-                          <%= link_to "Delete".html_safe, user_path(user, query: params[:query], 'role-id' => params['role-id'], page: params[:page]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-fill btn-sm', id: "#{user.id}-delete" %>
+                          <%= link_to "Delete".html_safe, admin_user_path(user, query: params[:query], 'role-id' => params['role-id'], page: params[:page]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-fill btn-sm', id: "#{user.id}-delete" %>
                         </div>
                       <% end %>
                       <div class="btn-group btn-group-sm pull-right">
-                        <%= link_to "Update".html_safe, edit_user_path(user, query: params[:query], 'role-id' => params['role-id'], page: params[:page]), remote: true, class: 'btn btn-sm', id: "#{user.id}-edit" %>
+                        <%= link_to "Update".html_safe, edit_admin_user_path(user, query: params[:query], 'role-id' => params['role-id'], page: params[:page]), remote: true, class: 'btn btn-sm', id: "#{user.id}-edit" %>
                       </div>
                     </div>
                   </div>

@@ -2,56 +2,46 @@ class Admin::UsersController < ApplicationController
   # include base controller methods
   include Authenticable
 
-  before_action :load_user, only: [:show, :edit, :update, :destroy]
+  before_action :load_user, only: [:edit, :update, :destroy]
   load_and_authorize_resource except: [:index]
-
-  def show
-    @title = 'Settings'
-    render :show
-  end
 
   def index
     load_index
+
+    render :index
   end
 
   def edit
-    if @user == current_user
-      # user updates his account
-      render :edit
-    else
-      # admin updates user account
-      load_index
+    load_index
 
-      render :index
-    end
+    render :edit
   end
 
   def update
-    if @user == current_user
-      # user updates his account
-      @user.update_attributes(safe_params)
+    # if @user == current_user
+    #   # user updates his account
+    #   @user.update_attributes(safe_params)
 
-      # refresh cookie if ORCID token was deleted
-      if safe_params[:orcid_token].blank? && safe_params[:orcid_expires_at].present?
-        cookies[:_datacite] = encode_cookie(@user.jwt) 
-        flash[:notice] = "ORCID token successfully deleted."
-      end
+    #   # refresh cookie if ORCID token was deleted
+    #   if safe_params[:orcid_token].blank? && safe_params[:orcid_expires_at].present?
+    #     cookies[:_datacite] = encode_cookie(@user.jwt) 
+    #     flash[:notice] = "ORCID token successfully deleted."
+    #   end
 
-      # delete GitHub external identifier from ORCID if GitHub account is unlinked
-      GithubJob.perform_later(@user) if @user.github_uid.blank? && @user.github_put_code.present?
+    #   # delete GitHub external identifier from ORCID if GitHub account is unlinked
+    #   GithubJob.perform_later(@user) if @user.github_uid.blank? && @user.github_put_code.present?
 
-      render :show
-    else
-      # admin updates user account
-      @user.update_attributes(safe_params)
+    #   render :show
+    # else
 
-      load_index
-      render :index
-    end
+    # admin updates user account
+    @user.update_attributes(safe_params)
+
+    load_index
+    render :edit
   end
 
   def destroy
-    @user = User.find(params[:id])
     @user.destroy
     load_index
     render :index
@@ -60,9 +50,7 @@ class Admin::UsersController < ApplicationController
   protected
 
   def load_user
-    if user_signed_in? && params[:id] == "me"
-      @user = current_user
-    elsif user_signed_in?
+    if user_signed_in?
       @user = User.where(uid: params[:id]).first
     else
       fail CanCan::AccessDenied.new("Please sign in first.", :read, User)
