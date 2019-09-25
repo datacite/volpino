@@ -51,7 +51,7 @@ Rails.application.configure do
   BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP']
   
   HttpLog.configure do |config|
-    config.enabled = true
+    config.enabled = false
     config.logger = ActiveSupport::Logger.new(STDOUT)
     config.url_blacklist_pattern = /sqs\.eu-west-1\.amazonaws\.com/
     config.filter_parameters = %w(client_id access_token orcid_token)

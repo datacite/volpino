@@ -20,6 +20,11 @@ class Claim < ActiveRecord::Base
   # include state machine
   include AASM
 
+  # include helper module for Elasticsearch
+  include Indexable
+
+  include Elasticsearch::Model
+
   SUBJECT = "Add your published work(s) to your ORCID record"
   INTRO =  "Hello, You may not be familiar with DataCite. Our data centers send us publication information (including ORCID iDs and DOIs), and we ensure that your work can be found, linked and cited. It looks like you have included your ORCID iD with a recent publication submission and that has been passed to us by your data center. We would like to auto-update your ORCID record with information about these published work(s) published, starting today with those listed below, so you don’t have to search for and add them manually, now or in the future. Please click ‘Grant permissions’ below to set this up."
 
@@ -62,6 +67,11 @@ class Claim < ActiveRecord::Base
     end
   end
 
+  alias_attribute :created, :created_at
+  alias_attribute :updated, :updated_at
+  alias_attribute :claimed, :claimed_at
+  alias_attribute :user_id, :orcid
+
   scope :by_state, ->(state) { where(aasm_state: state) }
   scope :order_by_date, -> { order("updated_at DESC") }
 
@@ -75,12 +85,88 @@ class Claim < ActiveRecord::Base
   scope :stale, -> { where(aasm_state: ["waiting", "working"]).order_by_date }
   scope :total, ->(duration) { where(updated_at: (Time.zone.now.beginning_of_hour - duration.hours)..Time.zone.now.beginning_of_hour) }
 
-  scope :query, ->(query) { where("doi like ?", "%#{query}%") }
+  scope :q, ->(query) { where("doi like ?", "%#{query}%") }
   scope :search_and_link, -> { where(source_id: "orcid_search").where("claimed_at IS NOT NULL") }
   scope :auto_update, -> { where(source_id: "orcid_update").where("claimed_at IS NOT NULL") }
   scope :total_count, -> { where(claim_action: "create").count }
 
   serialize :error_messages, JSON
+
+  # use different index for testing
+  index_name Rails.env.test? ? "claims-test" : "claims"
+
+  settings index: {
+    analysis: {
+      analyzer: {
+        string_lowercase: { tokenizer: 'keyword', filter: %w(lowercase ascii_folding) }
+      },
+      filter: { ascii_folding: { type: 'asciifolding', preserve_original: true } }
+    }
+  } do
+    mapping dynamic: 'false' do
+      indexes :id,            type: :keyword
+      indexes :uuid,          type: :keyword
+      indexes :doi,           type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}
+      indexes :user_id,       type: :keyword
+      indexes :source_id,     type: :keyword
+      indexes :error_messages, type: :text
+      indexes :claim_action,  type: :keyword
+      indexes :put_code,      type: :keyword
+      indexes :state_number,  type: :integer
+      indexes :aasm_state,    type: :keyword
+      indexes :claimed,       type: :date
+      indexes :created,       type: :date
+      indexes :updated,       type: :date
+
+      # include parent objects
+      indexes :user,          type: :object, properties: {
+        id: { type: :keyword },
+        uid: { type: :keyword },
+        name: { type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}},
+        given_names: { type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}},
+        family_name: { type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}},
+        github: { type: :keyword },
+        created: { type: :date },
+        updated: { type: :date },
+        is_active: { type: :boolean }
+      }
+    end
+  end
+
+  # also index id as workaround for finding the correct key in associations
+  def as_indexed_json(options={})
+    {
+      "id" => uuid,
+      "uuid" => uuid,
+      "doi" => doi,
+      "user_id" => orcid,
+      "source_id" => source_id,
+      "error_messages" => error_messages,
+      "claim_action" => claim_action,
+      "put_code" => put_code,
+      "state_number" => state_number,
+      "aasm_state" => aasm_state,
+      "claimed" => claimed,
+      "created" => created,
+      "updated" => updated,
+      "user" => user
+    }
+  end
+
+  def self.query_fields
+    ['uuid^10', 'doi^5', 'orcid^5', 'source_id^5', '_all']
+  end
+
+  def self.query_aggregations
+    {
+      created: { date_histogram: { field: 'created', interval: 'year', min_doc_count: 1 } },
+      claimed: { date_histogram: { field: 'claimed', interval: 'year', min_doc_count: 1 } },
+      sources: { terms: { field: 'source_id', size: 10, min_doc_count: 1 } },
+      users: { terms: { field: 'orcid', size: 15, min_doc_count: 1 } },
+      claim_actions: { terms: { field: 'claim_action', size: 10, min_doc_count: 1 } },
+      states: { terms: { field: 'aasm_state', size: 10, min_doc_count: 1 } }
+    }
+  end
 
   def to_be_created?
     claim_action == "create"

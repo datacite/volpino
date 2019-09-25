@@ -1,77 +1,179 @@
-class ClaimsController < ApplicationController
-  before_action :load_user, only: [:index, :update]
-  before_action :load_claim, only: [:update]
-  load_and_authorize_resource
+class ClaimsController < BaseController
+  #prepend_before_action :load_user, only: [:index]
+  prepend_before_action :authenticate_user_from_token!
+  before_action :load_claim, only: [:show, :destroy]
+  before_action :set_include, only: [:index, :show, :create, :update]
+  load_and_authorize_resource :except => [:create]
 
-  def index
-    load_index
+  def show
+    options = {}
+    options[:include] = @include
+    options[:is_collection] = false
+
+    render json: ClaimSerializer.new(@claim, options).serialized_json, status: :ok
   end
 
-  def update
-    if params[:claim][:resolve]
-      params[:claim][:state] = "waiting"
-      params[:claim][:error_messages] = nil
-      params[:claim] = params[:claim].except(:resolve)
+  def index
+    sort = case params[:sort]
+           when "relevance" then { "_score" => { order: 'desc' }}
+           when "doi" then { "doi.raw" => { order: 'asc' }}
+           when "-doi" then { "doi.raw" => { order: 'desc' }}
+           when "orcid" then { orcid: { order: 'asc' }}
+           when "-orcid" then { orcid: { order: 'desc' }}
+           when "created" then { created: { order: 'asc' }}
+           when "-created" then { created: { order: 'desc' }}
+           when "updated" then { updated: { order: 'asc' }}
+           when "-updated" then { updated: { order: 'desc' }}
+           else { "updated" => { order: 'desc' }}
+           end
+
+    page = page_from_params(params)
+
+    if params[:id].present?
+      response = Claim.find_by_id(params[:id])
+    elsif params[:ids].present?
+      response = Claim.find_by_id(params[:ids], page: page, sort: sort)
+    else
+      response = Claim.query(params[:query],
+                             dois: params[:dois],
+                             orcid: params[:user_id],
+                             source_id: params[:source_id],
+                             claim_action: params[:claim_action],
+                             state: params[:state],
+                             created: params[:created],
+                             claimed: params[:claimed],
+                             page: page, 
+                             sort: sort)
     end
 
-    @claim.update_attributes(safe_params)
+    begin
+      total = response.results.total
+      total_pages = page[:size] > 0 ? (total.to_f / page[:size]).ceil : 0
+      created = total > 0 ? facet_by_year(response.response.aggregations.created.buckets) : nil
+      claimed = total > 0 ? facet_by_year(response.response.aggregations.claimed.buckets) : nil
+      sources = total > 0 ? facet_by_key(response.response.aggregations.sources.buckets) : nil
+      users = total > 0 ? facet_by_key(response.response.aggregations.users.buckets) : nil
+      claim_actions = total > 0 ? facet_by_key(response.response.aggregations.claim_actions.buckets) : nil
+      states = total > 0 ? facet_by_key(response.response.aggregations.states.buckets) : nil
+      
+      options = {}
+      options[:meta] = {
+        total: total,
+        "totalPages" => total_pages,
+        page: page[:number],
+        created: created,
+        claimed: claimed,
+        sources: sources,
+        users: users,
+        "claimActions" => claim_actions,
+        states: states
+      }.compact
 
-    load_index
+      options[:links] = {
+      self: request.original_url,
+      next: response.results.blank? ? nil : request.base_url + "/claims?" + {
+        query: params[:query],
+        "page[number]" => page[:number] + 1,
+        "page[size]" => page[:size],
+        sort: params[:sort] }.compact.to_query
+      }.compact
+      options[:is_collection] = true
 
-    render :index
+      fields = fields_from_params(params)
+      if fields
+        render json: ClaimSerializer.new(response.results, options.merge(fields: fields)).serialized_json, status: :ok
+      else
+        render json: ClaimSerializer.new(response.results, options).serialized_json, status: :ok
+      end
+    rescue Elasticsearch::Transport::Transport::Errors::BadRequest => exception
+      Raven.capture_exception(exception)
+
+      message = JSON.parse(exception.message[6..-1]).to_h.dig("error", "root_cause", 0, "reason")
+
+      render json: { "errors" => { "title" => message }}.to_json, status: :bad_request
+    end
+  end
+
+  def create
+    @claim = Claim.where(orcid: params.fetch(:claim, {}).fetch(:orcid, nil),
+                         doi: params.fetch(:claim, {}).fetch(:doi, nil))
+                  .first_or_initialize
+
+    authorize! :create, @claim
+
+    claim_action = params.dig(:claim, :claim_action) || "create"
+
+    options = {}
+    options[:include] = @include
+    options[:is_collection] = false
+
+    if @claim.new_record? ||
+      @claim.source_id == "orcid_search" ||
+      (claim_action == "create" && %w(failed ignored deleted notified).include?(@claim.state)) ||
+      (claim_action == "delete" && %w(done failed ignored notified).include?(@claim.state))
+
+      @claim.assign_attributes(state: "waiting",
+                               source_id: params.fetch(:claim, {}).fetch(:source_id, nil),
+                               claim_action: claim_action)
+
+      if @claim.save
+        render json: ClaimSerializer.new(@claim, options).serialized_json, status: :accepted
+      else
+        logger.warn @claim.errors.inspect
+        render json: serialize_errors(@claim.errors), include: @include, status: :unprocessable_entity
+      end
+    else
+      render json: ClaimSerializer.new(@claim, options).serialized_json, status: :accepted
+    end
+  rescue ActiveRecord::RecordNotUnique
+    render json: @claim, :status => :ok
+  end
+
+  def destroy
+    if @claim.destroy
+      render json: { data: {} }, meta: { status: "deleted" }, status: :ok
+    else
+      render json: { errors: [{ status: 400, title: "An error occured." }] }, status: :bad_request
+    end
   end
 
   protected
 
-  def load_index
-    if !@user.is_admin_or_staff?
-      collection = @user.claims
-    elsif params[:user_id]
-      collection = Claim.where(orcid: params[:user_id])
-      @claim_count = collection.count
-      @my_claim_count = Claim.where(orcid: current_user.uid).count
-    else
-      collection = Claim
-      @my_claim_count = Claim.where(orcid: current_user.uid).count
-    end
-    collection = collection.query(params[:query]) if params[:query]
-    if params[:source].present?
-      collection = collection.where(source_id: params[:source])
-      @source = collection.group(:source_id).count.first
-    end
-    if params[:claim_action].present?
-      collection = collection.where(claim_action: params[:claim_action])
-      @claim_action = collection.group(:claim_action).count.first
-    end
-    if params[:state].present?
-      collection = collection.where(aasm_state: params[:state])
-      @state = collection.group(:aasm_state).count.first
-    end
-    @sources = collection.where.not(source_id: nil).group(:source_id).count
-    @claim_actions = collection.where.not(claim_action: nil).group(:claim_action).count
-    @states = collection.where.not(aasm_state: nil).group(:aasm_state).count
-    @claims = collection.order_by_date.page(params[:page])
-    @page = params[:page] || 1
+  def load_claim
+    @claim = Claim.where(uuid: params[:id]).first
+
+    fail ActiveRecord::RecordNotFound unless @claim.present?
   end
 
   def load_user
-    if user_signed_in?
-      @user = current_user
+    return nil unless params[:user_id].present?
+
+    @user = User.where(uid: params[:user_id]).first
+
+    fail ActiveRecord::RecordNotFound unless @user.present?
+  end
+
+  def set_include
+    if params[:include].present?
+      @include = params[:include].split(",").map { |i| i.downcase.underscore.to_sym }
+      @include = @include & [:user]
     else
-      fail CanCan::AccessDenied.new("Please sign in first.", :read, User)
+      @include = [:user]
     end
   end
 
-  def load_claim
-    @claim = Claim.where(uuid: params[:id]).first
-    fail ActiveRecord::RecordNotFound unless @claim.present?
+  def human_source_name(source_id)
+    sources.fetch(source_id, nil)
+  end
+
+  def sources
+    { "orcid_search" => "ORCID Search and Link",
+      "orcid_update" => "ORCID Auto-Update" }
   end
 
   private
 
   def safe_params
-    params.require(:claim).permit(:state,
-                                  :claim_action,
-                                  :error_messages)
+    params.require(:claim).permit(:uuid, :orcid, :doi, :source_id, :claim_action)
   end
 end

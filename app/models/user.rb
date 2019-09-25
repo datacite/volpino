@@ -13,6 +13,11 @@ class User < ActiveRecord::Base
   # include helper module for caching infrequently changing resources
   include Cacheable
 
+  # include helper module for Elasticsearch
+  include Indexable
+
+  include Elasticsearch::Model
+
   nilify_blanks
 
   # include hash helper
@@ -35,13 +40,61 @@ class User < ActiveRecord::Base
   validates :uid, presence: true, uniqueness: true
   validate :validate_email
 
-  scope :query, ->(query) { where("name like ? OR uid like ? OR email like ? OR github like ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%") }
+  scope :q, ->(query) { where("name like ? OR uid like ? OR email like ? OR github like ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%") }
   scope :ordered, -> { order("created_at DESC") }
   scope :order_by_name, -> { order("ISNULL(family_name), family_name") }
   scope :is_public, -> { where("is_public = 1") }
   scope :with_github, -> { where("github IS NOT NULL AND github_put_code IS NULL") }
 
+  alias_attribute :created, :created_at
+  alias_attribute :updated, :updated_at
+
   serialize :other_names, JSON
+
+  # use different index for testing
+  index_name Rails.env.test? ? "users-test" : "users"
+
+  settings index: {
+    analysis: {
+      analyzer: {
+        string_lowercase: { tokenizer: 'keyword', filter: %w(lowercase ascii_folding) }
+      },
+      filter: { ascii_folding: { type: 'asciifolding', preserve_original: true } }
+    }
+  } do
+    mapping dynamic: 'false' do
+      indexes :id,            type: :keyword
+      indexes :uid,           type: :keyword
+      indexes :name,          type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}
+      indexes :given_names,   type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}
+      indexes :family_name,   type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}
+      indexes :github,        type: :keyword
+      indexes :role_id,       type: :keyword
+      indexes :created,       type: :date
+      indexes :updated,       type: :date
+      indexes :is_active,     type: :boolean
+    end
+  end
+
+  # also index id as workaround for finding the correct key in associations
+  def as_indexed_json(options={})
+    {
+      "id" => uid,
+      "uid" => uid,
+      "name" => name,
+      "given_names" => given_names,
+      "family_name" => family_name,
+      "github" => github,
+      "created" => created,
+      "updated" => updated,
+      "role_id" => role_id,
+      "is_active" => is_active
+    }
+  end
+
+  def self.query_fields
+    ['uid^10', 'name^5', 'given_names^5', 'family_name^5', '_all']
+  end
 
   def self.from_omniauth(auth, options={})
     where(provider: auth.provider, uid: options[:uid] || auth.uid).first_or_create

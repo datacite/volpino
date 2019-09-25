@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :user do
     sequence(:name) { |n| "Josiah Carberry{n}" }
-    provider { "orcid" }
+    provider { "globus" }
     role_id { "user" }
     sequence(:uid) { |n| "0000-0002-1825-000#{n}" }
 

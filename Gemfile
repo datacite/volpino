@@ -55,6 +55,18 @@ gem 'cancancan', '~> 2.0'
 gem 'mailgun-ruby', '~> 1.1'
 gem 'gravtastic', '~> 3.2', '>= 3.2.6'
 
+gem 'maremma', '>= 4.1'
+gem 'elasticsearch', '~> 6.8'
+gem 'elasticsearch-model', '~> 6.0.0', require: 'elasticsearch/model'
+gem 'elasticsearch-rails', '~> 6.0.0'
+gem 'faraday_middleware-aws-sigv4', '~> 0.2.4'
+gem 'rack-utf8_sanitizer', '~> 1.6'
+gem 'graphql', '~> 1.9', '>= 1.9.4'
+gem 'graphql-errors', '~> 0.3.0'
+gem 'graphql-batch', '~> 0.4.0'
+gem 'batch-loader', '~> 1.4', '>= 1.4.1'
+gem 'graphql-cache', '~> 0.6.0', git: "https://github.com/stackshareio/graphql-cache"
+
 gem 'sprockets-rails', '~> 3.2', '>= 3.2.1', :require => 'sprockets/railtie'
 gem 'coffee-rails', '~> 4.1', '>= 4.1.1'
 gem 'sassc-rails', '>= 2.1.0'
@@ -99,4 +111,5 @@ group :test do
   gem 'vcr', '~> 3.0', '>= 3.0.3'
   gem 'poltergeist', '~> 1.15'
   gem "with_env", "~> 1.1.0"
+  gem 'elasticsearch-extensions', '~> 0.0.29'
 end

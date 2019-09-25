@@ -39,6 +39,13 @@ Rails.application.routes.draw do
   resources :tags
   resources :users
 
+  resources :settings
+
+  namespace :admin do
+    resources :claims
+    resources :users
+  end
+
   namespace :api, defaults: { format: "json" } do
     scope module: :v1, constraints: ApiConstraint.new(version: 1, default: :true) do
       resources :claims

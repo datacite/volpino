@@ -44,6 +44,8 @@ ENV['MYSQL_USER'] ||= "root"
 ENV['MYSQL_PASSWORD'] ||= ""
 ENV['MYSQL_HOST'] ||= "mysql"
 ENV['MYSQL_PORT'] ||= "3306"
+ENV['ES_HOST'] ||= "elasticsearch:9200"
+ENV['ES_NAME'] ||= "elasticsearch"
 
 module Volpino
   class Application < Rails::Application

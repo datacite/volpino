@@ -1,29 +1,22 @@
-class ClaimSerializer < ActiveModel::Serializer
-  cache key: 'claim'
+class ClaimSerializer
+  include FastJsonapi::ObjectSerializer
+  set_key_transform :camel_lower
+  set_type :claims
+  set_id :uuid
+  
   attributes :orcid, :doi, :source_id, :state, :claim_action, :error_messages, :put_code, :claimed, :created, :updated
 
-  def can_read
-    # `scope` is current ability
-    scope.can?(:read, object)
+  belongs_to :user, serializer: UserSerializer, record_type: :users
+
+  attribute :doi do |object|
+    "https://doi.org/#{object.doi}"
   end
 
-  def id
-    object.uuid
+  attribute :orcid do |object|
+    "https://orcid.org/#{object.user_id}"
   end
 
-  def error_messages
-    object.error_messages.presence
-  end
-
-  def claimed
-    object.claimed_at.iso8601 if object.claimed_at.present?
-  end
-
-  def created
-    object.created_at.iso8601
-  end
-
-  def updated
-    object.updated_at.iso8601
+  attribute :state do |object|
+    object.aasm_state
   end
 end

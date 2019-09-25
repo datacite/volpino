@@ -1,4 +1,56 @@
+# frozen_string_literal: true
+
 namespace :claim do
+  desc "Create index for claims"
+  task create_index: :environment do
+    puts Claim.create_index
+  end
+
+  desc "Delete index for claims"
+  task delete_index: :environment do
+    puts Claim.delete_index
+  end
+
+  desc "Upgrade index for claims"
+  task upgrade_index: :environment do
+    puts Claim.upgrade_index
+  end
+
+  desc "Show index stats for claims"
+  task index_stats: :environment do
+    puts Claim.index_stats
+  end
+
+  desc "Switch index for claims"
+  task switch_index: :environment do
+    puts Claim.switch_index
+  end
+
+  desc "Return active index for claims"
+  task active_index: :environment do
+    puts Claim.active_index + " is the active index."
+  end
+
+  desc "Start using alias indexes for claims"
+  task start_aliases: :environment do
+    puts Claim.start_aliases
+  end
+
+  desc "Monitor reindexing for claims"
+  task monitor_reindex: :environment do
+    puts Claim.monitor_reindex
+  end
+
+  desc "Wrap up starting using alias indexes for claims"
+  task finish_aliases: :environment do
+    puts Claim.finish_aliases
+  end
+
+  desc 'Import all claims'
+  task import: :environment do
+    Claim.import(index: Claim.inactive_index)
+  end
+
   desc "Push all stale claims"
   task :stale => :environment do
     Claim.stale.each do |claim|

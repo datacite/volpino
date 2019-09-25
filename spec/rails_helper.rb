@@ -51,10 +51,12 @@ WebMock.disable_net_connect!(
 )
 
 VCR.configure do |c|
+  sqs_host = "sqs.#{ENV['AWS_REGION'].to_s}.amazonaws.com"
+
   c.cassette_library_dir = "spec/fixtures/vcr_cassettes"
   c.hook_into :webmock
   c.ignore_localhost = true
-  c.ignore_hosts "codeclimate.com"
+  c.ignore_hosts "codeclimate.com", "api.mailgun.net", "elasticsearch", sqs_host
   c.filter_sensitive_data("<ORCID_CLIENT_ID>") { ENV["ORCID_CLIENT_ID"] }
   c.filter_sensitive_data("<ORCID_CLIENT_SECRET>") { ENV["ORCID_CLIENT_SECRET"] }
   c.filter_sensitive_data("<ORCID_TOKEN>") { ENV["ORCID_TOKEN"] }
@@ -91,13 +93,17 @@ RSpec.configure do |config|
   # config.include WebMock::API
   config.include FactoryBot::Syntax::Methods
 
-  config.include Rack::Test::Methods, :type => :api
+  config.include Rack::Test::Methods, :type => :request
 
   config.include Devise::Test::ControllerHelpers, :type => :controller
   config.include Rack::Test::Methods, :type => :controller
+  config.include JobHelper, type: :job
+  
+  ActiveJob::Base.queue_adapter = :test
 
-  config.include ActiveJob::TestHelper, type: :job
-
+  # add custom json method
+  config.include RequestHelper, type: :request
+  
   def app
     Rails.application
   end

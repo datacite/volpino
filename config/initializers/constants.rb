@@ -1,10 +1,20 @@
-RESCUABLE_EXCEPTIONS = [ActiveRecord::RecordNotFound,
-                        CanCan::AccessDenied,
+RESCUABLE_EXCEPTIONS = [CanCan::AccessDenied,
+                        CanCan::AuthorizationNotPerformed,
+                        ActiveModelSerializers::Adapter::JsonApi::Deserialization::InvalidDocument,
                         JWT::DecodeError,
                         JWT::VerificationError,
+                        JSON::ParserError,
+                        Nokogiri::XML::SyntaxError,
+                        NoMethodError,
+                        SocketError,
+                        ActionDispatch::Http::Parameters::ParseError,
+                        ActiveRecord::RecordNotUnique,
+                        ActiveRecord::RecordNotFound,
+                        AbstractController::ActionNotFound,
+                        ActionController::UnknownFormat,
+                        ActionController::RoutingError,
                         ActionController::ParameterMissing,
-                        ActionController::UnpermittedParameters,
-                        NoMethodError]
+                        ActionController::UnpermittedParameters]
 
 # Format used for DOI validation
 # The prefix is 10.x where x is 4-5 digits. The suffix can be anything, but can"t be left off

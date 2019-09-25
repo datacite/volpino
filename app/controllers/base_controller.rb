@@ -1,6 +1,18 @@
-class Api::BaseController < ActionController::Base
+class BaseController < ActionController::Base
   # include base controller methods
   include Authenticable
+
+  # include helper module for sparse fieldsets
+  include Fieldable
+
+  # include helper module for pagination
+  include Paginatable
+
+  # include helper module for facets
+  include Facetable
+
+  # include helper module for formatting errors
+  include ErrorSerializable
 
   attr_accessor :current_user
 
@@ -64,28 +76,38 @@ class Api::BaseController < ActionController::Base
   unless Rails.env.development?
     rescue_from *RESCUABLE_EXCEPTIONS do |exception|
       status = case exception.class.to_s
-               when "CanCan::AccessDenied", "JWT::DecodeError" then 401
-               when "ActiveRecord::RecordNotFound" then 404
-               when "ActionController::UnpermittedParameters", "NoMethodError" then 422
+               when "CanCan::AuthorizationNotPerformed", "JWT::DecodeError" then 401
+               when "CanCan::AccessDenied" then 403
+               when "ActiveRecord::RecordNotFound", "AbstractController::ActionNotFound", "ActionController::RoutingError" then 404
+               when "ActionController::UnknownFormat" then 406
+               when "ActiveRecord::RecordNotUnique" then 409
+               when "ActiveModel::ForbiddenAttributesError", "ActionController::ParameterMissing", "ActionController::UnpermittedParameters", "ActiveModelSerializers::Adapter::JsonApi::Deserialization::InvalidDocument" then 422
+               when "SocketError" then 500 
                else 400
                end
 
-      if status == 404
-        message = "The page you are looking for doesn't exist."
-      elsif status == 401
-        message = "You are not authorized to access this page."
+      if status == 401
+        message = "Bad credentials."
+      elsif status == 403 && current_user.try(:uid)
+        message = "You are not authorized to access this resource."
+      elsif status == 403
+        status = 401
+        message = "Bad credentials."
+      elsif status == 404
+        message = "The resource you are looking for doesn't exist."
+      elsif status == 406
+        message = "The content type is not recognized."
+      elsif status == 409
+        message = "The resource already exists."
+      elsif ["JSON::ParserError", "Nokogiri::XML::SyntaxError", "ActionDispatch::Http::Parameters::ParseError"].include?(exception.class.to_s)
+        message = exception.message
       else
         Raven.capture_exception(exception)
 
         message = exception.message
       end
 
-      respond_to do |format|
-        format.all { render json: { errors: [{ status: status.to_s,
-                                               title: message }]
-                                  }, status: status
-                   }
-      end
+      render json: { errors: [{ status: status.to_s, title: message }] }.to_json, status: status
     end
   end
 

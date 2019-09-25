@@ -1,4 +1,4 @@
-class Api::V1::RolesController < Api::BaseController
+class RolesController < BaseController
   def index
     @roles = Role.where(params)
     render jsonapi: @roles[:data], meta: @roles[:meta]
