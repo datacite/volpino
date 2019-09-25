@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe UserJob, :type => :job do
+RSpec.describe UserJob, :type => :job, elasticsearch: true do
   let(:user) { FactoryBot.create(:valid_user) }
   let(:job) { user.queue_user_job }
 
   it "enqueue jobs" do
-    expect { job }.to change(enqueued_jobs, :size).by(2)
+    expect { job }.to change(enqueued_jobs, :size).by(3)
 
     user_job = enqueued_jobs.first
     expect(user_job[:job]).to eq(UserJob)

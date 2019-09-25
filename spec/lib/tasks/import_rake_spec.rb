@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "import:all", vcr: true, rake: true do
+describe "import:all", vcr: true, rake: true, elasticsearch: true do
   include ActiveJob::TestHelper
   include_context "rake"
 
@@ -16,7 +16,7 @@ describe "import:all", vcr: true, rake: true do
   # end
 end
 
-describe "import:one", vcr: true, rake: true do
+describe "import:one", vcr: true, rake: true, elasticsearch: true do
   include ActiveJob::TestHelper
   include WithEnv
   include_context "rake"

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Work, type: :model, vcr: true do
+describe Work, type: :model, vcr: true, elasticsearch: true do
   let(:doi) { "10.5438/mk65-3m12"}
   let(:user) { FactoryBot.create(:valid_user) }
   let(:put_code) { "1062217" }

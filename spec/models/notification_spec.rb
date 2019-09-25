@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Notification, type: :model, vcr: true do
+describe Notification, type: :model, vcr: true, elasticsearch: true do
   let(:doi) { "10.6084/M9.FIGSHARE.1066168"}
   let(:user) { FactoryBot.create(:valid_user) }
   let(:notification_access_token) { ENV['NOTIFICATION_ACCESS_TOKEN'] }

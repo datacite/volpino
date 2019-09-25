@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe ExternalIdentifier, type: :model, vcr: true do
+describe ExternalIdentifier, type: :model, vcr: true, elasticsearch: true do
   let(:type) { "Github" }
   let(:value) { "mfenner" }
   let(:url) { "https://github.com/#{value}" }
