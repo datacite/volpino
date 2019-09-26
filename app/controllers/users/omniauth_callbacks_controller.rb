@@ -44,7 +44,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
         netlify_response(token: token, content: content)
       else
-        redirect_to stored_location_for(:user) || user_path("me", panel: "login")
+        redirect_to stored_location_for(:user) || setting_path("me")
       end
     elsif @user = User.where(github_uid: auth.uid).first
       cookies[:_datacite] = encode_cookie(@user.jwt)
@@ -61,7 +61,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
         netlify_response(token: token, content: content)
       else
-        redirect_to stored_location_for(:user) || user_path("me")
+        redirect_to stored_location_for(:user) || setting_path("me")
       end
     else
       flash[:omniauth] = { "github" => auth.info.nickname,
@@ -95,7 +95,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       c = encode_cookie(@user.jwt)
       puts "C:" + c.inspect
       cookies[:_datacite] = c
-      redirect_to stored_location_for(:user) || user_path("me")
+      redirect_to stored_location_for(:user) || setting_path("me")
     else
       flash[:alert] = @user.errors.map { |k,v| "#{k}: #{v}" }.join("<br />").html_safe || "Error signing in with #{provider}"
       redirect_to root_path
@@ -141,7 +141,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
         netlify_response(token: token, content: content)
       else
-        redirect_to stored_location_for(:user) || user_path("me")
+        redirect_to stored_location_for(:user) || setting_path("me")
       end
     else
       flash[:alert] = @user.errors.map { |k,v| "#{k}: #{v}" }.join("<br />").html_safe || "Error signing in with #{provider}"
