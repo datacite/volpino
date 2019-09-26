@@ -1,4 +1,4 @@
-class Api::V1::RandomController < Api::BaseController
+class RandomController < BaseController
   before_action :authenticate_user_from_token!
   load_and_authorize_resource Phrase
 
