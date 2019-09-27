@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  post "/users/graphql", to: "graphql#execute"
+  get "/users/graphql", to: "index#method_not_allowed"
+
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   devise_scope :user do

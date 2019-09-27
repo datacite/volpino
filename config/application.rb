@@ -52,6 +52,10 @@ module Volpino
     # autoload files in lib folder
     config.autoload_paths << Rails.root.join('lib')
 
+    # include graphql
+    config.paths.add Rails.root.join('app', 'graphql', 'types').to_s, eager_load: true
+    config.paths.add Rails.root.join('app', 'graphql', 'mutations').to_s, eager_load: true
+
     # add assets installed via node
     config.assets.paths << "#{Rails.root}/vendor/node_modules"
 
