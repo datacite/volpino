@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class UserConnectionWithMetaType < BaseConnection
-  edge_type(UserEdgeType)
+class ResearcherConnectionWithMetaType < BaseConnection
+  edge_type(ResearcherEdgeType)
   field_class GraphQL::Cache::Field
   
   field :total_count, Integer, null: false, cache: true
