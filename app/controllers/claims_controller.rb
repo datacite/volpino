@@ -48,7 +48,9 @@ class ClaimsController < BaseController
 
     begin
       total = response.results.total
-      total_pages = page[:size] > 0 ? (total.to_f / page[:size]).ceil : 0
+      total_for_pages = page[:cursor].nil? ? [total.to_f, 10000].min : total.to_f
+      total_pages = page[:size] > 0 ? (total_for_pages / page[:size]).ceil : 0
+
       created = total > 0 ? facet_by_year(response.response.aggregations.created.buckets) : nil
       claimed = total > 0 ? facet_by_year(response.response.aggregations.claimed.buckets) : nil
       sources = total > 0 ? facet_by_key(response.response.aggregations.sources.buckets) : nil
