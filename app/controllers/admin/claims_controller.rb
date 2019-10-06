@@ -34,7 +34,7 @@ class Admin::ClaimsController < ApplicationController
       collection = Claim
       @my_claim_count = Claim.where(orcid: current_user.uid).count
     end
-    collection = collection.query(params[:query]) if params[:query]
+    collection = collection.q(params[:query]) if params[:query]
     if params[:source].present?
       collection = collection.where(source_id: params[:source])
       @source = collection.group(:source_id).count.first

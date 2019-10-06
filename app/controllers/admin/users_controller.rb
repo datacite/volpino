@@ -56,7 +56,7 @@ class Admin::UsersController < ApplicationController
       @group = User.where(beta_tester: true)
     end
 
-    collection = collection.query(params[:query]) if params[:query]
+    collection = collection.q(params[:query]) if params[:query]
 
     @roles = collection.where.not(role_id: nil).group(:role_id).count
     @groups = collection.where(:beta_tester => true)

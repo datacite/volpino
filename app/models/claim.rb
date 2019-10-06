@@ -77,7 +77,7 @@ class Claim < ActiveRecord::Base
 
   scope :waiting, -> { by_state("waiting").order_by_date }
   scope :working, -> { by_state("working").order_by_date }
-  scope :failed, -> { by_state("failes").order_by_date }
+  scope :failed, -> { by_state("failed").order_by_date }
   scope :done, -> { by_state("done").order_by_date }
   scope :ignored, -> { by_state("ignored").order_by_date }
   scope :deleted, -> { by_state("deleted").order_by_date }
