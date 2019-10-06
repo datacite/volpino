@@ -6,6 +6,7 @@
             <div class="register-card-globus">
               <h3 class="title">Sign In</h3>
               <%= link_to "<img id=\"globus-logo\" src=\"#{ENV["CDN_URL"]}/images/globus.png\" alt=\"Globus icon\"/> Sign in with Globus".html_safe, user_globus_omniauth_authorize_path, :id => "sign-in-globus", class: 'btn btn-block btn-social btn-globus btn-fill' %>
+              <p>Globus allows you to login via your institutional account (if supported), Google or ORCID. <a href="https://docs.globus.org/api/auth/specification/" target="_blank">Learn More</a></p>
             </div>
           </div>
         </div>
