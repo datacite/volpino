@@ -20,6 +20,8 @@ class UserSearch < Base
     @updated_at = Date.today.beginning_of_day
   end
 
+  alias_method :created, :created_at
+
   def orcid
     uid
   end
