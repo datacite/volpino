@@ -82,12 +82,14 @@ class UsersController < BaseController
       options[:is_collection] = false
       render json: UserSerializer.new(@user, options).serialized_json, status: :created
     else
-      Rails.logger.warn @user.errors.inspect
+      logger.warn @user.errors.inspect
       render json: serialize_errors(@user.errors), status: :unprocessable_entity
     end
   end
 
   def update
+    logger = Logger.new(STDOUT)
+
     if @user.created_at.present?
       authorize! :update, @user
 
@@ -96,7 +98,7 @@ class UsersController < BaseController
         options[:is_collection] = false
         render json: UserSerializer.new(@user, options).serialized_json, status: :ok
       else
-        Rails.logger.warn @user.errors.inspect
+        logger.warn @user.errors.inspect
         render json: serialize_errors(@user.errors), status: :unprocessable_entity
       end
     else
@@ -108,7 +110,7 @@ class UsersController < BaseController
         options[:is_collection] = false
         render json: UserSerializer.new(@user, options).serialized_json, status: :created
       else
-        Rails.logger.warn @user.errors.inspect
+        logger.warn @user.errors.inspect
         render json: serialize_errors(@user.errors), status: :unprocessable_entity
       end
     end

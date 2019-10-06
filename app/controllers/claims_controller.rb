@@ -97,6 +97,8 @@ class ClaimsController < BaseController
   end
 
   def create
+    logger = Logger.new(STDOUT)
+    
     @claim = Claim.where(orcid: params.fetch(:claim, {}).fetch(:orcid, nil),
                          doi: params.fetch(:claim, {}).fetch(:doi, nil))
                   .first_or_initialize
