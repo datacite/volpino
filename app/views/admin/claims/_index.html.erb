@@ -172,6 +172,7 @@
                   <%= sources[claim.source_id] %>
 
                   <% if claim.error_messages.present? %>
+                    <h5>Error Message</h5>
                     <% if current_user.is_admin_or_staff? %>
                       <br/><br/>
                     <% end %>
