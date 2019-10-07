@@ -97,7 +97,7 @@ class User < ActiveRecord::Base
   end
 
   def self.from_omniauth(auth, options={})
-    where(provider: auth.provider, uid: options[:uid] || auth.uid).first_or_create
+    where(provider: options[:provider], uid: options[:uid] || auth.uid).first_or_create
   end
 
   def queue_user_job
@@ -177,8 +177,8 @@ class User < ActiveRecord::Base
       given_names: auth.info.fetch(:first_name, "").to_s.strip,
       other_names: auth.extra.fetch(:raw_info, {}).fetch(:other_names, nil),
       organization: auth.extra.id_info? ? auth.extra.id_info.organization : nil,
-      authentication_token: auth.credentials.token,
-      expires_at: timestamp(auth.credentials),
+      authentication_token: options.fetch(:authentication_token, nil),
+      expires_at: options.fetch(:expires_at, "1970-01-01"),
       role_id: auth.extra.fetch(:raw_info, {}).fetch(:role_id, nil),
       github: options.fetch("github", nil),
       github_uid: options.fetch("github_uid", nil),

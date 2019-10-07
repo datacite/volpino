@@ -82,19 +82,17 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       redirect_to user_path("me") && return
     else
       # extract ORCID ID from preferred_username
-      @user = User.from_omniauth(auth, uid: auth.extra.id_info.preferred_username[0..18])
+      @user = User.from_omniauth(auth, provider: "globus", uid: auth.extra.id_info.preferred_username[0..18])
     end
 
     if Time.zone.now > @user.expires_at
-      auth_hash = User.get_auth_hash(auth)
+      auth_hash = User.get_auth_hash(auth, authentication_token: auth.credentials.token, expires_at: Time.at(auth.credentials.expires_at).utc)
       @user.update_attributes(auth_hash)
     end
 
     if @user.persisted?
       sign_in @user
-      c = encode_cookie(@user.jwt)
-      puts "C:" + c.inspect
-      cookies[:_datacite] = c
+      cookies[:_datacite] = encode_cookie(@user.jwt)
       redirect_to stored_location_for(:user) || setting_path("me")
     else
       flash[:alert] = @user.errors.map { |k,v| "#{k}: #{v}" }.join("<br />").html_safe || "Error signing in with #{provider}"
@@ -112,7 +110,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                               orcid_token: auth.credentials.token)
       flash[:notice] = "ORCID token successfully refreshed."
     else
-      @user = User.from_omniauth(auth)
+      @user = User.from_omniauth(auth, provider: "globus")
     end
 
     if Time.zone.now > @user.expires_at || omniauth.present?
