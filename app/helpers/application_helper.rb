@@ -115,6 +115,10 @@ module ApplicationHelper
       "orcid_update" => "ORCID Auto-Update" }
   end
 
+  def aasm_states
+    ["waiting", "working", "done", "failed", "ignored", "notified"]
+  end
+
   def settings
     Settings[ENV['MODE']]
   end

@@ -120,34 +120,78 @@
     <% if @claims.size > 0 %>
       <% @claims.each do |claim| %>
         <div class="panel panel-default">
-          <div class="panel-body">
-            <h3 class="work"><%= link_to h(claim.doi), "#{ENV['SEARCH_URL']}/works/#{claim.doi}" %></h3>
-            <% if claim.error_messages.present? || current_user.is_admin_or_staff? %>
-              <% if claim.user %>
-                <%= link_to h(claim.user.credit_name), admin_users_path(query: claim.orcid) %>
-              <% end %>
-              <% if claim.error_messages.present? %>
-                <% if current_user.is_admin_or_staff? %>
-                  <br/><br/>
-                <% end %>
-                <%= h(claim.error_messages.first["title"]) %>
-              <% end %>
-            <% end %>
+          <div class="panel panel-heading">
+            <h3 class="panel-title">
+              <span class='pull-right'><%= claim.doi %></span>
+              <%= claim.user.credit_name %>
+            </h3>
           </div>
-          <div class="panel-footer">
-            <%= sources[claim.source_id] %>
-            <div class="btn-toolbar pull-right">
-              <div class="btn-group btn-group-sm">
-                <% if claim.failed? %>
-                  <%= link_to claim.state, admin_claim_path(claim, :claim => { :resolve => true }, state: params[:state], source: params[:source]), :method => :put, :remote => true %> <%= l claim.updated_at, format: :medium %>
-                <% elsif claim.done? %>
-                  <%= claim.claim_action + "d" %> <%= l claim.claimed_at, format: :medium %>
-                <% else %>
-                  <%= claim.state %> <%= l claim.updated_at, format: :medium %>
+          <% if can?(:manage, claim) && @claim && @claim.id == claim.id && (controller.action_name == "edit" or (controller.action_name == "update" and !@claim.errors.empty?)) %>
+            <%= simple_form_for claim, url: admin_claim_path(claim), html: { role: "form", remote: true } do |f| %>
+              <div class="panel-body">
+                <%= f.input :aasm_state, collection: aasm_states, include_blank: false, label: "State", input_html: { class: "form-user" } %>
+                <%= f.input :put_code, label: "Put Code", input_html: { class: "form-user" } %>
+              </div>
+              <div class="panel-footer">
+                <div class="form-group pull-right">
+                  <%= link_to 'Cancel', admin_claims_path(query: params[:query]), { :remote => true, :class => 'btn btn-sm' } %>
+                  <%= f.submit "Save ", class: "btn btn-sm btn-fill" %>
+                </div>
+                <div class="clearfix"/>
+              </div>
+            <% end %>
+            <% else %>
+              <div class="panel-body"> 
+                <span class="label label-success pull-right"><%= claim.state %></span>
+                <% if claim.error_messages.present? || current_user.is_admin_or_staff? %>
+                  <% if claim.user %>
+                    <h5>ORCID</h5>
+                    <%= link_to h(claim.orcid), admin_users_path(query: claim.orcid) %>
+                  <% end %>
+                  
+                  <h5>DOI</h5>
+                  <%= link_to h(claim.doi), "#{ENV['SEARCH_URL']}/works/#{claim.doi}" %>
+                  
+                  <h5>Put Code</h5>
+                  <% if claim.put_code.present? %>
+                    <%= claim.put_code %>
+                  <% else %>
+                    none
+                  <% end %>
+
+                  <% if claim.done? %>
+                    <h5>Claimed</h5>
+                    <%= l claim.claimed_at, format: :medium %>
+                  <% else %>
+                    <h5>Updated</h5>
+                    <%= l claim.updated_at, format: :medium %>
+                  <% end %>
+
+                  <h5>Source</h5>
+                  <%= sources[claim.source_id] %>
+
+                  <% if claim.error_messages.present? %>
+                    <% if current_user.is_admin_or_staff? %>
+                      <br/><br/>
+                    <% end %>
+                    <%= h(claim.error_messages.first["title"]) %>
+                  <% end %>
                 <% end %>
               </div>
-            </div>
-          </div>
+              <% if can?(:manage, claim) %>
+                <div class="panel-footer">
+                  <div class="btn-toolbar">
+                    <div class="btn-group btn-group-sm pull-right">
+                      <%= link_to "Delete".html_safe, admin_claim_path(claim, query: params[:query], page: params[:page]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-fill btn-sm', id: "#{claim.id}-delete" %>
+                    </div>
+                    <div class="btn-group btn-group-sm pull-right">
+                      <%= link_to "Update".html_safe, edit_admin_claim_path(claim, query: params[:query], page: params[:page]), remote: true, class: 'btn btn-sm', id: "#{claim.id}-edit" %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div> 
         </div>
       <% end %>
       <div class="text-center">

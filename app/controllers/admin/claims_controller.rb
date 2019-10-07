@@ -1,10 +1,16 @@
 class Admin::ClaimsController < ApplicationController
-  before_action :load_user, only: [:index, :update]
-  before_action :load_claim, only: [:update]
+  before_action :load_user, only: [:index, :edit, :update, :destroy]
+  before_action :load_claim, only: [:edit, :update, :destroy]
   load_and_authorize_resource
 
   def index
     load_index
+  end
+
+  def edit
+    load_index
+
+    render :edit
   end
 
   def update
@@ -18,6 +24,12 @@ class Admin::ClaimsController < ApplicationController
 
     load_index
 
+    render :index
+  end
+
+  def destroy
+    @claim.destroy
+    load_index
     render :index
   end
 
@@ -63,8 +75,11 @@ class Admin::ClaimsController < ApplicationController
   end
 
   def load_claim
-    @claim = Claim.where(uuid: params[:id]).first
-    fail ActiveRecord::RecordNotFound unless @claim.present?
+    if user_signed_in?
+      @claim = Claim.where(uuid: params[:id]).first
+    else
+      fail CanCan::AccessDenied.new("Please sign in first.", :read, Claim)
+    end
   end
 
   private
