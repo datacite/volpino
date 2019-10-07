@@ -135,6 +135,7 @@ module ApplicationHelper
     case state
     when "done" then "label-success"
     when "failed" then "label-danger"
+    when "working" then "label-info"
     else "label-default"
     end
   end
