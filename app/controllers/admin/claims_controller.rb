@@ -86,6 +86,8 @@ class Admin::ClaimsController < ApplicationController
 
   def safe_params
     params.require(:claim).permit(:state,
+                                  :aasm_state,
+                                  :put_code,
                                   :claim_action,
                                   :error_messages)
   end

@@ -120,7 +120,7 @@
     <% if @claims.size > 0 %>
       <% @claims.each do |claim| %>
         <div class="panel panel-default">
-          <div class="panel panel-heading">
+          <div class="panel-heading">
             <h3 class="panel-title">
               <span class='pull-right'><%= claim.doi %></span>
               <%= claim.user.credit_name %>
@@ -142,7 +142,7 @@
             <% end %>
             <% else %>
               <div class="panel-body"> 
-                <span class="label label-success pull-right"><%= claim.state %></span>
+                <span class="label <%= state_label(claim.state) %> pull-right"><%= claim.state %></span>
                 <% if claim.error_messages.present? || current_user.is_admin_or_staff? %>
                   <% if claim.user %>
                     <h5>ORCID</h5>
@@ -159,7 +159,7 @@
                     none
                   <% end %>
 
-                  <% if claim.done? %>
+                  <% if claim.done? && claim.claimed_at %>
                     <h5>Claimed</h5>
                     <%= l claim.claimed_at, format: :medium %>
                   <% else %>

@@ -131,6 +131,14 @@ module ApplicationHelper
     end
   end
 
+  def state_label(state)
+    case state
+    when "done" then "label-success"
+    when "failed" then "label-danger"
+    else "label-default"
+    end
+  end
+
   def data_tags_for_api
     data = { per_page: 15, model: controller.controller_name, host: ENV['LAGOTTO_URL'] }
     data[:page] = @page if @page.present?
