@@ -280,7 +280,6 @@ class User < ActiveRecord::Base
     logger = Logger.new(STDOUT)
 
     result = push_github_identifier(options)
-    logger.info result.inspect
 
     if result.body["skip"]
     elsif result.body["errors"]

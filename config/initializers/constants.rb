@@ -27,7 +27,7 @@ URL_FORMAT = %r(\A(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5
 QUEUE_OPTIONS = ["high", "default", "low"]
 
 # Version of ORCID API
-ORCID_VERSION = '2.0'
+ORCID_VERSION = '2.1'
 
 # ORCID schema
 ORCID_SCHEMA = 'https://raw.githubusercontent.com/ORCID/ORCID-Source/master/orcid-model/src/main/resources/orcid-message-1.2.xsd'

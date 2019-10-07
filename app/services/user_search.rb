@@ -2,7 +2,7 @@ class UserSearch < Base
   # include helper module for caching infrequently changing resources
   include Cacheable
 
-  attr_reader :uid, :name, :family_name, :given_names, :github, :created_at, :updated_at
+  attr_reader :uid, :name, :family_name, :given_names, :github, :created_at, :created, :updated_at
 
   def initialize(item, options={})
     @uid = item.dig("orcid-identifier", "path")
