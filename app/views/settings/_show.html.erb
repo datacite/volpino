@@ -101,9 +101,9 @@
                 <p><span class="label label-success"><%= @user.claims.done.count %> created</span> <span class="label label-warning"><%= @user.claims.deleted.count %> deleted</span> <span class="label label-default"><%= @user.claims.waiting.count %> queued</span> <span class="label label-danger"><%= @user.claims.failed.count %> failed</span></p>
                 <% if @user.claims.last %>
                   <% if Rails.env.production? %>
-                    <p>Last claim for DOI <a href="https://search.datacite.org/works/<%= @user.claims.last.doi %>"><%= @user.claims.last.doi %></a></strong> on <%= l @user.claims.last.created_at, format: :medium %>.
+                    <p>Last claim for DOI <a href="https://search.datacite.org/works/<%= @user.claims.last.doi %>"><%= @user.claims.last.doi %></a> on <%= l @user.claims.last.created_at, format: :medium %>.
                   <% else %>
-                    <p>Last claim for DOI <a href="https://search.test.datacite.org/works/<%= @user.claims.last.doi %>"><%= @user.claims.last.doi %></a></strong> on <%= l @user.claims.last.created_at, format: :medium %>.
+                    <p>Last claim for DOI <a href="https://search.test.datacite.org/works/<%= @user.claims.last.doi %>"><%= @user.claims.last.doi %></a> on <%= l @user.claims.last.created_at, format: :medium %>.
                   <% end %>
                 <% end %>
               </dd>

@@ -1,9 +1,9 @@
 <% if @flash.present? && @flash[:omniauth].blank? %>
   <% @flash.each do |name, msg| %>
-    <div class="alert alert-<%= name == "notice" ? "info" : "warning" %> landing-alert">
-      <div class="container text-center">
-        <%= content_tag :h5, msg, :id => "flash_#{name}" if msg.present? and msg.is_a?(String) %>
+    <% if msg.present? and msg.is_a?(String) %>
+      <div class="text-center flash-message alert alert-<%= name == "notice" ? "info" : "warning" %>">
+        <%= msg %>
       </div>
-    </div>
+    <% end %>
   <% end %>
 <% end %>
