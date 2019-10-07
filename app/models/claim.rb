@@ -185,20 +185,20 @@ class Claim < ActiveRecord::Base
   end
 
   def process_data(options={})
+    logger = Logger.new(STDOUT)
+
     self.start
     result = collect_data
 
     if result.body["skip"]
       claimed_at.present? ? self.finish : self.skip
     elsif result.body["errors"]
-      write_attribute(:error_messages, result.body["errors"])
+      write_attribute(:error_messages, result.body["errors"].inspect)
 
       # send notification to Sentry
-      if ENV["SENTRY_DSN"]
-        Raven.capture_exception(RuntimeError.new(result.body["errors"].first["title"]))
-      else
-        logger.error result.body["errors"].first["title"]
-      end
+      Raven.capture_exception(RuntimeError.new(result.body["errors"].first["title"])) if ENV["SENTRY_DSN"]
+
+      logger.error result.body["errors"].first["title"]
 
       self.error
     elsif result.body["notification"]
@@ -225,15 +225,7 @@ class Claim < ActiveRecord::Base
     return OpenStruct.new(body: { "skip" => true }) if to_be_created? && claimed_at.present?
 
     # user has not signed up yet or orcid_token is missing
-    return OpenStruct.new(body: { "skip" => true }) unless user.present? && user.orcid_token.present?
-
-    # user has not given permission for auto-update
-    return OpenStruct.new(body: { "skip" => true }) if source_id == "orcid_update" && user && !user.auto_update
-
-    options[:sandbox] = (ENV['ORCID_URL'] == "https://sandbox.orcid.org")
-
-    # user has not signed up yet or orcid_token is missing
-    unless (user.present? && user.orcid_token.present?)
+    unless (user.present? && orcid_token.present?)
       if ENV['NOTIFICATION_ACCESS_TOKEN'].present?
         response = notification.create_notification(options)
         response.body["notification"] = true
@@ -242,6 +234,11 @@ class Claim < ActiveRecord::Base
         return OpenStruct.new(body: { "skip" => true })
       end
     end
+
+    # user has not given permission for auto-update
+    return OpenStruct.new(body: { "skip" => true }) if source_id == "orcid_update" && user && !user.auto_update
+
+    options[:sandbox] = (ENV['ORCID_URL'] == "https://sandbox.orcid.org")
 
     # user has too many claims already
     return OpenStruct.new(body: { "errors" => [{ "title" => "Too many claims. Only 10,000 claims allowed." }] }) if user.claims.total_count > 10000
