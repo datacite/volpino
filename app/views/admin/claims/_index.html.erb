@@ -131,6 +131,7 @@
               <div class="panel-body">
                 <%= f.input :aasm_state, collection: aasm_states, include_blank: false, label: "State", input_html: { class: "form-user" } %>
                 <%= f.input :put_code, label: "Put Code", input_html: { class: "form-user" } %>
+                <%= f.input :error_messages, as: :text, label: "Error Message", input_html: { class: "form-user", rows: 5 } %>
               </div>
               <div class="panel-footer">
                 <div class="form-group pull-right">
