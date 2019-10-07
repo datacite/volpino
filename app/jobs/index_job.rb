@@ -1,5 +1,5 @@
 class IndexJob < ActiveJob::Base
-  queue_as :lupo
+  queue_as :volpino
 
   rescue_from ActiveJob::DeserializationError, Elasticsearch::Transport::Transport::Errors::BadRequest do |error|
     logger = Logger.new(STDOUT)
