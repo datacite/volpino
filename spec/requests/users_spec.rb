@@ -112,6 +112,20 @@ describe "users", type: :request, elasticsearch: true do
         expect(json.dig('data', 'attributes', 'name')).to eq("James Watt")
       end
     end
+
+    context 'when the record doesn\'t exist', vcr:true do
+      let(:new_user) { FactoryBot.build(:user, uid: "0000-0001-6528-2027", name: "Martin Fenner") }
+      let(:params) do
+        { "data" => { "type" => "users" } }
+      end
+
+      it 'updates the record' do
+        put "/users/#{new_user.uid}", params, headers
+        puts last_response.body
+        expect(last_response.status).to eq(200)
+        expect(json.dig('data', 'attributes', 'name')).to eq(new_user.name)
+      end
+    end
   end
 
   # # Test suite for DELETE /users/:id
@@ -131,18 +145,6 @@ describe "users", type: :request, elasticsearch: true do
   #     it 'returns a validation failure message' do
   #       expect(json["errors"].first).to eq("status"=>"404", "title"=>"The resource you are looking for doesn't exist.")
   #     end
-  #   end
-  # end
-
-  # describe 'POST /users/set-test-prefix' do
-  #   before { post '/users/set-test-prefix', headers: headers }
-
-  #   it 'returns success' do
-  #     expect(json['message']).to eq("Test prefix added.")
-  #   end
-
-  #   it 'returns status code 200' do
-  #     expect(response).to have_http_status(200)
   #   end
   # end
 end

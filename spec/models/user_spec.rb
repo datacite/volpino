@@ -89,28 +89,4 @@ describe User, type: :model, vcr: true, elasticsearch: true do
       expect(updated_claim.state).to eq("notified")
     end
   end
-
-  describe 'query ORCID API' do
-    it "users query name" do
-      users = UserSearch.where(query: "fenner")[:data]
-      expect(users.length).to eq(4)
-      user = users.first
-      expect(user.uid).to eq("0000-0002-8568-5429")
-    end
-
-    it "users query orcid id" do
-      users = UserSearch.where(query: "0000-0002-8568-5429")[:data]
-      expect(users.length).to eq(25)
-      user = users.first
-      expect(user.uid).to eq("0000-0002-8568-5429")
-    end
-
-    it "user" do
-      user = UserSearch.where(id: "0000-0002-8568-5429")[:data]
-      expect(user.uid).to eq("0000-0002-8568-5429")
-      expect(user.name).to eq("Martin Fenner")
-      expect(user.given_names).to eq("Martin")
-      expect(user.family_name).to eq("Fenner")
-    end
-  end
 end

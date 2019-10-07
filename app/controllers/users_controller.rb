@@ -2,7 +2,10 @@ class UsersController < BaseController
   # include helper module for caching infrequently changing resources
   include Cacheable
 
-  prepend_before_action :load_user, only: [:show, :update, :destroy]
+  # include helper module for metadata lookup from ORCID
+  include Metadatable
+
+  prepend_before_action :load_user, only: [:show, :destroy]
   before_action :set_include, :authenticate_user_from_token!
   load_and_authorize_resource :only => [:destroy]
 
@@ -90,29 +93,26 @@ class UsersController < BaseController
   def update
     logger = Logger.new(STDOUT)
 
-    if @user.created_at.present?
-      authorize! :update, @user
+    @user = User.where(uid: params[:id]).first
 
-      if @user.update_attributes(safe_params)
-        options = {}
-        options[:is_collection] = false
-        render json: UserSerializer.new(@user, options).serialized_json, status: :ok
-      else
-        logger.warn @user.errors.inspect
-        render json: serialize_errors(@user.errors), status: :unprocessable_entity
-      end
+    unless @user.present?
+      metadata = UsersController.get_orcid_metadata(params[:id])
+      fail ActiveRecord::RecordNotFound unless metadata.present?
+
+      @user = User.from_omniauth(nil, provider: "globus", uid: params[:id])
     else
-      @user = User.new(safe_params)
-      authorize! :create, @user
+      metadata = {}
+    end
 
-      if @user.save
-        options = {}
-        options[:is_collection] = false
-        render json: UserSerializer.new(@user, options).serialized_json, status: :created
-      else
-        logger.warn @user.errors.inspect
-        render json: serialize_errors(@user.errors), status: :unprocessable_entity
-      end
+    authorize! :update, @user
+
+    if @user.update_attributes(safe_params.merge(metadata))
+      options = {}
+      options[:is_collection] = false
+      render json: UserSerializer.new(@user, options).serialized_json, status: :ok
+    else
+      logger.error @user.errors.inspect
+      render json: serialize_errors(@user.errors), status: :unprocessable_entity
     end
   end
 
@@ -123,13 +123,7 @@ class UsersController < BaseController
   protected
 
   def load_user
-    if current_user.present?
-      @user = User.where(uid: params[:id]).first
-    else
-      @user = User.is_public.where(uid: params[:id]).first
-    end
-
-    @user = UserSearch.where(id: params[:id]).to_h.fetch(:data, nil) unless @user.present?
+    @user = User.where(uid: params[:id]).first
     fail ActiveRecord::RecordNotFound unless @user.present?
   end
 
@@ -149,7 +143,7 @@ class UsersController < BaseController
     ActiveModelSerializers::Deserialization.jsonapi_parse!(
       params,
       only: [
-        :uid, :name, "givenNames", "familyName", :email, :beta_tester, :role, :provider, :client
+        :id, :uid, :name, "givenNames", "familyName", :email, :beta_tester, :role, :provider, :client
       ],
       keys: {
         id: :uid, "givenNames" => :given_names, "familyName" => :family_name
