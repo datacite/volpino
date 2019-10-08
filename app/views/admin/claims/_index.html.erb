@@ -98,7 +98,11 @@
           <% if can?(:manage, @claim) && @claim && @claim.uuid == claim.uuid && (controller.action_name == "edit" or (controller.action_name == "update" and @claim.errors.present?)) %>
             <div class="panel-heading">
               <h3 class="panel-title">
-                <%= @claim.user.name %> – <%= @claim.doi %>
+                <% if claim.user_id %>
+                  <%= claim.user.name %> – <%= claim.doi %>
+                <% else %>
+                  No User – <%= claim.doi %>
+                <% end %>
               </h3>
             </div>
             
@@ -120,7 +124,11 @@
             <div class="panel-heading">
               <h3 class="panel-title">
                 <span class="label <%= state_label(claim.aasm_state) %> pull-right"><%= claim.aasm_state %></span>
-                <%= claim.user.name %> – <%= claim.doi %>
+                <% if claim.user_id %>
+                  <%= claim.user.name %> – <%= claim.doi %>
+                <% else %>
+                  No User – <%= claim.doi %>
+                <% end %>
               </h3>
             </div>
 

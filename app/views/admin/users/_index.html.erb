@@ -92,9 +92,6 @@
               <% if user.email.present? %>
                 <h5>Email</h5>
                 <%= link_to h(user.email), "mailto:#{user.email}" %>
-              <% elsif user.unconfirmed_email.present? %>
-                <h5>Email (unconfirmed)</h5>
-                <%= link_to h(user.unconfirmed_email), "mailto:#{user.unconfirmed_email}" %>
               <% end %>
 
               <h5>ORCID</h5>
