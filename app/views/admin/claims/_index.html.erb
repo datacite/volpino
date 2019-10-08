@@ -22,9 +22,9 @@
           <% @created.each do |created| %>
             <li>
               <% if params[:created] %>
-                <%= link_to icon('check-square-o').html_safe, admin_claims_path(query: params[:query], source: params[:source], user_id: params[:user_id], claim_action: params[:claim_action], state: params[:state]) %>
+                <%= link_to icon('check-square-o').html_safe, admin_claims_path(query: params[:query], source_id: params[:source_id], user_id: params[:user_id], claim_action: params[:claim_action], state: params[:state]) %>
               <% else %>
-                <%= link_to icon('square-o').html_safe, admin_claims_path(query: params[:query], source: params[:source], created: created["id"], user_id: params[:user_id], claim_action: params[:claim_action], state: params[:state]) %>
+                <%= link_to icon('square-o').html_safe, admin_claims_path(query: params[:query], source_id: params[:source_id], created: created["id"], user_id: params[:user_id], claim_action: params[:claim_action], state: params[:state]) %>
               <% end %>
  
               <div class="facet-title"><%= created["title"] %></div>
@@ -39,10 +39,10 @@
         <ul>
           <% @sources.each do |source| %>
             <li>
-              <% if params[:source] %>
+              <% if params[:source_id] %>
                 <%= link_to icon('check-square-o').html_safe, admin_claims_path(query: params[:query], user_id: params[:user_id], claim_action: params[:claim_action], state: params[:state]) %>
               <% else %>
-                <%= link_to icon('square-o').html_safe, admin_claims_path(query: params[:query], source: source["id"], user_id: params[:user_id], claim_action: params[:claim_action], state: params[:state]) %>
+                <%= link_to icon('square-o').html_safe, admin_claims_path(query: params[:query], source_id: source["id"], user_id: params[:user_id], claim_action: params[:claim_action], state: params[:state]) %>
               <% end %>
  
               <div class="facet-title"><%= source["title"] %></div>
@@ -58,9 +58,9 @@
           <% @claim_actions.each do |claim_action| %>
             <li>
               <% if params[:claim_action] %>
-                <%= link_to icon('check-square-o').html_safe, admin_claims_path(query: params[:query], user_id: params[:user_id], state: params[:state]) %>
+                <%= link_to icon('check-square-o').html_safe, admin_claims_path(query: params[:query], user_id: params[:user_id], source_id: params[:source_id], state: params[:state]) %>
               <% else %>
-                <%= link_to icon('square-o').html_safe, admin_claims_path(query: params[:query], source: params[:source], user_id: params[:user_id], claim_action: claim_action["id"], state: params[:state]) %>
+                <%= link_to icon('square-o').html_safe, admin_claims_path(query: params[:query], source_id: params[:source_id], user_id: params[:user_id], claim_action: claim_action["id"], state: params[:state]) %>
               <% end %>
 
               <div class="facet-title"><%= claim_action["title"] %></div>
@@ -76,9 +76,9 @@
           <% @states.each do |state| %>
             <li>
               <% if params[:state] %>
-                <%= link_to icon('check-square-o').html_safe, admin_claims_path(query: params[:query], user_id: params[:user_id], claim_action: params[:claim_action]) %>
+                <%= link_to icon('check-square-o').html_safe, admin_claims_path(query: params[:query], user_id: params[:user_id], source_id: params[:source_id], claim_action: params[:claim_action]) %>
               <% else %>
-                <%= link_to icon('square-o').html_safe, admin_claims_path(query: params[:query], source: params[:source], user_id: params[:user_id], claim_action: params[:claim_action], state: state["id"]) %>
+                <%= link_to icon('square-o').html_safe, admin_claims_path(query: params[:query], source_id: params[:source_id], user_id: params[:user_id], claim_action: params[:claim_action], state: state["id"]) %>
               <% end %>
 
               <div class="facet-title"><%= state["title"] %></div>
