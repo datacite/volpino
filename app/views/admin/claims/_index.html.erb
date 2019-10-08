@@ -135,7 +135,7 @@
               </div>
               <div class="panel-footer">
                 <div class="form-group pull-right">
-                  <%= link_to 'Cancel', admin_claims_path(query: params[:query]), { :remote => true, :class => 'btn btn-sm' } %>
+                  <%= link_to 'Cancel', admin_claims_path(query: params[:query], user_id: params[:user_id], source: params[:source], claim_action: params[:claim_action], state: params[:state]), { :remote => true, :class => 'btn btn-sm' } %>
                   <%= f.submit "Save ", class: "btn btn-sm btn-fill" %>
                 </div>
                 <div class="clearfix"/>
@@ -188,10 +188,10 @@
                 <span class="title pull-left"><%= sources[claim.source_id] %></span>
                 <div class="btn-toolbar">
                   <div class="btn-group btn-group-sm pull-right">
-                    <%= link_to "Delete".html_safe, admin_claim_path(claim, query: params[:query], page: params[:page]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-fill btn-sm', id: "#{claim.id}-delete" %>
+                    <%= link_to "Delete".html_safe, admin_claim_path(claim, query: params[:query], user_id: params[:user_id], source: params[:source], claim_action: params[:claim_action], state: params[:state], page: params[:page]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-fill btn-sm', id: "#{claim.id}-delete" %>
                   </div>
                   <div class="btn-group btn-group-sm pull-right">
-                    <%= link_to "Update".html_safe, edit_admin_claim_path(claim, query: params[:query], page: params[:page]), remote: true, class: 'btn btn-sm', id: "#{claim.id}-edit" %>
+                    <%= link_to "Update".html_safe, edit_admin_claim_path(claim, query: params[:query], user_id: params[:user_id], source: params[:source], claim_action: params[:claim_action], state: params[:state], page: params[:page]), remote: true, class: 'btn btn-sm', id: "#{claim.id}-edit" %>
                   </div>
                 </div>
                 <div class="clearfix"/>
