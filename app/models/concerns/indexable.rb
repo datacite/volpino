@@ -95,7 +95,7 @@ module Indexable
           sort = [{ created: "asc", uid: "asc" }]
         end
       else
-        from = ((options.dig(:page, :number) || 1) - 1) * (options.dig(:page, :size) || 25)
+        from = ((options.dig(:page, :number) || 1).to_i - 1) * (options.dig(:page, :size) || 25).to_i
         search_after = nil
         sort = options[:sort]
       end
