@@ -199,8 +199,8 @@ describe "/claims", type: :request, elasticsearch: true do
     context "as admin user" do
       it "JSON" do
         get uri, nil, headers
+        
         expect(last_response.status).to eq(200)
-    
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
         item = response["data"].first
@@ -214,8 +214,8 @@ describe "/claims", type: :request, elasticsearch: true do
     
       it "JSON" do
         get uri, nil, headers
+
         expect(last_response.status).to eq(200)
-    
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
         item = response["data"].first
