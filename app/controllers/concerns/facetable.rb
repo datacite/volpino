@@ -25,5 +25,13 @@ module Facetable
           "count" => hsh["doc_count"] }
       end
     end
+
+    def facet_by_id(arr)
+      arr.map do |hsh|
+        { "id" => hsh["key"],
+          "title" => hsh["key"],
+          "count" => hsh["doc_count"] }
+      end
+    end
   end
 end

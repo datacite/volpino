@@ -161,9 +161,8 @@ class Claim < ActiveRecord::Base
   def self.query_aggregations
     {
       created: { date_histogram: { field: 'created', interval: 'year', min_doc_count: 1 } },
-      claimed: { date_histogram: { field: 'claimed', interval: 'year', min_doc_count: 1 } },
       sources: { terms: { field: 'source_id', size: 10, min_doc_count: 1 } },
-      users: { terms: { field: 'orcid', size: 15, min_doc_count: 1 } },
+      users: { terms: { field: 'user_id', size: 15, min_doc_count: 1 } },
       claim_actions: { terms: { field: 'claim_action', size: 10, min_doc_count: 1 } },
       states: { terms: { field: 'aasm_state', size: 10, min_doc_count: 1 } }
     }

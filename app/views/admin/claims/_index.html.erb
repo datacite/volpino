@@ -36,9 +36,29 @@
           </ul>
         </div>
       <% end %>
+      <% if @users.present? %>
+        <div class="panel-body">
+          <h4>User</h4>
+          <ul>
+            <% @users.each do |user| %>
+              <li>
+                <% if params[:user_id] %>
+                  <%= link_to icon('check-square-o').html_safe, admin_claims_path(query: params[:query], source_id: params[:source_id], created: params[:created], claim_action: params[:claim_action], state: params[:state]) %>
+                <% else %>
+                  <%= link_to icon('square-o').html_safe, admin_claims_path(query: params[:query], source_id: params[:source_id], created: params[:created], user_id: user["id"], claim_action: params[:claim_action], state: params[:state]) %>
+                <% end %>
+  
+                <div class="facet-title"><%= user["title"] %></div>
+                <span class="number pull-right"><%= number_with_delimiter(user["count"]) %></span>
+                <div class="clearfix"/>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
       <% if @sources.present? %>
         <div class="panel-body">
-          <h4>Sources</h4>
+          <h4>Source</h4>
           <ul>
             <% @sources.each do |source| %>
               <li>
@@ -58,7 +78,7 @@
       <% end %>
       <% if @claim_actions.present? %>
         <div class="panel-body">
-          <h4>Actions</h4>
+          <h4>Action</h4>
           <ul>
             <% @claim_actions.each do |claim_action| %>
               <li>

@@ -66,9 +66,8 @@ class Admin::ClaimsController < ApplicationController
     @claims = response.results
 
     @created = @total > 0 ? facet_by_year(response.response.aggregations.created.buckets) : nil
-    @claimed = @total > 0 ? facet_by_year(response.response.aggregations.claimed.buckets) : nil
     @sources = @total > 0 ? facet_by_key(response.response.aggregations.sources.buckets) : nil
-    @users = @total > 0 ? facet_by_key(response.response.aggregations.users.buckets) : nil
+    @users = @total > 0 ? facet_by_id(response.response.aggregations.users.buckets) : nil
     @claim_actions = @total > 0 ? facet_by_key(response.response.aggregations.claim_actions.buckets) : nil
     @states = @total > 0 ? facet_by_key(response.response.aggregations.states.buckets) : nil
   end
