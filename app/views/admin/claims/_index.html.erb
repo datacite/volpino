@@ -115,8 +115,8 @@
             <% end %>
           </ul>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 
   <div class='col-md-9 panel-list'>
@@ -211,9 +211,9 @@
       </div>
     <% else %>
       <div class="alert alert-warning">
-        There are currently no claims
+        There are no claims
           <% unless params[:query].blank? %>
-            with <strong><%= params[:query] %></strong> in the DOI
+            with query string <strong><%= params[:query] %></strong>.
           <% end %>
       </div>
     <% end %>

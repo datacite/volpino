@@ -157,12 +157,12 @@
       </div>
     <% else %>
       <div class="alert alert-warning">
-        There are currently no users
+        There are no users
         <% unless params['role-id'].blank? %>
             with role "<%= params['role-id'].titleize %>"
         <% end %>
         <% unless params[:query].blank? %>
-            with <strong><%= params[:query] %></strong> in the name, email or API key
+            with query string <strong><%= params[:query] %></strong>.
         <% end %>
       </div>
     <% end %>

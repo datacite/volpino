@@ -99,6 +99,10 @@ module Indexable
         search_after = nil
         sort = options[:sort]
       end
+      
+      if query.present?
+        query = query.gsub("/", '\/')
+      end
 
       must = []
       must << { query_string: { query: query, fields: query_fields }} if query.present?
