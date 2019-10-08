@@ -76,7 +76,7 @@
               <%= user.display_name %>
             </h3>
           </div>
-          <% if can?(:manage, user) && @user && @user.id == user.id && (controller.action_name == "edit" or (controller.action_name == "update" and !@user.errors.empty?)) %>
+          <% if can?(:manage, user) && @user && @user.id == user.id && (controller.action_name == "edit" or (controller.action_name == "update" and @user.errors.present?)) %>
             <%= simple_form_for user, url: admin_user_path(user), html: { role: "form", remote: true } do |f| %>
               <div class="panel-body">
                 <% if user.id != current_user.id %>
@@ -141,12 +141,10 @@
               <% else %>
                 Expires <%= l user.orcid_expires_at, format: :medium %>
               <% end %>
-
-              <h5>Claims</h5>
-              <%= link_to_if user.claims.count > 0, pluralize(user.claims.count, "Claim"), admin_claims_path(source: params[:source], state: params[:state], user_id: user.orcid) %>
             </div>
             <% if can?(:manage, user) %>
               <div class="panel-footer">
+                <span class="title pull-left"><%= link_to_if user.claims.count > 0, pluralize(user.claims.count, "Claim"), admin_claims_path(source: params[:source], state: params[:state], user_id: user.orcid) %></span>
                 <div class="btn-toolbar">
                    <% if can?(:manage, user) && Time.zone.now < user.orcid_expires_at %>
                     <div class="btn-group btn-group-sm pull-right">

@@ -120,13 +120,13 @@
     <% if @claims.size > 0 %>
       <% @claims.each do |claim| %>
         <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-              <span class='pull-right'><%= claim.doi %></span>
-              <%= claim.user.credit_name %>
-            </h3>
-          </div>
-          <% if can?(:manage, claim) && @claim && @claim.id == claim.id && (controller.action_name == "edit" or (controller.action_name == "update" and !@claim.errors.empty?)) %>
+          <% if can?(:manage, claim) && @claim && @claim.id == claim.id && (controller.action_name == "edit" or (controller.action_name == "update" and @claim.errors.present?)) %>
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <%= claim.user.credit_name %> – <%= claim.doi %>
+              </h3>
+            </div>
+            
             <%= simple_form_for claim, url: admin_claim_path(claim), html: { role: "form", remote: true } do |f| %>
               <div class="panel-body">
                 <%= f.input :aasm_state, collection: aasm_states, include_blank: false, label: "State", input_html: { class: "form-user" } %>
@@ -142,8 +142,14 @@
               </div>
             <% end %>
           <% else %>
-            <div class="panel-body"> 
-              <span class="label <%= state_label(claim.state) %> pull-right"><%= claim.state %></span>
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <span class="label <%= state_label(claim.state) %> pull-right"><%= claim.state %></span>
+                <%= claim.user.credit_name %> – <%= claim.doi %>
+              </h3>
+            </div>
+
+            <div class="panel-body">
               <% if claim.error_messages.present? || current_user.is_admin_or_staff? %>
                 <% if claim.user %>
                   <h5>ORCID</h5>
@@ -168,9 +174,6 @@
                   <%= l claim.updated_at, format: :medium %>
                 <% end %>
 
-                <h5>Source</h5>
-                <%= sources[claim.source_id] %>
-
                 <% if claim.error_messages.present? %>
                   <h5>Error Message</h5>
                   <% if current_user.is_admin_or_staff? %>
@@ -182,6 +185,7 @@
             </div>
             <% if can?(:manage, claim) %>
               <div class="panel-footer">
+                <span class="title pull-left"><%= sources[claim.source_id] %></span>
                 <div class="btn-toolbar">
                   <div class="btn-group btn-group-sm pull-right">
                     <%= link_to "Delete".html_safe, admin_claim_path(claim, query: params[:query], page: params[:page]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-fill btn-sm', id: "#{claim.id}-delete" %>
@@ -190,6 +194,7 @@
                     <%= link_to "Update".html_safe, edit_admin_claim_path(claim, query: params[:query], page: params[:page]), remote: true, class: 'btn btn-sm', id: "#{claim.id}-edit" %>
                   </div>
                 </div>
+                <div class="clearfix"/>
               </div>
             <% end %>
           <% end %>
