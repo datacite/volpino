@@ -126,6 +126,7 @@ class Claim < ActiveRecord::Base
         given_names: { type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}},
         family_name: { type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}},
         github: { type: :keyword },
+        claimed: { type: :date },
         created: { type: :date },
         updated: { type: :date },
         is_active: { type: :boolean }

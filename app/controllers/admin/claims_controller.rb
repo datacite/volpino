@@ -36,34 +36,41 @@ class Admin::ClaimsController < ApplicationController
   protected
 
   def load_index
-    if !@user.is_admin_or_staff?
-      collection = @user.claims
-    elsif params[:user_id]
-      collection = Claim.where(orcid: params[:user_id])
-      @claim_count = collection.count
-      @my_claim_count = Claim.where(orcid: current_user.uid).count
-    else
-      collection = Claim
-      @my_claim_count = Claim.where(orcid: current_user.uid).count
-    end
-    collection = collection.q(params[:query]) if params[:query]
-    if params[:source].present?
-      collection = collection.where(source_id: params[:source])
-      @source = collection.group(:source_id).count.first
-    end
-    if params[:claim_action].present?
-      collection = collection.where(claim_action: params[:claim_action])
-      @claim_action = collection.group(:claim_action).count.first
-    end
-    if params[:state].present?
-      collection = collection.where(aasm_state: params[:state])
-      @state = collection.group(:aasm_state).count.first
-    end
-    @sources = collection.where.not(source_id: nil).group(:source_id).count
-    @claim_actions = collection.where.not(claim_action: nil).group(:claim_action).count
-    @states = collection.where.not(aasm_state: nil).group(:aasm_state).count
-    @claims = collection.order_by_date.page(params[:page])
+    sort = case params[:sort]
+            when "relevance" then { "_score" => { order: 'desc' }}
+            when "doi" then { "doi.raw" => { order: 'asc' }}
+            when "-doi" then { "doi.raw" => { order: 'desc' }}
+            when "orcid" then { orcid: { order: 'asc' }}
+            when "-orcid" then { orcid: { order: 'desc' }}
+            when "created" then { created: { order: 'asc' }}
+            when "-created" then { created: { order: 'desc' }}
+            when "updated" then { updated: { order: 'asc' }}
+            when "-updated" then { updated: { order: 'desc' }}
+            else { "updated" => { order: 'desc' }}
+            end
+
     @page = params[:page] || 1
+  
+    response = Claim.query(params[:query],
+                            dois: params[:dois],
+                            orcid: params[:user_id],
+                            source_id: params[:source_id],
+                            claim_action: params[:claim_action],
+                            state: params[:state],
+                            created: params[:created],
+                            claimed: params[:claimed],
+                            page: { number: @page }, 
+                            sort: sort)
+  
+    @total = response.results.total
+    @claims = response.results
+
+    @created = @total > 0 ? facet_by_year(response.response.aggregations.created.buckets) : nil
+    @claimed = @total > 0 ? facet_by_year(response.response.aggregations.claimed.buckets) : nil
+    @sources = @total > 0 ? facet_by_key(response.response.aggregations.sources.buckets) : nil
+    @users = @total > 0 ? facet_by_key(response.response.aggregations.users.buckets) : nil
+    @claim_actions = @total > 0 ? facet_by_key(response.response.aggregations.claim_actions.buckets) : nil
+    @states = @total > 0 ? facet_by_key(response.response.aggregations.states.buckets) : nil
   end
 
   def load_user

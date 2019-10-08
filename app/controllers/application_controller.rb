@@ -1,5 +1,8 @@
 class ApplicationController < ActionController::Base
   include Authenticable
+
+  # include helper module for facets
+  include Facetable
   
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
