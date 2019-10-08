@@ -31,7 +31,7 @@ class Claim < ActiveRecord::Base
   belongs_to :user, foreign_key: "orcid", primary_key: "uid", inverse_of: :claims
 
   before_create :create_uuid
-  after_commit :queue_claim_job, on: [:create, :update], if: Proc.new { |claim| claim.waiting? }
+  after_commit :queue_claim_job, on: [:create, :update]
 
   validates :orcid, :doi, :source_id, presence: true
 

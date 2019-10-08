@@ -94,6 +94,29 @@ describe "/claims", type: :request, elasticsearch: true do
       end
     end
 
+    context "as valid user" do
+      let(:user) { FactoryBot.create(:valid_user) }
+      let(:doi) { "10.14454/1X4X-9056" }
+      let(:params) do
+        { "claim" => { "orcid" => user.orcid,
+                       "doi" => doi,
+                       "claim_action" => "create",
+                       "source_id" => "orcid_search" } }
+      end
+
+      it "JSON" do
+        post uri, params, headers
+
+        expect(last_response.status).to eq(202)
+        response = JSON.parse(last_response.body)
+        expect(response["errors"]).to be_nil
+        expect(response.dig("data", "attributes", "orcid")).to eq("https://orcid.org/0000-0001-6528-2027")
+        expect(response.dig("data", "attributes", "doi")).to eq("https://doi.org/10.14454/1X4X-9056")
+        expect(response.dig("data", "attributes", "sourceId")).to eq("orcid_search")
+        expect(response.dig("data", "attributes", "state")).to eq("waiting")      
+      end
+    end
+
     context "without orcid" do
       let(:params) do
         { "claim" => { "uuid" => claim.uuid,
