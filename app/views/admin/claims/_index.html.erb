@@ -109,7 +109,7 @@
                 <% if claim.user %>
                   <%= claim.user.name %> – <%= claim.doi %>
                 <% else %>
-                  No User – <%= claim.doi %>
+                  <%= claim.user_id %> – <%= claim.doi %>
                 <% end %>
               </h3>
             </div>
@@ -135,16 +135,14 @@
                 <% if claim.user %>
                   <%= claim.user.name %> – <%= claim.doi %>
                 <% else %>
-                  No User – <%= claim.doi %>
+                  <%= claim.user_id %> – <%= claim.doi %>
                 <% end %>
               </h3>
             </div>
 
             <div class="panel-body">
-              <% if claim.user %>
-                <h5>ORCID</h5>
-                <%= link_to h(claim.user_id), admin_users_path(query: claim.user_id) %>
-              <% end %>
+              <h5>ORCID</h5>
+              <%= link_to h(claim.user_id), admin_users_path(query: claim.user_id) %>
               
               <h5>DOI</h5>
               <%= link_to h(claim.doi), "#{ENV['SEARCH_URL']}/works/#{claim.doi}" %>
