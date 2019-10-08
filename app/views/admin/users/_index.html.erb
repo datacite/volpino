@@ -16,42 +16,46 @@
 <div class="row">
   <div class='col-md-3'>
     <div class="panel facets">
-      <div class="panel-body">
-        <h4>Year Created</h4>
-        <ul>
-          <% @created.each do |created| %>
-            <li>
-              <% if params[:created] %>
-                <%= link_to icon('check-square-o').html_safe, admin_users_path(query: params[:query], role_id: params[:role_id]) %>
-              <% else %>
-                <%= link_to icon('square-o').html_safe, admin_users_path(query: params[:query], created: created["id"], role_id: params[:role_id]) %>
-              <% end %>
- 
-              <div class="facet-title"><%= created["title"] %></div>
-              <span class="number pull-right"><%= number_with_delimiter(created["count"]) %></span>
-              <div class="clearfix"/>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-      <div class="panel-body">
-        <h4>Role</h4>
-        <ul>
-          <% @roles.each do |role| %>
-            <li>
-              <% if params[:role_id] %>
-                <%= link_to icon('check-square-o').html_safe, admin_users_path(query: params[:query], created: params[:created]) %>
-              <% else %>
-                <%= link_to icon('square-o').html_safe, admin_users_path(query: params[:query], role_id: role["id"], created: params[:created]) %>
-              <% end %>
- 
-              <div class="facet-title"><%= role["title"] %></div>
-              <span class="number pull-right"><%= number_with_delimiter(role["count"]) %></span>
-              <div class="clearfix"/>
-            </li>
-          <% end %>
-        </ul>
-      </div>
+      <% if @created.present? %>
+        <div class="panel-body">
+          <h4>Year Created</h4>
+          <ul>
+            <% @created.each do |created| %>
+              <li>
+                <% if params[:created] %>
+                  <%= link_to icon('check-square-o').html_safe, admin_users_path(query: params[:query], role_id: params[:role_id]) %>
+                <% else %>
+                  <%= link_to icon('square-o').html_safe, admin_users_path(query: params[:query], created: created["id"], role_id: params[:role_id]) %>
+                <% end %>
+  
+                <div class="facet-title"><%= created["title"] %></div>
+                <span class="number pull-right"><%= number_with_delimiter(created["count"]) %></span>
+                <div class="clearfix"/>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <% if @roles.present? %>
+        <div class="panel-body">
+          <h4>Role</h4>
+          <ul>
+            <% @roles.each do |role| %>
+              <li>
+                <% if params[:role_id] %>
+                  <%= link_to icon('check-square-o').html_safe, admin_users_path(query: params[:query], created: params[:created]) %>
+                <% else %>
+                  <%= link_to icon('square-o').html_safe, admin_users_path(query: params[:query], role_id: role["id"], created: params[:created]) %>
+                <% end %>
+  
+                <div class="facet-title"><%= role["title"] %></div>
+                <span class="number pull-right"><%= number_with_delimiter(role["count"]) %></span>
+                <div class="clearfix"/>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
     </div>
   </div>
 
