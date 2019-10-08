@@ -36,7 +36,7 @@ class ClaimsController < BaseController
     else
       response = Claim.query(params[:query],
                              dois: params[:dois],
-                             orcid: params[:user_id],
+                             user_id: params[:user_id],
                              source_id: params[:source_id],
                              claim_action: params[:claim_action],
                              state: params[:state],

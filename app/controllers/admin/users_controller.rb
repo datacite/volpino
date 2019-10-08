@@ -44,23 +44,28 @@ class Admin::UsersController < ApplicationController
   def load_index
     authorize! :manage, Phrase
 
-    collection = User
+    sort = case params[:sort]
+           when "relevance" then { "_score" => { order: 'desc' }}
+           when "name" then { "family_name.raw" => { order: 'asc' }}
+           when "-name" then { "family_name.raw" => { order: 'desc' }}
+           when "created" then { created_at: { order: 'asc' }}
+           when "-created" then { created_at: { order: 'desc' }}
+           else { "family_name.raw" => { order: 'asc' }}
+           end
 
-    if params['role-id']
-      collection = collection.where(role_id: params['role-id'])
-      @role = User.where(role_id: params['role-id']).group(:role_id).count.first
-    end
+    @page = params[:page] || 1
 
-    if params['beta-tester']
-      collection = collection.where(beta_tester: true)
-      @group = User.where(beta_tester: true)
-    end
+    response = User.query(params[:query],
+                          created: params[:created],
+                          role_id: params[:role_id],
+                          page: { number: @page }, 
+                          sort: sort)
 
-    collection = collection.q(params[:query]) if params[:query]
+    @total = response.results.total
+    @users = response.results
 
-    @roles = collection.where.not(role_id: nil).group(:role_id).count
-    @groups = collection.where(:beta_tester => true)
-    @users = collection.ordered.page(params[:page])
+    @created = @total > 0 ? facet_by_year(response.response.aggregations.created.buckets) : nil
+    @roles = @total > 0 ? facet_by_key(response.response.aggregations.roles.buckets) : nil
   end
 
   private

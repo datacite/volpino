@@ -50,4 +50,12 @@ namespace :user do
   task import: :environment do
     User.import(index: User.inactive_index)
   end
+
+  desc "Update all claims counts"
+  task :update_counts => :environment do
+    User.find_each do |user|
+      user.save
+      puts "User #{user.uid} has #{user.claims_count} claims."
+    end
+  end
 end

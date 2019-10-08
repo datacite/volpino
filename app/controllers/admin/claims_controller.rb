@@ -37,23 +37,23 @@ class Admin::ClaimsController < ApplicationController
 
   def load_index
     sort = case params[:sort]
-            when "relevance" then { "_score" => { order: 'desc' }}
-            when "doi" then { "doi.raw" => { order: 'asc' }}
-            when "-doi" then { "doi.raw" => { order: 'desc' }}
-            when "orcid" then { orcid: { order: 'asc' }}
-            when "-orcid" then { orcid: { order: 'desc' }}
-            when "created" then { created: { order: 'asc' }}
-            when "-created" then { created: { order: 'desc' }}
-            when "updated" then { updated: { order: 'asc' }}
-            when "-updated" then { updated: { order: 'desc' }}
-            else { "updated" => { order: 'desc' }}
-            end
+           when "relevance" then { "_score" => { order: 'desc' }}
+           when "doi" then { "doi.raw" => { order: 'asc' }}
+           when "-doi" then { "doi.raw" => { order: 'desc' }}
+           when "orcid" then { orcid: { order: 'asc' }}
+           when "-orcid" then { orcid: { order: 'desc' }}
+           when "created" then { created: { order: 'asc' }}
+           when "-created" then { created: { order: 'desc' }}
+           when "updated" then { updated: { order: 'asc' }}
+           when "-updated" then { updated: { order: 'desc' }}
+           else { "updated" => { order: 'desc' }}
+           end
 
     @page = params[:page] || 1
   
     response = Claim.query(params[:query],
                             dois: params[:dois],
-                            orcid: params[:user_id],
+                            user_id: params[:user_id],
                             source_id: params[:source_id],
                             claim_action: params[:claim_action],
                             state: params[:state],

@@ -110,13 +110,13 @@ module Indexable
       # filters for some classes
       if self.name == "Claim"
         must << { terms: { "doi.keyword" => options[:dois].to_s.split(",") }} if options[:dois].present?
-        must << { term: { orcid: options[:orcid] }} if options[:orcid].present?
+        must << { term: { user_id: options[:user_id] }} if options[:user_id].present?
         must << { term: { source_id: options[:source_id] }} if options[:source_id].present?
         must << { term: { claim_action: options[:claim_action] }} if options[:claim_action].present?
         must << { terms: { aasm_state: options[:state].to_s.split(",") }} if options[:state].present?
         must << { range: { claimed: { gte: "#{options[:claimed].split(",").min}||/y", lte: "#{options[:claimed].split(",").max}||/y", format: "yyyy" }}} if options[:claimed].present?
       elsif self.name == "User"
-
+        must << { term: { role_id: options[:role_id] }} if options[:role_id].present?
       end
 
       # ES query can be optionally defined in different ways

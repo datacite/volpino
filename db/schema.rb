@@ -104,11 +104,11 @@ ActiveRecord::Schema.define(version: 2019_09_10_071132) do
     t.boolean "is_public", default: true
     t.string "provider_id"
     t.string "client_id"
-    t.string "sandbox_id"
     t.boolean "beta_tester", default: false
     t.string "organization", limit: 191
     t.string "orcid_token", limit: 191
     t.datetime "orcid_expires_at", default: "1970-01-01 00:00:00", null: false
+    t.string "sandbox_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["family_name", "given_names"], name: "index_users_on_family_name_and_given_names"
     t.index ["github"], name: "index_users_on_github", unique: true

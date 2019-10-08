@@ -15,57 +15,46 @@
 
 <div class="row">
   <div class='col-md-3'>
-    <% if @roles.count > 0 %>
-      <div class="panel facets">
-        <div class="panel-body">
-          <h4>Roles</h4>
-          <ul>
-            <% if @role %>
-              <li class="active">
-                <%= link_to icon('check-square-o').html_safe, admin_users_path('beta-tester' => params['beta-tester']) %>
-                <div class="facet-title"><%= @role.first.titleize %></div>
-                <span class="number pull-right"><%= number_with_delimiter(@role.last) %></span>
-                <div class="clearfix"/>
-              </li>
-            <% else %>
-              <% @roles.each do |role| %>
-                <li>
-                  <%= link_to icon('square-o').html_safe, admin_users_path('role-id' => role.first, 'beta-tester' => params['beta-tester']) %>
-                  <div class="facet-title"><%= role.first.titleize %></div>
-                  <span class="number pull-right"><%= number_with_delimiter(role.last) %></span>
-                  <div class="clearfix"/>
-                </li>
+    <div class="panel facets">
+      <div class="panel-body">
+        <h4>Year Created</h4>
+        <ul>
+          <% @created.each do |created| %>
+            <li>
+              <% if params[:created] %>
+                <%= link_to icon('check-square-o').html_safe, admin_users_path(query: params[:query], role_id: params[:role_id]) %>
+              <% else %>
+                <%= link_to icon('square-o').html_safe, admin_users_path(query: params[:query], created: created["id"], role_id: params[:role_id]) %>
               <% end %>
-            <% end %>
-          </ul>
-        </div>
+ 
+              <div class="facet-title"><%= created["title"] %></div>
+              <span class="number pull-right"><%= number_with_delimiter(created["count"]) %></span>
+              <div class="clearfix"/>
+            </li>
+          <% end %>
+        </ul>
       </div>
-    <% end %>
-    <% if @groups.count > 0 %>
-      <div class="panel facets">
-        <div class="panel-body">
-          <h4>Groups</h4>
-          <ul>
-            <% if @group %>
-              <li class="active">
-                <%= link_to icon('check-square-o').html_safe, admin_users_path('role-id' => params['role-id']) %>
-                <div class="facet-title">Beta Testers</div>
-                <span class="number pull-right"><%= number_with_delimiter(@group.count) %></span>
-                <div class="clearfix"/>
-              </li>
-            <% else %>
-              <li class="active">
-                <%= link_to icon('square-o').html_safe, admin_users_path('role-id' => params['role-id'], 'beta-tester' => true) %>
-                <div class="facet-title">Beta Testers</div>
-                <span class="number pull-right"><%= number_with_delimiter(@groups.count) %></span>
-                <div class="clearfix"/>
-              </li>
-            <% end %>
-          </ul>
-        </div>
+      <div class="panel-body">
+        <h4>Roles</h4>
+        <ul>
+          <% @roles.each do |role| %>
+            <li>
+              <% if params[:role_id] %>
+                <%= link_to icon('check-square-o').html_safe, admin_users_path(query: params[:query], created: params[:created]) %>
+              <% else %>
+                <%= link_to icon('square-o').html_safe, admin_users_path(query: params[:query], role_id: role["id"], created: params[:created]) %>
+              <% end %>
+ 
+              <div class="facet-title"><%= role["title"] %></div>
+              <span class="number pull-right"><%= number_with_delimiter(role["count"]) %></span>
+              <div class="clearfix"/>
+            </li>
+          <% end %>
+        </ul>
       </div>
-    <% end %>
+    </div>
   </div>
+
   <div class='col-md-9 panel-list'>
     <% if @users.size > 0 %>
       <% @users.each do |user| %>
@@ -73,13 +62,13 @@
           <div class="panel-heading">
             <h3 class="panel-title">
               <span class='pull-right'><%= user.role_name %></span>
-              <%= user.display_name %>
+              <%= user.name %>
             </h3>
           </div>
-          <% if can?(:manage, user) && @user && @user.id == user.id && (controller.action_name == "edit" or (controller.action_name == "update" and @user.errors.present?)) %>
-            <%= simple_form_for user, url: admin_user_path(user), html: { role: "form", remote: true } do |f| %>
+          <% if can?(:manage, @user) && @user && @user.uid == user.uid && (controller.action_name == "edit" or (controller.action_name == "update" and @user.errors.present?)) %>
+            <%= simple_form_for @user, url: admin_user_path(@user), html: { role: "form", remote: true } do |f| %>
               <div class="panel-body">
-                <% if user.id != current_user.id %>
+                <% if user.uid != current_user.uid %>
                   <%= f.input :role_id, collection: Role.all[:data], include_blank: false, input_html: { class: "form-user" } %>
                 <% end %>
 
@@ -109,7 +98,7 @@
               <% end %>
 
               <h5>ORCID</h5>
-              <%= link_to h(user.orcid), user.orcid_as_url %>              
+              <%= link_to h(user.uid), "https://orcid.org/" + user.uid %>              
 
               <h5>Record</h5>
               <% if user.is_public %>
@@ -131,33 +120,33 @@
               <% end %>
 
               <h5>Account created</h5>
-              <%= l user.created_at, format: :medium %>
+              <%= l DateTime.parse(user.created), format: :medium %>
 
               <h5>ORCID Token</h5>
               <% if user.orcid_token.blank? %>
                 Missing
-              <% elsif user.orcid_expires_at < Time.zone.now %>
+              <% elsif DateTime.parse(user.orcid_expires_at) < Time.zone.now %>
                 Expired
               <% else %>
-                Expires <%= l user.orcid_expires_at, format: :medium %>
+                Expires <%= l DateTime.parse(user.orcid_expires_at), format: :medium %>
               <% end %>
             </div>
             <% if can?(:manage, user) %>
               <div class="panel-footer">
-                <span class="title pull-left"><%= link_to_if user.claims.count > 0, pluralize(user.claims.count, "Claim"), admin_claims_path(source: params[:source], state: params[:state], user_id: user.orcid) %></span>
+                <span class="title pull-left"><%= link_to_if user.claims_count > 0, pluralize(user.claims_count, "Claim"), admin_claims_path(source: params[:source], state: params[:state], user_id: user.uid) %></span>
                 <div class="btn-toolbar">
                    <% if can?(:manage, user) && Time.zone.now < user.orcid_expires_at %>
                     <div class="btn-group btn-group-sm pull-right">
-                      <%= link_to 'delete token', admin_user_path(user, user: { orcid_token: nil, orcid_expires_at: Time.zone.now }), { method: :put, remote: true, class: 'btn btn-sm btn-warning btn-fill' } %>
+                      <%= link_to 'delete token', admin_user_path(user.uid, user: { orcid_token: nil, orcid_expires_at: Time.zone.now }), { method: :put, remote: true, class: 'btn btn-sm btn-warning btn-fill' } %>
                     </div>
                   <% end %>
                   <% if user.uid != current_user.uid && can?(:manage, Phrase) %>
                     <div class="btn-group btn-group-sm pull-right">
-                      <%= link_to "Delete".html_safe, admin_user_path(user, query: params[:query], 'role-id' => params['role-id'], page: params[:page]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-fill btn-sm', id: "#{user.id}-delete" %>
+                      <%= link_to "Delete".html_safe, admin_user_path(user.uid, query: params[:query], 'role-id' => params['role-id'], page: params[:page]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-fill btn-sm', id: "#{user.id}-delete" %>
                     </div>
                   <% end %>
                   <div class="btn-group btn-group-sm pull-right">
-                    <%= link_to "Update".html_safe, edit_admin_user_path(user, query: params[:query], 'role-id' => params['role-id'], page: params[:page]), remote: true, class: 'btn btn-sm', id: "#{user.id}-edit" %>
+                    <%= link_to "Update".html_safe, edit_admin_user_path(user.uid, query: params[:query], 'role-id' => params['role-id'], page: params[:page]), remote: true, class: 'btn btn-sm', id: "#{user.id}-edit" %>
                   </div>
                 </div>
               </div>

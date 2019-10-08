@@ -68,11 +68,19 @@ class User < ActiveRecord::Base
       indexes :name,          type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}
       indexes :given_names,   type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}
       indexes :family_name,   type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}
+      indexes :email,         type: :keyword
       indexes :github,        type: :keyword
       indexes :role_id,       type: :keyword
+      indexes :role_name,     type: :keyword
+      indexes :orcid_token,   type: :keyword
       indexes :created,       type: :date
       indexes :updated,       type: :date
+      indexes :orcid_expires_at, type: :date
       indexes :is_active,     type: :boolean
+      indexes :beta_tester,   type: :boolean
+      indexes :is_public,     type: :boolean
+      indexes :auto_update,   type: :boolean
+      indexes :claims_count,  type: :integer
     end
   end
 
@@ -84,16 +92,31 @@ class User < ActiveRecord::Base
       "name" => name,
       "given_names" => given_names,
       "family_name" => family_name,
+      "email" => email,
       "github" => github,
       "created" => created,
       "updated" => updated,
       "role_id" => role_id,
-      "is_active" => is_active
+      "role_name" => role_name,
+      "beta_tester" => beta_tester,
+      "is_public" => is_public,
+      "auto_update" => auto_update,
+      "is_active" => is_active,
+      "orcid_token" => orcid_token,
+      "orcid_expires_at" => orcid_expires_at,
+      "claims_count" => claims_count
     }
   end
 
   def self.query_fields
     ['uid^10', 'name^5', 'given_names^5', 'family_name^5', '_all']
+  end
+
+  def self.query_aggregations
+    {
+      created: { date_histogram: { field: 'created', interval: 'year', min_doc_count: 1 } },
+      roles: { terms: { field: 'role_id', size: 15, min_doc_count: 1 } }
+    }
   end
 
   def self.from_omniauth(auth, options={})
@@ -102,6 +125,10 @@ class User < ActiveRecord::Base
 
   def queue_user_job
     UserJob.perform_later(self)
+  end
+
+  def claims_count
+    claims.size
   end
 
   # Helper method to check for admin user
