@@ -63,7 +63,7 @@ class Claim < ActiveRecord::Base
     end
 
     event :skip do
-      transitions from: [:waiting, :working, :deleted, :notified], to: :ignored
+      transitions from: [:waiting, :working, :failed, :deleted, :notified], to: :ignored
     end
   end
 
