@@ -32,7 +32,7 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
 
     it 'already exists' do
       FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/1X4X-9056", claim_action: "create", claimed_at: Time.zone.now)
-      expect(subject.collect_data.body).to eq("skip"=>true)
+      expect(subject.collect_data.body).to eq("Reason"=>"already claimed.", "skip"=>true)
     end
 
     it 'delete claim' do
@@ -47,20 +47,20 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
       user = FactoryBot.create(:valid_user, auto_update: false)
       subject = FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/v6e2-yc93", source_id: "orcid_update")
       response = subject.collect_data
-      expect(response.body).to eq("skip"=>true)
+      expect(response.body).to eq("reason"=>"No auto-update permission", "skip"=>true)
     end
 
     it 'invalid token' do
       user = FactoryBot.create(:invalid_user)
       subject = FactoryBot.create(:claim, user: user, orcid: "0000-0003-1419-240x", doi: "10.14454/v6e2-yc93", source_id: "orcid_update")
       response = subject.collect_data
-      expect(response.body).to eq("skip"=>true)
+      expect(response.body).to eq("reason"=>"No user and/or ORCID token", "skip"=>true)
     end
 
     it 'no user' do
       subject = FactoryBot.create(:claim, orcid: "0000-0001-6528-2027", doi: "10.14454/v6e2-yc93")
       response = subject.collect_data
-      expect(subject.collect_data.body).to eq("skip"=>true)
+      expect(subject.collect_data.body).to eq("reason"=>"No user and/or ORCID token", "skip"=>true)
     end
   end
 
