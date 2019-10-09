@@ -1,15 +1,16 @@
 <div class="row">
-  <div class='col-md-9 col-md-offset-3'>
-    <div id="search" class="search-wide">
-      <%= form_tag(admin_users_path, :method => "get", :class => "form-horizontal", :role => "form") do %>
-        <div class="input-group">
-          <%= search_field_tag :query, params[:query], :placeholder => "Search user", :class => "form-control" %>
-          <div class="input-group-btn">
-            <button type="submit" class="btn btn-primary hidden-xs">Search</button>
-          </div>
+  <div class='col-md-9 col-md-offset-3 panel-list'>
+    <%= form_tag(admin_users_path, :method => "get", :class => "form-horizontal", :role => "form") do %>
+      <div id="search" class="input-group">
+        <%= search_field_tag :query, params[:query], :placeholder => "Search user", :class => "form-control" %>
+        <div class="input-group-btn">
+          <button type="submit" class="btn btn-primary hidden-xs">Search</button>
         </div>
+      </div>
+      <% if params[:query] || params[:created] || params[:role_id] %>
+        <span class="help-block"> <%= link_to 'Reset All', admin_users_path %></span>
       <% end %>
-    </div>
+    <% end %>
   </div>
 </div>
 
