@@ -19,7 +19,7 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
 
   describe 'collect_data', :order => :defined do
     let(:user) { FactoryBot.create(:valid_user) }
-    let(:put_code) { 1068517 }
+    let(:put_code) { 1069293 }
 
     subject { FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/1X4X-9056") }
 
@@ -66,7 +66,7 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
 
   describe 'process_data', :order => :defined do
     let(:user) { FactoryBot.create(:valid_user) }
-    let(:put_code) { 1068520 }
+    let(:put_code) { 1069294 }
 
     subject { FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/j6gr-cf48") }
 

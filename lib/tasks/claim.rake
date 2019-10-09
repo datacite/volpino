@@ -55,7 +55,7 @@ namespace :claim do
   task :stale => :environment do
     Claim.stale.find_each do |claim|
       ClaimJob.perform_later(claim)
-      puts "Pushing stale claim #{claim.doi} for user #{claim.orcid} to ORCID."
+      puts "[#{claim.aasm_state}] Pushing stale claim #{claim.doi} for user #{claim.orcid} to ORCID."
     end
   end
 
@@ -63,7 +63,7 @@ namespace :claim do
   task :failed => :environment do
     Claim.failed.find_each do |claim|
       ClaimJob.perform_later(claim)
-      puts "Pushing failed claim #{claim.doi} for user #{claim.orcid} to ORCID."
+      puts "[#{claim.aasm_state}] Pushed failed claim #{claim.doi} for user #{claim.orcid} to ORCID."
     end
   end
 
@@ -74,7 +74,7 @@ namespace :claim do
       next unless claim.user.present?
 
       ClaimJob.perform_later(claim)
-      puts "Pushing ignored claim #{claim.doi} for user #{claim.orcid} to ORCID."
+      puts "[#{claim.aasm_state}] Pushed ignored claim #{claim.doi} for user #{claim.orcid} to ORCID."
     end
   end
 

@@ -121,7 +121,7 @@ class ClaimsController < BaseController
       if @claim.save
         render json: ClaimSerializer.new(@claim, options).serialized_json, status: :accepted
       else
-        logger.warn @claim.errors.inspect
+        logger.error @claim.errors.inspect
         render json: serialize_errors(@claim.errors), include: @include, status: :unprocessable_entity
       end
     else

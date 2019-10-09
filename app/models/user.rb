@@ -41,8 +41,6 @@ class User < ActiveRecord::Base
   validate :validate_email
 
   scope :q, ->(query) { where("name like ? OR uid like ? OR email like ? OR github like ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%") }
-  scope :ordered, -> { order("created_at DESC") }
-  scope :order_by_name, -> { order("ISNULL(family_name), family_name") }
   scope :is_public, -> { where("is_public = 1") }
   scope :with_github, -> { where("github IS NOT NULL AND github_put_code IS NULL") }
 

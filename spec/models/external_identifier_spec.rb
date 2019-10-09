@@ -5,7 +5,7 @@ describe ExternalIdentifier, type: :model, vcr: true, elasticsearch: true do
   let(:value) { "mfenner" }
   let(:url) { "https://github.com/#{value}" }
   let(:user) { FactoryBot.create(:valid_user) }
-  let(:put_code) { "5534" }
+  let(:put_code) { "5581" }
 
   subject { ExternalIdentifier.new(type: type, value: value, url: url, orcid: user.uid, orcid_token: user.orcid_token, put_code: put_code) }
 

@@ -73,16 +73,14 @@ class Claim < ActiveRecord::Base
   alias_attribute :user_id, :orcid
 
   scope :by_state, ->(state) { where(aasm_state: state) }
-  scope :order_by_date, -> { order("updated_at DESC") }
-
-  scope :waiting, -> { by_state("waiting").order_by_date }
-  scope :working, -> { by_state("working").order_by_date }
-  scope :failed, -> { by_state("failed").order_by_date }
-  scope :done, -> { by_state("done").order_by_date }
-  scope :ignored, -> { by_state("ignored").order_by_date }
-  scope :deleted, -> { by_state("deleted").order_by_date }
-  scope :notified, -> { by_state("notified").order_by_date }
-  scope :stale, -> { where(aasm_state: ["waiting", "working"]).order_by_date }
+  scope :waiting, -> { by_state("waiting") }
+  scope :working, -> { by_state("working") }
+  scope :failed, -> { by_state("failed") }
+  scope :done, -> { by_state("done") }
+  scope :ignored, -> { by_state("ignored") }
+  scope :deleted, -> { by_state("deleted") }
+  scope :notified, -> { by_state("notified") }
+  scope :stale, -> { where(aasm_state: ["waiting", "working"])}
   scope :total, ->(duration) { where(updated_at: (Time.zone.now.beginning_of_hour - duration.hours)..Time.zone.now.beginning_of_hour) }
 
   scope :q, ->(query) { where("doi like ?", "%#{query}%") }

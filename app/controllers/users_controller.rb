@@ -85,7 +85,7 @@ class UsersController < BaseController
       options[:is_collection] = false
       render json: UserSerializer.new(@user, options).serialized_json, status: :created
     else
-      logger.warn @user.errors.inspect
+      logger.error @user.errors.inspect
       render json: serialize_errors(@user.errors), status: :unprocessable_entity
     end
   end

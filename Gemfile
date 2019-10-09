@@ -9,7 +9,7 @@ gem "config"
 gem 'tzinfo-data'
 gem 'rake', '~> 12.0'
 gem 'sentry-raven', '~> 2.9'
-gem 'orcid_client', '~> 0.5', '>= 0.6.2'
+gem 'orcid_client', '~> 0.5', '>= 0.8'
 gem 'addressable', "~> 2.3"
 gem 'postrank-uri', '~> 1.0', '>= 1.0.23'
 gem 'nilify_blanks', '~> 1.3'
@@ -55,7 +55,7 @@ gem 'cancancan', '~> 2.0'
 gem 'mailgun-ruby', '~> 1.1'
 gem 'gravtastic', '~> 3.2', '>= 3.2.6'
 
-gem 'maremma', '>= 4.1'
+gem 'maremma', '>= 4.3'
 gem 'elasticsearch', '~> 6.8'
 gem 'elasticsearch-model', '~> 6.0.0', require: 'elasticsearch/model'
 gem 'elasticsearch-rails', '~> 6.0.0'
@@ -67,7 +67,9 @@ gem 'graphql-batch', '~> 0.4.0'
 gem 'batch-loader', '~> 1.4', '>= 1.4.1'
 gem 'graphql-cache', '~> 0.6.0', git: "https://github.com/stackshareio/graphql-cache"
 gem 'apollo-federation', '~> 0.4.0'
+gem 'google-protobuf', '3.10.0.rc.1'
 
+gem 'sprockets', '~> 3.7', '>= 3.7.2'
 gem 'sprockets-rails', '~> 3.2', '>= 3.2.1', :require => 'sprockets/railtie'
 gem 'coffee-rails', '~> 4.1', '>= 4.1.1'
 gem 'sassc-rails', '>= 2.1.0'
