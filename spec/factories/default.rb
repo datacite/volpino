@@ -22,7 +22,7 @@ FactoryBot.define do
 
     factory :valid_user do
       uid { '0000-0001-6528-2027' }
-      orcid_token { ENV['ACCESS_TOKEN'] }
+      orcid_token { ENV['ORCID_TOKEN'] }
     end
 
     factory :invalid_user do
