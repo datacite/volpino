@@ -186,7 +186,9 @@ class Claim < ActiveRecord::Base
     logger = Logger.new(STDOUT)
 
     self.start
-    result = collect_data
+
+    ### depdency Injection for testing
+    result = options[:collect_data] || collect_data 
 
     if result.body["skip"]
       claimed_at.present? ? self.finish : self.skip
@@ -224,6 +226,7 @@ class Claim < ActiveRecord::Base
       end
 
       self.finish
+      save
     end
   end
 

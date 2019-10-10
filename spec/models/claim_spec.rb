@@ -76,6 +76,14 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
       expect(subject.claimed_at).not_to be_blank
       expect(subject.state).to eq("done")
     end
+
+    it 'no errors with dependency injection' do
+      options = {collect_data: OpenStruct.new(body: { "put_code" => "1069294"})}
+      expect(subject.process_data(options)).to be true
+      expect(subject.put_code).to eq(put_code)
+      expect(subject.claimed_at).not_to be_blank
+      expect(subject.state).to eq("done")
+    end
     
     it 'already exists' do
       FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/j6gr-cf48", claim_action: "create", claimed_at: Time.zone.now, put_code: put_code)
