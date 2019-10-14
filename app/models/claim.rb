@@ -185,13 +185,13 @@ class Claim < ActiveRecord::Base
   def process_data(options={})
     logger = Logger.new(STDOUT)
 
-    self.start
+    self.start!
 
     ### depdency Injection for testing
     result = options[:collect_data] || collect_data 
 
     if result.body["skip"]
-      claimed_at.present? ? self.finish : self.skip
+      claimed_at.present? ? self.finish! : self.skip!
 
       logger.warn "[Skipped] #{self.uid} – #{self.doi}] #{result.body["reason"]}"
     elsif result.body["errors"]
@@ -202,14 +202,14 @@ class Claim < ActiveRecord::Base
 
       logger.error "[Error] #{self.uid} – #{self.doi}] " + result.body["errors"].first["title"].inspect
 
-      self.error
+      self.error!
     elsif result.body["notification"]
       write_attribute(:put_code, result.body["put_code"])
       write_attribute(:error_messages, nil)
 
       logger.warn "[Notification] #{self.uid} – #{self.doi}] with Put Code #{result.body["put_code"]}" 
 
-      self.notify
+      self.notify!
     else
       if to_be_created?
         write_attribute(:claimed_at, Time.zone.now)
@@ -225,8 +225,7 @@ class Claim < ActiveRecord::Base
         logger.warn "[Deleted] #{self.uid} – #{self.doi}] with Put Code #{result.body["put_code"]}" 
       end
 
-      self.finish
-      save
+      self.finish!
     end
   end
 
