@@ -186,7 +186,9 @@ class Claim < ActiveRecord::Base
     logger = Logger.new(STDOUT)
 
     self.start
-    result = collect_data
+
+    ### depdency Injection for testing
+    result = options[:collect_data] || collect_data 
 
     if result.body["skip"]
       claimed_at.present? ? self.finish : self.skip
@@ -200,7 +202,7 @@ class Claim < ActiveRecord::Base
 
       logger.error "[Error] #{self.uid} – #{self.doi}] " + result.body["errors"].first["title"].inspect
 
-      self.error
+      self.error!
     elsif result.body["notification"]
       write_attribute(:put_code, result.body["put_code"])
       write_attribute(:error_messages, nil)
@@ -223,7 +225,7 @@ class Claim < ActiveRecord::Base
         logger.warn "[Deleted] #{self.uid} – #{self.doi}] with Put Code #{result.body["put_code"]}" 
       end
 
-      self.finish
+      self.finish!
     end
   end
 
