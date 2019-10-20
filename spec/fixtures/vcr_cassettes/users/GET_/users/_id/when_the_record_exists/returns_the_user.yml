@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.test.datacite.org/dois?page%5Bsize%5D=0&user-id=0000-0002-1825-0097
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Mozilla/5.0 (compatible; Maremma/4.4; mailto:info@datacite.org)
+      Accept:
+      - application/vnd.api+json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 20 Oct 2019 21:58:39 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Anonymous-Consumer:
+      - 'true'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Vary:
+      - Accept-Encoding, Origin
+      X-Request-Id:
+      - d0cbd703-b302-4f9c-9fbc-701c0ecca808
+      Etag:
+      - W/"619fb798536ec55922f1d9825af52777"
+      X-Runtime:
+      - '0.096619'
+      X-Powered-By:
+      - Phusion Passenger 6.0.4
+      Server:
+      - nginx/1.17.3 + Phusion Passenger 6.0.4
+    body:
+      encoding: ASCII-8BIT
+      string: '{"data":[],"included":[],"meta":{"total":18,"totalPages":0,"page":1,"states":[{"id":"findable","title":"Findable","count":18}],"resourceTypes":[{"id":"software","title":"Software","count":16},{"id":"text","title":"Text","count":2}],"created":[{"id":"2019","title":"2019","count":18}],"registered":[{"id":"2019","title":"2019","count":18}],"providers":[{"id":"osti","title":"Office
+        of Scientific and Technical Information (OSTI), US Department of Energy","count":14},{"id":"datacite","title":"DataCite","count":4}],"clients":[{"id":"osti.doe","title":"DOE
+        Generic","count":14},{"id":"datacite.datacite","title":"DataCite Repository","count":2},{"id":"datacite.mary","title":"Mary
+        test client","count":2}],"affiliations":[],"prefixes":[{"id":"10.11578","title":"10.11578","count":14},{"id":"10.14454","title":"10.14454","count":2},{"id":"10.70126","title":"10.70126","count":2}],"certificates":[],"schemaVersions":[],"sources":[{"id":"mds","title":"Mds","count":14},{"id":"fabricaForm","title":"Fabrica
+        Form","count":3},{"id":"fabrica","title":"Fabrica","count":1}],"linkChecksStatus":[{"id":"404","title":"404","count":14},{"id":"200","title":"200","count":4}],"linksChecked":0,"linksWithSchemaOrg":[{"id":"0","title":"0","count":16},{"id":"1","title":"1","count":2}],"linkChecksSchemaOrgId":2,"linkChecksDcIdentifier":0,"linkChecksCitationDoi":0,"subjects":[{"id":"123","title":"123","count":7},{"id":"asdf","title":"Asdf","count":4},{"id":"sadf","title":"Sadf","count":3},{"id":"000
+        computer science","title":"000 Computer Science","count":2}]},"links":{"self":"https://api.test.datacite.org/dois?page%5Bsize%5D=0&user-id=0000-0002-1825-0097"}}'
+    http_version: 
+  recorded_at: Sun, 20 Oct 2019 21:58:39 GMT
+recorded_with: VCR 3.0.3

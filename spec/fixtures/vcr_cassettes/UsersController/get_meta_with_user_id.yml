@@ -1,0 +1,57 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.test.datacite.org/dois?page%5Bsize%5D=0&user-id=0000-0003-1419-2405
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Mozilla/5.0 (compatible; Maremma/4.4; mailto:info@datacite.org)
+      Accept:
+      - application/vnd.api+json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 20 Oct 2019 21:48:41 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Anonymous-Consumer:
+      - 'true'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Vary:
+      - Accept-Encoding, Origin
+      Etag:
+      - W/"5f8d7dd25be663fd089ff260d04a0b17"
+      X-Runtime:
+      - '0.088250'
+      X-Request-Id:
+      - 815a7330-4569-41f1-ace4-e29d35e743e9
+      X-Powered-By:
+      - Phusion Passenger 6.0.4
+      Server:
+      - nginx/1.17.3 + Phusion Passenger 6.0.4
+    body:
+      encoding: ASCII-8BIT
+      string: '{"data":[],"included":[],"meta":{"total":58,"totalPages":0,"page":1,"states":[{"id":"findable","title":"Findable","count":58}],"resourceTypes":[{"id":"text","title":"Text","count":27},{"id":"software","title":"Software","count":21},{"id":"dataset","title":"Dataset","count":7},{"id":"event","title":"Event","count":1},{"id":"interactive-resource","title":"InteractiveResource","count":1},{"id":"model","title":"Model","count":1}],"created":[{"id":"2018","title":"2018","count":2},{"id":"2019","title":"2019","count":56}],"registered":[{"id":"2018","title":"2018","count":2},{"id":"2019","title":"2019","count":56}],"providers":[{"id":"exlibris","title":"EXLIBRIS","count":55},{"id":"datacite","title":"DataCite","count":3}],"clients":[{"id":"exlibris.esploro","title":"ESPLORO","count":55},{"id":"datacite.datacite","title":"DataCite
+        Repository","count":3}],"affiliations":[{"id":"https://ror.org/04wxnsj81","title":"DataCite","count":2}],"prefixes":[{"id":"10.21367","title":"10.21367","count":55},{"id":"10.14454","title":"10.14454","count":2},{"id":"10.5438","title":"10.5438","count":1}],"certificates":[],"schemaVersions":[],"sources":[{"id":"mds","title":"Mds","count":55},{"id":"fabricaForm","title":"Fabrica
+        Form","count":3}],"linkChecksStatus":[{"id":"200","title":"200","count":3}],"linksChecked":0,"linksWithSchemaOrg":[{"id":"0","title":"0","count":54},{"id":"1","title":"1","count":3}],"linkChecksSchemaOrgId":3,"linkChecksDcIdentifier":0,"linkChecksCitationDoi":0,"subjects":[{"id":"Karamela","title":"Karamela","count":3},{"id":"Music
+        Composition","title":"Music Composition","count":3},{"id":"Music Education","title":"Music
+        Education","count":3},{"id":"Musicology","title":"Musicology","count":3},{"id":"doi","title":"Doi","count":2},{"id":"featured","title":"Featured","count":2},{"id":"Agricultural
+        Chemistry","title":"Agricultural Chemistry","count":1},{"id":"Applied research","title":"Applied
+        Research","count":1},{"id":"COLLISIONS 18138","title":"Collisions 18138","count":1},{"id":"COLLISIONS
+        38138","title":"Collisions 38138","count":1},{"id":"Candy","title":"Candy","count":1},{"id":"Commodity
+        Futures","title":"Commodity Futures","count":1},{"id":"Confectionery","title":"Confectionery","count":1},{"id":"Education","title":"Education","count":1},{"id":"Education
+        Finance","title":"Education Finance","count":1}]},"links":{"self":"https://api.test.datacite.org/dois?page%5Bsize%5D=0&user-id=0000-0003-1419-2405"}}'
+    http_version: 
+  recorded_at: Sun, 20 Oct 2019 21:48:42 GMT
+recorded_with: VCR 3.0.3

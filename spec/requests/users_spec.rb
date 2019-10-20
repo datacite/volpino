@@ -30,7 +30,7 @@ describe "users", type: :request, elasticsearch: true do
   end
 
   describe 'GET /users/:id' do
-    context 'when the record exists' do
+    context 'when the record exists', vcr: true do
       it 'returns the user' do
         get "/users/#{user.uid}", nil, headers
 

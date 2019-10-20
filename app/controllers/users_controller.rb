@@ -14,9 +14,11 @@ class UsersController < BaseController
 
   def show
     options = {}
+
+    meta = get_meta(user_id: params[:id])
     options[:meta] = {
-      dois: doi_count(user_id: params[:id]),
-      "resourceTypes" => resource_type_count(user_id: params[:id]) }.compact
+      dois: meta.fetch("created", []),
+      "resourceTypes" => meta.fetch("resourceTypes", []) }.compact
     options[:include] = @include
     options[:is_collection] = false
     options[:params] = { current_ability: current_ability }
