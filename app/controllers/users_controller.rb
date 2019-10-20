@@ -5,12 +5,18 @@ class UsersController < BaseController
   # include helper module for metadata lookup from ORCID
   include Metadatable
 
+  # include helper module for information about associated DOIs
+  include Countable
+
   prepend_before_action :load_user, only: [:show, :destroy]
   before_action :set_include, :authenticate_user_from_token!
   load_and_authorize_resource :only => [:destroy]
 
   def show
     options = {}
+    options[:meta] = {
+      dois: doi_count(user_id: params[:id]),
+      "resourceTypes" => resource_type_count(user_id: params[:id]) }.compact
     options[:include] = @include
     options[:is_collection] = false
     options[:params] = { current_ability: current_ability }
