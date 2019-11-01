@@ -29,7 +29,7 @@ gem 'flipper-ui'
 gem 'flipper-active_support_cache_store'
 
 gem 'kaminari', '~> 1.0', '>= 1.0.1'
-gem "simple_form", "~> 4.1.0"
+gem "simple_form", "~> 5.0.0"
 gem 'country_select', '~> 2.5', '>= 2.5.1'
 gem 'nokogiri', '~> 1.8'
 gem "github-markdown", "~> 0.6.3"
