@@ -26,55 +26,57 @@ module Indexable
   module ClassMethods
     # return results for one or more ids
     def self.find_by_id(ids, options={})
-    ids = ids.split(",") if ids.is_a?(String)
+      ids = ids.split(",") if ids.is_a?(String)
 
-    options[:page] ||= {}
-    options[:page][:number] ||= 1
-    options[:page][:size] ||= 1000
-    options[:sort] ||= { created_at: { order: "asc" }}
+      options[:page] ||= {}
+      options[:page][:number] ||= 1
+      options[:page][:size] ||= 1000
+      options[:sort] ||= { created_at: { order: "asc" }}
 
-    __elasticsearch__.search({
-      from: (options.dig(:page, :number) - 1) * options.dig(:page, :size),
-      size: options.dig(:page, :size),
-      sort: [options[:sort]],
-      query: {
-        terms: {
-          uid: ids
-        }
-      },
-      aggregations: query_aggregations
-    })
-  end
-
-  def query_aggregations
-    {}
-  end
-
-  def find_by_id_list(ids, options={})
-    options[:sort] ||= { "_doc" => { order: 'asc' }}
-
-    __elasticsearch__.search({
-      from: options[:page].present? ? (options.dig(:page, :number) - 1) * options.dig(:page, :size) : 0,
-      size: options[:size] || 25,
-      sort: [options[:sort]],
-      query: {
-        terms: {
-          id: ids.split(",")
-        }
-      },
-      aggregations: query_aggregations
-    })
-  end
-
-  def get_aggregations_hash(aggregations = "")
-    return send(:query_aggregations) if aggregations.blank?
-    aggs = {}
-    aggregations.split(",").each do |agg|
-      agg = :query_aggregations if agg.blank? || !respond_to?(agg)
-      aggs.merge! send(agg)
+      __elasticsearch__.search({
+        from: (options.dig(:page, :number) - 1) * options.dig(:page, :size),
+        size: options.dig(:page, :size),
+        sort: [options[:sort]],
+        track_total_hits: true,
+        query: {
+          terms: {
+            uid: ids
+          }
+        },
+        aggregations: query_aggregations
+      })
     end
-    aggs
-  end
+
+    def query_aggregations
+      {}
+    end
+
+    def find_by_id_list(ids, options={})
+      options[:sort] ||= { "_doc" => { order: 'asc' }}
+
+      __elasticsearch__.search({
+        from: options[:page].present? ? (options.dig(:page, :number) - 1) * options.dig(:page, :size) : 0,
+        size: options[:size] || 25,
+        sort: [options[:sort]],
+        track_total_hits: true,
+        query: {
+          terms: {
+            id: ids.split(",")
+          }
+        },
+        aggregations: query_aggregations
+      })
+    end
+
+    def get_aggregations_hash(aggregations = "")
+      return send(:query_aggregations) if aggregations.blank?
+      aggs = {}
+      aggregations.split(",").each do |agg|
+        agg = :query_aggregations if agg.blank? || !respond_to?(agg)
+        aggs.merge! send(agg)
+      end
+      aggs
+    end
 
     def query(query, options={})
       aggregations = options[:totals_agg] == true ? totals_aggregations : get_aggregations_hash(options[:aggregations])
@@ -177,6 +179,7 @@ module Indexable
         from: from,
         search_after: search_after,
         sort: sort,
+        track_total_hits: true,
         query: es_query,
         aggregations: aggregations
       }.compact)
