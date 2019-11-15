@@ -463,7 +463,8 @@ GEM
       docopt (~> 0.5)
       sysrandom
     rack (2.0.7)
-    rack-cors (1.0.3)
+    rack-cors (1.0.5)
+      rack (>= 1.6.0)
     rack-jwt (0.4.0)
       jwt (~> 2.0)
       rack (>= 1.6.0)
@@ -723,7 +724,7 @@ DEPENDENCIES
   postrank-uri (~> 1.0, >= 1.0.23)
   pry-rails (~> 0.3.2)
   pwqgen.rb (~> 0.1.0)
-  rack-cors (~> 1.0, >= 1.0.2)
+  rack-cors (~> 1.0)
   rack-jwt
   rack-test (~> 1.1)
   rack-utf8_sanitizer (~> 1.6)
