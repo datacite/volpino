@@ -41,7 +41,7 @@ gem 'namae', '~> 1.0'
 gem 'lograge', '~> 0.10.0'
 gem 'logstash-event', '~> 1.2', '>= 1.2.02'
 gem 'logstash-logger', '~> 0.26.1'
-gem 'rack-cors', '~> 1.0', '>= 1.0.2', :require => 'rack/cors'
+gem 'rack-cors', '~> 1.0', :require => 'rack/cors'
 
 gem 'devise', '~> 4.7'
 gem 'omniauth-github', '~> 1.1.2'
