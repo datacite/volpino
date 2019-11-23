@@ -45,6 +45,8 @@ ENV['MYSQL_PASSWORD'] ||= ""
 ENV['MYSQL_HOST'] ||= "mysql"
 ENV['MYSQL_PORT'] ||= "3306"
 ENV['ES_HOST'] ||= "elasticsearch:9200"
+ENV['ES_SCHEME'] ||= "http"
+ENV['ES_PORT'] ||= "80"
 ENV['ES_NAME'] ||= "elasticsearch"
 
 module Volpino
