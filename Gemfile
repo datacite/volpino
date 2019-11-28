@@ -78,7 +78,6 @@ gem 'mini_magick', '~> 4.5', '>= 4.5.1'
 gem 'remotipart', '~> 1.2'
 gem 'rack-jwt'
 gem 'git', '~> 1.5'
-gem 'elastic-apm', '~> 3.2'
 
 group :development do
   gem 'pry-rails', '~> 0.3.2'
