@@ -74,7 +74,6 @@ gem 'google-protobuf', '3.10.0.rc.1'
 gem 'sprockets', '~> 3.7', '>= 3.7.2'
 gem 'sprockets-rails', '~> 3.2', '>= 3.2.1', :require => 'sprockets/railtie'
 gem 'coffee-rails', '~> 4.1', '>= 4.1.1'
-gem 'sassc-rails', '~> 2.1', '>= 2.1.2'
 gem 'uglifier', '~> 2.7', '>= 2.7.2'
 gem 'mini_magick', '~> 4.5', '>= 4.5.1'
 gem 'remotipart', '~> 1.2'
@@ -88,18 +87,19 @@ group :development do
   gem 'hologram', '~> 1.4'
   gem 'web-console', '~> 3.7'
   gem 'httplog', '~> 1.3'
+  gem "listen", "~> 3.0.5"
+  gem "spring"
+  gem "spring-watcher-listen", "~> 2.0.0"
 end
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.8', '>= 3.8.2'
   gem 'byebug'
-  gem 'spring'
   gem 'teaspoon-jasmine', '~> 2.2.0'
   gem 'brakeman', '~> 4.6', '>= 4.6.1', :require => false
   gem 'rubocop', '~> 0.77.0'
   gem 'rubocop-performance', '~> 1.5', '>= 1.5.1'
   gem 'rubocop-rails', '~> 2.4'
-  gem 'listen', '~> 3.1', '>= 3.1.5'
 end
 
 group :test do
