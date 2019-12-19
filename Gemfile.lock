@@ -748,7 +748,7 @@ DEPENDENCIES
   rubocop (~> 0.77.0)
   rubocop-performance (~> 1.5, >= 1.5.1)
   rubocop-rails (~> 2.4)
-  sassc-rails (>= 2.1.0)
+  sassc-rails (~> 2.1, >= 2.1.2)
   sentry-raven (~> 2.9)
   shoryuken (~> 4.0)
   shoulda-matchers (~> 2.7.0)
