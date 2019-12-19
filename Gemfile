@@ -27,20 +27,22 @@ gem 'flipper-redis'
 gem 'flipper-api'
 gem 'flipper-ui'
 gem 'flipper-active_support_cache_store'
+gem "oj", ">= 2.8.3"
+gem "oj_mimic_json", "~> 1.0", ">= 1.0.1"
 
 gem 'kaminari', '~> 1.0', '>= 1.0.1'
 gem "simple_form", "~> 4.1.0"
 gem 'country_select', '~> 2.5', '>= 2.5.1'
-gem 'nokogiri', '~> 1.8'
+gem 'nokogiri', '~> 1.10.4'
 gem "github-markdown", "~> 0.6.3"
 gem 'rouge', '~> 3.9'
 gem 'hashie', '~> 3.5.0'
 gem 'bergamasco', '~> 0.3.17'
 gem 'dalli', '~> 2.7', '>= 2.7.6'
 gem 'namae', '~> 1.0'
-gem 'lograge', '~> 0.10.0'
-gem 'logstash-event', '~> 1.2', '>= 1.2.02'
-gem 'logstash-logger', '~> 0.26.1'
+gem "lograge", "~> 0.11.2"
+gem "logstash-event", "~> 1.2", ">= 1.2.02"
+gem "logstash-logger", "~> 0.26.1"
 gem 'rack-cors', '~> 1.0', :require => 'rack/cors'
 
 gem 'devise', '~> 4.7'
@@ -94,8 +96,9 @@ group :development, :test do
   gem 'spring'
   gem 'teaspoon-jasmine', '~> 2.2.0'
   gem 'brakeman', '~> 4.6', '>= 4.6.1', :require => false
-  gem 'rubocop', '~> 0.68', require: false
-  gem 'rubocop-performance', '~> 1.2', require: false
+  gem 'rubocop', '~> 0.77.0'
+  gem 'rubocop-performance', '~> 1.5', '>= 1.5.1'
+  gem 'rubocop-rails', '~> 2.4'
   gem 'listen', '~> 3.1', '>= 3.1.5'
 end
 

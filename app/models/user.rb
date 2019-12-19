@@ -302,8 +302,6 @@ class User < ActiveRecord::Base
   end
 
   def process_data(options={})
-    logger = Logger.new(STDOUT)
-
     result = push_github_identifier(options)
 
     if result.body["skip"]

@@ -183,8 +183,6 @@ class Claim < ActiveRecord::Base
   end
 
   def process_data(options={})
-    logger = Logger.new(STDOUT)
-
     self.start
 
     ### depdency Injection for testing
@@ -193,7 +191,7 @@ class Claim < ActiveRecord::Base
     if result.body["skip"]
       claimed_at.present? ? self.finish : self.skip
 
-      logger.warn "[Skipped] #{self.uid} – #{self.doi}] #{result.body["reason"]}"
+      logger.info "[Skipped] #{self.uid} – #{self.doi}] #{result.body["reason"]}"
     elsif result.body["errors"]
       write_attribute(:error_messages, result.body["errors"].inspect)
 
@@ -207,7 +205,7 @@ class Claim < ActiveRecord::Base
       write_attribute(:put_code, result.body["put_code"])
       write_attribute(:error_messages, nil)
 
-      logger.warn "[Notification] #{self.uid} – #{self.doi}] with Put Code #{result.body["put_code"]}" 
+      logger.error "[Notification] #{self.uid} – #{self.doi}] with Put Code #{result.body["put_code"]}" 
 
       self.notify
     else
@@ -216,13 +214,13 @@ class Claim < ActiveRecord::Base
         write_attribute(:put_code, result.body["put_code"])
         write_attribute(:error_messages, nil)
 
-        logger.warn "[Done] #{self.uid} – #{self.doi}] with Put Code #{result.body["put_code"]}" 
+        logger.info "[Done] #{self.uid} – #{self.doi}] with Put Code #{result.body["put_code"]}" 
       elsif to_be_deleted?
         write_attribute(:claimed_at, nil)
         write_attribute(:put_code, nil)
         write_attribute(:error_messages, nil)
 
-        logger.warn "[Deleted] #{self.uid} – #{self.doi}] with Put Code #{result.body["put_code"]}" 
+        logger.info "[Deleted] #{self.uid} – #{self.doi}] with Put Code #{result.body["put_code"]}" 
       end
 
       self.finish!

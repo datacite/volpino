@@ -2,8 +2,7 @@ class IndexJob < ActiveJob::Base
   queue_as :volpino
 
   rescue_from ActiveJob::DeserializationError, Elasticsearch::Transport::Transport::Errors::BadRequest do |error|
-    logger = Logger.new(STDOUT)
-    logger.error error.message
+    Rails.logger.error error.message
   end
 
   def perform(obj)

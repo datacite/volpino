@@ -35,9 +35,7 @@ class GraphqlController < ApplicationController
     end
   end
 
-  def handle_error_in_development(e)
-    logger = Logger.new(STDOUT)
-    
+  def handle_error_in_development(e)    
     logger.error e.message
     logger.error e.backtrace.join("\n")
 

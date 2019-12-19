@@ -52,7 +52,7 @@ Rails.application.configure do
   
   HttpLog.configure do |config|
     config.enabled = false
-    config.logger = ActiveSupport::Logger.new(STDOUT)
+    config.logger = LogStashLogger.new(type: :stdout)
     config.url_blacklist_pattern = /sqs\.eu-west-1\.amazonaws\.com/
     config.filter_parameters = %w(client_id access_token orcid_token)
   end

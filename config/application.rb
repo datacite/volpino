@@ -67,22 +67,14 @@ module Volpino
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.0
 
-    # Write all logs to STDOUT instead of file
-    logger           = ActiveSupport::Logger.new(STDOUT)
-    logger.formatter = config.log_formatter
-    config.logger    = ActiveSupport::TaggedLogging.new(logger)
-    config.log_level = ENV['LOG_LEVEL'].to_sym
-
-    config.active_job.logger = config.logger
-
     # Use memcached as cache store
-    config.cache_store = :dalli_store, nil, { :namespace => ENV['APPLICATION'], :compress => true }
+    config.cache_store = :dalli_store, nil, { namespace: ENV["APPLICATION"], compress: true }
 
     # compress responses with deflate or gzip
     config.middleware.use Rack::Deflater
 
     # set Active Job queueing backend
-    if ENV['AWS_REGION']
+    if ENV["AWS_REGION"]
       config.active_job.queue_adapter = :shoryuken
     else
       config.active_job.queue_adapter = :inline

@@ -84,7 +84,6 @@ class UsersController < BaseController
   end
 
   def create
-    logger = Logger.new(STDOUT)
     @user = User.new(safe_params)
     authorize! :create, @user
 
@@ -99,8 +98,6 @@ class UsersController < BaseController
   end
 
   def update
-    logger = Logger.new(STDOUT)
-
     @user = User.where(uid: params[:id]).first
 
     unless @user.present?

@@ -94,9 +94,7 @@ class ClaimsController < BaseController
     end
   end
 
-  def create
-    logger = Logger.new(STDOUT)
-    
+  def create    
     @claim = Claim.where(orcid: params.fetch(:claim, {}).fetch(:orcid, nil),
                          doi: params.fetch(:claim, {}).fetch(:doi, nil))
                   .first_or_initialize
@@ -128,7 +126,7 @@ class ClaimsController < BaseController
       render json: ClaimSerializer.new(@claim, options).serialized_json, status: :accepted
     end
   rescue ActiveRecord::RecordNotUnique
-    render json: @claim, :status => :ok
+    render json: @claim, status: :ok
   end
 
   def destroy
@@ -144,15 +142,15 @@ class ClaimsController < BaseController
   def load_claim
     @claim = Claim.where(uuid: params[:id]).first
 
-    fail ActiveRecord::RecordNotFound unless @claim.present?
+    fail ActiveRecord::RecordNotFound if @claim.blank?
   end
 
   def load_user
-    return nil unless params[:user_id].present?
+    return nil if params[:user_id].blank?
 
     @user = User.where(uid: params[:user_id]).first
 
-    fail ActiveRecord::RecordNotFound unless @user.present?
+    fail ActiveRecord::RecordNotFound if @user.blank?
   end
 
   def set_include

@@ -3,7 +3,6 @@ Raven.configure do |config|
   config.release = "volpino:" + Volpino::Application::VERSION
   config.sanitize_fields = Rails.application.config.filter_parameters.map(&:to_s)
   config.transport_failure_callback = lambda { |event|
-    logger = Logger.new(STDOUT)
-    logger.error "[Sentry Error]: " + event.inspect
+    Rails.logger.error "[Sentry Error]: " + event.inspect
   }
 end
