@@ -189,7 +189,7 @@ class Claim < ActiveRecord::Base
     result = options[:collect_data] || collect_data 
 
     if result.body["skip"]
-      self.finish! && return if claimed_at.present?
+      return self.finish! if claimed_at.present?
 
       logger.info "[Skipped] #{self.uid} – #{self.doi}] #{result.body['reason']}"
 

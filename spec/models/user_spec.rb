@@ -4,7 +4,7 @@ require "cancan/matchers"
 describe User, type: :model, vcr: true, elasticsearch: true do
   subject { FactoryBot.create(:valid_user, github: "mfenner", github_put_code: nil) }
 
-  it { is_expected.to validate_uniqueness_of(:uid) }
+  it { is_expected.to validate_uniqueness_of(:uid).case_insensitive }
   it { is_expected.to have_many(:claims) }
 
   describe "jwt" do

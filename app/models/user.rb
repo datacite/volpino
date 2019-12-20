@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
 
   devise :omniauthable, :omniauth_providers => [:orcid, :github, :globus]
 
-  validates :uid, presence: true, uniqueness: true
+  validates :uid, presence: true, uniqueness: { case_sensitive: false }
   validate :validate_email
 
   scope :q, ->(query) { where("name like ? OR uid like ? OR email like ? OR github like ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%") }
