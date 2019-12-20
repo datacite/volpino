@@ -1,7 +1,7 @@
 # set ENV variables for testing
 ENV["RAILS_ENV"] = "test"
-ENV['ORCID_URL'] = "https://sandbox.orcid.org"
-ENV['ORCID_API_URL'] = "https://api.sandbox.orcid.org"
+ENV["ORCID_URL"] = "https://sandbox.orcid.org"
+ENV["ORCID_API_URL"] = "https://api.sandbox.orcid.org"
 
 # set up Code Climate
 require 'simplecov'
@@ -19,22 +19,30 @@ require "capybara-screenshot/rspec"
 require "database_cleaner"
 require "webmock/rspec"
 require "rack/test"
-require 'aasm/rspec'
+require "aasm/rspec"
 require "devise"
 require "colorize"
 require "maremma"
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
-Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
 
 Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, {
-    timeout: 180,
-    inspector: true,
-    debug: false,
-    window_size: [1024, 768]
-  })
+  Capybara::Poltergeist::Driver.new(app,
+    {
+      timeout: 180,
+      inspector: true,
+      debug: false,
+      window_size: [1024, 768],
+    })
 end
 
 Capybara.javascript_driver = :poltergeist
@@ -47,7 +55,7 @@ end
 
 WebMock.disable_net_connect!(
   allow: ['codeclimate.com:443', ENV['PRIVATE_IP'], ENV['HOSTNAME']],
-  allow_localhost: true
+  allow_localhost: true,
 )
 
 VCR.configure do |c|
@@ -68,14 +76,15 @@ end
 RSpec.configure do |config|
   OmniAuth.config.test_mode = true
   config.before(:each) do
-    OmniAuth.config.mock_auth[:default] = OmniAuth::AuthHash.new({
-      provider: "orcid",
-      uid: "0000-0002-1825-0097",
-      info: { "name" => "Josiah Carberry" },
-      extra: {},
-      credentials: { token: "123",
-                     expires_at: Time.zone.now + 20.years }
-    })
+    OmniAuth.config.mock_auth[:default] = OmniAuth::AuthHash.new(
+      {
+        provider: "orcid",
+        uid: "0000-0002-1825-0097",
+        info: { "name" => "Josiah Carberry" },
+        extra: {},
+        credentials: { token: "123",
+                       expires_at: Time.zone.now + 20.years },
+      })
   end
 
   # don't use transactions, use database_clear gem via support file
@@ -98,12 +107,12 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, :type => :controller
   config.include Rack::Test::Methods, :type => :controller
   config.include JobHelper, type: :job
-  
+
   ActiveJob::Base.queue_adapter = :test
 
   # add custom json method
   config.include RequestHelper, type: :request
-  
+
   def app
     Rails.application
   end
