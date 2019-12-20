@@ -40,9 +40,9 @@ class Claim < ActiveRecord::Base
 
   alias_attribute :state, :aasm_state
 
-  aasm :whiny_transitions => false do
+  aasm whiny_transitions: false do
     # waiting is initial state for new claims
-    state :waiting, :initial => true
+    state :waiting, initial: true
     state :working, :failed, :done, :ignored, :deleted, :notified
 
     event :start do
@@ -148,7 +148,7 @@ class Claim < ActiveRecord::Base
       "claimed" => claimed,
       "created" => created,
       "updated" => updated,
-      "user" => user
+      "user" => user,
     }
   end
 
@@ -182,16 +182,18 @@ class Claim < ActiveRecord::Base
     uuid
   end
 
-  def process_data(options={})
+  def process_data(options = {})
     self.start
 
     ### depdency Injection for testing
     result = options[:collect_data] || collect_data 
 
     if result.body["skip"]
-      claimed_at.present? ? self.finish : self.skip
+      self.finish! && return if claimed_at.present?
 
-      logger.info "[Skipped] #{self.uid} – #{self.doi}] #{result.body["reason"]}"
+      logger.info "[Skipped] #{self.uid} – #{self.doi}] #{result.body['reason']}"
+
+      self.skip
     elsif result.body["errors"]
       write_attribute(:error_messages, result.body["errors"].inspect)
 
@@ -232,7 +234,7 @@ class Claim < ActiveRecord::Base
     return OpenStruct.new(body: { "skip" => true, "Reason" => "already claimed." }) if to_be_created? && claimed_at.present?
 
     # user has not signed up yet or orcid_token is missing
-    unless (user.present? && orcid_token.present?)
+    if (user.blank? || orcid_token.blank?)
       if ENV['NOTIFICATION_ACCESS_TOKEN'].present?
         response = notification.create_notification(options)
         response.body["notification"] = true
@@ -254,7 +256,7 @@ class Claim < ActiveRecord::Base
     # validate data
     return OpenStruct.new(body: { "errors" => work.validation_errors.map { |error| { "title" => error } }}) if work.validation_errors.present?
 
-    options[:sandbox] = (ENV['ORCID_URL'] == "https://sandbox.orcid.org")
+    options[:sandbox] = (ENV["ORCID_URL"] == "https://sandbox.orcid.org")
 
     # create or delete entry in ORCID record
     if to_be_created?
@@ -277,7 +279,7 @@ class Claim < ActiveRecord::Base
   end
 
   def without_control(s)
-    r = ''
+    r = ""
     s.each_codepoint do |c|
       if c >= 32
         r << c

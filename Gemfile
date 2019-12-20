@@ -112,7 +112,7 @@ group :test do
   gem 'rack-test', '~> 1.1', :require => "rack/test"
   gem 'simplecov', '~> 0.1'
   gem 'codeclimate-test-reporter', '~> 1.0', '>= 1.0.8'
-  gem "shoulda-matchers", "~> 2.7.0", :require => false
+  gem 'shoulda-matchers', '~> 4.1', '>= 4.1.2'
   gem 'webmock', '~> 3.7'
   gem 'vcr', '~> 3.0', '>= 3.0.3'
   gem 'poltergeist', '~> 1.15'

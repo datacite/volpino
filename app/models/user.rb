@@ -317,7 +317,7 @@ class User < ActiveRecord::Base
     logger.info "Added Github username to ORCID record for user #{orcid}."
   end
 
-  def push_github_identifier(options={})
+  def push_github_identifier(options = {})
     # user has not linked github username
     return OpenStruct.new(body: { "skip" => true }) unless github_to_be_created? || github_to_be_deleted?
 
