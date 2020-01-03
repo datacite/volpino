@@ -11,7 +11,7 @@ module Countable
 
       response = Maremma.get(url, accept: 'application/vnd.api+json')
       return {} if response.status != 200
-      response.body.fetch("meta", {}).slice("created", "resourceTypes")
+      response.body.fetch("meta", {}).slice("created", "resourceTypes", "published")
     end
   end
 end

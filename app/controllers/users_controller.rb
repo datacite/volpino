@@ -18,6 +18,7 @@ class UsersController < BaseController
     meta = get_meta(user_id: params[:id])
     options[:meta] = {
       dois: meta.fetch("created", []),
+      published: meta.fetch("published", []),
       "resourceTypes" => meta.fetch("resourceTypes", []) }.compact
     options[:include] = @include
     options[:is_collection] = false

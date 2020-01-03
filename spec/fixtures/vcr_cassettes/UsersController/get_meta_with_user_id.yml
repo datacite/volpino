@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.test.datacite.org/dois?page%5Bsize%5D=0&user-id=0000-0003-1419-2405
+    uri: https://api.datacite.org/dois?page%5Bsize%5D=0&user-id=0000-0003-1419-2405
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Mozilla/5.0 (compatible; Maremma/4.4; mailto:info@datacite.org)
+      - Mozilla/5.0 (compatible; Maremma/4.5; mailto:info@datacite.org)
       Accept:
       - application/vnd.api+json
   response:
@@ -17,7 +17,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 20 Oct 2019 21:48:41 GMT
+      - Fri, 03 Jan 2020 17:08:15 GMT
       Content-Type:
       - application/json; charset=utf-8
       Connection:
@@ -31,27 +31,39 @@ http_interactions:
       Vary:
       - Accept-Encoding, Origin
       Etag:
-      - W/"5f8d7dd25be663fd089ff260d04a0b17"
+      - W/"f569725c5fb285dce7b3588e6df62979"
       X-Runtime:
-      - '0.088250'
+      - '10.949339'
       X-Request-Id:
-      - 815a7330-4569-41f1-ace4-e29d35e743e9
+      - afc0b39b-919b-4334-a668-6a4a578b2e77
       X-Powered-By:
       - Phusion Passenger 6.0.4
       Server:
-      - nginx/1.17.3 + Phusion Passenger 6.0.4
+      - nginx/1.14.0 + Phusion Passenger 6.0.4
     body:
       encoding: ASCII-8BIT
-      string: '{"data":[],"included":[],"meta":{"total":58,"totalPages":0,"page":1,"states":[{"id":"findable","title":"Findable","count":58}],"resourceTypes":[{"id":"text","title":"Text","count":27},{"id":"software","title":"Software","count":21},{"id":"dataset","title":"Dataset","count":7},{"id":"event","title":"Event","count":1},{"id":"interactive-resource","title":"InteractiveResource","count":1},{"id":"model","title":"Model","count":1}],"created":[{"id":"2018","title":"2018","count":2},{"id":"2019","title":"2019","count":56}],"registered":[{"id":"2018","title":"2018","count":2},{"id":"2019","title":"2019","count":56}],"providers":[{"id":"exlibris","title":"EXLIBRIS","count":55},{"id":"datacite","title":"DataCite","count":3}],"clients":[{"id":"exlibris.esploro","title":"ESPLORO","count":55},{"id":"datacite.datacite","title":"DataCite
-        Repository","count":3}],"affiliations":[{"id":"https://ror.org/04wxnsj81","title":"DataCite","count":2}],"prefixes":[{"id":"10.21367","title":"10.21367","count":55},{"id":"10.14454","title":"10.14454","count":2},{"id":"10.5438","title":"10.5438","count":1}],"certificates":[],"schemaVersions":[],"sources":[{"id":"mds","title":"Mds","count":55},{"id":"fabricaForm","title":"Fabrica
-        Form","count":3}],"linkChecksStatus":[{"id":"200","title":"200","count":3}],"linksChecked":0,"linksWithSchemaOrg":[{"id":"0","title":"0","count":54},{"id":"1","title":"1","count":3}],"linkChecksSchemaOrgId":3,"linkChecksDcIdentifier":0,"linkChecksCitationDoi":0,"subjects":[{"id":"Karamela","title":"Karamela","count":3},{"id":"Music
-        Composition","title":"Music Composition","count":3},{"id":"Music Education","title":"Music
-        Education","count":3},{"id":"Musicology","title":"Musicology","count":3},{"id":"doi","title":"Doi","count":2},{"id":"featured","title":"Featured","count":2},{"id":"Agricultural
-        Chemistry","title":"Agricultural Chemistry","count":1},{"id":"Applied research","title":"Applied
-        Research","count":1},{"id":"COLLISIONS 18138","title":"Collisions 18138","count":1},{"id":"COLLISIONS
-        38138","title":"Collisions 38138","count":1},{"id":"Candy","title":"Candy","count":1},{"id":"Commodity
-        Futures","title":"Commodity Futures","count":1},{"id":"Confectionery","title":"Confectionery","count":1},{"id":"Education","title":"Education","count":1},{"id":"Education
-        Finance","title":"Education Finance","count":1}]},"links":{"self":"https://api.test.datacite.org/dois?page%5Bsize%5D=0&user-id=0000-0003-1419-2405"}}'
+      string: '{"data":[],"included":[],"meta":{"total":153,"totalPages":0,"page":1,"states":[{"id":"findable","title":"Findable","count":153}],"resourceTypes":[{"id":"text","title":"Text","count":116},{"id":"dataset","title":"Dataset","count":15},{"id":"audiovisual","title":"Audiovisual","count":14},{"id":"software","title":"Software","count":4},{"id":"collection","title":"Collection","count":2},{"id":"image","title":"Image","count":2}],"created":[{"id":"2012","title":"2012","count":2},{"id":"2013","title":"2013","count":2},{"id":"2014","title":"2014","count":2},{"id":"2015","title":"2015","count":2},{"id":"2016","title":"2016","count":48},{"id":"2017","title":"2017","count":23},{"id":"2018","title":"2018","count":34},{"id":"2019","title":"2019","count":40}],"published":[{"id":"2012","title":"2012","count":4},{"id":"2013","title":"2013","count":7},{"id":"2014","title":"2014","count":2},{"id":"2015","title":"2015","count":27},{"id":"2016","title":"2016","count":24},{"id":"2017","title":"2017","count":21},{"id":"2018","title":"2018","count":31},{"id":"2019","title":"2019","count":37}],"registered":[{"id":"2012","title":"2012","count":2},{"id":"2013","title":"2013","count":2},{"id":"2014","title":"2014","count":2},{"id":"2015","title":"2015","count":2},{"id":"2016","title":"2016","count":48},{"id":"2017","title":"2017","count":23},{"id":"2018","title":"2018","count":34},{"id":"2019","title":"2019","count":38}],"providers":[{"id":"datacite","title":"DataCite","count":67},{"id":"cern","title":"CERN
+        - European Organization for Nuclear Research","count":40},{"id":"figshare","title":"figshare","count":39},{"id":"tib","title":"German
+        National Library of Science and Technology","count":4},{"id":"crossref","title":"Crossref","count":2},{"id":"ands","title":"Australian
+        Research Data Commons","count":1}],"clients":[{"id":"datacite.blog","title":"DataCite
+        Blog","count":57},{"id":"cern.zenodo","title":"Zenodo","count":40},{"id":"figshare.ars","title":"figshare
+        Academic Research System","count":27},{"id":"figshare.orcid","title":"Figshare
+        Datacite","count":12},{"id":"datacite.datacite","title":"DataCite","count":10},{"id":"tib.osl","title":"Open
+        Science Lab","count":4},{"id":"crossref.citations","title":"Crossref Citations","count":2},{"id":"ands.centre-3","title":"Monash
+        University","count":1}],"affiliations":[{"id":"https://ror.org/04wxnsj81","title":"DataCite","count":50},{"id":"https://ror.org/00njsd438","title":"Google
+        (United States)","count":1},{"id":"https://ror.org/01ggx4157","title":"European
+        Organization for Nuclear Research","count":1},{"id":"https://ror.org/031rekg67","title":"Swinburne
+        University of Technology","count":1},{"id":"https://ror.org/036f5mx38","title":"Space
+        Telescope Science Institute","count":1},{"id":"https://ror.org/03r10zj06","title":"National
+        Center for Supercomputing Applications","count":1}],"prefixes":[{"id":"10.5438","title":"10.5438","count":63},{"id":"10.5281","title":"10.5281","count":40},{"id":"10.6084","title":"10.6084","count":27},{"id":"10.23640","title":"10.23640","count":12},{"id":"10.14454","title":"10.14454","count":4},{"id":"10.2314","title":"10.2314","count":4},{"id":"10.1007","title":"10.1007","count":1},{"id":"10.1101","title":"10.1101","count":1},{"id":"10.4225","title":"10.4225","count":1}],"certificates":[],"schemaVersions":[{"id":"4","title":"Schema
+        4","count":34},{"id":"3","title":"Schema 3","count":21}],"sources":[{"id":"mds","title":"Mds","count":34},{"id":"fabrica","title":"Fabrica","count":10},{"id":"fabricaForm","title":"Fabrica
+        Form","count":8},{"id":"levriero","title":"Levriero","count":2}],"linkChecksStatus":[{"id":"200","title":"200","count":74},{"id":"404","title":"404","count":3}],"linksChecked":0,"linksWithSchemaOrg":[{"id":"1","title":"1","count":58},{"id":"0","title":"0","count":24}],"linkChecksSchemaOrgId":58,"linkChecksDcIdentifier":11,"linkChecksCitationDoi":0,"subjects":[{"id":"metadata","title":"Metadata","count":15},{"id":"featured","title":"Featured","count":13},{"id":"orcid","title":"Orcid","count":11},{"id":"thor","title":"Thor","count":11},{"id":"Information
+        Systems","title":"Information Systems","count":10},{"id":"datacite","title":"Datacite","count":9},{"id":"PID","title":"Pid","count":8},{"id":"Applied
+        Computer Science","title":"Applied Computer Science","count":7},{"id":"doi","title":"Doi","count":7},{"id":"80306
+        Open Software","title":"80306 Open Software","count":6},{"id":"FREYA","title":"Freya","count":6},{"id":"Persistent
+        Identifiers","title":"Persistent Identifiers","count":6},{"id":"freya","title":"Freya","count":6},{"id":"80204
+        Mathematical Software","title":"80204 Mathematical Software","count":5},{"id":"80301
+        Bioinformatics Software","title":"80301 Bioinformatics Software","count":5}]},"links":{"self":"https://api.datacite.org/dois?page%5Bsize%5D=0&user-id=0000-0003-1419-2405"}}'
     http_version: 
-  recorded_at: Sun, 20 Oct 2019 21:48:42 GMT
+  recorded_at: Fri, 03 Jan 2020 17:08:15 GMT
 recorded_with: VCR 3.0.3
