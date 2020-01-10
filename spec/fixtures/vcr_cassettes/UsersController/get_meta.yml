@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.datacite.org/dois?page%5Bsize%5D=0
+    uri: https://api.test.datacite.org/dois?page%5Bsize%5D=0
     body:
       encoding: US-ASCII
       string: ''

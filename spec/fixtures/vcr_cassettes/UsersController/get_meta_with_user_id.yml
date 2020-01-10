@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.datacite.org/dois?page%5Bsize%5D=0&user-id=0000-0003-1419-2405
+    uri: https://api.test.datacite.org/dois?page%5Bsize%5D=0&user-id=0000-0003-1419-2405
     body:
       encoding: US-ASCII
       string: ''
