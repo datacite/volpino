@@ -19,7 +19,10 @@ class UsersController < BaseController
     options[:meta] = {
       dois: meta.fetch("created", []),
       published: meta.fetch("published", []),
-      "resourceTypes" => meta.fetch("resourceTypes", []) }.compact
+      "resourceTypes" => meta.fetch("resourceTypes", []),
+      views: meta.fetch("views", []),
+      downloads: meta.fetch("downloads", []),
+      citations: meta.fetch("citations", []) }.compact
     options[:include] = @include
     options[:is_collection] = false
     options[:params] = { current_ability: current_ability }
