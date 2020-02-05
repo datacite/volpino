@@ -107,7 +107,7 @@ class User < ActiveRecord::Base
   end
 
   def self.query_fields
-    ['uid^10', 'name^5', 'given_names^5', 'family_name^5', '_all']
+    ['uid^50', 'name^5', 'given_names^5', 'family_name^5', '_all']
   end
 
   def self.query_aggregations
