@@ -103,19 +103,17 @@ class UsersController < BaseController
 
   def update
     @user = User.where(uid: params[:id]).first
+    exists = @user.present?
 
-    unless @user.present?
-      metadata = UsersController.get_orcid_metadata(params[:id])
-      fail ActiveRecord::RecordNotFound unless metadata.present?
-
-      @user = User.from_omniauth(nil, provider: "globus", uid: params[:id])
+    if exists
+      authorize! :update, @user
+      @user.assign_attributes(safe_params.except(:uid))
     else
-      metadata = {}
+      @user = User.new(safe_params.merge(uid: params["id"], provider: "globus"))
+      authorize! :new, @user
     end
 
-    authorize! :update, @user
-
-    if @user.update_attributes(safe_params.merge(metadata))
+    if @user.save
       options = {}
       options[:is_collection] = false
       render json: UserSerializer.new(@user, options).serialized_json, status: :ok
