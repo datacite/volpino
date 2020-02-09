@@ -14,7 +14,7 @@ require "email_spec"
 require "factory_bot_rails"
 require "capybara/rspec"
 require "capybara/rails"
-require "capybara/poltergeist"
+require "capybara/cuprite"
 require "capybara-screenshot/rspec"
 require "database_cleaner"
 require "webmock/rspec"
@@ -35,17 +35,17 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
-Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app,
-    {
-      timeout: 180,
-      inspector: true,
-      debug: false,
-      window_size: [1024, 768],
-    })
+Capybara.register_driver :cuprite do |app|
+  Capybara::Cuprite::Driver.new(app, {
+    timeout: 60,
+    window_size: [1440, 1024],
+    # host: "127.0.0.1",
+    # port: 33689,
+    browser_options: { "no-sandbox" => nil }
+  })
 end
 
-Capybara.javascript_driver = :poltergeist
+Capybara.javascript_driver = :cuprite
 Capybara.default_selector = :css
 
 Capybara.configure do |config|

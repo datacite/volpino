@@ -12,7 +12,7 @@ module ApplicationHelper
   end
 
   def markdown(text)
-    text = GitHub::Markdown.render_gfm(text)
+    text = CommonMarker.render_html(text)
     syntax_highlighter(text).html_safe
   end
 

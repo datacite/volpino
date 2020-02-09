@@ -67,6 +67,28 @@ module Volpino
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.0
 
+    # configure logging
+    config.active_job.logger = nil
+    config.lograge.enabled = true
+    config.lograge.formatter = Lograge::Formatters::Logstash.new
+    config.lograge.logger = LogStashLogger.new(type: :stdout)
+    config.logger = config.lograge.logger        ## LogStashLogger needs to be pass to rails logger, see roidrage/lograge#26
+    config.log_level = ENV["LOG_LEVEL"].to_sym   ## Log level in a config level configuration
+
+    config.lograge.ignore_actions = ["HeartbeatController#index", "IndexController#index"]
+    config.lograge.ignore_custom = lambda do |event|
+      event.payload.inspect.length > 100000
+    end
+    config.lograge.base_controller_class = ['ActionController::API', 'ActionController::Base']
+
+    config.lograge.custom_options = lambda do |event|
+      exceptions = %w(controller action format id)
+      {
+        params: event.payload[:params].except(*exceptions),
+        uid: event.payload[:uid],
+      }
+    end
+
     # Use memcached as cache store
     config.cache_store = :dalli_store, nil, { namespace: ENV["APPLICATION"], compress: true }
 

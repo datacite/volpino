@@ -43,19 +43,17 @@ Rails.application.configure do
     domain: ENV['MAILGUN_DOMAIN']
   }
 
-  config.web_console.whitelisted_ips = ENV['TRUSTED_IP']
-
   require 'flipper/middleware/memoizer'
   config.middleware.use Flipper::Middleware::Memoizer
   
   BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP']
   
-  HttpLog.configure do |config|
-    config.enabled = false
-    config.logger = LogStashLogger.new(type: :stdout)
-    config.url_blacklist_pattern = /sqs\.eu-west-1\.amazonaws\.com/
-    config.filter_parameters = %w(client_id access_token orcid_token)
-  end
+  # HttpLog.configure do |config|
+  #   config.enabled = false
+  #   config.logger = LogStashLogger.new(type: :stdout)
+  #   config.url_blacklist_pattern = /sqs\.eu-west-1\.amazonaws\.com/
+  #   config.filter_parameters = %w(client_id access_token orcid_token)
+  # end
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

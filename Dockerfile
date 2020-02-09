@@ -7,24 +7,32 @@ ENV HOME /home/app
 # Allow app user to read /etc/container_environment
 RUN usermod -a -G docker_env app
 
+# This is to ensure when mounting volumes the non root user is actually our app user.
+# This ensures editing on both host/container.
+RUN usermod -u 1000 app
+RUN groupmod -g 1000 app
+
 # Use baseimage-docker's init process
 CMD ["/sbin/my_init"]
 
 # Use Ruby 2.6.5
 RUN bash -lc 'rvm --default use ruby-2.6.5'
 
+# Set debconf to run non-interactively
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+
+# Install Chrome for headless testing
+RUN apt-get update && \
+    apt-get install wget && \
+    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+
 # Update installed APT packages, clean up when done
 RUN apt-get update && \
     apt-get upgrade -y -o Dpkg::Options::="--force-confold" && \
-    apt-get install ntp wget -y && \
+    apt-get install ntp wget google-chrome-stable python-dev pkg-config fontconfig libpng-dev libjpeg-dev libcairo2-dev libfreetype6-dev -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# install phantomjs
-RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
-    bzip2 -d phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
-    tar -xvf phantomjs-2.1.1-linux-x86_64.tar && \
-    cp phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/bin/phantomjs
 
 # Enable Passenger and Nginx and remove the default site
 # Preserve env variables for nginx

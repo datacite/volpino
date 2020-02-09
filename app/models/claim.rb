@@ -73,13 +73,13 @@ class Claim < ActiveRecord::Base
   alias_attribute :user_id, :orcid
 
   scope :by_state, ->(state) { where(aasm_state: state) }
-  scope :waiting, -> { by_state("waiting") }
-  scope :working, -> { by_state("working") }
-  scope :failed, -> { by_state("failed") }
-  scope :done, -> { by_state("done") }
-  scope :ignored, -> { by_state("ignored") }
-  scope :deleted, -> { by_state("deleted") }
-  scope :notified, -> { by_state("notified") }
+  # scope :waiting, -> { by_state("waiting") }
+  # scope :working, -> { by_state("working") }
+  # scope :failed, -> { by_state("failed") }
+  # scope :done, -> { by_state("done") }
+  # scope :ignored, -> { by_state("ignored") }
+  # scope :deleted, -> { by_state("deleted") }
+  # scope :notified, -> { by_state("notified") }
   scope :stale, -> { where(aasm_state: ["waiting", "working"])}
   scope :total, ->(duration) { where(updated_at: (Time.zone.now.beginning_of_hour - duration.hours)..Time.zone.now.beginning_of_hour) }
 

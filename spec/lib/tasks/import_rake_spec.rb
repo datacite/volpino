@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe "import:all", vcr: true, rake: true, elasticsearch: true do
   include ActiveJob::TestHelper
