@@ -198,7 +198,7 @@ class Claim < ActiveRecord::Base
       write_attribute(:error_messages, result.body["errors"].inspect)
 
       # send notification to Sentry
-      Raven.capture_exception(RuntimeError.new(result.body["errors"].first["title"])) if ENV["SENTRY_DSN"]
+      # Raven.capture_exception(RuntimeError.new(result.body["errors"].first["title"])) if ENV["SENTRY_DSN"]
 
       logger.error "[Error] #{self.uid} – #{self.doi}] " + result.body["errors"].first["title"].inspect
 

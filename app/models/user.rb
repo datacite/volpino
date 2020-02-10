@@ -307,7 +307,7 @@ class User < ActiveRecord::Base
     if result.body["skip"]
     elsif result.body["errors"]
       # send notification to Sentry
-      Raven.capture_exception(RuntimeError.new(result.body["errors"].first["title"]))if ENV["SENTRY_DSN"]
+      # Raven.capture_exception(RuntimeError.new(result.body["errors"].first["title"]))if ENV["SENTRY_DSN"]
 
       logger.error result.body["errors"].first["title"]
     else
