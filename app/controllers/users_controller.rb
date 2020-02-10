@@ -107,16 +107,18 @@ class UsersController < BaseController
 
     if exists
       authorize! :update, @user
-      @user.assign_attributes(safe_params.except(:uid))
+      @user.assign_attributes(safe_params)
+      status = :ok
     else
-      @user = User.new(safe_params.merge(uid: params["id"], provider: "globus"))
+      @user = User.new(safe_params.merge(uid: params[:id], provider: "globus"))
       authorize! :new, @user
+      status = :created
     end
 
     if @user.save
       options = {}
       options[:is_collection] = false
-      render json: UserSerializer.new(@user, options).serialized_json, status: :ok
+      render json: UserSerializer.new(@user, options).serialized_json, status: status
     else
       logger.error @user.errors.inspect
       render json: serialize_errors(@user.errors), status: :unprocessable_entity
@@ -131,7 +133,7 @@ class UsersController < BaseController
 
   def load_user
     @user = User.where(uid: params[:id]).first
-    fail ActiveRecord::RecordNotFound unless @user.present?
+    fail ActiveRecord::RecordNotFound if @user.blank?
   end
 
   def set_include

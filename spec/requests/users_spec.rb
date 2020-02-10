@@ -114,7 +114,7 @@ describe "users", type: :request, elasticsearch: true do
     end
 
     context 'when the record doesn\'t exist', vcr:true do
-      let(:new_user) { FactoryBot.build(:user, uid: "0000-0001-6528-2027", name: "Martin Fenner") }
+      let(:new_user) { FactoryBot.build(:user, uid: "0000-0002-0989-1335", name: "Ogechukwu Alozie") }
       let(:params) do
         { "data" => { "type" => "users",
                       "attributes" => {
@@ -124,7 +124,7 @@ describe "users", type: :request, elasticsearch: true do
       it 'updates the record' do
         put "/users/#{new_user.uid}", params, headers
 
-        expect(last_response.status).to eq(200)
+        expect(last_response.status).to eq(201)
         expect(json.dig('data', 'attributes', 'name')).to eq(new_user.name)
       end
     end
