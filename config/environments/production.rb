@@ -49,13 +49,6 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
 
-  # Use the lowest log level to ensure availability of diagnostic information
-  # when problems arise.
-  config.log_level = :debug
-
-  # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
-
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
@@ -67,9 +60,6 @@ Rails.application.configure do
 
   # for devise
   config.action_mailer.default_url_options = { :host => "#{ENV['SERVER_NAME']}:#{ENV['SERVER_PORT']}" }
-  
-  # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = ::Logger::Formatter.new
 
   # send email via mailgun
   config.action_mailer.delivery_method = :mailgun
