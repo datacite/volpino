@@ -32,7 +32,7 @@ gem "oj_mimic_json", "~> 1.0", ">= 1.0.1"
 gem 'kaminari', '~> 1.2'
 gem "simple_form", "~> 4.1.0"
 gem 'country_select', '~> 4.0'
-gem 'nokogiri', '~> 1.10', '>= 1.10.7'
+gem 'nokogiri', '~> 1.10'
 gem 'commonmarker', '~> 0.21.0'
 gem 'hashie'
 gem 'rouge', '~> 3.15'
