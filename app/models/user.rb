@@ -46,6 +46,7 @@ class User < ActiveRecord::Base
 
   alias_attribute :created, :created_at
   alias_attribute :updated, :updated_at
+  alias_attribute :given_name, :given_names
 
   serialize :other_names, JSON
 
@@ -64,7 +65,7 @@ class User < ActiveRecord::Base
       indexes :id,            type: :keyword
       indexes :uid,           type: :keyword
       indexes :name,          type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}
-      indexes :given_names,   type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}
+      indexes :given_name,   type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}
       indexes :family_name,   type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}
       indexes :email,         type: :keyword
       indexes :github,        type: :keyword
@@ -88,7 +89,7 @@ class User < ActiveRecord::Base
       "id" => uid,
       "uid" => uid,
       "name" => name,
-      "given_names" => given_names,
+      "given_name" => given_name,
       "family_name" => family_name,
       "email" => email,
       "github" => github,
@@ -107,7 +108,7 @@ class User < ActiveRecord::Base
   end
 
   def self.query_fields
-    ['uid^50', 'name^5', 'given_names^5', 'family_name^5', '_all']
+    ['uid^50', 'name^5', 'given_name^5', 'family_name^5', '_all']
   end
 
   def self.query_aggregations
