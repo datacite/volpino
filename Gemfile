@@ -13,6 +13,7 @@ gem 'orcid_client', '~> 0.5', '>= 0.8'
 gem 'addressable', '~> 2.7'
 gem 'postrank-uri', '~> 1.0', '>= 1.0.24'
 gem 'nilify_blanks', '~> 1.3'
+gem 'strip_attributes', '~> 1.9', '>= 1.9.2'
 gem 'aasm', '~> 5.0', '>= 5.0.6'
 gem 'shoryuken', '~> 5.0', '>= 5.0.3'
 gem "aws-sdk-s3", require: false
@@ -66,7 +67,7 @@ gem 'graphql', '~> 1.9', '>= 1.9.16'
 gem 'graphql-errors', '~> 0.4.0'
 gem 'graphql-batch', '~> 0.4.1'
 gem 'batch-loader', '~> 1.4', '>= 1.4.1'
-gem 'graphql-cache', '~> 0.6.0', git: "https://github.com/stackshareio/graphql-cache"
+gem 'graphql-cache', '~> 0.6.0'
 gem 'apollo-federation', '~> 1.0'
 gem 'google-protobuf', '3.10.0.rc.1'
 

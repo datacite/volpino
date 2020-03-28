@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
   include Elasticsearch::Model
 
   nilify_blanks
+  strip_attributes only: [:given_names, :family_name, :name, :other_names]
 
   # include hash helper
   include Hashie::Extensions::DeepFetch

@@ -6,6 +6,10 @@ describe User, type: :model, vcr: true, elasticsearch: true do
 
   it { is_expected.to validate_uniqueness_of(:uid).case_insensitive }
   it { is_expected.to have_many(:claims) }
+  it { is_expected.to strip_attribute :given_names }
+  it { is_expected.to strip_attribute :family_name }
+  it { is_expected.to strip_attribute :other_names }
+  it { is_expected.to strip_attribute :name }
 
   describe "jwt" do
     subject { FactoryBot.create(:regular_user) }

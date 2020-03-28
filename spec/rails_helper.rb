@@ -23,6 +23,7 @@ require "aasm/rspec"
 require "devise"
 require "colorize"
 require "maremma"
+require "strip_attributes/matchers"
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -112,6 +113,8 @@ RSpec.configure do |config|
 
   # add custom json method
   config.include RequestHelper, type: :request
+
+  config.include StripAttributes::Matchers
 
   def app
     Rails.application
