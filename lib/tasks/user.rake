@@ -47,8 +47,11 @@ namespace :user do
   end
 
   desc 'Import all users'
-  task import: :environment do
-    User.import(index: User.inactive_index)
+  task :import => :environment do
+    from_id = (ENV['FROM_ID'] || User.minimum(:id)).to_i
+    until_id = (ENV['UNTIL_ID'] || User.maximum(:id)).to_i
+
+    User.import_by_ids(from_id: from_id, until_id: until_id, index: ENV["INDEX"] || User.inactive_index)
   end
 
   desc "Update all claims counts"

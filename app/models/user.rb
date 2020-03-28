@@ -65,7 +65,7 @@ class User < ActiveRecord::Base
       indexes :id,            type: :keyword
       indexes :uid,           type: :keyword
       indexes :name,          type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}
-      indexes :given_name,   type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}
+      indexes :given_name,    type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}
       indexes :family_name,   type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}
       indexes :email,         type: :keyword
       indexes :github,        type: :keyword
@@ -120,6 +120,72 @@ class User < ActiveRecord::Base
 
   def self.from_omniauth(auth, options={})
     where(provider: options[:provider], uid: options[:uid] || auth.uid).first_or_create
+  end
+
+  def self.import_by_ids(options={})
+    from_id = (options[:from_id] || User.minimum(:id)).to_i
+    until_id = (options[:until_id] || User.maximum(:id)).to_i
+
+    # get every id between from_id and end_id
+    (from_id..until_id).step(500).each do |id|
+      UserImportByIdJob.perform_later(options.merge(id: id))
+      Rails.logger.info "Queued importing for users with IDs starting with #{id}." unless Rails.env.test?
+    end
+
+    (from_id..until_id).to_a.length
+  end
+
+  def self.import_by_id(options={})
+    return nil if options[:id].blank?
+
+    id = options[:id].to_i
+    index = if Rails.env.test?
+              "users-test"
+            elsif options[:index].present?
+              options[:index]
+            else
+              self.inactive_index
+            end
+    errors = 0
+    count = 0
+
+    User.where(id: id..(id + 499)).find_in_batches(batch_size: 500) do |users|
+      response = User.__elasticsearch__.client.bulk \
+        index:   index,
+        type:    User.document_type,
+        body:    users.map { |user| { index: { _id: user.id, data: user.as_indexed_json } } }
+
+      # try to handle errors
+      response['items'].select { |k, v| k.values.first['error'].present? }.each do |item|
+        Rails.logger.error "[Elasticsearch] " + item.inspect
+        id = item.dig("index", "_id").to_i
+        user = User.where(id: id).first
+        IndexJob.perform_later(user) if user.present?
+      end
+
+      count += users.length
+    end
+
+    if errors > 1
+      Rails.logger.error "[Elasticsearch] #{errors} errors importing #{count} users with IDs #{id} - #{(id + 499)}."
+    elsif count > 0
+      Rails.logger.info "[Elasticsearch] Imported #{count} users with IDs #{id} - #{(id + 499)}."
+    end
+
+    count
+  rescue Elasticsearch::Transport::Transport::Errors::RequestEntityTooLarge, Faraday::ConnectionFailed, ActiveRecord::LockWaitTimeout => error
+    Rails.logger.info "[Elasticsearch] Error #{error.message} importing users with IDs #{id} - #{(id + 499)}."
+
+    count = 0
+
+    User.where(id: id..(id + 499)).find_each do |user|
+      IndexJob.perform_later(user)
+      count += 1
+    end
+
+    Rails.logger.info "[Elasticsearch] Imported #{count} users with IDs #{id} - #{(id + 499)}."
+
+    count
   end
 
   def queue_user_job
