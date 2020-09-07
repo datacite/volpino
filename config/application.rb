@@ -48,6 +48,7 @@ ENV['ES_HOST'] ||= "elasticsearch:9200"
 ENV['ES_SCHEME'] ||= "http"
 ENV['ES_PORT'] ||= "80"
 ENV['ES_NAME'] ||= "elasticsearch"
+ENV['ES_PREFIX'] ||= ""
 
 module Volpino
   class Application < Rails::Application
@@ -101,6 +102,11 @@ module Volpino
     else
       config.active_job.queue_adapter = :inline
     end
-    config.active_job.queue_name_prefix = Rails.env
+    if Rails.env == "stage" 
+      queue_name_prefix = ENV['ES_PREFIX'].present? ? "stage" : "test"
+    else
+      queue_name_prefix = Rails.env
+    end
+    config.active_job.queue_name_prefix = queue_name_prefix
   end
 end

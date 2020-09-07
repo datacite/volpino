@@ -34,6 +34,8 @@ class Users::SessionsController < Devise::SessionsController
     
     domain = if Rails.env.production?
                ".datacite.org"
+             elsif Rails.env.stage? && ENV['ES_PREFIX'].present?
+               ".stage.datacite.org"
              elsif Rails.env.stage?
                ".test.datacite.org"
              else
