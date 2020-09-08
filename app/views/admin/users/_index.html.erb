@@ -24,9 +24,9 @@
             <% @created.each do |created| %>
               <li>
                 <% if params[:created] %>
-                  <%= link_to icon('check-square-o').html_safe, admin_users_path(query: params[:query], role_id: params[:role_id]) %>
+                  <%= link_to "<i class='far fa-check-square'></i>".html_safe, admin_users_path(query: params[:query], role_id: params[:role_id]) %>
                 <% else %>
-                  <%= link_to icon('square-o').html_safe, admin_users_path(query: params[:query], created: created["id"], role_id: params[:role_id]) %>
+                  <%= link_to "<i class='far fa-square'></i>".html_safe, admin_users_path(query: params[:query], created: created["id"], role_id: params[:role_id]) %>
                 <% end %>
   
                 <div class="facet-title"><%= created["title"] %></div>
@@ -44,9 +44,9 @@
             <% @roles.each do |role| %>
               <li>
                 <% if params[:role_id] %>
-                  <%= link_to icon('check-square-o').html_safe, admin_users_path(query: params[:query], created: params[:created]) %>
+                  <%= link_to "<i class='far fa-check-square'></i>".html_safe, admin_users_path(query: params[:query], created: params[:created]) %>
                 <% else %>
-                  <%= link_to icon('square-o').html_safe, admin_users_path(query: params[:query], role_id: role["id"], created: params[:created]) %>
+                  <%= link_to "<i class='far fa-square'></i>".html_safe, admin_users_path(query: params[:query], role_id: role["id"], created: params[:created]) %>
                 <% end %>
   
                 <div class="facet-title"><%= role["title"] %></div>
@@ -100,7 +100,7 @@
               <% end %>
 
               <h5>ORCID</h5>
-              <%= link_to h(user.uid), "https://orcid.org/" + user.uid %>              
+              <%= link_to "https://orcid.org/#{user.uid}".html_safe, "https://orcid.org/" + user.uid %>              
 
               <h5>Record</h5>
               <% if user.is_public %>

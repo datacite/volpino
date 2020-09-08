@@ -20,10 +20,10 @@
                   <li><%= link_to "#{icon('user')} Settings".html_safe, setting_path("me") %></li>
                   <li class="divider"></li>
                   <% if ENV['ORCID_CLIENT_ID'].present? %>
-                    <li><%= link_to "#{icon('external-link')} ORCID Record".html_safe, current_user.orcid %></li>
+                    <li><%= link_to "<i class='fab fa-orcid'></i> ORCID Record".html_safe, current_user.orcid %></li>
                     <li class="divider"></li>
                   <% end %>
-                  <li><%= link_to "#{icon('sign-out')} Sign Out".html_safe, destroy_user_session_path, :method => :delete, :id => "sign_out" %></li>
+                  <li><%= link_to "#{icon('sign-out-alt')} Sign Out".html_safe, destroy_user_session_path, :method => :delete, :id => "sign_out" %></li>
                 </ul>
               </li>
             <% else %>
