@@ -15,7 +15,11 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_out_path_for(resource_or_scope)
-    request.referrer || root_path
+    if request.referrer.to_s.end_with?("/settings/me")
+      root_path
+    else
+      request.referrer || root_path
+    end
   end
 
   #convert parameters with hyphen to parameters with underscore.

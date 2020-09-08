@@ -12,11 +12,8 @@ class SettingsController < ApplicationController
   def update
     @user.update_attributes(safe_params)
     
-    # refresh cookie if ORCID token was deleted
-    if safe_params[:orcid_token].blank? && safe_params[:orcid_expires_at].present?
-      cookies[:_datacite] = encode_cookie(@user.jwt) 
-      flash[:notice] = "ORCID token successfully deleted."
-    end
+    # refresh cookie 
+    cookies[:_datacite] = encode_cookie(@user.jwt) 
 
     render :show
   end
