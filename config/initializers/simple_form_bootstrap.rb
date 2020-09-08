@@ -156,7 +156,7 @@ module SimpleForm
         input_html_options[:style] ||= 'display:none;'
 
         button = template.content_tag(:div, class: 'input-append') do
-          template.content_tag(:a, '<i class="fa fa-pencil"/> Edit'.html_safe, class: 'btn btn-file btn-sm', onclick: "$('input[id=#{idf}]').click();")
+          template.content_tag(:a, '<i class="fas fa-pencil"/> Edit'.html_safe, class: 'btn btn-file btn-sm', onclick: "$('input[id=#{idf}]').click();")
         end
 
         script = template.content_tag(:script, type: 'text/javascript') do
