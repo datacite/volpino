@@ -14,13 +14,18 @@
     <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="//cdn.statuspage.io/se-v2.js"></script>
-    <script src="<%= ENV['CDN_URL'] %>/javascripts/default.js"></script>
+    <script src="https://assets.datacite.org/javascripts/default.js"></script>
   </head>
 
   <body>
     <%= render partial: "layouts/#{ENV['MODE']}/header" -%>
     <%= yield -%>
-    <%= render partial: "layouts/analytics" -%>
+    <div id="consent"></div>
+    <script src="<%= ENV['CDN_URL'] %>/javascripts/consent.js"></script>
+    <% if ENV['GABBA_COOKIE'].present? %>
+      <div id="ga" data-ga="<%= ENV['GABBA_COOKIE'] %>"></div>
+      <script src="<%= ENV['CDN_URL'] %>/javascripts/ga.js"></script>
+    <% end %>
     <%= render partial: "layouts/#{ENV['MODE']}/footer" -%>
   </body>
 </html>
