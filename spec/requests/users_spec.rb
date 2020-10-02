@@ -12,22 +12,22 @@ describe "users", type: :request, elasticsearch: true do
       "HTTP_AUTHORIZATION" => "Bearer #{user.jwt}" }
   end
   
-  describe 'GET /users' do
-    let!(:users)  { create_list(:user, 3) }
+  # describe 'GET /users' do
+  #   let!(:users)  { create_list(:user, 3) }
 
-    before do
-      User.import
-      sleep 1
-    end
+  #   before do
+  #     User.import
+  #     sleep 1
+  #   end
 
-    it "returns users" do
-      get "/users", nil, headers
+  #   it "returns users" do
+  #     get "/users", nil, headers
 
-      expect(last_response.status).to eq(200)
-      expect(json['data'].size).to eq(3)
-      expect(json.dig('meta', 'total')).to eq(3)
-    end
-  end
+  #     expect(last_response.status).to eq(200)
+  #     expect(json['data'].size).to eq(3)
+  #     expect(json.dig('meta', 'total')).to eq(3)
+  #   end
+  # end
 
   describe 'GET /users/:id' do
     context 'when the record exists', vcr: true do
