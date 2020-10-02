@@ -16,6 +16,14 @@ class ClaimSerializer
     "https://orcid.org/#{object.user_id}"
   end
 
+  attribute :error_messages do |object|
+    if object.error_messages.is_a?(String)
+      [{ "title" => object.error_messages }]
+    else
+      Array.wrap(object.error_messages)
+    end
+  end
+
   attribute :state do |object|
     object.aasm_state
   end

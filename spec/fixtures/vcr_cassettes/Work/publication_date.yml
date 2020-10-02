@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Mozilla/5.0 (compatible; Maremma/4.4; mailto:info@datacite.org)
+      - Mozilla/5.0 (compatible; Maremma/4.7; mailto:info@datacite.org)
       Accept:
       - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
   response:
@@ -17,24 +17,26 @@ http_interactions:
       message: ''
     headers:
       Date:
-      - Wed, 09 Oct 2019 07:24:03 GMT
+      - Fri, 02 Oct 2020 06:24:51 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Connection:
       - keep-alive
       Set-Cookie:
-      - __cfduid=de950d2652c35fe2dcbfb53f5e3a9c6571570605843; expires=Thu, 08-Oct-20
-        07:24:03 GMT; path=/; domain=.doi.org; HttpOnly
+      - __cfduid=d08f68a26de3eb23218b6fc3dd596a36f1601619891; expires=Sun, 01-Nov-20
+        06:24:51 GMT; path=/; domain=.doi.org; HttpOnly; SameSite=Lax; Secure
       Cf-Cache-Status:
       - DYNAMIC
-      Strict-Transport-Security:
-      - max-age=2592000; includeSubDomains
+      Cf-Request-Id:
+      - '0589952ee00000dfa9e312a200000001'
       Expect-Ct:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Server:
       - cloudflare
       Cf-Ray:
-      - 522e9cdc1b9ad725-FRA
+      - 5dbc57c4990cdfa9-FRA
     body:
       encoding: ASCII-8BIT
       string: |-
@@ -45,57 +47,49 @@ http_interactions:
           }
         ]
     http_version: 
-  recorded_at: Wed, 09 Oct 2019 07:24:03 GMT
+  recorded_at: Fri, 02 Oct 2020 06:24:52 GMT
 - request:
     method: get
-    uri: https://api.test.datacite.org/dois/10.5438/mk65-3m12
+    uri: https://api.datacite.org/dois/10.5438/mk65-3m12
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Mozilla/5.0 (compatible; Maremma/4.4; mailto:info@datacite.org)
+      - Mozilla/5.0 (compatible; Maremma/4.7; mailto:info@datacite.org)
       Accept:
       - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
   response:
     status:
-      code: 200
-      message: OK
+      code: 404
+      message: Not Found
     headers:
       Date:
-      - Wed, 09 Oct 2019 07:24:04 GMT
+      - Fri, 02 Oct 2020 06:24:52 GMT
       Content-Type:
       - application/json; charset=utf-8
       Connection:
       - keep-alive
       Status:
-      - 200 OK
-      X-Anonymous-Consumer:
-      - 'true'
+      - 404 Not Found
       Cache-Control:
-      - max-age=0, private, must-revalidate
+      - no-cache
       Vary:
       - Accept-Encoding, Origin
-      X-Request-Id:
-      - bc73f76a-18ba-433f-9633-1d4ecccfe880
-      Etag:
-      - W/"c2256cee884c8bf6df6ef5593f30baa2"
       X-Runtime:
-      - '0.020444'
+      - '0.057949'
+      X-Rack-Cors:
+      - miss; no-origin
+      X-Request-Id:
+      - b304c122-4b69-4503-bbd5-47ea5bae52bd
       X-Powered-By:
-      - Phusion Passenger 6.0.4
+      - Phusion Passenger 6.0.6
       Server:
-      - nginx/1.17.3 + Phusion Passenger 6.0.4
+      - nginx/1.14.0 + Phusion Passenger 6.0.6
     body:
       encoding: ASCII-8BIT
-      string: '{"data":{"id":"10.5438/mk65-3m12","type":"dois","attributes":{"doi":"10.5438/mk65-3m12","prefix":"10.5438","suffix":"mk65-3m12","identifiers":[{"identifier":"https://doi.org/10.5438/mk65-3m12","identifierType":"DOI"}],"creators":[{"name":"Fenner,
-        Martin","nameType":"Personal","givenName":"Martin","familyName":"Fenner","affiliation":["DataCite"],"nameIdentifiers":[{"schemeUri":"https://orcid.org","nameIdentifier":"https://orcid.org/0000-0003-1419-2405","nameIdentifierScheme":"ORCID"}]}],"titles":[{"title":"Eating
-        your own Dog Food"}],"publisher":"DataCite","container":{},"publicationYear":2016,"subjects":[{"subject":"datacite"},{"subject":"doi"},{"subject":"metadata"},{"subject":"featured"}],"contributors":[],"dates":[{"date":"2016-12-20","dateType":"Issued"},{"date":"2016-12-20","dateType":"Created"},{"date":"2016-12-20","dateType":"Updated"}],"language":null,"types":{"ris":"GEN","bibtex":"article","citeproc":"post-weblog","schemaOrg":"BlogPosting","resourceTypeGeneral":"Text"},"relatedIdentifiers":[{"relationType":"IsPartOf","relatedIdentifier":"10.5438/0000-00ss","resourceTypeGeneral":"Text","relatedIdentifierType":"DOI"},{"relationType":"References","relatedIdentifier":"10.5438/0012","relatedIdentifierType":"DOI"},{"relationType":"References","relatedIdentifier":"10.5438/55e5-t5c0","relatedIdentifierType":"DOI"}],"sizes":null,"formats":null,"version":"1.0","rightsList":[{"rights":null,"rightsUri":null}],"descriptions":[{"lang":null,"description":"Eating
-        your own dog food is a slang term to describe that an organization should
-        itself use the products and services it provides. For DataCite this means
-        that we should use DOIs with appropriate metadata and strategies for long-term
-        preservation for...","descriptionType":"Abstract"}],"geoLocations":null,"fundingReferences":null,"xml":"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHJlc291cmNlIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhtbG5zPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtNCIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtNCBodHRwOi8vc2NoZW1hLmRhdGFjaXRlLm9yZy9tZXRhL2tlcm5lbC00L21ldGFkYXRhLnhzZCI+CiAgPGlkZW50aWZpZXIgaWRlbnRpZmllclR5cGU9IkRPSSI+MTAuNTQzOC9NSzY1LTNNMTI8L2lkZW50aWZpZXI+CiAgPGNyZWF0b3JzPgogICAgPGNyZWF0b3I+CiAgICAgIDxjcmVhdG9yTmFtZSBuYW1lVHlwZT0iUGVyc29uYWwiPkZlbm5lciwgTWFydGluPC9jcmVhdG9yTmFtZT4KICAgICAgPGdpdmVuTmFtZT5NYXJ0aW48L2dpdmVuTmFtZT4KICAgICAgPGZhbWlseU5hbWU+RmVubmVyPC9mYW1pbHlOYW1lPgogICAgICA8bmFtZUlkZW50aWZpZXIgbmFtZUlkZW50aWZpZXJTY2hlbWU9Ik9SQ0lEIiBzY2hlbWVVUkk9Imh0dHBzOi8vb3JjaWQub3JnIj5odHRwczovL29yY2lkLm9yZy8wMDAwLTAwMDMtMTQxOS0yNDA1PC9uYW1lSWRlbnRpZmllcj4KICAgICAgPGFmZmlsaWF0aW9uIGFmZmlsaWF0aW9uSWRlbnRpZmllcj0iaHR0cHM6Ly9yb3Iub3JnLzA0d3huc2o4MSIgYWZmaWxpYXRpb25JZGVudGlmaWVyU2NoZW1lPSJST1IiPkRhdGFDaXRlPC9hZmZpbGlhdGlvbj4KICAgIDwvY3JlYXRvcj4KICA8L2NyZWF0b3JzPgogIDx0aXRsZXM+CiAgICA8dGl0bGU+RWF0aW5nIHlvdXIgb3duIERvZyBGb29kPC90aXRsZT4KICA8L3RpdGxlcz4KICA8cHVibGlzaGVyPkRhdGFDaXRlPC9wdWJsaXNoZXI+CiAgPHB1YmxpY2F0aW9uWWVhcj4yMDE2PC9wdWJsaWNhdGlvblllYXI+CiAgPHJlc291cmNlVHlwZSByZXNvdXJjZVR5cGVHZW5lcmFsPSJUZXh0Ij5CbG9nUG9zdGluZzwvcmVzb3VyY2VUeXBlPgogIDxzdWJqZWN0cz4KICAgIDxzdWJqZWN0PmRhdGFjaXRlPC9zdWJqZWN0PgogICAgPHN1YmplY3Q+ZG9pPC9zdWJqZWN0PgogICAgPHN1YmplY3Q+bWV0YWRhdGE8L3N1YmplY3Q+CiAgICA8c3ViamVjdD5mZWF0dXJlZDwvc3ViamVjdD4KICA8L3N1YmplY3RzPgogIDxkYXRlcz4KICAgIDxkYXRlIGRhdGVUeXBlPSJJc3N1ZWQiPjIwMTYtMTItMjA8L2RhdGU+CiAgICA8ZGF0ZSBkYXRlVHlwZT0iQ3JlYXRlZCI+MjAxNi0xMi0yMDwvZGF0ZT4KICAgIDxkYXRlIGRhdGVUeXBlPSJVcGRhdGVkIj4yMDE2LTEyLTIwPC9kYXRlPgogIDwvZGF0ZXM+CiAgPHJlbGF0ZWRJZGVudGlmaWVycz4KICAgIDxyZWxhdGVkSWRlbnRpZmllciByZWxhdGVkSWRlbnRpZmllclR5cGU9IkRPSSIgcmVsYXRpb25UeXBlPSJJc1BhcnRPZiIgcmVzb3VyY2VUeXBlR2VuZXJhbD0iVGV4dCI+MTAuNTQzOC8wMDAwLTAwc3M8L3JlbGF0ZWRJZGVudGlmaWVyPgogICAgPHJlbGF0ZWRJZGVudGlmaWVyIHJlbGF0ZWRJZGVudGlmaWVyVHlwZT0iRE9JIiByZWxhdGlvblR5cGU9IlJlZmVyZW5jZXMiPjEwLjU0MzgvMDAxMjwvcmVsYXRlZElkZW50aWZpZXI+CiAgICA8cmVsYXRlZElkZW50aWZpZXIgcmVsYXRlZElkZW50aWZpZXJUeXBlPSJET0kiIHJlbGF0aW9uVHlwZT0iUmVmZXJlbmNlcyI+MTAuNTQzOC81NWU1LXQ1YzA8L3JlbGF0ZWRJZGVudGlmaWVyPgogIDwvcmVsYXRlZElkZW50aWZpZXJzPgogIDx2ZXJzaW9uPjEuMDwvdmVyc2lvbj4KICA8cmlnaHRzTGlzdD4KICAgIDxyaWdodHMvPgogIDwvcmlnaHRzTGlzdD4KICA8ZGVzY3JpcHRpb25zPgogICAgPGRlc2NyaXB0aW9uIGRlc2NyaXB0aW9uVHlwZT0iQWJzdHJhY3QiPkVhdGluZyB5b3VyIG93biBkb2cgZm9vZCBpcyBhIHNsYW5nIHRlcm0gdG8gZGVzY3JpYmUgdGhhdCBhbiBvcmdhbml6YXRpb24gc2hvdWxkIGl0c2VsZiB1c2UgdGhlIHByb2R1Y3RzIGFuZCBzZXJ2aWNlcyBpdCBwcm92aWRlcy4gRm9yIERhdGFDaXRlIHRoaXMgbWVhbnMgdGhhdCB3ZSBzaG91bGQgdXNlIERPSXMgd2l0aCBhcHByb3ByaWF0ZSBtZXRhZGF0YSBhbmQgc3RyYXRlZ2llcyBmb3IgbG9uZy10ZXJtIHByZXNlcnZhdGlvbiBmb3IuLi48L2Rlc2NyaXB0aW9uPgogIDwvZGVzY3JpcHRpb25zPgo8L3Jlc291cmNlPgo=","url":"https://blog.datacite.org/eating-your-own-dog-food/","contentUrl":null,"metadataVersion":4,"schemaVersion":null,"source":"fabricaForm","isActive":true,"state":"findable","reason":null,"created":"2018-12-30T16:40:29.000Z","registered":"2018-12-30T16:40:30.000Z","published":"2016","updated":"2019-09-17T17:02:42.000Z"},"relationships":{"client":{"data":{"id":"datacite.datacite","type":"clients"}},"media":{"data":{"id":"10.5438/mk65-3m12","type":"media"}}}},"included":[{"id":"datacite.datacite","type":"clients","attributes":{"name":"DataCite
-        Repository","symbol":"DATACITE.DATACITE","year":2011,"contactEmail":"support@datacite.org","alternateName":null,"description":null,"language":["en","fr"],"clientType":"periodical","domains":"datacite.org","issn":{"issnl":null,"print":"1545-7885","electronic":"1544-9173"},"url":null,"created":"2011-12-07T13:43:39.000Z","updated":"2019-08-24T06:22:34.000Z","isActive":true,"hasPassword":true},"relationships":{"provider":{"data":{"id":"datacite","type":"providers"}},"consortium":{"data":{"id":"dc","type":"providers"}},"prefixes":{"data":[{"id":"10.5438","type":"prefixes"},{"id":"10.14454","type":"prefixes"},{"id":"10.70002","type":"prefixes"},{"id":"10.70001","type":"prefixes"}]}}}]}'
+      string: '{"errors":[{"status":"404","title":"The resource you are looking for
+        doesn''t exist."}]}'
     http_version: 
-  recorded_at: Wed, 09 Oct 2019 07:24:04 GMT
+  recorded_at: Fri, 02 Oct 2020 06:24:52 GMT
 recorded_with: VCR 3.0.3

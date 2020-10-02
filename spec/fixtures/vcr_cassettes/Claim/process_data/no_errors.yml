@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Mozilla/5.0 (compatible; Maremma/4.4; mailto:info@datacite.org)
+      - Mozilla/5.0 (compatible; Maremma/4.7; mailto:info@datacite.org)
       Accept:
       - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
   response:
@@ -17,24 +17,26 @@ http_interactions:
       message: ''
     headers:
       Date:
-      - Wed, 09 Oct 2019 07:24:20 GMT
+      - Fri, 02 Oct 2020 06:13:14 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Connection:
       - keep-alive
       Set-Cookie:
-      - __cfduid=de7dfdaaac41a81cc91d6140ce1d1e5a61570605860; expires=Thu, 08-Oct-20
-        07:24:20 GMT; path=/; domain=.doi.org; HttpOnly
+      - __cfduid=d8caeabcc7e9a5699a974e4fc7e4f21fa1601619194; expires=Sun, 01-Nov-20
+        06:13:14 GMT; path=/; domain=.doi.org; HttpOnly; SameSite=Lax; Secure
       Cf-Cache-Status:
       - DYNAMIC
-      Strict-Transport-Security:
-      - max-age=2592000; includeSubDomains
+      Cf-Request-Id:
+      - '05898a8b3d000097ba02340200000001'
       Expect-Ct:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Server:
       - cloudflare
       Cf-Ray:
-      - 522e9d46bc95640d-FRA
+      - 5dbc46bec8fa97ba-FRA
     body:
       encoding: ASCII-8BIT
       string: |-
@@ -45,317 +47,49 @@ http_interactions:
           }
         ]
     http_version: 
-  recorded_at: Wed, 09 Oct 2019 07:24:20 GMT
+  recorded_at: Fri, 02 Oct 2020 06:13:14 GMT
 - request:
     method: get
-    uri: https://api.test.datacite.org/dois/10.14454/j6gr-cf48
+    uri: https://api.datacite.org/dois/10.14454/j6gr-cf48
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Mozilla/5.0 (compatible; Maremma/4.4; mailto:info@datacite.org)
+      - Mozilla/5.0 (compatible; Maremma/4.7; mailto:info@datacite.org)
       Accept:
       - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
   response:
     status:
-      code: 200
-      message: OK
+      code: 404
+      message: Not Found
     headers:
       Date:
-      - Wed, 09 Oct 2019 07:24:21 GMT
+      - Fri, 02 Oct 2020 06:13:15 GMT
       Content-Type:
       - application/json; charset=utf-8
       Connection:
       - keep-alive
       Status:
-      - 200 OK
-      X-Anonymous-Consumer:
-      - 'true'
+      - 404 Not Found
       Cache-Control:
-      - max-age=0, private, must-revalidate
-      Vary:
-      - Accept-Encoding, Origin
-      X-Request-Id:
-      - ee89dda2-9625-49ec-8faf-49713eecdd6d
-      Etag:
-      - W/"d5e5aeef1a12e3c3f7c3150cd2c77510"
-      X-Runtime:
-      - '0.025533'
-      X-Powered-By:
-      - Phusion Passenger 6.0.4
-      Server:
-      - nginx/1.17.3 + Phusion Passenger 6.0.4
-    body:
-      encoding: ASCII-8BIT
-      string: '{"data":{"id":"10.14454/j6gr-cf48","type":"dois","attributes":{"doi":"10.14454/j6gr-cf48","prefix":"10.14454","suffix":"j6gr-cf48","identifiers":null,"creators":[{"name":"Fenner,
-        Martin","nameType":"Personal","givenName":"Martin","familyName":"Fenner","affiliation":["DataCite"],"nameIdentifiers":[{"schemeUri":"https://orcid.org","nameIdentifier":"https://orcid.org/0000-0003-1419-2405","nameIdentifierScheme":"ORCID"}]}],"titles":[{"lang":null,"title":"Test","titleType":null}],"publisher":"DataCite","container":{},"publicationYear":2019,"subjects":null,"contributors":[],"dates":null,"language":null,"types":{"resourceTypeGeneral":"Text"},"relatedIdentifiers":null,"sizes":null,"formats":null,"version":null,"rightsList":[],"descriptions":[],"geoLocations":null,"fundingReferences":null,"xml":"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHJlc291cmNlIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhtbG5zPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtNCIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtNCBodHRwOi8vc2NoZW1hLmRhdGFjaXRlLm9yZy9tZXRhL2tlcm5lbC00L21ldGFkYXRhLnhzZCI+CiAgPGlkZW50aWZpZXIgaWRlbnRpZmllclR5cGU9IkRPSSI+MTAuMTQ0NTQvSjZHUi1DRjQ4PC9pZGVudGlmaWVyPgogIDxjcmVhdG9ycz4KICAgIDxjcmVhdG9yPgogICAgICA8Y3JlYXRvck5hbWUgbmFtZVR5cGU9IlBlcnNvbmFsIj5GZW5uZXIsIE1hcnRpbjwvY3JlYXRvck5hbWU+CiAgICAgIDxnaXZlbk5hbWU+TWFydGluPC9naXZlbk5hbWU+CiAgICAgIDxmYW1pbHlOYW1lPkZlbm5lcjwvZmFtaWx5TmFtZT4KICAgICAgPG5hbWVJZGVudGlmaWVyIG5hbWVJZGVudGlmaWVyU2NoZW1lPSJPUkNJRCIgc2NoZW1lVVJJPSJodHRwczovL29yY2lkLm9yZyI+aHR0cHM6Ly9vcmNpZC5vcmcvMDAwMC0wMDAzLTE0MTktMjQwNTwvbmFtZUlkZW50aWZpZXI+CiAgICAgIDxhZmZpbGlhdGlvbj5EYXRhQ2l0ZTwvYWZmaWxpYXRpb24+CiAgICA8L2NyZWF0b3I+CiAgPC9jcmVhdG9ycz4KICA8dGl0bGVzPgogICAgPHRpdGxlPlRlc3Q8L3RpdGxlPgogIDwvdGl0bGVzPgogIDxwdWJsaXNoZXI+RGF0YUNpdGU8L3B1Ymxpc2hlcj4KICA8cHVibGljYXRpb25ZZWFyPjIwMTk8L3B1YmxpY2F0aW9uWWVhcj4KICA8cmVzb3VyY2VUeXBlIHJlc291cmNlVHlwZUdlbmVyYWw9IlRleHQiLz4KICA8dmVyc2lvbi8+CjwvcmVzb3VyY2U+Cg==","url":"https://blog.datacite.org","contentUrl":null,"metadataVersion":4,"schemaVersion":null,"source":"fabricaForm","isActive":true,"state":"findable","reason":null,"created":"2019-04-13T06:29:47.000Z","registered":"2019-04-13T06:31:10.000Z","published":"2019","updated":"2019-10-03T01:31:34.000Z"},"relationships":{"client":{"data":{"id":"datacite.datacite","type":"clients"}},"media":{"data":{"id":"10.14454/j6gr-cf48","type":"media"}}}},"included":[{"id":"datacite.datacite","type":"clients","attributes":{"name":"DataCite
-        Repository","symbol":"DATACITE.DATACITE","year":2011,"contactEmail":"support@datacite.org","alternateName":null,"description":null,"language":["en","fr"],"clientType":"periodical","domains":"datacite.org","issn":{"issnl":null,"print":"1545-7885","electronic":"1544-9173"},"url":null,"created":"2011-12-07T13:43:39.000Z","updated":"2019-08-24T06:22:34.000Z","isActive":true,"hasPassword":true},"relationships":{"provider":{"data":{"id":"datacite","type":"providers"}},"consortium":{"data":{"id":"dc","type":"providers"}},"prefixes":{"data":[{"id":"10.5438","type":"prefixes"},{"id":"10.14454","type":"prefixes"},{"id":"10.70002","type":"prefixes"},{"id":"10.70001","type":"prefixes"}]}}}]}'
-    http_version: 
-  recorded_at: Wed, 09 Oct 2019 07:24:21 GMT
-- request:
-    method: get
-    uri: https://doi.org/ra/10.14454
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Mozilla/5.0 (compatible; Maremma/4.4; mailto:info@datacite.org)
-      Accept:
-      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
-  response:
-    status:
-      code: 200
-      message: ''
-    headers:
-      Date:
-      - Wed, 09 Oct 2019 07:24:21 GMT
-      Content-Type:
-      - application/json;charset=UTF-8
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=dacc6294d735f7a1b65bb369a8cc825791570605861; expires=Thu, 08-Oct-20
-        07:24:21 GMT; path=/; domain=.doi.org; HttpOnly
-      Cf-Cache-Status:
-      - DYNAMIC
-      Strict-Transport-Security:
-      - max-age=2592000; includeSubDomains
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - 522e9d489b99beab-FRA
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        [
-          {
-            "DOI": "10.14454",
-            "RA": "DataCite"
-          }
-        ]
-    http_version: 
-  recorded_at: Wed, 09 Oct 2019 07:24:21 GMT
-- request:
-    method: get
-    uri: https://api.test.datacite.org/dois/10.14454/j6gr-cf48
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Mozilla/5.0 (compatible; Maremma/4.4; mailto:info@datacite.org)
-      Accept:
-      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Wed, 09 Oct 2019 07:24:21 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Connection:
-      - keep-alive
-      Status:
-      - 200 OK
-      X-Anonymous-Consumer:
-      - 'true'
-      Cache-Control:
-      - max-age=0, private, must-revalidate
-      Vary:
-      - Accept-Encoding, Origin
-      X-Request-Id:
-      - 22cfe75e-0445-43e2-b65a-4cfb4b834217
-      Etag:
-      - W/"d5e5aeef1a12e3c3f7c3150cd2c77510"
-      X-Runtime:
-      - '0.018992'
-      X-Powered-By:
-      - Phusion Passenger 6.0.4
-      Server:
-      - nginx/1.17.3 + Phusion Passenger 6.0.4
-    body:
-      encoding: ASCII-8BIT
-      string: '{"data":{"id":"10.14454/j6gr-cf48","type":"dois","attributes":{"doi":"10.14454/j6gr-cf48","prefix":"10.14454","suffix":"j6gr-cf48","identifiers":null,"creators":[{"name":"Fenner,
-        Martin","nameType":"Personal","givenName":"Martin","familyName":"Fenner","affiliation":["DataCite"],"nameIdentifiers":[{"schemeUri":"https://orcid.org","nameIdentifier":"https://orcid.org/0000-0003-1419-2405","nameIdentifierScheme":"ORCID"}]}],"titles":[{"lang":null,"title":"Test","titleType":null}],"publisher":"DataCite","container":{},"publicationYear":2019,"subjects":null,"contributors":[],"dates":null,"language":null,"types":{"resourceTypeGeneral":"Text"},"relatedIdentifiers":null,"sizes":null,"formats":null,"version":null,"rightsList":[],"descriptions":[],"geoLocations":null,"fundingReferences":null,"xml":"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHJlc291cmNlIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhtbG5zPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtNCIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtNCBodHRwOi8vc2NoZW1hLmRhdGFjaXRlLm9yZy9tZXRhL2tlcm5lbC00L21ldGFkYXRhLnhzZCI+CiAgPGlkZW50aWZpZXIgaWRlbnRpZmllclR5cGU9IkRPSSI+MTAuMTQ0NTQvSjZHUi1DRjQ4PC9pZGVudGlmaWVyPgogIDxjcmVhdG9ycz4KICAgIDxjcmVhdG9yPgogICAgICA8Y3JlYXRvck5hbWUgbmFtZVR5cGU9IlBlcnNvbmFsIj5GZW5uZXIsIE1hcnRpbjwvY3JlYXRvck5hbWU+CiAgICAgIDxnaXZlbk5hbWU+TWFydGluPC9naXZlbk5hbWU+CiAgICAgIDxmYW1pbHlOYW1lPkZlbm5lcjwvZmFtaWx5TmFtZT4KICAgICAgPG5hbWVJZGVudGlmaWVyIG5hbWVJZGVudGlmaWVyU2NoZW1lPSJPUkNJRCIgc2NoZW1lVVJJPSJodHRwczovL29yY2lkLm9yZyI+aHR0cHM6Ly9vcmNpZC5vcmcvMDAwMC0wMDAzLTE0MTktMjQwNTwvbmFtZUlkZW50aWZpZXI+CiAgICAgIDxhZmZpbGlhdGlvbj5EYXRhQ2l0ZTwvYWZmaWxpYXRpb24+CiAgICA8L2NyZWF0b3I+CiAgPC9jcmVhdG9ycz4KICA8dGl0bGVzPgogICAgPHRpdGxlPlRlc3Q8L3RpdGxlPgogIDwvdGl0bGVzPgogIDxwdWJsaXNoZXI+RGF0YUNpdGU8L3B1Ymxpc2hlcj4KICA8cHVibGljYXRpb25ZZWFyPjIwMTk8L3B1YmxpY2F0aW9uWWVhcj4KICA8cmVzb3VyY2VUeXBlIHJlc291cmNlVHlwZUdlbmVyYWw9IlRleHQiLz4KICA8dmVyc2lvbi8+CjwvcmVzb3VyY2U+Cg==","url":"https://blog.datacite.org","contentUrl":null,"metadataVersion":4,"schemaVersion":null,"source":"fabricaForm","isActive":true,"state":"findable","reason":null,"created":"2019-04-13T06:29:47.000Z","registered":"2019-04-13T06:31:10.000Z","published":"2019","updated":"2019-10-03T01:31:34.000Z"},"relationships":{"client":{"data":{"id":"datacite.datacite","type":"clients"}},"media":{"data":{"id":"10.14454/j6gr-cf48","type":"media"}}}},"included":[{"id":"datacite.datacite","type":"clients","attributes":{"name":"DataCite
-        Repository","symbol":"DATACITE.DATACITE","year":2011,"contactEmail":"support@datacite.org","alternateName":null,"description":null,"language":["en","fr"],"clientType":"periodical","domains":"datacite.org","issn":{"issnl":null,"print":"1545-7885","electronic":"1544-9173"},"url":null,"created":"2011-12-07T13:43:39.000Z","updated":"2019-08-24T06:22:34.000Z","isActive":true,"hasPassword":true},"relationships":{"provider":{"data":{"id":"datacite","type":"providers"}},"consortium":{"data":{"id":"dc","type":"providers"}},"prefixes":{"data":[{"id":"10.5438","type":"prefixes"},{"id":"10.14454","type":"prefixes"},{"id":"10.70002","type":"prefixes"},{"id":"10.70001","type":"prefixes"}]}}}]}'
-    http_version: 
-  recorded_at: Wed, 09 Oct 2019 07:24:21 GMT
-- request:
-    method: get
-    uri: https://doi.org/ra/10.14454
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Mozilla/5.0 (compatible; Maremma/4.4; mailto:info@datacite.org)
-      Accept:
-      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
-  response:
-    status:
-      code: 200
-      message: ''
-    headers:
-      Date:
-      - Wed, 09 Oct 2019 07:24:21 GMT
-      Content-Type:
-      - application/json;charset=UTF-8
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=d9908ef62968cf822f13d2c8ef45819011570605861; expires=Thu, 08-Oct-20
-        07:24:21 GMT; path=/; domain=.doi.org; HttpOnly
-      Cf-Cache-Status:
-      - DYNAMIC
-      Strict-Transport-Security:
-      - max-age=2592000; includeSubDomains
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - 522e9d4a7ce6d705-FRA
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        [
-          {
-            "DOI": "10.14454",
-            "RA": "DataCite"
-          }
-        ]
-    http_version: 
-  recorded_at: Wed, 09 Oct 2019 07:24:21 GMT
-- request:
-    method: get
-    uri: https://api.test.datacite.org/dois/10.14454/j6gr-cf48
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Mozilla/5.0 (compatible; Maremma/4.4; mailto:info@datacite.org)
-      Accept:
-      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Wed, 09 Oct 2019 07:24:21 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Connection:
-      - keep-alive
-      Status:
-      - 200 OK
-      X-Anonymous-Consumer:
-      - 'true'
-      Cache-Control:
-      - max-age=0, private, must-revalidate
-      Vary:
-      - Accept-Encoding, Origin
-      X-Request-Id:
-      - 96e918a5-ecfc-48e8-98d5-8a9a423a10e4
-      Etag:
-      - W/"d5e5aeef1a12e3c3f7c3150cd2c77510"
-      X-Runtime:
-      - '0.017066'
-      X-Powered-By:
-      - Phusion Passenger 6.0.4
-      Server:
-      - nginx/1.17.3 + Phusion Passenger 6.0.4
-    body:
-      encoding: ASCII-8BIT
-      string: '{"data":{"id":"10.14454/j6gr-cf48","type":"dois","attributes":{"doi":"10.14454/j6gr-cf48","prefix":"10.14454","suffix":"j6gr-cf48","identifiers":null,"creators":[{"name":"Fenner,
-        Martin","nameType":"Personal","givenName":"Martin","familyName":"Fenner","affiliation":["DataCite"],"nameIdentifiers":[{"schemeUri":"https://orcid.org","nameIdentifier":"https://orcid.org/0000-0003-1419-2405","nameIdentifierScheme":"ORCID"}]}],"titles":[{"lang":null,"title":"Test","titleType":null}],"publisher":"DataCite","container":{},"publicationYear":2019,"subjects":null,"contributors":[],"dates":null,"language":null,"types":{"resourceTypeGeneral":"Text"},"relatedIdentifiers":null,"sizes":null,"formats":null,"version":null,"rightsList":[],"descriptions":[],"geoLocations":null,"fundingReferences":null,"xml":"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHJlc291cmNlIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhtbG5zPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtNCIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtNCBodHRwOi8vc2NoZW1hLmRhdGFjaXRlLm9yZy9tZXRhL2tlcm5lbC00L21ldGFkYXRhLnhzZCI+CiAgPGlkZW50aWZpZXIgaWRlbnRpZmllclR5cGU9IkRPSSI+MTAuMTQ0NTQvSjZHUi1DRjQ4PC9pZGVudGlmaWVyPgogIDxjcmVhdG9ycz4KICAgIDxjcmVhdG9yPgogICAgICA8Y3JlYXRvck5hbWUgbmFtZVR5cGU9IlBlcnNvbmFsIj5GZW5uZXIsIE1hcnRpbjwvY3JlYXRvck5hbWU+CiAgICAgIDxnaXZlbk5hbWU+TWFydGluPC9naXZlbk5hbWU+CiAgICAgIDxmYW1pbHlOYW1lPkZlbm5lcjwvZmFtaWx5TmFtZT4KICAgICAgPG5hbWVJZGVudGlmaWVyIG5hbWVJZGVudGlmaWVyU2NoZW1lPSJPUkNJRCIgc2NoZW1lVVJJPSJodHRwczovL29yY2lkLm9yZyI+aHR0cHM6Ly9vcmNpZC5vcmcvMDAwMC0wMDAzLTE0MTktMjQwNTwvbmFtZUlkZW50aWZpZXI+CiAgICAgIDxhZmZpbGlhdGlvbj5EYXRhQ2l0ZTwvYWZmaWxpYXRpb24+CiAgICA8L2NyZWF0b3I+CiAgPC9jcmVhdG9ycz4KICA8dGl0bGVzPgogICAgPHRpdGxlPlRlc3Q8L3RpdGxlPgogIDwvdGl0bGVzPgogIDxwdWJsaXNoZXI+RGF0YUNpdGU8L3B1Ymxpc2hlcj4KICA8cHVibGljYXRpb25ZZWFyPjIwMTk8L3B1YmxpY2F0aW9uWWVhcj4KICA8cmVzb3VyY2VUeXBlIHJlc291cmNlVHlwZUdlbmVyYWw9IlRleHQiLz4KICA8dmVyc2lvbi8+CjwvcmVzb3VyY2U+Cg==","url":"https://blog.datacite.org","contentUrl":null,"metadataVersion":4,"schemaVersion":null,"source":"fabricaForm","isActive":true,"state":"findable","reason":null,"created":"2019-04-13T06:29:47.000Z","registered":"2019-04-13T06:31:10.000Z","published":"2019","updated":"2019-10-03T01:31:34.000Z"},"relationships":{"client":{"data":{"id":"datacite.datacite","type":"clients"}},"media":{"data":{"id":"10.14454/j6gr-cf48","type":"media"}}}},"included":[{"id":"datacite.datacite","type":"clients","attributes":{"name":"DataCite
-        Repository","symbol":"DATACITE.DATACITE","year":2011,"contactEmail":"support@datacite.org","alternateName":null,"description":null,"language":["en","fr"],"clientType":"periodical","domains":"datacite.org","issn":{"issnl":null,"print":"1545-7885","electronic":"1544-9173"},"url":null,"created":"2011-12-07T13:43:39.000Z","updated":"2019-08-24T06:22:34.000Z","isActive":true,"hasPassword":true},"relationships":{"provider":{"data":{"id":"datacite","type":"providers"}},"consortium":{"data":{"id":"dc","type":"providers"}},"prefixes":{"data":[{"id":"10.5438","type":"prefixes"},{"id":"10.14454","type":"prefixes"},{"id":"10.70002","type":"prefixes"},{"id":"10.70001","type":"prefixes"}]}}}]}'
-    http_version: 
-  recorded_at: Wed, 09 Oct 2019 07:24:21 GMT
-- request:
-    method: post
-    uri: https://api.sandbox.orcid.org/v2.1/0000-0001-6528-2027/work
-    body:
-      encoding: UTF-8
-      string: |
-        <?xml version="1.0" encoding="UTF-8"?>
-        <work:work xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:common="http://www.orcid.org/ns/common" xmlns:work="http://www.orcid.org/ns/work" visibility="public" xsi:schemaLocation="http://www.orcid.org/ns/work ../work-2.1.xsd">
-          <work:title>
-            <common:title>Test</common:title>
-          </work:title>
-          <work:journal-title>DataCite</work:journal-title>
-          <work:type>other</work:type>
-          <common:publication-date>
-            <common:year>2019</common:year>
-          </common:publication-date>
-          <common:external-ids>
-            <common:external-id>
-              <common:external-id-type>doi</common:external-id-type>
-              <common:external-id-value>10.14454/j6gr-cf48</common:external-id-value>
-              <common:external-id-relationship>self</common:external-id-relationship>
-            </common:external-id>
-          </common:external-ids>
-          <work:contributors>
-            <work:contributor>
-              <common:contributor-orcid>
-                <common:uri>https://orcid.org/0000-0003-1419-2405</common:uri>
-                <common:path>0000-0003-1419-2405</common:path>
-                <common:host>orcid.org</common:host>
-              </common:contributor-orcid>
-              <work:credit-name>Martin Fenner</work:credit-name>
-            </work:contributor>
-          </work:contributors>
-        </work:work>
-    headers:
-      User-Agent:
-      - Mozilla/5.0 (compatible; Maremma/4.4; mailto:info@datacite.org)
-      Accept:
-      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
-      Content-Type:
-      - application/vnd.orcid+xml
-      Authorization:
-      - Bearer <ACCESS_TOKEN>
-  response:
-    status:
-      code: 201
-      message: Created
-    headers:
-      Server:
-      - nginx/1.10.0
-      Date:
-      - Wed, 09 Oct 2019 07:24:22 GMT
-      Content-Type:
-      - application/vnd.orcid+xml; qs=5;charset=UTF-8
-      Content-Length:
-      - '0'
-      Connection:
-      - keep-alive
-      Access-Control-Allow-Origin:
-      - "*"
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
       - no-cache
-      Expires:
-      - '0'
-      X-Xss-Protection:
-      - 1; mode=block
-      X-Frame-Options:
-      - DENY
-      X-Content-Type-Options:
-      - nosniff
-      Location:
-      - http://api.sandbox.orcid.org/orcid-api-web/v2.1/0000-0001-6528-2027/work/1069294
+      Vary:
+      - Accept-Encoding, Origin
+      X-Runtime:
+      - '0.073740'
+      X-Rack-Cors:
+      - miss; no-origin
+      X-Request-Id:
+      - 3b02f742-353f-4756-b532-0e2502e4fc79
+      X-Powered-By:
+      - Phusion Passenger 6.0.6
+      Server:
+      - nginx/1.14.0 + Phusion Passenger 6.0.6
     body:
       encoding: ASCII-8BIT
-      string: ''
+      string: '{"errors":[{"status":"404","title":"The resource you are looking for
+        doesn''t exist."}]}'
     http_version: 
-  recorded_at: Wed, 09 Oct 2019 07:24:22 GMT
+  recorded_at: Fri, 02 Oct 2020 06:13:15 GMT
 recorded_with: VCR 3.0.3

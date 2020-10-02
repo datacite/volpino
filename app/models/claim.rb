@@ -195,7 +195,7 @@ class Claim < ActiveRecord::Base
 
       self.skip
     elsif result.body["errors"]
-      write_attribute(:error_messages, result.body["errors"].inspect)
+      write_attribute(:error_messages, result.body["errors"])
 
       # send notification to Sentry
       # Raven.capture_exception(RuntimeError.new(result.body["errors"].first["title"])) if ENV["SENTRY_DSN"]
@@ -205,7 +205,7 @@ class Claim < ActiveRecord::Base
       self.error!
     elsif result.body["notification"]
       write_attribute(:put_code, result.body["put_code"])
-      write_attribute(:error_messages, nil)
+      write_attribute(:error_messages, [])
 
       logger.error "[Notification] #{self.uid} – #{self.doi}] with Put Code #{result.body["put_code"]}" 
 
@@ -214,13 +214,13 @@ class Claim < ActiveRecord::Base
       if to_be_created?
         write_attribute(:claimed_at, Time.zone.now)
         write_attribute(:put_code, result.body["put_code"])
-        write_attribute(:error_messages, nil)
+        write_attribute(:error_messages, [])
 
         logger.info "[Done] #{self.uid} – #{self.doi}] with Put Code #{result.body["put_code"]}" 
       elsif to_be_deleted?
         write_attribute(:claimed_at, nil)
         write_attribute(:put_code, nil)
-        write_attribute(:error_messages, nil)
+        write_attribute(:error_messages, [])
 
         logger.info "[Deleted] #{self.uid} – #{self.doi}] with Put Code #{result.body["put_code"]}" 
       end
