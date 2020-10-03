@@ -17,7 +17,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 02 Oct 2020 19:24:15 GMT
+      - Sat, 03 Oct 2020 07:26:45 GMT
       Content-Type:
       - application/json; charset=utf-8
       Connection:
@@ -31,11 +31,11 @@ http_interactions:
       Vary:
       - Accept-Encoding, Origin
       X-Request-Id:
-      - e3f1c291-4f64-4462-ad44-6e6a6a033705
+      - 15cd697f-0c27-40c3-9651-db027a1d35c3
       Etag:
       - W/"12c9ea0a808f6c4f3c91b82199ecd37b"
       X-Runtime:
-      - '0.043898'
+      - '0.090506'
       X-Rack-Cors:
       - miss; no-origin
       X-Powered-By:
@@ -55,5 +55,5 @@ http_interactions:
         Sciences","count":1}],"fieldsOfScience":[{"id":"computer_and_information_sciences","title":"Computer
         and information sciences","count":1}],"citations":[{"id":"2011","title":"2011","count":16}],"views":[{"id":"2011","title":"2011","count":1662}],"downloads":[{"id":"2011","title":"2011","count":846}]},"links":{"self":"https://api.stage.datacite.org/dois?page%5Bsize%5D=0&user-id=0000-0003-1419-2405"}}'
     http_version: 
-  recorded_at: Fri, 02 Oct 2020 19:24:15 GMT
+  recorded_at: Sat, 03 Oct 2020 07:26:45 GMT
 recorded_with: VCR 3.0.3
