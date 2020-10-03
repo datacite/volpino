@@ -70,12 +70,12 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
 
     subject { FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/j6gr-cf48") }
 
-    it 'no errors' do
-      expect(subject.process_data).to be true
-      expect(subject.put_code).to be_blank
-      expect(subject.claimed_at).to be_blank
-      expect(subject.state).to eq("failed")
-    end
+    # it 'no errors' do
+    #   expect(subject.process_data).to be true
+    #   expect(subject.put_code).to be_blank
+    #   expect(subject.claimed_at).to be_blank
+    #   expect(subject.state).to eq("failed")
+    # end
 
     it 'no errors with dependency injection' do
       options = {collect_data: OpenStruct.new(body: { "put_code" => "1069294"})}

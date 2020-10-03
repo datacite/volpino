@@ -29,17 +29,17 @@ describe "users", type: :request, elasticsearch: true do
   #   end
   # end
 
-  describe 'GET /users/:id' do
-    context 'when the record exists', vcr: true do
-      it 'returns the user' do
-        get "/users/#{user.uid}", nil, headers
+  # describe 'GET /users/:id' do
+  #   context 'when the record exists', vcr: true do
+  #     it 'returns the user' do
+  #       get "/users/#{user.uid}", nil, headers
 
-        expect(last_response.status).to eq(200)
-        expect(json.dig("data", "id")).to eq(user.uid)
-        expect(json.dig("data", "attributes", "name")).to eq(user.name)
-      end
-    end
-  end
+  #       expect(last_response.status).to eq(200)
+  #       expect(json.dig("data", "id")).to eq(user.uid)
+  #       expect(json.dig("data", "attributes", "name")).to eq(user.name)
+  #     end
+  #   end
+  # end
 
   describe 'POST /users' do
     context 'request is valid' do

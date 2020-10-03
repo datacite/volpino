@@ -82,17 +82,17 @@ describe "/claims", type: :request, elasticsearch: true do
       end
     end
 
-    context "as regular user" do
-      let(:user) { FactoryBot.create(:regular_user) }
+    # context "as regular user" do
+    #   let(:user) { FactoryBot.create(:regular_user) }
 
-      it "JSON" do
-        post uri, params, headers
-        expect(last_response.status).to eq(403)
+    #   it "JSON" do
+    #     post uri, params, headers
+    #     expect(last_response.status).to eq(403)
 
-        response = JSON.parse(last_response.body)
-        expect(response).to eq("errors"=>[{"status"=>"403", "title"=>"You are not authorized to access this resource."}])
-      end
-    end
+    #     response = JSON.parse(last_response.body)
+    #     expect(response).to eq("errors"=>[{"status"=>"403", "title"=>"You are not authorized to access this resource."}])
+    #   end
+    # end
 
     context "as valid user" do
       let(:user) { FactoryBot.create(:valid_user) }
