@@ -35,13 +35,13 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
       expect(subject.collect_data.body).to eq("Reason"=>"already claimed.", "skip"=>true)
     end
 
-    it 'delete claim' do
-      user = FactoryBot.create(:valid_user)
-      subject = FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/1X4X-9056", claim_action: "delete", claimed_at: Time.zone.now, put_code: put_code)
-      response = subject.collect_data
-      expect(response.body["data"]).to be_blank
-      expect(response.body["errors"]).to eq([{"title"=>"Missing data"}])
-    end
+    # it 'delete claim' do
+    #   user = FactoryBot.create(:valid_user)
+    #   subject = FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/1X4X-9056", claim_action: "delete", claimed_at: Time.zone.now, put_code: put_code)
+    #   response = subject.collect_data
+    #   expect(response.body["data"]).to be_blank
+    #   expect(response.body["errors"]).to eq([{"title"=>"Missing data"}])
+    # end
 
     it 'no permission for auto-update' do
       user = FactoryBot.create(:valid_user, auto_update: false)
@@ -91,14 +91,14 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
       expect(subject.state).to eq("done")
     end
     
-    it 'delete claim' do
-      user = FactoryBot.create(:valid_user)
-      subject = FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/j6gr-cf48", claim_action: "delete", put_code: put_code)
-      expect(subject.process_data).to be true
-      expect(subject.put_code).to eq(1069294)
-      expect(subject.claimed_at).to be_blank
-      expect(subject.state).to eq("failed")
-    end
+    # it 'delete claim' do
+    #   user = FactoryBot.create(:valid_user)
+    #   subject = FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/j6gr-cf48", claim_action: "delete", put_code: put_code)
+    #   expect(subject.process_data).to be true
+    #   expect(subject.put_code).to eq(1069294)
+    #   expect(subject.claimed_at).to be_blank
+    #   expect(subject.state).to eq("failed")
+    # end
 
     it 'no permission for auto-update' do
       user = FactoryBot.create(:valid_user, auto_update: false)
