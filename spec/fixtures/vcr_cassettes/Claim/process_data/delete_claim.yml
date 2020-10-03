@@ -17,18 +17,18 @@ http_interactions:
       message: ''
     headers:
       Date:
-      - Fri, 02 Oct 2020 06:30:09 GMT
+      - Fri, 02 Oct 2020 19:24:24 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Connection:
       - keep-alive
       Set-Cookie:
-      - __cfduid=d998986a20ee3adc520bd1100b562c92f1601620209; expires=Sun, 01-Nov-20
-        06:30:09 GMT; path=/; domain=.doi.org; HttpOnly; SameSite=Lax; Secure
+      - __cfduid=db2baa2bae400db3ccb44a07af695c0351601666664; expires=Sun, 01-Nov-20
+        19:24:24 GMT; path=/; domain=.doi.org; HttpOnly; SameSite=Lax; Secure
       Cf-Cache-Status:
       - DYNAMIC
       Cf-Request-Id:
-      - '05899a08250000dff773212200000001'
+      - '058c5ee1720000dfdfa2362200000001'
       Expect-Ct:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Strict-Transport-Security:
@@ -36,7 +36,7 @@ http_interactions:
       Server:
       - cloudflare
       Cf-Ray:
-      - 5dbc5f86ab79dff7-FRA
+      - 5dc0cdaf1b88dfdf-FRA
     body:
       encoding: ASCII-8BIT
       string: |-
@@ -47,7 +47,7 @@ http_interactions:
           }
         ]
     http_version: 
-  recorded_at: Fri, 02 Oct 2020 06:30:09 GMT
+  recorded_at: Fri, 02 Oct 2020 19:24:25 GMT
 - request:
     method: get
     uri: https://api.datacite.org/dois/10.14454/j6gr-cf48
@@ -65,7 +65,7 @@ http_interactions:
       message: Not Found
     headers:
       Date:
-      - Fri, 02 Oct 2020 06:30:10 GMT
+      - Fri, 02 Oct 2020 19:24:25 GMT
       Content-Type:
       - application/json; charset=utf-8
       Connection:
@@ -77,11 +77,11 @@ http_interactions:
       Vary:
       - Accept-Encoding, Origin
       X-Runtime:
-      - '0.064784'
+      - '0.096172'
       X-Rack-Cors:
       - miss; no-origin
       X-Request-Id:
-      - e9311abe-8b7c-487a-9caa-0ddcd732f9ea
+      - 2eabeedc-8b75-4003-a1d5-3a63fb8c4a4e
       X-Powered-By:
       - Phusion Passenger 6.0.6
       Server:
@@ -91,5 +91,5 @@ http_interactions:
       string: '{"errors":[{"status":"404","title":"The resource you are looking for
         doesn''t exist."}]}'
     http_version: 
-  recorded_at: Fri, 02 Oct 2020 06:30:10 GMT
+  recorded_at: Fri, 02 Oct 2020 19:24:25 GMT
 recorded_with: VCR 3.0.3

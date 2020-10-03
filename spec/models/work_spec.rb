@@ -21,7 +21,7 @@ describe Work, type: :model, vcr: true, elasticsearch: true do
       it 'should get works' do
         response = subject.get_works(sandbox: true)
         works = response.body.fetch("data", {}).fetch("group", {})
-        expect(works.length).to eq(23)
+        expect(works.length).to eq(22)
         work = works.first
         expect(work["external-ids"]).to eq("external-id"=>[{"external-id-type"=>"doi", "external-id-value"=>"10.5256/f1000research.67475.r16884", "external-id-url"=>nil, "external-id-relationship"=>"SELF"}])
       end

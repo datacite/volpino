@@ -8,26 +8,27 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Mozilla/5.0 (compatible; Maremma/4.4; mailto:info@datacite.org)
+      - Mozilla/5.0 (compatible; Maremma/4.7; mailto:info@datacite.org)
       Accept:
       - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
       Content-Type:
       - application/vnd.orcid+xml
       Authorization:
-      - Bearer <ACCESS_TOKEN>
+      - Bearer <ORCID_TOKEN>
   response:
     status:
-      code: 204
-      message: No Content
+      code: 403
+      message: Forbidden
     headers:
-      Server:
-      - nginx/1.10.0
       Date:
-      - Wed, 09 Oct 2019 08:00:44 GMT
+      - Fri, 02 Oct 2020 19:24:35 GMT
       Content-Type:
       - application/vnd.orcid+xml; qs=5;charset=UTF-8
       Connection:
       - keep-alive
+      Set-Cookie:
+      - __cfduid=d61e1317f6004c42e167e9b660796dd221601666675; expires=Sun, 01-Nov-20
+        19:24:35 GMT; path=/; domain=.orcid.org; HttpOnly; SameSite=Lax
       Access-Control-Allow-Origin:
       - "*"
       Cache-Control:
@@ -42,9 +43,27 @@ http_interactions:
       - DENY
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Request-Id:
+      - '058c5f09dd0000215daa962200000001'
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 5dc0cdefcd54215d-DUS
     body:
       encoding: ASCII-8BIT
-      string: ''
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <error xmlns="http://www.orcid.org/ns/error">
+            <response-code>403</response-code>
+            <developer-message>409 Conflict: The item has a limited or private visibility and your request doesn't have the required scope.</developer-message>
+            <user-message>You don't have the permissions to execute this action.</user-message>
+            <error-code>9038</error-code>
+            <more-info>https://members.orcid.org/api/resources/troubleshooting</more-info>
+        </error>
     http_version: 
-  recorded_at: Wed, 09 Oct 2019 08:00:44 GMT
+  recorded_at: Fri, 02 Oct 2020 19:24:35 GMT
 recorded_with: VCR 3.0.3

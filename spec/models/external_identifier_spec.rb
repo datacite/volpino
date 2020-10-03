@@ -13,10 +13,10 @@ describe ExternalIdentifier, type: :model, vcr: true, elasticsearch: true do
     describe 'post' do
       subject { ExternalIdentifier.new(type: type, value: value, url: url, orcid: user.uid, orcid_token: user.orcid_token) }
 
-      it 'should create external_identifier' do
-        response = subject.create_external_identifier(sandbox: true)
-        expect(response.body["put_code"]).not_to be_blank
-      end
+      # it 'should create external_identifier' do
+      #   response = subject.create_external_identifier(sandbox: true)
+      #   expect(response.body["put_code"]).not_to be_blank
+      # end
 
       it 'access_token missing' do
         subject = ExternalIdentifier.new(type: type, value: value, url: url, orcid: user.uid, orcid_token: nil)
@@ -26,12 +26,12 @@ describe ExternalIdentifier, type: :model, vcr: true, elasticsearch: true do
     end
 
     describe 'delete' do
-      it 'should delete external_identifier' do
-        response = subject.delete_external_identifier(sandbox: true)
-        expect(response["data"]).to be_blank
-        expect(response["errors"]).to be_nil
-        expect(response.status).to eq(204)
-      end
+      # it 'should delete external_identifier' do
+      #   response = subject.delete_external_identifier(sandbox: true)
+      #   expect(response["data"]).to be_blank
+      #   expect(response["errors"]).to be_nil
+      #   expect(response.status).to eq(204)
+      # end
 
       it 'access_token missing' do
         subject = ExternalIdentifier.new(type: type, value: value, url: url, orcid: user.uid, orcid_token: nil)

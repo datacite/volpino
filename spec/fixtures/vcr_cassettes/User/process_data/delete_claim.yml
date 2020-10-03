@@ -21,14 +21,14 @@ http_interactions:
       message: Forbidden
     headers:
       Date:
-      - Fri, 02 Oct 2020 06:13:06 GMT
+      - Fri, 02 Oct 2020 19:23:06 GMT
       Content-Type:
       - application/vnd.orcid+xml; qs=5;charset=UTF-8
       Connection:
       - keep-alive
       Set-Cookie:
-      - __cfduid=d5766b7460ae367fc207e5bc7f566a7d31601619185; expires=Sun, 01-Nov-20
-        06:13:05 GMT; path=/; domain=.orcid.org; HttpOnly; SameSite=Lax
+      - __cfduid=d9533eff490a37536cb99c59ed01ff69f1601666585; expires=Sun, 01-Nov-20
+        19:23:05 GMT; path=/; domain=.orcid.org; HttpOnly; SameSite=Lax
       Access-Control-Allow-Origin:
       - "*"
       Cache-Control:
@@ -46,13 +46,13 @@ http_interactions:
       Cf-Cache-Status:
       - DYNAMIC
       Cf-Request-Id:
-      - '05898a67fb0000c4d11231c200000001'
+      - '058c5dad4100002151041ab200000001'
       Expect-Ct:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Server:
       - cloudflare
       Cf-Ray:
-      - 5dbc46865f39c4d1-DUS
+      - 5dc0cbc208232151-DUS
     body:
       encoding: ASCII-8BIT
       string: |
@@ -65,5 +65,5 @@ http_interactions:
             <more-info>https://members.orcid.org/api/resources/troubleshooting</more-info>
         </error>
     http_version: 
-  recorded_at: Fri, 02 Oct 2020 06:13:06 GMT
+  recorded_at: Fri, 02 Oct 2020 19:23:06 GMT
 recorded_with: VCR 3.0.3

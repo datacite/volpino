@@ -17,18 +17,18 @@ http_interactions:
       message: ''
     headers:
       Date:
-      - Fri, 02 Oct 2020 06:13:14 GMT
+      - Fri, 02 Oct 2020 19:24:20 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Connection:
       - keep-alive
       Set-Cookie:
-      - __cfduid=d8caeabcc7e9a5699a974e4fc7e4f21fa1601619194; expires=Sun, 01-Nov-20
-        06:13:14 GMT; path=/; domain=.doi.org; HttpOnly; SameSite=Lax; Secure
+      - __cfduid=df286e665131657bf76f3e2928b0dae8a1601666660; expires=Sun, 01-Nov-20
+        19:24:20 GMT; path=/; domain=.doi.org; HttpOnly; SameSite=Lax; Secure
       Cf-Cache-Status:
       - DYNAMIC
       Cf-Request-Id:
-      - '05898a8b3d000097ba02340200000001'
+      - '058c5ecfb700001f2d35024200000001'
       Expect-Ct:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Strict-Transport-Security:
@@ -36,7 +36,7 @@ http_interactions:
       Server:
       - cloudflare
       Cf-Ray:
-      - 5dbc46bec8fa97ba-FRA
+      - 5dc0cd92bd7d1f2d-FRA
     body:
       encoding: ASCII-8BIT
       string: |-
@@ -47,7 +47,7 @@ http_interactions:
           }
         ]
     http_version: 
-  recorded_at: Fri, 02 Oct 2020 06:13:14 GMT
+  recorded_at: Fri, 02 Oct 2020 19:24:20 GMT
 - request:
     method: get
     uri: https://api.datacite.org/dois/10.14454/j6gr-cf48
@@ -65,7 +65,7 @@ http_interactions:
       message: Not Found
     headers:
       Date:
-      - Fri, 02 Oct 2020 06:13:15 GMT
+      - Fri, 02 Oct 2020 19:24:20 GMT
       Content-Type:
       - application/json; charset=utf-8
       Connection:
@@ -76,12 +76,12 @@ http_interactions:
       - no-cache
       Vary:
       - Accept-Encoding, Origin
+      X-Request-Id:
+      - 9fb5f85c-24ac-4caa-a2f8-8e672cdc49be
       X-Runtime:
-      - '0.073740'
+      - '0.312186'
       X-Rack-Cors:
       - miss; no-origin
-      X-Request-Id:
-      - 3b02f742-353f-4756-b532-0e2502e4fc79
       X-Powered-By:
       - Phusion Passenger 6.0.6
       Server:
@@ -91,5 +91,5 @@ http_interactions:
       string: '{"errors":[{"status":"404","title":"The resource you are looking for
         doesn''t exist."}]}'
     http_version: 
-  recorded_at: Fri, 02 Oct 2020 06:13:15 GMT
+  recorded_at: Fri, 02 Oct 2020 19:24:21 GMT
 recorded_with: VCR 3.0.3

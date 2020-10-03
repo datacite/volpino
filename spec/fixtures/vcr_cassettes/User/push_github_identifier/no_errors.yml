@@ -15,28 +15,27 @@ http_interactions:
         </external-identifier:external-identifier>
     headers:
       User-Agent:
-      - Mozilla/5.0 (compatible; Maremma/4.4; mailto:info@datacite.org)
+      - Mozilla/5.0 (compatible; Maremma/4.7; mailto:info@datacite.org)
       Accept:
       - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
       Content-Type:
       - application/vnd.orcid+xml
       Authorization:
-      - Bearer <ACCESS_TOKEN>
+      - Bearer <ORCID_TOKEN>
   response:
     status:
-      code: 201
-      message: Created
+      code: 403
+      message: Forbidden
     headers:
-      Server:
-      - nginx/1.10.0
       Date:
-      - Wed, 09 Oct 2019 08:08:46 GMT
+      - Fri, 02 Oct 2020 19:23:09 GMT
       Content-Type:
       - application/vnd.orcid+xml; qs=5;charset=UTF-8
-      Content-Length:
-      - '0'
       Connection:
       - keep-alive
+      Set-Cookie:
+      - __cfduid=d1288362f1f61a7f3a2dfe77b04ea74021601666588; expires=Sun, 01-Nov-20
+        19:23:08 GMT; path=/; domain=.orcid.org; HttpOnly; SameSite=Lax
       Access-Control-Allow-Origin:
       - "*"
       Cache-Control:
@@ -51,11 +50,27 @@ http_interactions:
       - DENY
       X-Content-Type-Options:
       - nosniff
-      Location:
-      - http://api.sandbox.orcid.org/orcid-api-web/v2.1/0000-0001-6528-2027/external-identifiers/5583
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Request-Id:
+      - '058c5db7700000c49f6e310200000001'
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 5dc0cbd24ce1c49f-DUS
     body:
       encoding: ASCII-8BIT
-      string: ''
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <error xmlns="http://www.orcid.org/ns/error">
+            <response-code>403</response-code>
+            <developer-message>409 Conflict: The item has a limited or private visibility and your request doesn't have the required scope.</developer-message>
+            <user-message>You don't have the permissions to execute this action.</user-message>
+            <error-code>9038</error-code>
+            <more-info>https://members.orcid.org/api/resources/troubleshooting</more-info>
+        </error>
     http_version: 
-  recorded_at: Wed, 09 Oct 2019 08:08:46 GMT
+  recorded_at: Fri, 02 Oct 2020 19:23:09 GMT
 recorded_with: VCR 3.0.3
