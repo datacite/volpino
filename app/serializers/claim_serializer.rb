@@ -18,7 +18,7 @@ class ClaimSerializer
 
   attribute :error_messages do |object|
     if object.error_messages.is_a?(String)
-      [{ "title" => object.error_messages }]
+      eval(object.error_messages)
     else
       Array.wrap(object.error_messages)
     end

@@ -139,7 +139,6 @@
               <div class="panel-body">
                 <%= f.input :aasm_state, collection: aasm_states, include_blank: false, label: "State", input_html: { class: "form-user" } %>
                 <%= f.input :put_code, label: "Put Code", input_html: { class: "form-user" } %>
-                <%= f.input :error_messages, as: :text, label: "Error Message", input_html: { class: "form-user", rows: 5 } %>
               </div>
               <div class="panel-footer">
                 <div class="form-group pull-right">
@@ -182,12 +181,12 @@
                 <h5>Updated</h5>
                 <%= l DateTime.parse(claim.updated), format: :medium %>
               <% end %>
-
-              <% if claim.error_messages.present? %>
+              <% if claim.error_messages && claim.error_messages.first["status"].present? %>
+                <h5>Error Status</h5>
+                <%= h(claim.error_messages.first["status"]) %>
+              <% end %>
+              <% if claim.error_messages && claim.error_messages.first["title"].present?  %>
                 <h5>Error Message</h5>
-                <% if current_user.is_admin_or_staff? %>
-                  <br/><br/>
-                <% end %>
                 <%= h(claim.error_messages.first["title"]) %>
               <% end %>
             </div>

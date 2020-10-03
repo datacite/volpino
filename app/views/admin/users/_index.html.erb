@@ -67,7 +67,11 @@
           <div class="panel-heading">
             <h3 class="panel-title">
               <span class='pull-right'><%= user.role_name %></span>
-              <%= user.name %>
+              <% if user.name.present? %>
+                <%= user.name %>
+              <% else %>
+                <%= user.uid %>
+              <% end %>
             </h3>
           </div>
           <% if can?(:manage, @user) && @user && @user.uid == user.uid && (controller.action_name == "edit" or (controller.action_name == "update" and @user.errors.present?)) %>

@@ -107,7 +107,10 @@ class Claim < ActiveRecord::Base
       indexes :doi,           type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}
       indexes :user_id,       type: :keyword
       indexes :source_id,     type: :keyword
-      indexes :error_messages, type: :text
+      indexes :error_messages, type: :object, properties: {
+        status: { type: :integer },
+        title: { type: :text},
+      }
       indexes :claim_action,  type: :keyword
       indexes :put_code,      type: :keyword
       indexes :state_number,  type: :integer
@@ -286,5 +289,71 @@ class Claim < ActiveRecord::Base
       end
     end
     r
+  end
+
+  def self.import_by_ids(options={})
+    from_id = (options[:from_id] || Claim.minimum(:id)).to_i
+    until_id = (options[:until_id] || Claim.maximum(:id)).to_i
+
+    # get every id between from_id and end_id
+    (from_id..until_id).step(500).each do |id|
+      ClaimImportByIdJob.perform_later(options.merge(id: id))
+      Rails.logger.info "Queued importing for claims with IDs starting with #{id}." unless Rails.env.test?
+    end
+
+    (from_id..until_id).to_a.length
+  end
+
+  def self.import_by_id(options={})
+    return nil if options[:id].blank?
+
+    id = options[:id].to_i
+    index = if Rails.env.test?
+              "claims-test"
+            elsif options[:index].present?
+              options[:index]
+            else
+              self.inactive_index
+            end
+    errors = 0
+    count = 0
+
+    Claim.where(id: id..(id + 499)).find_in_batches(batch_size: 500) do |claims|
+      response = Claim.__elasticsearch__.client.bulk \
+        index:   index,
+        type:    Claim.document_type,
+        body:    claims.map { |claim| { index: { _id: claim.id, data: claim.as_indexed_json } } }
+
+      # try to handle errors
+      response['items'].select { |k, v| k.values.first['error'].present? }.each do |item|
+        Rails.logger.error "[Elasticsearch] " + item.inspect
+        id = item.dig("index", "_id").to_i
+        claim = Claim.where(id: id).first
+        IndexJob.perform_later(claim) if claim.present?
+      end
+
+      count += claims.length
+    end
+
+    if errors > 1
+      Rails.logger.error "[Elasticsearch] #{errors} errors importing #{count} claims with IDs #{id} - #{(id + 499)}."
+    elsif count > 0
+      Rails.logger.info "[Elasticsearch] Imported #{count} claims with IDs #{id} - #{(id + 499)}."
+    end
+
+    count
+  rescue Elasticsearch::Transport::Transport::Errors::RequestEntityTooLarge, Faraday::ConnectionFailed, ActiveRecord::LockWaitTimeout => error
+    Rails.logger.info "[Elasticsearch] Error #{error.message} importing claims with IDs #{id} - #{(id + 499)}."
+
+    count = 0
+
+    Claim.where(id: id..(id + 499)).find_each do |claim|
+      IndexJob.perform_later(claim)
+      count += 1
+    end
+
+    Rails.logger.info "[Elasticsearch] Imported #{count} claims with IDs #{id} - #{(id + 499)}."
+
+    count
   end
 end

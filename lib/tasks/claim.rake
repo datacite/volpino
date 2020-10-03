@@ -47,8 +47,11 @@ namespace :claim do
   end
 
   desc 'Import all claims'
-  task import: :environment do
-    Claim.import(index: Claim.inactive_index)
+  task :import => :environment do
+    from_id = (ENV['FROM_ID'] || Claim.minimum(:id)).to_i
+    until_id = (ENV['UNTIL_ID'] || Claim.maximum(:id)).to_i
+
+    Claim.import_by_ids(from_id: from_id, until_id: until_id, index: ENV["INDEX"] || Claim.inactive_index)
   end
 
   desc "Push all stale claims"
