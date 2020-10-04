@@ -130,7 +130,6 @@ class User < ActiveRecord::Base
     # get every id between from_id and end_id
     (from_id..until_id).step(500).each do |id|
       UserImportByIdJob.perform_later(options.merge(id: id))
-      Rails.logger.info "Queued importing for users with IDs starting with #{id}." unless Rails.env.test?
     end
 
     (from_id..until_id).to_a.length

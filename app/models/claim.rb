@@ -98,13 +98,16 @@ class Claim < ActiveRecord::Base
       analyzer: {
         string_lowercase: { tokenizer: 'keyword', filter: %w(lowercase ascii_folding) }
       },
+      normalizer: {
+        keyword_lowercase: { type: "custom", filter: %w(lowercase) }
+      },
       filter: { ascii_folding: { type: 'asciifolding', preserve_original: true } }
     }
   } do
     mapping dynamic: 'false' do
       indexes :id,            type: :keyword
       indexes :uuid,          type: :keyword
-      indexes :doi,           type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}
+      indexes :doi,           type: :keyword, normalizer: "keyword_lowercase"
       indexes :user_id,       type: :keyword
       indexes :source_id,     type: :keyword
       indexes :error_messages, type: :object, properties: {
@@ -140,7 +143,7 @@ class Claim < ActiveRecord::Base
     {
       "id" => uuid,
       "uuid" => uuid,
-      "doi" => doi,
+      "doi" => doi.downcase,
       "user_id" => orcid,
       "source_id" => source_id,
       "error_messages" => error_messages,
@@ -298,7 +301,6 @@ class Claim < ActiveRecord::Base
     # get every id between from_id and end_id
     (from_id..until_id).step(500).each do |id|
       ClaimImportByIdJob.perform_later(options.merge(id: id))
-      Rails.logger.info "Queued importing for claims with IDs starting with #{id}." unless Rails.env.test?
     end
 
     (from_id..until_id).to_a.length

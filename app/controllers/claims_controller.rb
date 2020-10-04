@@ -16,8 +16,8 @@ class ClaimsController < BaseController
   def index
     sort = case params[:sort]
            when "relevance" then { "_score" => { order: 'desc' }}
-           when "doi" then { "doi.raw" => { order: 'asc' }}
-           when "-doi" then { "doi.raw" => { order: 'desc' }}
+           when "doi" then { "doi" => { order: 'asc' }}
+           when "-doi" then { "doi" => { order: 'desc' }}
            when "orcid" then { orcid: { order: 'asc' }}
            when "-orcid" then { orcid: { order: 'desc' }}
            when "created" then { created: { order: 'asc' }}

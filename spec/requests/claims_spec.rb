@@ -211,12 +211,12 @@ describe "/claims", type: :request, elasticsearch: true do
   end
 
   context "index" do
-    let!(:claim) { FactoryBot.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
+    let!(:claim) { FactoryBot.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid, doi: "10.5061/dryad.781pv") }
     let(:uri) { "/claims" }
 
     before do
       Claim.import
-      sleep 1
+      sleep 2
     end
 
     context "as admin user" do
@@ -227,7 +227,7 @@ describe "/claims", type: :request, elasticsearch: true do
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
         item = response["data"].first
-        expect(item.dig('attributes', 'doi')).to eq("https://doi.org/10.5061/DRYAD.781PV")
+        expect(item.dig('attributes', 'doi')).to eq("https://doi.org/10.5061/dryad.781pv")
       end
     end
 
@@ -242,7 +242,7 @@ describe "/claims", type: :request, elasticsearch: true do
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
         item = response["data"].first
-        expect(item.dig('attributes', 'doi')).to eq("https://doi.org/10.5061/DRYAD.781PV")
+        expect(item.dig('attributes', 'doi')).to eq("https://doi.org/10.5061/dryad.781pv")
       end
     end
 
@@ -257,7 +257,7 @@ describe "/claims", type: :request, elasticsearch: true do
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
         item = response["data"].first
-        expect(item.dig('attributes', 'doi')).to eq("https://doi.org/10.5061/DRYAD.781PV")
+        expect(item.dig('attributes', 'doi')).to eq("https://doi.org/10.5061/dryad.781pv")
       end
     end
 
@@ -277,17 +277,18 @@ describe "/claims", type: :request, elasticsearch: true do
     end
 
     context "with query for dois" do
-      let(:doi) { "10.5061/DRYAD.781PV" }
+      let(:doi) { "10.5061/dryad.781pv" }
       let(:uri) { "/claims?dois=#{doi}" }
     
       it "JSON" do
         get uri, nil, headers
         expect(last_response.status).to eq(200)
-    
+        puts Claim.query(nil, page: { cursor: [], size: 3 }).results.to_a.inspect
+        puts last_response.body
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
         item = response["data"].first
-        expect(item.dig('attributes', 'doi')).to eq("https://doi.org/10.5061/DRYAD.781PV")
+        expect(item.dig('attributes', 'doi')).to eq("https://doi.org/10.5061/dryad.781pv")
       end
     end
 

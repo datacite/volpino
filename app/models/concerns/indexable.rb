@@ -115,7 +115,7 @@ module Indexable
 
       # filters for some classes
       if self.name == "Claim"
-        must << { terms: { "doi.keyword" => options[:dois].to_s.split(",") }} if options[:dois].present?
+        must << { terms: { doi: options[:dois].to_s.split(",") }} if options[:dois].present?
         must << { term: { user_id: options[:user_id] }} if options[:user_id].present?
         must << { term: { source_id: options[:source_id] }} if options[:source_id].present?
         must << { term: { claim_action: options[:claim_action] }} if options[:claim_action].present?
