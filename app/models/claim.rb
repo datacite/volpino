@@ -345,7 +345,7 @@ class Claim < ActiveRecord::Base
 
     count
   rescue Elasticsearch::Transport::Transport::Errors::RequestEntityTooLarge, Faraday::ConnectionFailed, ActiveRecord::LockWaitTimeout => error
-    Rails.logger.info "[Elasticsearch] Error #{error.message} importing claims with IDs #{id} - #{(id + 499)}."
+    Rails.logger.error "[Elasticsearch] Error #{error.message} importing claims with IDs #{id} - #{(id + 499)}."
 
     count = 0
 
@@ -353,8 +353,6 @@ class Claim < ActiveRecord::Base
       IndexJob.perform_later(claim)
       count += 1
     end
-
-    Rails.logger.info "[Elasticsearch] Imported #{count} claims with IDs #{id} - #{(id + 499)}."
 
     count
   end
