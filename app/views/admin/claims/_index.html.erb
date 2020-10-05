@@ -181,11 +181,11 @@
                 <h5>Updated</h5>
                 <%= l DateTime.parse(claim.updated), format: :medium %>
               <% end %>
-              <% if claim.error_messages.length > 0 && claim.error_messages.first["status"].present? %>
+              <% if claim.error_messages && claim.error_messages.length > 0 && claim.error_messages.first["status"].present? %>
                 <h5>Error Status</h5>
                 <%= h(claim.error_messages.first["status"]) %>
               <% end %>
-              <% if claim.error_messages.length > 0 && claim.error_messages.first["title"].present?  %>
+              <% if claim.error_messages && claim.error_messages.length > 0 && claim.error_messages.first["title"].present?  %>
                 <h5>Error Message</h5>
                 <%= h(claim.error_messages.first["title"]) %>
               <% end %>
