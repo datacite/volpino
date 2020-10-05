@@ -17,7 +17,11 @@ class ClaimSerializer
   end
 
   attribute :error_messages do |object|
-    Array.wrap(object.error_messages)
+    if object.error_messages.is_a?(String)
+      eval(object.error_messages)
+    else
+      Array.wrap(object.error_messages)
+    end
   end
 
   attribute :state do |object|
