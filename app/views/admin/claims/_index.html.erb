@@ -162,7 +162,7 @@
 
             <div class="panel-body">
               <h5>ORCID</h5>
-              <%= link_to h(claim.user_id), admin_users_path(query: "\"#{claim.user_id}\"") %>
+              <%= link_to h(claim.user_id), admin_users_path(query: claim.user_id) %>
               
               <h5>DOI</h5>
               <%= link_to h(claim.doi), "#{ENV['COMMONS_URL']}/doi.org/#{claim.doi}" %>
