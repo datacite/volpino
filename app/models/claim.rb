@@ -146,7 +146,7 @@ class Claim < ActiveRecord::Base
       "doi" => doi.downcase,
       "user_id" => orcid,
       "source_id" => source_id,
-      "error_messages" => error_messages.is_a?(String) ? [{ "title" => error_messages }] : error_messages,
+      "error_messages" => error_messages.is_a?(String) ? eval(error_messages) : error_messages,
       "claim_action" => claim_action,
       "put_code" => put_code,
       "state_number" => state_number,
