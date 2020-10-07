@@ -21,7 +21,7 @@
     <%= render partial: "layouts/#{ENV['MODE']}/header" -%>
     <%= yield -%>
     <div id="consent"></div>
-    <%# <script src="<%= ENV['CDN_URL'] %>/javascripts/consent.js"></script> %>
+    <script src="<%= ENV['CDN_URL'] %>/javascripts/consent.js"></script>
     <% if ENV['GABBA_COOKIE'].present? %>
       <div id="ga" data-ga="<%= ENV['GABBA_COOKIE'] %>"></div>
       <script src="<%= ENV['CDN_URL'] %>/javascripts/ga.js"></script>
