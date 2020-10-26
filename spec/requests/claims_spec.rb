@@ -30,7 +30,7 @@ describe "/claims", type: :request, elasticsearch: true do
 
     it "admin user" do
       post uri, params, headers
-
+      puts last_response.body
       expect(last_response.status).to eq(202)
       response = JSON.parse(last_response.body)
       expect(response["errors"]).to be_nil
@@ -159,14 +159,10 @@ describe "/claims", type: :request, elasticsearch: true do
 
       it "JSON" do
         post uri, params, headers
-        expect(last_response.status).to eq(202)
+        expect(last_response.status).to eq(422)
 
         response = JSON.parse(last_response.body)
-        expect(response["errors"]).to be_nil
-        expect(response.dig("data", "attributes", "orcid")).to start_with("https://orcid.org/0000-0002-1825-000")
-        expect(response.dig("data", "attributes", "doi")).to eq("https://doi.org/10.5061/DRYAD.781PV")
-        expect(response.dig("data", "attributes", "sourceId")).to eq("orcid_update")
-        expect(response.dig("data", "attributes", "state")).to eq("waiting")
+        expect(response).to eq("errors"=>[{"source"=>"source_id", "title"=>"Can't be blank"}])
       end
     end
 

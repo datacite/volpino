@@ -362,6 +362,5 @@ class Claim < ActiveRecord::Base
 
   def set_defaults
     self.claim_action = "create" if claim_action.blank?
-    self.source_id = "orcid_update" if source_id.blank?
   end
 end
