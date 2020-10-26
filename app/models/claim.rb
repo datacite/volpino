@@ -31,6 +31,7 @@ class Claim < ActiveRecord::Base
   belongs_to :user, foreign_key: "orcid", primary_key: "uid", inverse_of: :claims
 
   before_create :create_uuid
+  before_validation :set_defaults
   after_commit :queue_claim_job, on: [:create, :update]
 
   validates :orcid, :doi, :source_id, presence: true
@@ -355,5 +356,12 @@ class Claim < ActiveRecord::Base
     end
 
     count
+  end
+
+  private
+
+  def set_defaults
+    self.claim_action = "create" if claim_action.blank?
+    self.source_id = "orcid_update" if source_id.blank?
   end
 end

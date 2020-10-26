@@ -94,36 +94,28 @@ class ClaimsController < BaseController
     end
   end
 
-  def create    
+  def create  
     @claim = Claim.where(orcid: params.fetch(:claim, {}).fetch(:orcid, nil),
-                         doi: params.fetch(:claim, {}).fetch(:doi, nil))
-                  .first_or_initialize
+                         doi: params.fetch(:claim, {}).fetch(:doi, nil)).first
+    exists = @claim.present?
 
-    authorize! :create, @claim
-
-    claim_action = params.dig(:claim, :claim_action) || "create"
-
-    options = {}
-    options[:include] = @include
-    options[:is_collection] = false
-
-    if @claim.new_record? ||
-      @claim.source_id == "orcid_search" ||
-      (claim_action == "create" && %w(failed ignored deleted notified).include?(@claim.state)) ||
-      (claim_action == "delete" && %w(done failed ignored notified).include?(@claim.state))
-
-      @claim.assign_attributes(state: "waiting",
-                               source_id: params.fetch(:claim, {}).fetch(:source_id, nil),
-                               claim_action: claim_action)
-
-      if @claim.save
-        render json: ClaimSerializer.new(@claim, options).serialized_json, status: :accepted
-      else
-        logger.error @claim.errors.inspect
-        render json: serialize_errors(@claim.errors), include: @include, status: :unprocessable_entity
-      end
+    if exists
+      authorize! :update, @claim
+      @claim.assign_attributes(safe_params.slice(:source_id, :claim_action))
     else
+      @claim = Claim.new(safe_params)
+      authorize! :new, @claim
+      @claim.assign_attributes(safe_params)
+    end
+
+    if @claim.save
+      options = {}
+      options[:include] = @include
+      options[:is_collection] = false
       render json: ClaimSerializer.new(@claim, options).serialized_json, status: :accepted
+    else
+      logger.error @claim.errors.inspect
+      render json: serialize_errors(@claim.errors), include: @include, status: :unprocessable_entity
     end
   rescue ActiveRecord::RecordNotUnique
     render json: @claim, status: :ok
