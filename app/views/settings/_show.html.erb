@@ -111,6 +111,20 @@
             </dl>
           </div>
         <% end %>
+        <div class="panel-body">
+          <dl class="dl-horizontal">
+            <dt>GitHub Permissions</dt>
+            <dd>
+              <% if @user.github_token %>
+                <p>Delete GitHub token to no longer allow DataCite to update your GitHub account.</p>
+                <%= link_to "<img id=\"github-logo\" src=\"#{ENV["CDN_URL"]}/images/github.png\" alt=\"GitHub icon\"/>&nbsp;Delete GitHub Token".html_safe, setting_path("me", user: { github_token: nil }), { method: :put, remote: true, class: 'btn btn-social btn-github btn-fill' } %>
+              <% else %>
+                <p>Get GitHub token to allow DataCite to update your GitHub account.</p>
+                <%= link_to "<img id=\"github-logo\" src=\"#{ENV["CDN_URL"]}/images/github.png\" alt=\"GitHub icon\"/>&nbsp;Get GitHub Token".html_safe, user_github_omniauth_authorize_path, :id => "sign-in-github", class: 'btn btn-social btn-github btn-fill' %>
+              <% end %>
+            </dd>
+          </dl>
+        </div>
         <div class="panel-footer clearfix">
           <div class="form-group pull-right">
             <%= link_to 'Update', edit_setting_path("me"), :remote => true, :class => 'btn btn-sm', id: "#{@user.id}-edit" %>

@@ -1,4 +1,4 @@
-version: '2.1'
+version: "2.1"
 
 services:
   web:
@@ -24,7 +24,6 @@ services:
   mysql:
     environment:
       - MYSQL_DATABASE=datacite
-      - MYSQL_USER=root
       - MYSQL_ALLOW_EMPTY_PASSWORD="yes"
     image: mysql:5.7
     ports:
@@ -63,5 +62,5 @@ networks:
     ipam:
       driver: default
       config:
-      - subnet: 10.0.60.0/24
-        gateway: 10.0.60.1
+        - subnet: 10.0.60.0/24
+          gateway: 10.0.60.1
