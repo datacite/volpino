@@ -41,4 +41,4 @@ doc/dependencies*
 .env
 .env.*
 !.env.example
-!.env.travis
+!.env.build
