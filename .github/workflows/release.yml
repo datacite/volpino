@@ -148,12 +148,10 @@ jobs:
           tar -xzvf dockerize-linux-amd64-v0.6.0.tar.gz
           rm dockerize-linux-amd64-v0.6.0.tar.gz
           ./dockerize -template prod-eu-west/services/profiles/_volpino.auto.tfvars.tmpl:prod-eu-west/services/profiles/_volpino.auto.tfvars
-          ./dockerize -template test/services/profiles/_volpino.auto.tfvars.tmpl:test/services/profiles/_volpino.auto.tfvars
-
+          
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add prod-eu-west/services/profiles/_volpino.auto.tfvars
-          git add test/services/profiles/_volpino.auto.tfvars
           git commit -m "Adding volpino git variables for tag ${{ steps.extract_variables.outputs.GIT_TAG }}"
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
