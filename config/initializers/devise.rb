@@ -16,7 +16,7 @@ Devise.setup do |config|
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
-  require 'devise/orm/active_record'
+  require "devise/orm/active_record"
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
@@ -182,7 +182,7 @@ Devise.setup do |config|
   # Defines name of the authentication token params key
   # config.token_authentication_key = :api_key
 
-  config.secret_key = ENV['SECRET_KEY_BASE']
+  config.secret_key = ENV["SECRET_KEY_BASE"]
 
   # ==> Scopes configuration
   # Turn scoped views on. Before rendering "sessions/new", it will first check for
@@ -213,18 +213,18 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  config.omniauth :orcid, ENV['ORCID_CLIENT_ID'],
-                          ENV['ORCID_CLIENT_SECRET'],
-                          member: ENV['ORCID_MEMBER'],
-                          sandbox: (ENV['ORCID_URL'] == "https://sandbox.orcid.org"),
-                          provider_ignores_state: true
+  config.omniauth :orcid, ENV["ORCID_CLIENT_ID"],
+                  ENV["ORCID_CLIENT_SECRET"],
+                  member: ENV["ORCID_MEMBER"],
+                  sandbox: (ENV["ORCID_URL"] == "https://sandbox.orcid.org"),
+                  provider_ignores_state: true
 
-  config.omniauth :github, ENV['GITHUB_CLIENT_ID'],
-                           ENV['GITHUB_CLIENT_SECRET'],
-                           scope: "user,repo"
+  config.omniauth :github, ENV["GITHUB_CLIENT_ID"],
+                  ENV["GITHUB_CLIENT_SECRET"],
+                  scope: "user,repo"
 
-  config.omniauth :globus, ENV["GLOBUS_CLIENT_ID"], 
-                           ENV["GLOBUS_CLIENT_SECRET"]
+  config.omniauth :globus, ENV["GLOBUS_CLIENT_ID"],
+                  ENV["GLOBUS_CLIENT_SECRET"]
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

@@ -9,8 +9,8 @@ describe ExternalIdentifier, type: :model, vcr: true, elasticsearch: true do
 
   subject { ExternalIdentifier.new(type: type, value: value, url: url, orcid: user.uid, orcid_token: user.orcid_token, put_code: put_code) }
 
-  describe 'push to ORCID', :order => :defined do
-    describe 'post' do
+  describe "push to ORCID", order: :defined do
+    describe "post" do
       subject { ExternalIdentifier.new(type: type, value: value, url: url, orcid: user.uid, orcid_token: user.orcid_token) }
 
       # it 'should create external_identifier' do
@@ -18,14 +18,14 @@ describe ExternalIdentifier, type: :model, vcr: true, elasticsearch: true do
       #   expect(response.body["put_code"]).not_to be_blank
       # end
 
-      it 'access_token missing' do
+      it "access_token missing" do
         subject = ExternalIdentifier.new(type: type, value: value, url: url, orcid: user.uid, orcid_token: nil)
         response = subject.create_external_identifier(sandbox: true)
-        expect(response.body).to eq("errors"=>[{"title"=>"ORCID access token missing"}])
+        expect(response.body).to eq("errors" => [{ "title" => "ORCID access token missing" }])
       end
     end
 
-    describe 'delete' do
+    describe "delete" do
       # it 'should delete external_identifier' do
       #   response = subject.delete_external_identifier(sandbox: true)
       #   expect(response["data"]).to be_blank
@@ -33,26 +33,26 @@ describe ExternalIdentifier, type: :model, vcr: true, elasticsearch: true do
       #   expect(response.status).to eq(204)
       # end
 
-      it 'access_token missing' do
+      it "access_token missing" do
         subject = ExternalIdentifier.new(type: type, value: value, url: url, orcid: user.uid, orcid_token: nil)
         response = subject.delete_external_identifier(sandbox: true)
-        expect(response.body).to eq("errors"=>[{"title"=>"ORCID access token missing"}])
+        expect(response.body).to eq("errors" => [{ "title" => "ORCID access token missing" }])
       end
     end
   end
 
-  describe 'schema' do
-    it 'exists' do
+  describe "schema" do
+    it "exists" do
       expect(subject.schema.errors).to be_empty
     end
 
-    it 'validates data' do
+    it "validates data" do
       expect(subject.validation_errors).to be_empty
     end
   end
 
-  it 'data' do
-    xml = File.read(fixture_path + 'external_identifier.xml')
+  it "data" do
+    xml = File.read(fixture_path + "external_identifier.xml")
     expect(subject.data).to eq(xml)
   end
 end

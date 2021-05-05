@@ -4,7 +4,7 @@ describe "/claims", type: :request, elasticsearch: true do
   before(:each) { allow(Time.zone).to receive(:now).and_return(Time.mktime(2015, 4, 8)) }
 
   let(:claim) { FactoryBot.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: "0000-0002-1825-0097") }
-  let(:error) { { "errors" => [{"status"=>"401", "title"=>"Bad credentials."}] } }
+  let(:error) { { "errors" => [{ "status" => "401", "title" => "Bad credentials." }] } }
   let(:user) { FactoryBot.create(:admin_user, uid: "0000-0002-1825-0097") }
   let(:uuid) { SecureRandom.uuid }
   let(:headers) do
@@ -29,7 +29,7 @@ describe "/claims", type: :request, elasticsearch: true do
     end
 
     it "admin user" do
-      post uri, params, headers
+      post uri, params: params, session: headers
       puts last_response.body
       expect(last_response.status).to eq(202)
       response = JSON.parse(last_response.body)
@@ -58,7 +58,7 @@ describe "/claims", type: :request, elasticsearch: true do
 
     context "as admin user" do
       it "JSON" do
-        post uri, params, headers
+        post uri, params: params, session: headers
         expect(last_response.status).to eq(202)
 
         response = JSON.parse(last_response.body)
@@ -74,11 +74,11 @@ describe "/claims", type: :request, elasticsearch: true do
       let(:user) { FactoryBot.create(:staff_user) }
 
       it "JSON" do
-        post uri, params, headers
+        post uri, params: params, session: headers
         expect(last_response.status).to eq(403)
 
         response = JSON.parse(last_response.body)
-        expect(response).to eq("errors"=>[{"status"=>"403", "title"=>"You are not authorized to access this resource."}])
+        expect(response).to eq("errors" => [{ "status" => "403", "title" => "You are not authorized to access this resource." }])
       end
     end
 
@@ -105,7 +105,7 @@ describe "/claims", type: :request, elasticsearch: true do
       end
 
       it "JSON" do
-        post uri, params, headers
+        post uri, params: params, session: headers
 
         expect(last_response.status).to eq(202)
         response = JSON.parse(last_response.body)
@@ -113,7 +113,7 @@ describe "/claims", type: :request, elasticsearch: true do
         expect(response.dig("data", "attributes", "orcid")).to eq("https://orcid.org/0000-0001-6528-2027")
         expect(response.dig("data", "attributes", "doi")).to eq("https://doi.org/10.14454/1X4X-9056")
         expect(response.dig("data", "attributes", "sourceId")).to eq("orcid_search")
-        expect(response.dig("data", "attributes", "state")).to eq("waiting")      
+        expect(response.dig("data", "attributes", "state")).to eq("waiting")
       end
     end
 
@@ -125,11 +125,11 @@ describe "/claims", type: :request, elasticsearch: true do
       end
 
       it "JSON" do
-        post uri, params, headers
+        post uri, params: params, session: headers
         expect(last_response.status).to eq(422)
 
         response = JSON.parse(last_response.body)
-        expect(response).to eq("errors"=>[{"source"=>"user", "title"=>"Must exist"}])
+        expect(response).to eq("errors" => [{ "source" => "user", "title" => "Must exist" }])
       end
     end
 
@@ -141,11 +141,11 @@ describe "/claims", type: :request, elasticsearch: true do
       end
 
       it "JSON" do
-        post uri, params, headers
+        post uri, params: params, session: headers
         expect(last_response.status).to eq(422)
 
         response = JSON.parse(last_response.body)
-        expect(response).to eq("errors"=>[{"source"=>"doi", "title"=>"Can't be blank"}])
+        expect(response).to eq("errors" => [{ "source" => "doi", "title" => "Can't be blank" }])
       end
     end
 
@@ -158,11 +158,11 @@ describe "/claims", type: :request, elasticsearch: true do
       end
 
       it "JSON" do
-        post uri, params, headers
+        post uri, params: params, session: headers
         expect(last_response.status).to eq(422)
 
         response = JSON.parse(last_response.body)
-        expect(response).to eq("errors"=>[{"source"=>"source_id", "title"=>"Can't be blank"}])
+        expect(response).to eq("errors" => [{ "source" => "source_id", "title" => "Can't be blank" }])
       end
     end
 
@@ -173,7 +173,7 @@ describe "/claims", type: :request, elasticsearch: true do
       end
 
       it "JSON" do
-        post uri, params, headers
+        post uri, params: params, session: headers
         expect(last_response.status).to eq(401)
 
         response = JSON.parse(last_response.body)
@@ -190,11 +190,11 @@ describe "/claims", type: :request, elasticsearch: true do
       end
 
       it "JSON" do
-        post uri, params, headers
+        post uri, params: params, session: headers
         expect(last_response.status).to eq(422)
 
         response = JSON.parse(last_response.body)
-        expect(response).to eq("errors" => [{"status"=>"422", "title"=>"param is missing or the value is empty: claim"}])
+        expect(response).to eq("errors" => [{ "status" => "422", "title" => "param is missing or the value is empty: claim" }])
       end
     end
 
@@ -202,7 +202,7 @@ describe "/claims", type: :request, elasticsearch: true do
       let(:params) { { "claim" => "10.1371/journal.pone.0036790 2012-05-15 New Dromaeosaurids (Dinosauria: Theropoda) from the Lower Cretaceous of Utah, and the Evolution of the Dromaeosaurid Tail" } }
 
       it "JSON" do
-        post uri, params, headers
+        post uri, params: params, session: headers
         expect(last_response.status).to eq(400)
         response = JSON.parse(last_response.body)
         expect(response["errors"].first["title"]).to start_with("undefined method")
@@ -221,43 +221,43 @@ describe "/claims", type: :request, elasticsearch: true do
 
     context "as admin user" do
       it "JSON" do
-        get uri, nil, headers
-        
+        get uri, params: nil, session: headers
+
         expect(last_response.status).to eq(200)
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
         item = response["data"].first
-        expect(item.dig('attributes', 'doi')).to eq("https://doi.org/10.5061/dryad.781pv")
+        expect(item.dig("attributes", "doi")).to eq("https://doi.org/10.5061/dryad.781pv")
       end
     end
 
     context "as staff user" do
       let(:user) { FactoryBot.create(:staff_user) }
       let!(:claim) { FactoryBot.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
-    
+
       it "JSON" do
-        get uri, nil, headers
+        get uri, params: nil, session: headers
 
         expect(last_response.status).to eq(200)
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
         item = response["data"].first
-        expect(item.dig('attributes', 'doi')).to eq("https://doi.org/10.5061/dryad.781pv")
+        expect(item.dig("attributes", "doi")).to eq("https://doi.org/10.5061/dryad.781pv")
       end
     end
 
     context "as regular user" do
       let(:user) { FactoryBot.create(:regular_user) }
       let!(:claim) { FactoryBot.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
-    
+
       it "JSON" do
-        get uri, nil, headers
+        get uri, params: nil, session: headers
         expect(last_response.status).to eq(200)
-    
+
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
         item = response["data"].first
-        expect(item.dig('attributes', 'doi')).to eq("https://doi.org/10.5061/dryad.781pv")
+        expect(item.dig("attributes", "doi")).to eq("https://doi.org/10.5061/dryad.781pv")
       end
     end
 
@@ -268,7 +268,7 @@ describe "/claims", type: :request, elasticsearch: true do
       end
 
       it "JSON" do
-        get uri, nil, headers
+        get uri, params: nil, session: headers
         expect(last_response.status).to eq(401)
 
         response = JSON.parse(last_response.body)
@@ -279,31 +279,31 @@ describe "/claims", type: :request, elasticsearch: true do
     context "with query for dois" do
       let(:doi) { "10.5061/dryad.781pv" }
       let(:uri) { "/claims?dois=#{doi}" }
-    
+
       it "JSON" do
-        get uri, nil, headers
+        get uri, params: nil, session: headers
         expect(last_response.status).to eq(200)
         puts Claim.query(nil, page: { cursor: [], size: 3 }).results.to_a.inspect
         puts last_response.body
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
         item = response["data"].first
-        expect(item.dig('attributes', 'doi')).to eq("https://doi.org/10.5061/dryad.781pv")
+        expect(item.dig("attributes", "doi")).to eq("https://doi.org/10.5061/dryad.781pv")
       end
     end
 
     context "with query for missing dois" do
       let(:doi) { "10.5061/DRYAD.781PVx" }
       let(:uri) { "/claims?dois=#{doi}" }
-    
+
       it "JSON" do
-        get uri, nil, headers
+        get uri, params: nil, session: headers
         expect(last_response.status).to eq(200)
-    
+
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
         expect(response["data"]).to be_empty
-        expect(response["meta"]).to eq("page"=>1, "total"=>0, "totalPages"=>0)
+        expect(response["meta"]).to eq("page" => 1, "total" => 0, "totalPages" => 0)
       end
     end
   end
@@ -319,7 +319,7 @@ describe "/claims", type: :request, elasticsearch: true do
 
     context "as admin user" do
       it "JSON" do
-        get uri, nil, headers
+        get uri, params: nil, session: headers
         expect(last_response.status).to eq(200)
 
         response = JSON.parse(last_response.body)
@@ -335,7 +335,7 @@ describe "/claims", type: :request, elasticsearch: true do
       let(:user) { FactoryBot.create(:staff_user) }
 
       it "JSON" do
-        get uri, nil, headers
+        get uri, params: nil, session: headers
         expect(last_response.status).to eq(200)
 
         response = JSON.parse(last_response.body)
@@ -351,7 +351,7 @@ describe "/claims", type: :request, elasticsearch: true do
       let(:user) { FactoryBot.create(:regular_user) }
 
       it "JSON" do
-        get uri, nil, headers
+        get uri, params: nil, session: headers
         expect(last_response.status).to eq(200)
 
         response = JSON.parse(last_response.body)
@@ -370,7 +370,7 @@ describe "/claims", type: :request, elasticsearch: true do
       end
 
       it "JSON" do
-        get uri, nil, headers
+        get uri, params: nil, session: headers
         expect(last_response.status).to eq(401)
 
         response = JSON.parse(last_response.body)
@@ -382,11 +382,11 @@ describe "/claims", type: :request, elasticsearch: true do
       let(:uri) { "/claims/#{claim.uuid}x" }
 
       it "JSON" do
-        get uri, nil, headers
+        get uri, params: nil, session: headers
         expect(last_response.status).to eq(404)
 
         response = JSON.parse(last_response.body)
-        expect(response).to eq("errors"=>[{"status"=>"404", "title"=>"The resource you are looking for doesn't exist."}])
+        expect(response).to eq("errors" => [{ "status" => "404", "title" => "The resource you are looking for doesn't exist." }])
       end
     end
   end
@@ -402,11 +402,11 @@ describe "/claims", type: :request, elasticsearch: true do
 
     context "as admin user" do
       it "JSON" do
-        delete uri, nil, headers
+        delete uri, params: nil, session: headers
         expect(last_response.status).to eq(200)
 
         response = JSON.parse(last_response.body)
-        expect(response).to eq("data"=>{})
+        expect(response).to eq("data" => {})
       end
     end
 
@@ -414,11 +414,11 @@ describe "/claims", type: :request, elasticsearch: true do
       let(:user) { FactoryBot.create(:staff_user) }
 
       it "JSON" do
-        delete uri, nil, headers
+        delete uri, params: nil, session: headers
         expect(last_response.status).to eq(403)
 
         response = JSON.parse(last_response.body)
-        expect(response).to eq("errors"=>[{"status"=>"403", "title"=>"You are not authorized to access this resource."}])
+        expect(response).to eq("errors" => [{ "status" => "403", "title" => "You are not authorized to access this resource." }])
       end
     end
 
@@ -441,7 +441,7 @@ describe "/claims", type: :request, elasticsearch: true do
       end
 
       it "JSON" do
-        delete uri, nil, headers
+        delete uri, params: nil, session: headers
         expect(last_response.status).to eq(401)
 
         response = JSON.parse(last_response.body)
@@ -453,11 +453,11 @@ describe "/claims", type: :request, elasticsearch: true do
       let(:uri) { "/claims/#{claim.uuid}x" }
 
       it "JSON" do
-        delete uri, nil, headers
+        delete uri, params: nil, session: headers
         expect(last_response.status).to eq(404)
 
         response = JSON.parse(last_response.body)
-        expect(response).to eq("errors"=>[{"status"=>"404", "title"=>"The resource you are looking for doesn't exist."}])
+        expect(response).to eq("errors" => [{ "status" => "404", "title" => "The resource you are looking for doesn't exist." }])
       end
     end
   end

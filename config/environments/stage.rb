@@ -22,7 +22,7 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.serve_static_files = ENV["RAILS_SERVE_STATIC_FILES"].present?
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -65,18 +65,18 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # for devise
-  config.action_mailer.default_url_options = { :host => "#{ENV['SERVER_NAME']}:#{ENV['SERVER_PORT']}" }
+  config.action_mailer.default_url_options = { host: "#{ENV['SERVER_NAME']}:#{ENV['SERVER_PORT']}" }
 
   # send email via mailgun
   config.action_mailer.delivery_method = :mailgun
   config.action_mailer.mailgun_settings = {
-    api_key: ENV['MAILGUN_API_KEY'],
-    domain: ENV['MAILGUN_DOMAIN']
+    api_key: ENV["MAILGUN_API_KEY"],
+    domain: ENV["MAILGUN_DOMAIN"],
   }
 
   # use ssl with Devise
   # config.to_prepare { Devise::SessionsController.force_ssl }
 
-  require 'flipper/middleware/memoizer'
+  require "flipper/middleware/memoizer"
   config.middleware.use Flipper::Middleware::Memoizer
 end

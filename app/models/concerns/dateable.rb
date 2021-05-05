@@ -8,7 +8,7 @@ module Dateable
       year = iso8601_time[0..3].to_i
       month = iso8601_time[5..6].to_i
       day = iso8601_time[8..9].to_i
-      { 'date-parts' => [[year, month, day].reject { |part| part == 0 }] }
+      { "date-parts" => [[year, month, day].reject { |part| part == 0 }] }
     end
 
     def get_year_month(iso8601_time)
@@ -21,16 +21,16 @@ module Dateable
     end
 
     def get_date_parts_from_parts(year = nil, month = nil, day = nil)
-      { 'date-parts' => [[year.to_i, month.to_i, day.to_i].reject { |part| part == 0 }] }
+      { "date-parts" => [[year.to_i, month.to_i, day.to_i].reject { |part| part == 0 }] }
     end
 
     def get_parts_from_date_parts(date_parts)
-      parts = date_parts.fetch('date-parts', []).first
-      return { "date_parts" => [[]] } unless parts.present?
+      parts = date_parts.fetch("date-parts", []).first
+      return { "date_parts" => [[]] } if parts.blank?
 
-      { 'year' => parts[0],
-        'month' => parts[1],
-        'day' => parts[2] }.compact
+      { "year" => parts[0],
+        "month" => parts[1],
+        "day" => parts[2] }.compact
     end
 
     def get_year_month_day(iso8601_time)
@@ -40,9 +40,9 @@ module Dateable
       month = iso8601_time[5..6]
       day = iso8601_time[8..9]
 
-      { 'year' => year.to_i,
-        'month' => month.to_i,
-        'day' => day.to_i }.delete_if { |key, value| value == 0 }
+      { "year" => year.to_i,
+        "month" => month.to_i,
+        "day" => day.to_i }.delete_if { |_key, value| value == 0 }
     end
 
     def get_iso8601_from_time(time)

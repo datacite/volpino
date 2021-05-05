@@ -1,7 +1,7 @@
 class WidenTokenColumn < ActiveRecord::Migration[4.2]
-def up
+  def up
     change_column :users, :facebook_token, :text
-  end
+    end
 
   def down
     change_column :users, :facebook_token, :string

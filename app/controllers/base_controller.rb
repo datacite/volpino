@@ -1,4 +1,4 @@
-class BaseController < ActionController::Base
+class BaseController < ApplicationController
   # include base controller methods
   include Authenticable
 
@@ -26,15 +26,15 @@ class BaseController < ActionController::Base
   def set_jsonp_format
     if params[:callback] && request.get?
       self.response_body = "#{params[:callback]}(#{response.body})"
-      headers["Content-Type"] = 'application/javascript'
+      headers["Content-Type"] = "application/javascript"
     end
   end
 
   def set_consumer_header
     if current_user
-      response.headers['X-Credential-Username'] = current_user.uid
+      response.headers["X-Credential-Username"] = current_user.uid
     else
-      response.headers['X-Anonymous-Consumer'] = true
+      response.headers["X-Anonymous-Consumer"] = true
     end
   end
 
@@ -42,18 +42,18 @@ class BaseController < ActionController::Base
     request.format = :json if request.format.html?
   end
 
-  #convert parameters with hyphen to parameters with underscore.
+  # convert parameters with hyphen to parameters with underscore.
   # https://stackoverflow.com/questions/35812277/fields-parameters-with-hyphen-in-ruby-on-rails
   def transform_params
-    params.transform_keys! { |key| key.tr('-', '_') }
+    params.transform_keys! { |key| key.tr("-", "_") }
   end
 
   def authenticate_user_from_token!
     token = token_from_request_headers
-    return false unless token.present?
+    return false if token.blank?
 
     payload = decode_token(token)
-    return false unless payload.present?
+    return false if payload.blank?
 
     # find user associated with token
     user = User.where(uid: payload["uid"]).first
@@ -68,9 +68,7 @@ class BaseController < ActionController::Base
 
   # from https://github.com/nsarno/knock/blob/master/lib/knock/authenticable.rb
   def token_from_request_headers
-    unless request.headers['Authorization'].nil?
-      request.headers['Authorization'].split.last
-    end
+    request.headers["Authorization"]&.split&.last
   end
 
   unless Rails.env.development?
@@ -82,7 +80,7 @@ class BaseController < ActionController::Base
                when "ActionController::UnknownFormat" then 406
                when "ActiveRecord::RecordNotUnique" then 409
                when "ActiveModel::ForbiddenAttributesError", "ActionController::ParameterMissing", "ActionController::UnpermittedParameters", "ActiveModelSerializers::Adapter::JsonApi::Deserialization::InvalidDocument" then 422
-               when "SocketError" then 500 
+               when "SocketError" then 500
                else 400
                end
 
@@ -130,12 +128,12 @@ class BaseController < ActionController::Base
       Raven.user_context(
         email: current_user.email,
         id: current_user.uid,
-        ip_address: request.ip
+        ip_address: request.ip,
       )
     else
       Raven.user_context(
-        ip_address: request.ip
-      ) 
+        ip_address: request.ip,
+      )
     end
   end
 end

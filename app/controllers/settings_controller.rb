@@ -10,10 +10,10 @@ class SettingsController < ApplicationController
   end
 
   def update
-    @user.update_attributes(safe_params)
-    
-    # refresh cookie 
-    cookies[:_datacite] = encode_cookie(@user.jwt) 
+    @user.update(safe_params)
+
+    # refresh cookie
+    cookies[:_datacite] = encode_cookie(@user.jwt)
 
     render :show
   end

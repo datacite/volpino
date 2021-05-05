@@ -11,7 +11,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:name, :family_name, :given_names, :email) }
   end
 
-  def after_inactive_sign_up_path_for(resource_or_scope)
+  def after_inactive_sign_up_path_for(_resource_or_scope)
     session["user_return_to"] || root_path
   end
 end

@@ -1,4 +1,4 @@
-require 'cgi'
+require "cgi"
 
 class Base
   extend ActiveModel::Naming
@@ -8,7 +8,7 @@ class Base
     collect_data
   end
 
-  def self.where(options={})
+  def self.where(options = {})
     collect_data(options)
   end
 
@@ -17,16 +17,16 @@ class Base
     parse_data(data, options)
   end
 
-  def self.get_data(options={})
+  def self.get_data(options = {})
     query_url = get_query_url(options)
     Maremma.get(query_url, options)
   end
 
-  def self.parse_item(item, options={})
-    self.new(item, options)
+  def self.parse_item(item, options = {})
+    new(item, options)
   end
 
-  def self.parse_items(items, options={})
+  def self.parse_items(items, options = {})
     Array(items).map do |item|
       parse_item(item, options)
     end
@@ -36,7 +36,7 @@ class Base
     klass.new(params)
   end
 
-  def self.sanitize(text, options={})
+  def self.sanitize(text, options = {})
     Bergamasco::Sanitize.sanitize(text, options)
   end
 end

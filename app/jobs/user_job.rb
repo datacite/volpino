@@ -1,4 +1,4 @@
-class UserJob < ActiveJob::Base
+class UserJob < ApplicationJob
   queue_as :volpino
 
   rescue_from ActiveJob::DeserializationError, ActiveRecord::ConnectionTimeoutError, Faraday::TimeoutError do

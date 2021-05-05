@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class PersonType < BaseObject
-  key fields: 'id'
-  
+  key fields: "id"
+
   description "A person."
 
   field :id, ID, null: true, description: "The ORCID ID of the person."

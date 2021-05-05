@@ -6,41 +6,41 @@ module Typeable
     # from the `resourceTypeGeneral field` (controlled list) and B)) the value of the more specific
     # `resourceType` field which is not from a controlled list but rather free-form input from data centres.
     def orcid_work_type(internal_work_type, internal_work_subtype)
-      type =  case  internal_work_type
-              when 'Text'
+      type =  case internal_work_type
+              when "Text"
                 case internal_work_subtype
                 when /^(Article|Articles|Journal Article|JournalArticle)$/i
-                  'journal-article'
+                  "journal-article"
                 when /^(Book|ebook|Monografie|Monograph\w*|)$/i
-                  'book'
+                  "book"
                 when /^(chapter|chapters)$/i
-                  'book-chapter'
+                  "book-chapter"
                 when /^(Project report|Report|Research report|Technical Report|TechnicalReport|Text\/Report|XFEL.EU Annual Report|XFEL.EU Technical Report)$/i
-                  'report'
+                  "report"
                 when /^(Dissertation|thesis|Doctoral thesis|Academic thesis|Master thesis|Masterthesis|Postdoctoral thesis)$/i
-                  'dissertation'
+                  "dissertation"
                 when /^(Conference Abstract|Conference extended abstract)$/i
-                  'conference-abstract'
+                  "conference-abstract"
                 when /^(Conference full text|Conference paper|ConferencePaper)$/i
-                  'conference-paper'
+                  "conference-paper"
                 when /^(poster|Conference poster)$/i
-                  'conference-poster'
+                  "conference-poster"
                 when /^(working paper|workingpaper|preprint)$/i
-                  'working-paper'
+                  "working-paper"
                 when /^(dataset$)/i
-                  'data-set'
+                  "data-set"
                 end
 
-              when 'Collection'
+              when "Collection"
                 case internal_work_subtype
                 when /^(Collection of Datasets|Data Files|Dataset|Supplementary Collection of Datasets)$/i
-                  'data-set'
-                when 'Report'
-                  'report'
+                  "data-set"
+                when "Report"
+                  "report"
                 end
-              end  # double CASE statement ends
+              end # double CASE statement ends
 
-      type || TYPE_OF_WORK[internal_work_type] || 'other'
+      type || TYPE_OF_WORK[internal_work_type] || "other"
     end
   end
 end

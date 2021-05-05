@@ -1,7 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe Claim, type: :model, vcr: true, elasticsearch: true do
-
   subject { FactoryBot.create(:claim) }
 
   context "HTTP" do

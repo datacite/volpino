@@ -42,17 +42,15 @@ module Authorable
       name_identifier_scheme = author.fetch("nameIdentifierScheme", "orcid").downcase
       if name_identifier.present? && name_identifier_scheme == "orcid"
         "http://orcid.org/#{name_identifier}"
-      else
-        nil
       end
     end
 
     def get_credit_name(author)
-      [author['given'], author['family']].compact.join(' ').presence || author['literal']
+      [author["given"], author["family"]].compact.join(" ").presence || author["literal"]
     end
 
     def get_full_name(author)
-      [author['family'], author['given']].compact.join(', ')
+      [author["family"], author["given"]].compact.join(", ")
     end
   end
 end

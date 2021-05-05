@@ -3,7 +3,7 @@ class ClaimSerializer
   set_key_transform :camel_lower
   set_type :claims
   set_id :uuid
-  
+
   attributes :orcid, :doi, :source_id, :state, :claim_action, :error_messages, :put_code, :claimed, :created, :updated
 
   belongs_to :user, serializer: UserSerializer, record_type: :users
@@ -24,7 +24,5 @@ class ClaimSerializer
     end
   end
 
-  attribute :state do |object|
-    object.aasm_state
-  end
+  attribute :state, &:aasm_state
 end

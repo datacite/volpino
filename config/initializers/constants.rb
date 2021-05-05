@@ -14,23 +14,23 @@ RESCUABLE_EXCEPTIONS = [CanCan::AccessDenied,
                         ActionController::UnknownFormat,
                         ActionController::RoutingError,
                         ActionController::ParameterMissing,
-                        ActionController::UnpermittedParameters]
+                        ActionController::UnpermittedParameters].freeze
 
 # Format used for DOI validation
 # The prefix is 10.x where x is 4-5 digits. The suffix can be anything, but can"t be left off
-DOI_FORMAT = %r(\A10\.\d{4,5}/.+)
+DOI_FORMAT = %r(\A10\.\d{4,5}/.+).freeze
 
 # Format used for URL validation
-URL_FORMAT = %r(\A(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?\z)
+URL_FORMAT = %r(\A(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?\z).freeze
 
 # Form queue options
-QUEUE_OPTIONS = ["high", "default", "low"]
+QUEUE_OPTIONS = ["high", "default", "low"].freeze
 
 # Version of ORCID API
-ORCID_VERSION = '2.1'
+ORCID_VERSION = "2.1".freeze
 
 # ORCID schema
-ORCID_SCHEMA = 'https://raw.githubusercontent.com/ORCID/ORCID-Source/master/orcid-model/src/main/resources/orcid-message-1.2.xsd'
+ORCID_SCHEMA = "https://raw.githubusercontent.com/ORCID/ORCID-Source/master/orcid-model/src/main/resources/orcid-message-1.2.xsd".freeze
 
 # CrossRef types from http://api.crossref.org/types
 CROSSREF_TYPE_TRANSLATIONS = {
@@ -58,8 +58,8 @@ CROSSREF_TYPE_TRANSLATIONS = {
   "component" => nil,
   "reference-entry" => "entry-dictionary",
   "journal-volume" => nil,
-  "book-set" => nil
-}
+  "book-set" => nil,
+}.freeze
 
 # DataCite resourceTypeGeneral from DataCite metadata schema: http://dx.doi.org/10.5438/0010
 DATACITE_TYPE_TRANSLATIONS = {
@@ -76,36 +76,36 @@ DATACITE_TYPE_TRANSLATIONS = {
   "Sound" => "song",
   "Text" => "report",
   "Workflow" => nil,
-  "Other" => nil
-}
+  "Other" => nil,
+}.freeze
 
 # Map of DataCite work types to the CASRAI-based ORCID type vocabulary
 # https://members.orcid.org/api/supported-work-types
 TYPE_OF_WORK = {
 
-  'Audiovisual' => 'other',
-  'Collection' => 'other',
-  'Dataset' =>  'data-set',
-  'Event' => 'other',
-  'Image' => 'other',
-  'InteractiveResource' => 'online-resource',
-  'Model' => 'other',
-  'PhysicalObject' => 'other',
-  'Service' => 'other',
-  'Software' => 'other',
-  'Sound' => 'other',
-  'Text' => 'other',
-  'Workflow' => 'other',
-  'Other' => 'other',
+  "Audiovisual" => "other",
+  "Collection" => "other",
+  "Dataset" => "data-set",
+  "Event" => "other",
+  "Image" => "other",
+  "InteractiveResource" => "online-resource",
+  "Model" => "other",
+  "PhysicalObject" => "other",
+  "Service" => "other",
+  "Software" => "other",
+  "Sound" => "other",
+  "Text" => "other",
+  "Workflow" => "other",
+  "Other" => "other",
 
   # Legacy types from older schema versions
-  'Film' => 'other'
+  "Film" => "other",
   # pick up other legacy types as we go along
-}
+}.freeze
 
 # regions used by countries gem
 REGIONS = {
   "APAC" => "Asia and Pacific",
   "EMEA" => "Europe, Middle East and Africa",
-  "AMER" => "Americas"
-}
+  "AMER" => "Americas",
+}.freeze

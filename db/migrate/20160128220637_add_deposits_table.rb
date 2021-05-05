@@ -6,11 +6,11 @@ class AddDepositsTable < ActiveRecord::Migration[4.2]
       t.text     "message",        limit: 4294967295
       t.string   "source_token",   limit: 191
       t.text     "callback",       limit: 65535
-      t.integer  "state",          limit: 4,          default: 0
+      t.integer  "state",          limit: 4, default: 0
       t.string   "state_event",    limit: 191
       t.datetime "created_at",                                           null: false
       t.datetime "updated_at",                                           null: false
-      t.string   "message_action", limit: 255,        default: "create", null: false
+      t.string   "message_action", limit: 255, default: "create", null: false
     end
 
     add_index "deposits", ["uuid"], name: "index_deposits_on_uuid"

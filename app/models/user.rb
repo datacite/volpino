@@ -1,6 +1,6 @@
-require 'orcid_client'
+require "orcid_client"
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   # include helper module for date and time calculations
   include Dateable
 
@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   include Elasticsearch::Model
 
   nilify_blanks
-  strip_attributes only: [:given_names, :family_name, :name, :other_names]
+  strip_attributes only: %i[given_names family_name name other_names]
 
   # include hash helper
   include Hashie::Extensions::DeepFetch
@@ -31,12 +31,12 @@ class User < ActiveRecord::Base
 
   before_create :set_role
 
-  after_commit :queue_user_job, :on => :create
-  after_commit :queue_claim_jobs, :on => :create
+  after_commit :queue_user_job, on: :create
+  after_commit :queue_claim_jobs, on: :create
 
   has_many :claims, primary_key: "uid", foreign_key: "orcid", inverse_of: :user
 
-  devise :omniauthable, :omniauth_providers => [:orcid, :github, :globus]
+  devise :omniauthable, omniauth_providers: %i[orcid github globus]
 
   validates :uid, presence: true, uniqueness: { case_sensitive: false }
   validate :validate_email
@@ -57,17 +57,17 @@ class User < ActiveRecord::Base
   settings index: {
     analysis: {
       analyzer: {
-        string_lowercase: { tokenizer: 'keyword', filter: %w(lowercase ascii_folding) }
+        string_lowercase: { tokenizer: "keyword", filter: %w(lowercase ascii_folding) },
       },
-      filter: { ascii_folding: { type: 'asciifolding', preserve_original: true } }
-    }
+      filter: { ascii_folding: { type: "asciifolding", preserve_original: true } },
+    },
   } do
-    mapping dynamic: 'false' do
+    mapping dynamic: "false" do
       indexes :id,            type: :keyword
       indexes :uid,           type: :keyword
-      indexes :name,          type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}
-      indexes :given_name,    type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}
-      indexes :family_name,   type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}
+      indexes :name,          type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true } }
+      indexes :given_name,    type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true } }
+      indexes :family_name,   type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true } }
       indexes :email,         type: :keyword
       indexes :github,        type: :keyword
       indexes :role_id,       type: :keyword
@@ -85,7 +85,7 @@ class User < ActiveRecord::Base
   end
 
   # also index id as workaround for finding the correct key in associations
-  def as_indexed_json(options={})
+  def as_indexed_json(_options = {})
     {
       "id" => uid,
       "uid" => uid,
@@ -104,26 +104,26 @@ class User < ActiveRecord::Base
       "is_active" => is_active,
       "orcid_token" => orcid_token,
       "orcid_expires_at" => orcid_expires_at,
-      "claims_count" => claims_count
+      "claims_count" => claims_count,
     }
   end
 
   def self.query_fields
-    ['uid^50', 'name^5', 'given_name^5', 'family_name^5', '_all']
+    ["uid^50", "name^5", "given_name^5", "family_name^5", "_all"]
   end
 
   def self.query_aggregations
     {
-      created: { date_histogram: { field: 'created', interval: 'year', min_doc_count: 1 } },
-      roles: { terms: { field: 'role_id', size: 15, min_doc_count: 1 } }
+      created: { date_histogram: { field: "created", interval: "year", min_doc_count: 1 } },
+      roles: { terms: { field: "role_id", size: 15, min_doc_count: 1 } },
     }
   end
 
-  def self.from_omniauth(auth, options={})
+  def self.from_omniauth(auth, options = {})
     where(provider: options[:provider], uid: options[:uid] || auth.uid).first_or_create
   end
 
-  def self.import_by_ids(options={})
+  def self.import_by_ids(options = {})
     from_id = (options[:from_id] || User.minimum(:id)).to_i
     until_id = (options[:until_id] || User.maximum(:id)).to_i
 
@@ -135,7 +135,7 @@ class User < ActiveRecord::Base
     (from_id..until_id).to_a.length
   end
 
-  def self.import_by_id(options={})
+  def self.import_by_id(options = {})
     return nil if options[:id].blank?
 
     id = options[:id].to_i
@@ -144,19 +144,19 @@ class User < ActiveRecord::Base
             elsif options[:index].present?
               options[:index]
             else
-              self.inactive_index
+              inactive_index
             end
     errors = 0
     count = 0
 
     User.where(id: id..(id + 499)).find_in_batches(batch_size: 500) do |users|
       response = User.__elasticsearch__.client.bulk \
-        index:   index,
-        type:    User.document_type,
-        body:    users.map { |user| { index: { _id: user.id, data: user.as_indexed_json } } }
+        index: index,
+        type: User.document_type,
+        body: users.map { |user| { index: { _id: user.id, data: user.as_indexed_json } } }
 
       # try to handle errors
-      response['items'].select { |k, v| k.values.first['error'].present? }.each do |item|
+      response["items"].select { |k, _v| k.values.first["error"].present? }.each do |item|
         Rails.logger.error "[Elasticsearch] " + item.inspect
         id = item.dig("index", "_id").to_i
         user = User.where(id: id).first
@@ -173,8 +173,8 @@ class User < ActiveRecord::Base
     end
 
     count
-  rescue Elasticsearch::Transport::Transport::Errors::RequestEntityTooLarge, Faraday::ConnectionFailed, ActiveRecord::LockWaitTimeout => error
-    Rails.logger.info "[Elasticsearch] Error #{error.message} importing users with IDs #{id} - #{(id + 499)}."
+  rescue Elasticsearch::Transport::Transport::Errors::RequestEntityTooLarge, Faraday::ConnectionFailed, ActiveRecord::LockWaitTimeout => e
+    Rails.logger.info "[Elasticsearch] Error #{e.message} importing users with IDs #{id} - #{(id + 499)}."
 
     count = 0
 
@@ -220,7 +220,7 @@ class User < ActiveRecord::Base
   end
 
   def orcid_as_url
-    Rails.env.test? ? ENV['ORCID_URL'] + "/" + orcid : "https://orcid.org/" + orcid
+    Rails.env.test? ? ENV["ORCID_URL"] + "/" + orcid : "https://orcid.org/" + orcid
   end
 
   def flipper_id
@@ -263,7 +263,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.get_auth_hash(auth, options={})
+  def self.get_auth_hash(auth, options = {})
     { name: auth.info && auth.info.name.to_s.strip,
       family_name: auth.info.fetch(:last_name, "").to_s.strip,
       given_names: auth.info.fetch(:first_name, "").to_s.strip,
@@ -279,7 +279,7 @@ class User < ActiveRecord::Base
   end
 
   def self.timestamp(credentials)
-    ts = credentials && credentials.expires_at
+    ts = credentials&.expires_at
     ts = Time.at(ts).utc if ts.present?
   end
 
@@ -293,14 +293,14 @@ class User < ActiveRecord::Base
       has_orcid_token: has_orcid_token,
       features: features,
       iat: Time.now.to_i,
-      exp: Time.now.to_i + 30 * 24 * 3600
+      exp: Time.now.to_i + 30 * 24 * 3600,
     }.compact
 
     encode_token(payload)
   end
 
   def reversed_name
-    [family_name.to_s, given_names].join(', ')
+    [family_name.to_s, given_names].join(", ")
   end
 
   def display_name
@@ -315,18 +315,18 @@ class User < ActiveRecord::Base
     orcid_token.present?
   end
 
-  def collect_data(options={})
+  def collect_data(options = {})
     result = get_data(options)
     result = parse_data(result, options)
   end
 
   def queue_claim_jobs
-    #claims.notified.find_each { |claim| claim.queue_claim_job }
-    claims.ignored.find_each { |claim| claim.queue_claim_job }
+    # claims.notified.find_each { |claim| claim.queue_claim_job }
+    claims.ignored.find_each(&:queue_claim_job)
   end
 
-  def get_data(options={})
-    options[:sandbox] = (ENV['ORCID_URL'] == "https://sandbox.orcid.org")
+  def get_data(options = {})
+    options[:sandbox] = (ENV["ORCID_URL"] == "https://sandbox.orcid.org")
 
     response = get_works(options)
     return nil if response.body["errors"]
@@ -335,16 +335,16 @@ class User < ActiveRecord::Base
 
     Array.wrap(works).select do |work|
       work.extend Hashie::Extensions::DeepFetch
-      work.deep_fetch('work-summary', 0, 'source', 'source-client-id', 'path') { nil } == ENV['ORCID_CLIENT_ID']
+      work.deep_fetch("work-summary", 0, "source", "source-client-id", "path") { nil } == ENV["ORCID_CLIENT_ID"]
     end
   end
 
-  def parse_data(works, options={})
+  def parse_data(works, _options = {})
     Array(works).map do |work|
       work.extend Hashie::Extensions::DeepFetch
-      doi = work.deep_fetch('external-ids', 'external-id', 0, 'external-id-value') { nil }
-      claimed_at = get_iso8601_from_epoch(work.deep_fetch('last-modified-date', 'value') { nil })
-      put_code = work.deep_fetch('work-summary', 0, 'put-code') { nil }
+      doi = work.deep_fetch("external-ids", "external-id", 0, "external-id-value") { nil }
+      claimed_at = get_iso8601_from_epoch(work.deep_fetch("last-modified-date", "value") { nil })
+      put_code = work.deep_fetch("work-summary", 0, "put-code") { nil }
 
       claim = Claim.where(orcid: orcid, doi: doi).first_or_initialize
       if claim.put_code.blank?
@@ -368,7 +368,7 @@ class User < ActiveRecord::Base
     github.present? && github_put_code.present?
   end
 
-  def process_data(options={})
+  def process_data(options = {})
     result = push_github_identifier(options)
 
     if result.body["skip"]
@@ -392,9 +392,9 @@ class User < ActiveRecord::Base
     return OpenStruct.new(body: { "errors" => [{ "title" => "Missing data" }] }) if external_identifier.data.nil?
 
     # validate data
-    return OpenStruct.new(body: { "errors" => external_identifier.validation_errors.map { |error| { "title" => error } }}) if external_identifier.validation_errors.present?
+    return OpenStruct.new(body: { "errors" => external_identifier.validation_errors.map { |error| { "title" => error } } }) if external_identifier.validation_errors.present?
 
-    options[:sandbox] = (ENV['ORCID_URL'] == "https://sandbox.orcid.org")
+    options[:sandbox] = (ENV["ORCID_URL"] == "https://sandbox.orcid.org")
 
     # create or delete entry in ORCID record
     if github_to_be_created?

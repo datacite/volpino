@@ -1,5 +1,5 @@
 class RoleSerializer < ActiveModel::Serializer
-  cache key: 'role'
+  cache key: "role"
   attributes :name, :updated
 
   def updated

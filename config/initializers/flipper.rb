@@ -1,15 +1,15 @@
-require 'flipper'
-require 'flipper/adapters/redis'
+require "flipper"
+require "flipper/adapters/redis"
 require "active_support/notifications"
-require 'active_support/cache'
-require 'flipper/adapters/active_support_cache_store'
+require "active_support/cache"
+require "flipper/adapters/active_support_cache_store"
 
 Flipper.configure do |config|
   config.default do
-    client = Redis.new(url: ENV['REDIS_URL'])
+    client = Redis.new(url: ENV["REDIS_URL"])
     adapter = Flipper::Adapters::Redis.new(client)
     unless Rails.env.test?
-      cache = ActiveSupport::Cache::MemCacheStore.new(ENV['MEMCACHE_SERVERS'])
+      cache = ActiveSupport::Cache::MemCacheStore.new(ENV["MEMCACHE_SERVERS"])
       adapter = Flipper::Adapters::ActiveSupportCacheStore.new(adapter, cache, expires_in: 1.hour)
     end
     flipper = Flipper.new(adapter, instrumenter: ActiveSupport::Notifications)

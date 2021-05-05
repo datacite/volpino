@@ -4,10 +4,10 @@ ENV["ORCID_URL"] = "https://sandbox.orcid.org"
 ENV["ORCID_API_URL"] = "https://api.sandbox.orcid.org"
 
 # set up Code Climate
-require 'simplecov'
+require "simplecov"
 SimpleCov.start
 
-require File.expand_path("../../config/environment", __FILE__)
+require File.expand_path("../config/environment", __dir__)
 require "rspec/rails"
 require "shoulda-matchers"
 require "email_spec"
@@ -37,13 +37,12 @@ Shoulda::Matchers.configure do |config|
 end
 
 Capybara.register_driver :cuprite do |app|
-  Capybara::Cuprite::Driver.new(app, {
-    timeout: 60,
-    window_size: [1440, 1024],
-    # host: "127.0.0.1",
-    # port: 33689,
-    browser_options: { "no-sandbox" => nil }
-  })
+  Capybara::Cuprite::Driver.new(app,
+                                timeout: 60,
+                                window_size: [1440, 1024],
+                                # host: "127.0.0.1",
+                                # port: 33689,
+                                browser_options: { "no-sandbox" => nil })
 end
 
 Capybara.javascript_driver = :cuprite
@@ -55,12 +54,12 @@ Capybara.configure do |config|
 end
 
 WebMock.disable_net_connect!(
-  allow: ['codeclimate.com:443', ENV['PRIVATE_IP'], ENV['HOSTNAME']],
+  allow: ["codeclimate.com:443", ENV["PRIVATE_IP"], ENV["HOSTNAME"]],
   allow_localhost: true,
 )
 
 VCR.configure do |c|
-  sqs_host = "sqs.#{ENV['AWS_REGION'].to_s}.amazonaws.com"
+  sqs_host = "sqs.#{ENV['AWS_REGION']}.amazonaws.com"
 
   c.cassette_library_dir = "spec/fixtures/vcr_cassettes"
   c.hook_into :webmock
@@ -78,14 +77,13 @@ RSpec.configure do |config|
   OmniAuth.config.test_mode = true
   config.before(:each) do
     OmniAuth.config.mock_auth[:default] = OmniAuth::AuthHash.new(
-      {
-        provider: "orcid",
-        uid: "0000-0002-1825-0097",
-        info: { "name" => "Josiah Carberry" },
-        extra: {},
-        credentials: { token: "123",
-                       expires_at: Time.zone.now + 20.years },
-      })
+      provider: "orcid",
+      uid: "0000-0002-1825-0097",
+      info: { "name" => "Josiah Carberry" },
+      extra: {},
+      credentials: { token: "123",
+                     expires_at: Time.zone.now + 20.years },
+    )
   end
 
   # don't use transactions, use database_clear gem via support file
@@ -103,10 +101,10 @@ RSpec.configure do |config|
   # config.include WebMock::API
   config.include FactoryBot::Syntax::Methods
 
-  config.include Rack::Test::Methods, :type => :request
+  config.include Rack::Test::Methods, type: :request
 
-  config.include Devise::Test::ControllerHelpers, :type => :controller
-  config.include Rack::Test::Methods, :type => :controller
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Rack::Test::Methods, type: :controller
   config.include JobHelper, type: :job
 
   ActiveJob::Base.queue_adapter = :test
@@ -122,10 +120,10 @@ RSpec.configure do |config|
 
   # restore application-specific ENV variables after each example
   config.after(:each) do
-    ENV_VARS.each { |k,v| ENV[k] = v }
+    ENV_VARS.each { |k, v| ENV[k] = v }
   end
 
-  def capture_stdout(&block)
+  def capture_stdout
     original_stdout = $stdout
     $stdout = fake = StringIO.new
     begin

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user do
-    sequence(:name) { |n| "Josiah Carberry{n}" }
+    sequence(:name) { |_n| "Josiah Carberry{n}" }
     provider { "globus" }
     role_id { "user" }
     sequence(:uid) { |n| "0000-0002-1825-000#{n}" }
@@ -21,12 +21,12 @@ FactoryBot.define do
     end
 
     factory :valid_user do
-      uid { '0000-0001-6528-2027' }
-      orcid_token { ENV['ORCID_TOKEN'] }
+      uid { "0000-0001-6528-2027" }
+      orcid_token { ENV["ORCID_TOKEN"] }
     end
 
     factory :invalid_user do
-      uid { '0000-0001-6528-2027' }
+      uid { "0000-0001-6528-2027" }
       orcid_token { nil }
     end
 

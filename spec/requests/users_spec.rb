@@ -1,17 +1,18 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe "users", type: :request, elasticsearch: true do
   let(:params) do
     { "data" => { "type" => "users",
                   "attributes" => {
-                    "name" => "Martin Fenner" } } }
+                    "name" => "Martin Fenner",
+                  } } }
   end
   let(:user) { FactoryBot.create(:admin_user, uid: "0000-0002-1825-0097") }
   let(:headers) do
     { "HTTP_ACCEPT" => "application/json; version=1",
       "HTTP_AUTHORIZATION" => "Bearer #{user.jwt}" }
   end
-  
+
   # describe 'GET /users' do
   #   let!(:users)  { create_list(:user, 3) }
 
@@ -41,52 +42,54 @@ describe "users", type: :request, elasticsearch: true do
   #   end
   # end
 
-  describe 'POST /users' do
-    context 'request is valid' do
+  describe "POST /users" do
+    context "request is valid" do
       let(:params) do
         { "data" => { "type" => "users",
                       "attributes" => {
                         "uid" => "0000-0003-2584-9687",
                         "name" => "James Gill",
                         "givenNames" => "James",
-                        "familyName" => "Gill" } } }
+                        "familyName" => "Gill",
+                      } } }
       end
 
-      it 'creates a user' do
-        post '/users', params, headers
+      it "creates a user" do
+        post "/users", params: params, session: headers
 
         User.import
         sleep 1
 
         expect(last_response.status).to eq(201)
-        expect(json.dig('data', 'attributes', 'name')).to eq("James Gill")
+        expect(json.dig("data", "attributes", "name")).to eq("James Gill")
       end
     end
 
-    context 'when the request is missing a required attribute' do
+    context "when the request is missing a required attribute" do
       let(:params) do
         { "data" => { "type" => "users",
-                      "attributes" => { } } }
+                      "attributes" => {} } }
       end
 
-      it 'returns a validation failure message' do
-        post '/users', params, headers
+      it "returns a validation failure message" do
+        post "/users", params: params, session: headers
 
         expect(last_response.status).to eq(422)
-        expect(json["errors"].first).to eq("source"=>"uid", "title"=>"Can't be blank")
+        expect(json["errors"].first).to eq("source" => "uid", "title" => "Can't be blank")
       end
     end
 
-    context 'when the request is missing a data object' do
+    context "when the request is missing a data object" do
       let(:params) do
         { "type" => "users",
           "attributes" => {
             "uid" => "0000-0003-2584-9687",
-            "name" => "James Gill"  } }
+            "name" => "James Gill",
+          } }
       end
 
-      it 'returns status code 400' do
-        post '/users', params, headers
+      it "returns status code 400" do
+        post "/users", params: params, session: headers
 
         expect(last_response.status).to eq(400)
       end
@@ -97,35 +100,37 @@ describe "users", type: :request, elasticsearch: true do
     end
   end
 
-  describe 'PUT /users/:id' do
-    context 'when the record exists' do
+  describe "PUT /users/:id" do
+    context "when the record exists" do
       let(:params) do
         { "data" => { "type" => "users",
                       "attributes" => {
-                        "name" => "James Watt" } } }
+                        "name" => "James Watt",
+                      } } }
       end
 
-      it 'updates the record' do
-        put "/users/#{user.uid}", params, headers
+      it "updates the record" do
+        put "/users/#{user.uid}", params: params, session: headers
 
         expect(last_response.status).to eq(200)
-        expect(json.dig('data', 'attributes', 'name')).to eq("James Watt")
+        expect(json.dig("data", "attributes", "name")).to eq("James Watt")
       end
     end
 
-    context 'when the record doesn\'t exist', vcr:true do
+    context "when the record doesn't exist", vcr: true do
       let(:new_user) { FactoryBot.build(:user, uid: "0000-0002-0989-1335", name: "Ogechukwu Alozie") }
       let(:params) do
         { "data" => { "type" => "users",
                       "attributes" => {
-                        "name" => new_user.name } } }
+                        "name" => new_user.name,
+                      } } }
       end
 
-      it 'updates the record' do
-        put "/users/#{new_user.uid}", params, headers
+      it "updates the record" do
+        put "/users/#{new_user.uid}", params: params, session: headers
 
         expect(last_response.status).to eq(201)
-        expect(json.dig('data', 'attributes', 'name')).to eq(new_user.name)
+        expect(json.dig("data", "attributes", "name")).to eq(new_user.name)
       end
     end
   end

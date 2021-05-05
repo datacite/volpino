@@ -1,17 +1,17 @@
 require "rails_helper"
 
 describe Notification, type: :model, vcr: true, elasticsearch: true do
-  let(:doi) { "10.6084/M9.FIGSHARE.1066168"}
+  let(:doi) { "10.6084/M9.FIGSHARE.1066168" }
   let(:user) { FactoryBot.create(:valid_user) }
-  let(:notification_access_token) { ENV['NOTIFICATION_ACCESS_TOKEN'] }
+  let(:notification_access_token) { ENV["NOTIFICATION_ACCESS_TOKEN"] }
   let(:put_code) { "292016" }
 
   subject { Notification.new(doi: doi, orcid: user.uid, notification_access_token: notification_access_token, put_code: put_code) }
 
-  describe 'push to ORCID', :order => :defined do
+  describe "push to ORCID", order: :defined do
     # describe 'post' do
     #   subject { Notification.new(doi: doi, orcid: user.uid, notification_access_token: notification_access_token) }
-    
+
     #   it 'should create notification' do
     #     response = subject.create_notification(sandbox: true)
     #     expect(response.body["put_code"]).not_to be_blank
@@ -40,8 +40,8 @@ describe Notification, type: :model, vcr: true, elasticsearch: true do
     # end
   end
 
-  describe 'schema' do
-    it 'exists' do
+  describe "schema" do
+    it "exists" do
       expect(subject.schema.errors).to be_empty
     end
 
@@ -54,7 +54,7 @@ describe Notification, type: :model, vcr: true, elasticsearch: true do
     #   expect(subject.validation_errors).to be_empty
     # end
 
-    it 'validates data with errors' do
+    it "validates data with errors" do
       allow(subject).to receive(:metadata) { OpenStruct.new }
       expect(subject.validation_errors).to eq(["-1:0: ERROR: The document has no document element."])
     end

@@ -1,11 +1,11 @@
 class AddClaimsTable < ActiveRecord::Migration[4.2]
   def change
     create_table "claims", force: :cascade do |t|
-      t.string   "uuid",         limit: 191
-      t.integer  "user_id",                                       null: false
-      t.string   "work_id",      limit: 191
+      t.string   "uuid", limit: 191
+      t.integer  "user_id", null: false
+      t.string   "work_id", limit: 191
       t.integer  "service_id"
-      t.integer  "state",        limit: 4,        default: 0
+      t.integer  "state",        limit: 4, default: 0
       t.string   "state_event",  limit: 255
       t.datetime "created_at",                                    null: false
       t.datetime "updated_at",                                    null: false

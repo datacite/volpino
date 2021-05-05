@@ -4,7 +4,7 @@ class VolpinoSchema < GraphQL::Schema
   include ApolloFederation::Schema
 
   use ApolloFederation::Tracing
-  
+
   default_max_page_size 250
   max_depth 10
 
@@ -16,7 +16,7 @@ class VolpinoSchema < GraphQL::Schema
 end
 
 GraphQL::Errors.configure(VolpinoSchema) do
-  rescue_from ActiveRecord::RecordNotFound do |exception|
+  rescue_from ActiveRecord::RecordNotFound do |_exception|
     GraphQL::ExecutionError.new("Record not found")
   end
 

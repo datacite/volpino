@@ -1,5 +1,5 @@
 class Users::SessionsController < Devise::SessionsController
-  #prepend_before_action :authenticate_user!, :only => [:destroy]
+  # prepend_before_action :authenticate_user!, :only => [:destroy]
 
   # GET /sign_in
   def new
@@ -31,19 +31,17 @@ class Users::SessionsController < Devise::SessionsController
 
   def empty_cookie
     value = '{"authenticated":{}}'
-    
+
     domain = if Rails.env.production?
                ".datacite.org"
-             elsif Rails.env.stage? && ENV['ES_PREFIX'].present?
+             elsif Rails.env.stage? && ENV["ES_PREFIX"].present?
                ".stage.datacite.org"
              elsif Rails.env.stage?
                ".test.datacite.org"
-             else
-               nil
              end
-    
+
     # URI.encode optional parameter needed to encode colon
-    { value: value, #URI.encode(value, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")),
+    { value: value, # URI.encode(value, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")),
       secure: !Rails.env.development? && !Rails.env.test?,
       domain: domain }
   end

@@ -1,7 +1,7 @@
-require 'nokogiri'
-require 'orcid_client'
+require "nokogiri"
+require "orcid_client"
 
-class Claim < ActiveRecord::Base
+class Claim < ApplicationRecord
   # include view helpers
   include ActionView::Helpers::TextHelper
 
@@ -25,14 +25,14 @@ class Claim < ActiveRecord::Base
 
   include Elasticsearch::Model
 
-  SUBJECT = "Add your published work(s) to your ORCID record"
-  INTRO =  "Hello, You may not be familiar with DataCite. Our data centers send us publication information (including ORCID iDs and DOIs), and we ensure that your work can be found, linked and cited. It looks like you have included your ORCID iD with a recent publication submission and that has been passed to us by your data center. We would like to auto-update your ORCID record with information about these published work(s) published, starting today with those listed below, so you don’t have to search for and add them manually, now or in the future. Please click ‘Grant permissions’ below to set this up."
+  SUBJECT = "Add your published work(s) to your ORCID record".freeze
+  INTRO = "Hello, You may not be familiar with DataCite. Our data centers send us publication information (including ORCID iDs and DOIs), and we ensure that your work can be found, linked and cited. It looks like you have included your ORCID iD with a recent publication submission and that has been passed to us by your data center. We would like to auto-update your ORCID record with information about these published work(s) published, starting today with those listed below, so you don’t have to search for and add them manually, now or in the future. Please click ‘Grant permissions’ below to set this up.".freeze
 
   belongs_to :user, foreign_key: "orcid", primary_key: "uid", inverse_of: :claims
 
   before_create :create_uuid
   before_validation :set_defaults
-  after_commit :queue_claim_job, on: [:create, :update]
+  after_commit :queue_claim_job, on: %i[create update]
 
   validates :orcid, :doi, :source_id, presence: true
 
@@ -47,12 +47,12 @@ class Claim < ActiveRecord::Base
     state :working, :failed, :done, :ignored, :deleted, :notified
 
     event :start do
-      transitions from: [:waiting, :ignored, :deleted, :notified], to: :working
+      transitions from: %i[waiting ignored deleted notified], to: :working
     end
 
     event :finish do
       transitions from: [:working], to: :deleted, if: [:to_be_deleted?]
-      transitions from: [:waiting, :working, :failed], to: :done
+      transitions from: %i[waiting working failed], to: :done
     end
 
     event :notify do
@@ -60,11 +60,11 @@ class Claim < ActiveRecord::Base
     end
 
     event :error do
-      transitions from: [:waiting, :working, :ignored, :deleted, :notified], to: :failed
+      transitions from: %i[waiting working ignored deleted notified], to: :failed
     end
 
     event :skip do
-      transitions from: [:waiting, :working, :failed, :deleted, :notified], to: :ignored
+      transitions from: %i[waiting working failed deleted notified], to: :ignored
     end
   end
 
@@ -81,7 +81,7 @@ class Claim < ActiveRecord::Base
   # scope :ignored, -> { by_state("ignored") }
   # scope :deleted, -> { by_state("deleted") }
   # scope :notified, -> { by_state("notified") }
-  scope :stale, -> { where(aasm_state: ["waiting", "working"])}
+  scope :stale, -> { where(aasm_state: ["waiting", "working"]) }
   scope :total, ->(duration) { where(updated_at: (Time.zone.now.beginning_of_hour - duration.hours)..Time.zone.now.beginning_of_hour) }
 
   scope :q, ->(query) { where("doi like ?", "%#{query}%") }
@@ -97,15 +97,15 @@ class Claim < ActiveRecord::Base
   settings index: {
     analysis: {
       analyzer: {
-        string_lowercase: { tokenizer: 'keyword', filter: %w(lowercase ascii_folding) }
+        string_lowercase: { tokenizer: "keyword", filter: %w(lowercase ascii_folding) },
       },
       normalizer: {
-        keyword_lowercase: { type: "custom", filter: %w(lowercase) }
+        keyword_lowercase: { type: "custom", filter: %w(lowercase) },
       },
-      filter: { ascii_folding: { type: 'asciifolding', preserve_original: true } }
-    }
+      filter: { ascii_folding: { type: "asciifolding", preserve_original: true } },
+    },
   } do
-    mapping dynamic: 'false' do
+    mapping dynamic: "false" do
       indexes :id,            type: :keyword
       indexes :uuid,          type: :keyword
       indexes :doi,           type: :keyword, normalizer: "keyword_lowercase"
@@ -113,7 +113,7 @@ class Claim < ActiveRecord::Base
       indexes :source_id,     type: :keyword
       indexes :error_messages, type: :object, properties: {
         status: { type: :integer },
-        title: { type: :text},
+        title: { type: :text },
       }
       indexes :claim_action,  type: :keyword
       indexes :put_code,      type: :keyword
@@ -127,20 +127,20 @@ class Claim < ActiveRecord::Base
       indexes :user,          type: :object, properties: {
         id: { type: :keyword },
         uid: { type: :keyword },
-        name: { type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}},
-        given_names: { type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}},
-        family_name: { type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true }}},
+        name: { type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true } } },
+        given_names: { type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true } } },
+        family_name: { type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true } } },
         github: { type: :keyword },
         claimed: { type: :date },
         created: { type: :date },
         updated: { type: :date },
-        is_active: { type: :boolean }
+        is_active: { type: :boolean },
       }
     end
   end
 
   # also index id as workaround for finding the correct key in associations
-  def as_indexed_json(options={})
+  def as_indexed_json(_options = {})
     {
       "id" => uuid,
       "uuid" => uuid,
@@ -160,16 +160,16 @@ class Claim < ActiveRecord::Base
   end
 
   def self.query_fields
-    ['uuid^10', 'doi^5', 'orcid^5', 'source_id^5', '_all']
+    ["uuid^10", "doi^5", "orcid^5", "source_id^5", "_all"]
   end
 
   def self.query_aggregations
     {
-      created: { date_histogram: { field: 'created', interval: 'year', min_doc_count: 1 } },
-      sources: { terms: { field: 'source_id', size: 10, min_doc_count: 1 } },
-      users: { terms: { field: 'user_id', size: 10, min_doc_count: 1 } },
-      claim_actions: { terms: { field: 'claim_action', size: 10, min_doc_count: 1 } },
-      states: { terms: { field: 'aasm_state', size: 10, min_doc_count: 1 } }
+      created: { date_histogram: { field: "created", interval: "year", min_doc_count: 1 } },
+      sources: { terms: { field: "source_id", size: 10, min_doc_count: 1 } },
+      users: { terms: { field: "user_id", size: 10, min_doc_count: 1 } },
+      claim_actions: { terms: { field: "claim_action", size: 10, min_doc_count: 1 } },
+      states: { terms: { field: "aasm_state", size: 10, min_doc_count: 1 } },
     }
   end
 
@@ -185,64 +185,64 @@ class Claim < ActiveRecord::Base
     ClaimJob.perform_later(self)
   end
 
-  def to_param  # overridden, use uuid instead of id
+  def to_param # overridden, use uuid instead of id
     uuid
   end
 
   def process_data(options = {})
-    self.start
+    start
 
     ### depdency Injection for testing
-    result = options[:collect_data] || collect_data 
+    result = options[:collect_data] || collect_data
 
     if result.body["skip"]
-      return self.finish! if claimed_at.present?
+      return finish! if claimed_at.present?
 
-      logger.info "[Skipped] #{self.uid} – #{self.doi}] #{result.body['reason']}"
+      logger.info "[Skipped] #{uid} – #{doi}] #{result.body['reason']}"
 
-      self.skip
+      skip
     elsif result.body["errors"]
       write_attribute(:error_messages, result.body["errors"])
 
       # send notification to Sentry
       # Raven.capture_exception(RuntimeError.new(result.body["errors"].first["title"])) if ENV["SENTRY_DSN"]
 
-      logger.error "[Error] #{self.uid} – #{self.doi}] " + result.body["errors"].first["title"].inspect
+      logger.error "[Error] #{uid} – #{doi}] " + result.body["errors"].first["title"].inspect
 
-      self.error!
+      error!
     elsif result.body["notification"]
       write_attribute(:put_code, result.body["put_code"])
       write_attribute(:error_messages, [])
 
-      logger.error "[Notification] #{self.uid} – #{self.doi}] with Put Code #{result.body["put_code"]}" 
+      logger.error "[Notification] #{uid} – #{doi}] with Put Code #{result.body['put_code']}"
 
-      self.notify
+      notify
     else
       if to_be_created?
         write_attribute(:claimed_at, Time.zone.now)
         write_attribute(:put_code, result.body["put_code"])
         write_attribute(:error_messages, [])
 
-        logger.info "[Done] #{self.uid} – #{self.doi}] with Put Code #{result.body["put_code"]}" 
+        logger.info "[Done] #{uid} – #{doi}] with Put Code #{result.body['put_code']}"
       elsif to_be_deleted?
         write_attribute(:claimed_at, nil)
         write_attribute(:put_code, nil)
         write_attribute(:error_messages, [])
 
-        logger.info "[Deleted] #{self.uid} – #{self.doi}] with Put Code #{result.body["put_code"]}" 
+        logger.info "[Deleted] #{uid} – #{doi}] with Put Code #{result.body['put_code']}"
       end
 
-      self.finish!
+      finish!
     end
   end
 
-  def collect_data(options={})
+  def collect_data(options = {})
     # already claimed
     return OpenStruct.new(body: { "skip" => true, "Reason" => "already claimed." }) if to_be_created? && claimed_at.present?
 
     # user has not signed up yet or orcid_token is missing
-    if (user.blank? || orcid_token.blank?)
-      if ENV['NOTIFICATION_ACCESS_TOKEN'].present?
+    if user.blank? || orcid_token.blank?
+      if ENV["NOTIFICATION_ACCESS_TOKEN"].present?
         response = notification.create_notification(options)
         response.body["notification"] = true
         return response
@@ -261,7 +261,7 @@ class Claim < ActiveRecord::Base
     return OpenStruct.new(body: { "errors" => [{ "title" => "Missing data" }] }) if work.data.nil?
 
     # validate data
-    return OpenStruct.new(body: { "errors" => work.validation_errors.map { |error| { "title" => error } }}) if work.validation_errors.present?
+    return OpenStruct.new(body: { "errors" => work.validation_errors.map { |error| { "title" => error } } }) if work.validation_errors.present?
 
     options[:sandbox] = (ENV["ORCID_URL"] == "https://sandbox.orcid.org")
 
@@ -282,7 +282,7 @@ class Claim < ActiveRecord::Base
   end
 
   def notification
-    Notification.new(doi: doi, orcid: orcid, notification_access_token: ENV['NOTIFICATION_ACCESS_TOKEN'], put_code: put_code, subject: SUBJECT, intro: INTRO)
+    Notification.new(doi: doi, orcid: orcid, notification_access_token: ENV["NOTIFICATION_ACCESS_TOKEN"], put_code: put_code, subject: SUBJECT, intro: INTRO)
   end
 
   def without_control(s)
@@ -295,7 +295,7 @@ class Claim < ActiveRecord::Base
     r
   end
 
-  def self.import_by_ids(options={})
+  def self.import_by_ids(options = {})
     from_id = (options[:from_id] || Claim.minimum(:id)).to_i
     until_id = (options[:until_id] || Claim.maximum(:id)).to_i
 
@@ -307,7 +307,7 @@ class Claim < ActiveRecord::Base
     (from_id..until_id).to_a.length
   end
 
-  def self.import_by_id(options={})
+  def self.import_by_id(options = {})
     return nil if options[:id].blank?
 
     id = options[:id].to_i
@@ -316,19 +316,19 @@ class Claim < ActiveRecord::Base
             elsif options[:index].present?
               options[:index]
             else
-              self.inactive_index
+              inactive_index
             end
     errors = 0
     count = 0
 
     Claim.where(id: id..(id + 499)).find_in_batches(batch_size: 500) do |claims|
       response = Claim.__elasticsearch__.client.bulk \
-        index:   index,
-        type:    Claim.document_type,
-        body:    claims.map { |claim| { index: { _id: claim.id, data: claim.as_indexed_json } } }
+        index: index,
+        type: Claim.document_type,
+        body: claims.map { |claim| { index: { _id: claim.id, data: claim.as_indexed_json } } }
 
       # try to handle errors
-      response['items'].select { |k, v| k.values.first['error'].present? }.each do |item|
+      response["items"].select { |k, _v| k.values.first["error"].present? }.each do |item|
         Rails.logger.error "[Elasticsearch] " + item.inspect
         id = item.dig("index", "_id").to_i
         claim = Claim.where(id: id).first
@@ -345,8 +345,8 @@ class Claim < ActiveRecord::Base
     end
 
     count
-  rescue Elasticsearch::Transport::Transport::Errors::RequestEntityTooLarge, Faraday::ConnectionFailed, ActiveRecord::LockWaitTimeout => error
-    Rails.logger.error "[Elasticsearch] Error #{error.message} importing claims with IDs #{id} - #{(id + 499)}."
+  rescue Elasticsearch::Transport::Transport::Errors::RequestEntityTooLarge, Faraday::ConnectionFailed, ActiveRecord::LockWaitTimeout => e
+    Rails.logger.error "[Elasticsearch] Error #{e.message} importing claims with IDs #{id} - #{(id + 499)}."
 
     count = 0
 

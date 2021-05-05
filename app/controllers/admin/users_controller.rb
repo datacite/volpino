@@ -2,7 +2,7 @@ class Admin::UsersController < ApplicationController
   # include base controller methods
   include Authenticable
 
-  before_action :load_user, only: [:edit, :update, :destroy]
+  before_action :load_user, only: %i[edit update destroy]
   load_and_authorize_resource except: [:index]
 
   def index
@@ -19,7 +19,7 @@ class Admin::UsersController < ApplicationController
 
   def update
     # admin updates user account
-    @user.update_attributes(safe_params)
+    @user.update(safe_params)
 
     load_index
     render :edit
@@ -45,12 +45,12 @@ class Admin::UsersController < ApplicationController
     authorize! :manage, Phrase
 
     sort = case params[:sort]
-           when "relevance" then { "_score" => { order: 'desc' }}
-           when "name" then { "family_name.raw" => { order: 'asc' }}
-           when "-name" then { "family_name.raw" => { order: 'desc' }}
-           when "created" then { created_at: { order: 'asc' }}
-           when "-created" then { created_at: { order: 'desc' }}
-           else { "family_name.raw" => { order: 'asc' }}
+           when "relevance" then { "_score" => { order: "desc" } }
+           when "name" then { "family_name.raw" => { order: "asc" } }
+           when "-name" then { "family_name.raw" => { order: "desc" } }
+           when "created" then { created_at: { order: "asc" } }
+           when "-created" then { created_at: { order: "desc" } }
+           else { "family_name.raw" => { order: "asc" } }
            end
 
     @page = params[:page] || 1
@@ -58,7 +58,7 @@ class Admin::UsersController < ApplicationController
     response = User.query(params[:query],
                           created: params[:created],
                           role_id: params[:role_id],
-                          page: { number: @page }, 
+                          page: { number: @page },
                           sort: sort)
 
     @total = response.results.total

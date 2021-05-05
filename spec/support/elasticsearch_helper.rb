@@ -1,5 +1,5 @@
 ## https://github.com/elastic/elasticsearch-ruby/issues/462
-SEARCHABLE_MODELS = [Claim, User]
+SEARCHABLE_MODELS = [Claim, User].freeze
 
 RSpec.configure do |config|
   config.around :all, elasticsearch: true do |example|

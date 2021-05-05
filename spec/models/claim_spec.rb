@@ -17,7 +17,7 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
   #   end
   # end
 
-  describe 'collect_data', :order => :defined do
+  describe "collect_data", order: :defined do
     let(:user) { FactoryBot.create(:valid_user) }
     let(:put_code) { 1069293 }
 
@@ -30,9 +30,9 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
     #   expect(response.status).to eq(201)
     # end
 
-    it 'already exists' do
+    it "already exists" do
       FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/1X4X-9056", claim_action: "create", claimed_at: Time.zone.now)
-      expect(subject.collect_data.body).to eq("Reason"=>"already claimed.", "skip"=>true)
+      expect(subject.collect_data.body).to eq("Reason" => "already claimed.", "skip" => true)
     end
 
     # it 'delete claim' do
@@ -43,28 +43,28 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
     #   expect(response.body["errors"]).to eq([{"title"=>"Missing data"}])
     # end
 
-    it 'no permission for auto-update' do
+    it "no permission for auto-update" do
       user = FactoryBot.create(:valid_user, auto_update: false)
       subject = FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/v6e2-yc93", source_id: "orcid_update")
       response = subject.collect_data
-      expect(response.body).to eq("reason"=>"No auto-update permission", "skip"=>true)
+      expect(response.body).to eq("reason" => "No auto-update permission", "skip" => true)
     end
 
-    it 'invalid token' do
+    it "invalid token" do
       user = FactoryBot.create(:invalid_user)
       subject = FactoryBot.create(:claim, user: user, orcid: "0000-0003-1419-240x", doi: "10.14454/v6e2-yc93", source_id: "orcid_update")
       response = subject.collect_data
-      expect(response.body).to eq("reason"=>"No user and/or ORCID token", "skip"=>true)
+      expect(response.body).to eq("reason" => "No user and/or ORCID token", "skip" => true)
     end
 
-    it 'no user' do
+    it "no user" do
       subject = FactoryBot.create(:claim, orcid: "0000-0001-6528-2027", doi: "10.14454/v6e2-yc93")
       response = subject.collect_data
-      expect(subject.collect_data.body).to eq("reason"=>"No user and/or ORCID token", "skip"=>true)
+      expect(subject.collect_data.body).to eq("reason" => "No user and/or ORCID token", "skip" => true)
     end
   end
 
-  describe 'process_data', :order => :defined do
+  describe "process_data", order: :defined do
     let(:user) { FactoryBot.create(:valid_user) }
     let(:put_code) { 1069294 }
 
@@ -77,20 +77,20 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
     #   expect(subject.state).to eq("failed")
     # end
 
-    it 'no errors with dependency injection' do
-      options = {collect_data: OpenStruct.new(body: { "put_code" => "1069294"})}
+    it "no errors with dependency injection" do
+      options = { collect_data: OpenStruct.new(body: { "put_code" => "1069294" }) }
       expect(subject.process_data(options)).to be true
       expect(subject.put_code).to eq(put_code)
       expect(subject.claimed_at).not_to be_blank
       expect(subject.state).to eq("done")
     end
-    
-    it 'already exists' do
+
+    it "already exists" do
       FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/j6gr-cf48", claim_action: "create", claimed_at: Time.zone.now, put_code: put_code)
       expect(subject.process_data).to be true
       expect(subject.state).to eq("done")
     end
-    
+
     # it 'delete claim' do
     #   user = FactoryBot.create(:valid_user)
     #   subject = FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/j6gr-cf48", claim_action: "delete", put_code: put_code)
@@ -100,21 +100,21 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
     #   expect(subject.state).to eq("failed")
     # end
 
-    it 'no permission for auto-update' do
+    it "no permission for auto-update" do
       user = FactoryBot.create(:valid_user, auto_update: false)
       subject = FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/j6gr-cf48", source_id: "orcid_update")
       expect(subject.process_data).to be true
       expect(subject.state).to eq("ignored")
     end
 
-    it 'invalid token' do
+    it "invalid token" do
       user = FactoryBot.create(:invalid_user)
       subject = FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/j6gr-cf48", source_id: "orcid_update")
       expect(subject.process_data).to be true
       expect(subject.state).to eq("ignored")
     end
 
-    it 'no user' do
+    it "no user" do
       subject = FactoryBot.build(:claim, user: nil, orcid: "0000-0001-6528-2027", doi: "10.14454/j6gr-cf48")
       expect(subject.process_data).to be true
       expect(subject.state).to eq("ignored")

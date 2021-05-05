@@ -46,16 +46,16 @@ namespace :claim do
     puts Claim.finish_aliases
   end
 
-  desc 'Import all claims'
-  task :import => :environment do
-    from_id = (ENV['FROM_ID'] || Claim.minimum(:id)).to_i
-    until_id = (ENV['UNTIL_ID'] || Claim.maximum(:id)).to_i
+  desc "Import all claims"
+  task import: :environment do
+    from_id = (ENV["FROM_ID"] || Claim.minimum(:id)).to_i
+    until_id = (ENV["UNTIL_ID"] || Claim.maximum(:id)).to_i
 
     Claim.import_by_ids(from_id: from_id, until_id: until_id, index: ENV["INDEX"] || Claim.inactive_index)
   end
 
   desc "Push all stale claims"
-  task :stale => :environment do
+  task stale: :environment do
     Claim.stale.find_each do |claim|
       ClaimJob.perform_later(claim)
       puts "[#{claim.aasm_state}] Pushing stale claim #{claim.doi} for user #{claim.orcid} to ORCID."
@@ -63,7 +63,7 @@ namespace :claim do
   end
 
   desc "Push all failed claims"
-  task :failed => :environment do
+  task failed: :environment do
     Claim.failed.find_each do |claim|
       ClaimJob.perform_later(claim)
       puts "[#{claim.aasm_state}] Pushed failed claim #{claim.doi} for user #{claim.orcid} to ORCID."
@@ -71,10 +71,10 @@ namespace :claim do
   end
 
   desc "Push all ignored claims"
-  task :ignored => :environment do
+  task ignored: :environment do
     Claim.ignored.find_each do |claim|
       # skip if not user account
-      next unless claim.user.present?
+      next if claim.user.blank?
 
       ClaimJob.perform_later(claim)
       puts "[#{claim.aasm_state}] Pushed ignored claim #{claim.doi} for user #{claim.orcid} to ORCID."
@@ -82,29 +82,30 @@ namespace :claim do
   end
 
   desc "Get notification_access_token"
-  task :get_notification_access_token => :environment do
+  task get_notification_access_token: :environment do
     response = Claim.last.notification.get_notification_access_token(
-      client_id: ENV['ORCID_CLIENT_ID'],
-      client_secret: ENV['ORCID_CLIENT_SECRET'],
-      sandbox: (ENV['ORCID_URL'] == "https://sandbox.orcid.org"))
+      client_id: ENV["ORCID_CLIENT_ID"],
+      client_secret: ENV["ORCID_CLIENT_SECRET"],
+      sandbox: (ENV["ORCID_URL"] == "https://sandbox.orcid.org"),
+    )
     notification_access_token = response.body.fetch("data", {}).fetch("access_token", nil)
     puts "The new notification_access_token is #{notification_access_token}"
   end
 
   desc "Create claim for notification"
-  task :create => :environment do
-    if ENV['DOI'].nil?
+  task create: :environment do
+    if ENV["DOI"].nil?
       puts "ENV['DOI'] is required"
       exit
     end
 
-    if ENV['ORCID'].nil?
+    if ENV["ORCID"].nil?
       puts "ENV['ORCID'] is required"
       exit
     end
 
-    claim = Claim.where(orcid: ENV['ORCID'],
-                        doi: ENV['DOI']).first_or_initialize
+    claim = Claim.where(orcid: ENV["ORCID"],
+                        doi: ENV["DOI"]).first_or_initialize
     claim.assign_attributes(state: 0,
                             source_id: "orcid_search",
                             claim_action: "create")
@@ -114,7 +115,7 @@ namespace :claim do
   end
 
   desc "Queue claim jobs for all users"
-  task :all => :environment do
+  task all: :environment do
     User.find_each do |user|
       user.queue_claim_jobs
       puts "Claim jobs for ORCID ID #{ENV['ORCID']} queued."
@@ -122,13 +123,13 @@ namespace :claim do
   end
 
   desc "Queue claim jobs for one user"
-  task :one => :environment do |_, args|
-    if ENV['ORCID'].nil?
+  task one: :environment do |_, _args|
+    if ENV["ORCID"].nil?
       puts "ENV['ORCID'] is required"
       exit
     end
 
-    user = User.where(uid: ENV['ORCID']).first
+    user = User.where(uid: ENV["ORCID"]).first
     if user.nil?
       puts "User with ORCID #{ENV['ORCID']} does not exist"
       exit

@@ -1,4 +1,4 @@
-class GithubJob < ActiveJob::Base
+class GithubJob < ApplicationJob
   queue_as :volpino
 
   rescue_from ActiveJob::DeserializationError, ActiveRecord::ConnectionTimeoutError, Faraday::TimeoutError do

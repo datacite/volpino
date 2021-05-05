@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe UserJob, :type => :job, elasticsearch: true do
+RSpec.describe UserJob, type: :job, elasticsearch: true do
   let(:user) { FactoryBot.create(:valid_user) }
   let(:job) { user.queue_user_job }
 
@@ -11,9 +11,9 @@ RSpec.describe UserJob, :type => :job, elasticsearch: true do
     expect(user_job[:job]).to eq(UserJob)
   end
 
-  it 'executes perform', vcr: true do
+  it "executes perform", vcr: true do
     expect(user.claims.count).to eq(0)
     perform_enqueued_jobs { job }
-    #expect(user.claims.count).to eq(27)
+    # expect(user.claims.count).to eq(27)
   end
 end

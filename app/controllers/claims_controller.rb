@@ -1,9 +1,9 @@
 class ClaimsController < BaseController
-  #prepend_before_action :load_user, only: [:index]
+  # prepend_before_action :load_user, only: [:index]
   prepend_before_action :authenticate_user_from_token!
-  before_action :load_claim, only: [:show, :destroy]
-  before_action :set_include, only: [:index, :show, :create, :update]
-  load_and_authorize_resource :except => [:create]
+  before_action :load_claim, only: %i[show destroy]
+  before_action :set_include, only: %i[index show create update]
+  load_and_authorize_resource except: [:create]
 
   def show
     options = {}
@@ -15,26 +15,26 @@ class ClaimsController < BaseController
 
   def index
     sort = case params[:sort]
-           when "relevance" then { "_score" => { order: 'desc' }}
-           when "doi" then { "doi" => { order: 'asc' }}
-           when "-doi" then { "doi" => { order: 'desc' }}
-           when "orcid" then { orcid: { order: 'asc' }}
-           when "-orcid" then { orcid: { order: 'desc' }}
-           when "created" then { created: { order: 'asc' }}
-           when "-created" then { created: { order: 'desc' }}
-           when "updated" then { updated: { order: 'asc' }}
-           when "-updated" then { updated: { order: 'desc' }}
-           else { "updated" => { order: 'desc' }}
+           when "relevance" then { "_score" => { order: "desc" } }
+           when "doi" then { "doi" => { order: "asc" } }
+           when "-doi" then { "doi" => { order: "desc" } }
+           when "orcid" then { orcid: { order: "asc" } }
+           when "-orcid" then { orcid: { order: "desc" } }
+           when "created" then { created: { order: "asc" } }
+           when "-created" then { created: { order: "desc" } }
+           when "updated" then { updated: { order: "asc" } }
+           when "-updated" then { updated: { order: "desc" } }
+           else { "updated" => { order: "desc" } }
            end
 
     page = page_from_params(params)
 
-    if params[:id].present?
-      response = Claim.find_by_id(params[:id])
-    elsif params[:ids].present?
-      response = Claim.find_by_id(params[:ids], page: page, sort: sort)
-    else
-      response = Claim.query(params[:query],
+    response = if params[:id].present?
+                 Claim.find_by(id: params[:id])
+               elsif params[:ids].present?
+                 Claim.find_by_id(params[:ids], page: page, sort: sort)
+               else
+                 Claim.query(params[:query],
                              dois: params[:dois],
                              user_id: params[:user_id],
                              source_id: params[:source_id],
@@ -42,9 +42,9 @@ class ClaimsController < BaseController
                              state: params[:state],
                              created: params[:created],
                              claimed: params[:claimed],
-                             page: page, 
+                             page: page,
                              sort: sort)
-    end
+               end
 
     begin
       total = response.results.total
@@ -56,7 +56,7 @@ class ClaimsController < BaseController
       users = total > 0 ? facet_by_id(response.response.aggregations.users.buckets) : nil
       claim_actions = total > 0 ? facet_by_key(response.response.aggregations.claim_actions.buckets) : nil
       states = total > 0 ? facet_by_key(response.response.aggregations.states.buckets) : nil
-      
+
       options = {}
       options[:meta] = {
         total: total,
@@ -66,16 +66,17 @@ class ClaimsController < BaseController
         sources: sources,
         users: users,
         "claimActions" => claim_actions,
-        states: states
+        states: states,
       }.compact
 
       options[:links] = {
-      self: request.original_url,
-      next: response.results.blank? ? nil : request.base_url + "/claims?" + {
-        query: params[:query],
-        "page[number]" => page[:number] + 1,
-        "page[size]" => page[:size],
-        sort: params[:sort] }.compact.to_query
+        self: request.original_url,
+        next: response.results.blank? ? nil : request.base_url + "/claims?" + {
+          query: params[:query],
+          "page[number]" => page[:number] + 1,
+          "page[size]" => page[:size],
+          sort: params[:sort],
+        }.compact.to_query,
       }.compact
       options[:is_collection] = true
 
@@ -85,16 +86,16 @@ class ClaimsController < BaseController
       else
         render json: ClaimSerializer.new(response.results, options).serialized_json, status: :ok
       end
-    rescue Elasticsearch::Transport::Transport::Errors::BadRequest => exception
-      Raven.capture_exception(exception)
+    rescue Elasticsearch::Transport::Transport::Errors::BadRequest => e
+      Raven.capture_exception(e)
 
-      message = JSON.parse(exception.message[6..-1]).to_h.dig("error", "root_cause", 0, "reason")
+      message = JSON.parse(e.message[6..-1]).to_h.dig("error", "root_cause", 0, "reason")
 
-      render json: { "errors" => { "title" => message }}.to_json, status: :bad_request
+      render json: { "errors" => { "title" => message } }.to_json, status: :bad_request
     end
   end
 
-  def create  
+  def create
     @claim = Claim.where(orcid: params.fetch(:claim, {}).fetch(:orcid, nil),
                          doi: params.fetch(:claim, {}).fetch(:doi, nil)).first
     exists = @claim.present?

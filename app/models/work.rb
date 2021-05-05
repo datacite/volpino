@@ -1,5 +1,4 @@
-require 'orcid_client'
+require "orcid_client"
 
 class Work < OrcidClient::Work
-
 end

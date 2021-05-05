@@ -20,7 +20,7 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -59,13 +59,13 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   # for devise
-  config.action_mailer.default_url_options = { :host => "#{ENV['SERVER_NAME']}:#{ENV['SERVER_PORT']}" }
+  config.action_mailer.default_url_options = { host: "#{ENV['SERVER_NAME']}:#{ENV['SERVER_PORT']}" }
 
   # send email via mailgun
   config.action_mailer.delivery_method = :mailgun
   config.action_mailer.mailgun_settings = {
-    api_key: ENV['MAILGUN_API_KEY'],
-    domain: ENV['MAILGUN_DOMAIN']
+    api_key: ENV["MAILGUN_API_KEY"],
+    domain: ENV["MAILGUN_DOMAIN"],
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.
@@ -79,7 +79,7 @@ Rails.application.configure do
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
 
-  require 'flipper/middleware/memoizer'
+  require "flipper/middleware/memoizer"
   config.middleware.use Flipper::Middleware::Memoizer
 
   # Do not dump schema after migrations.

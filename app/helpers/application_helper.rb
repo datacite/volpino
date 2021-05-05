@@ -1,13 +1,16 @@
 module ApplicationHelper
   def icon(icon, text = nil, html_options = {})
-    text, html_options = nil, text if text.is_a?(Hash)
+    if text.is_a?(Hash)
+      html_options = text
+      text = nil
+    end
 
     content_class = "fas fa-#{icon}"
     content_class << " #{html_options[:class]}" if html_options.key?(:class)
     html_options[:class] = content_class
 
     html = content_tag(:i, nil, html_options)
-    html << ' ' << text.to_s unless text.blank?
+    html << " " << text.to_s if text.present?
     html
   end
 
@@ -17,7 +20,7 @@ module ApplicationHelper
   end
 
   def syntax_highlighter(html)
-    formatter = Rouge::Formatters::HTML.new(:css_class => 'hll')
+    formatter = Rouge::Formatters::HTML.new(css_class: "hll")
     lexer = Rouge::Lexers::Shell.new
 
     doc = Nokogiri::HTML::DocumentFragment.parse(html)
@@ -27,47 +30,47 @@ module ApplicationHelper
 
   def public_text
     if !user_signed_in?
-      'panel-default'
+      "panel-default"
     elsif current_user.is_public
-      'panel-success'
+      "panel-success"
     else
-      'panel-warning'
+      "panel-warning"
     end
   end
 
   def auto_update_text
     if !user_signed_in?
-      'panel-default'
+      "panel-default"
     elsif current_user.auto_update
-      'panel-success'
+      "panel-success"
     else
-      'panel-warning'
+      "panel-warning"
     end
   end
 
   def email_text
     if current_user.has_email?
-      'success'
+      "success"
     else
-      'warning'
+      "warning"
     end
   end
 
   def claim_text
     if current_user.claims.failed.count > 0
-      'panel-warning'
+      "panel-warning"
     elsif current_user.claims.done.count > 0
-      'panel-success'
+      "panel-success"
     elsif current_user.claims.stale.count > 0
-      'panel-info'
+      "panel-info"
     else
-      'panel-default'
+      "panel-default"
     end
   end
 
   def true_text
     if !user_signed_in?
-      ''
+      ""
     elsif current_user.is_public
       '<span class="small pull-right">true</span>'
     else
@@ -77,7 +80,7 @@ module ApplicationHelper
 
   def enabled_text
     if !user_signed_in?
-      ''
+      ""
     elsif current_user.auto_update
       '<span class="small pull-right">enabled</span>'
     else
@@ -94,7 +97,7 @@ module ApplicationHelper
   end
 
   def devise_current_user
-    @devise_current_user ||= warden.authenticate(:scope => :user)
+    @devise_current_user ||= warden.authenticate(scope: :user)
   end
 
   def current_user
@@ -120,7 +123,7 @@ module ApplicationHelper
   end
 
   def settings
-    Settings[ENV['MODE']]
+    Settings[ENV["MODE"]]
   end
 
   def worker_label(status)
@@ -141,7 +144,7 @@ module ApplicationHelper
   end
 
   def data_tags_for_api
-    data = { per_page: 15, model: controller.controller_name, host: ENV['LAGOTTO_URL'] }
+    data = { per_page: 15, model: controller.controller_name, host: ENV["LAGOTTO_URL"] }
     data[:page] = @page if @page.present?
     data[:source_id] = @source.name if @source.present? && !@source.is_a?(Array)
     data[:user_id] = current_user.uid if current_user.present?
