@@ -72,7 +72,7 @@ jobs:
           ELASTIC_PASSWORD: "changeme"
           MEMCACHE_SERVERS: "localhost:11211"
         run: |
-          bundle exec rubocop
+          # bundle exec rubocop
           # bundle exec rspec
           echo $?
       # - name: Publish code coverage
