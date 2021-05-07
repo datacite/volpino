@@ -51,10 +51,11 @@ gem "gravtastic", "~> 3.2", ">= 3.2.6"
 gem "jwt", "~> 2.2", ">= 2.2.1"
 gem "mailgun-ruby", "~> 1.2"
 gem "oauth2", "~> 1.4"
-gem 'omniauth', '~> 2.0', '>= 2.0.4'
+gem "omniauth", "~> 2.0", ">= 2.0.4"
 gem "omniauth-github", "~> 2.0"
 gem "omniauth-globus", "~> 0.9.1"
 gem "omniauth-orcid", "~> 2.0"
+gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem "validates_email_format_of", "~> 1.6", ">= 1.6.3"
 
 gem "apollo-federation", "~> 1.0"
