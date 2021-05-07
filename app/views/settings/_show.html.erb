@@ -89,7 +89,7 @@
                 <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Delete ORCID Token".html_safe, setting_path("me", user: { orcid_token: nil, orcid_expires_at: Time.zone.now }), { method: :put, remote: true, class: 'btn btn-social btn-orcid btn-fill' } %>
               <% else %>
                 <p>Get ORCID token to allow DataCite to update your ORCID record.</p>
-                <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Get ORCID Token".html_safe, user_orcid_omniauth_authorize_path, :id => "sign-in-orcid", class: 'btn btn-social btn-orcid btn-fill' %>
+                <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Get ORCID Token".html_safe, user_orcid_omniauth_authorize_path, method: :post, :id => "sign-in-orcid", class: 'btn btn-social btn-orcid btn-fill' %>
               <% end %>
             </dd>
           </dl>
@@ -120,7 +120,7 @@
                 <%= link_to "<img id=\"github-logo\" src=\"#{ENV["CDN_URL"]}/images/github.png\" alt=\"GitHub icon\"/>&nbsp;Delete GitHub Token".html_safe, setting_path("me", user: { github_token: nil }), { method: :put, remote: true, class: 'btn btn-social btn-github btn-fill' } %>
               <% else %>
                 <p>Get GitHub token to allow DataCite to link your ORCID and GitHub accounts.</p>
-                <%= link_to "<img id=\"github-logo\" src=\"#{ENV["CDN_URL"]}/images/github.png\" alt=\"GitHub icon\"/>&nbsp;Get GitHub Token".html_safe, user_github_omniauth_authorize_path, :id => "sign-in-github", class: 'btn btn-social btn-github btn-fill' %>
+                <%= link_to "<img id=\"github-logo\" src=\"#{ENV["CDN_URL"]}/images/github.png\" alt=\"GitHub icon\"/>&nbsp;Get GitHub Token".html_safe, user_github_omniauth_authorize_path, method: :post, :id => "sign-in-github", class: 'btn btn-social btn-github btn-fill' %>
               <% end %>
             </dd>
           </dl>
