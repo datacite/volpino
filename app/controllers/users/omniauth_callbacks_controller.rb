@@ -10,7 +10,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     store_location_for(:user, request.referer)
 
     if params[:provider].present?
-      redirect_to "/users/auth/#{params[:provider]}"
+      redirect_post "/users/auth/#{params[:provider]}"
     else
       flash[:alert] = "Error signing in: no provider"
       redirect_to root_path

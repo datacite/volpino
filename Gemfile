@@ -56,6 +56,7 @@ gem "omniauth-github", "~> 2.0"
 gem "omniauth-globus", "~> 0.9.1"
 gem "omniauth-orcid", "~> 2.0"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
+gem "repost", "~> 0.3.7"
 gem "validates_email_format_of", "~> 1.6", ">= 1.6.3"
 
 gem "apollo-federation", "~> 1.0"
