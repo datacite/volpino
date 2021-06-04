@@ -2,7 +2,7 @@ class ClaimsController < BaseController
   # prepend_before_action :load_user, only: [:index]
   prepend_before_action :authenticate_user_from_token!
   before_action :load_claim, only: %i[show destroy]
-  before_action :set_include, only: %i[index show create update]
+  before_action :set_include, only: %i[index show create]
   load_and_authorize_resource except: [:create]
 
   def show

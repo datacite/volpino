@@ -19,6 +19,7 @@ class BaseController < ApplicationController
   # pass ability into serializer
   serialization_scope :current_ability
 
+  skip_before_action :verify_authenticity_token
   before_action :default_format_json, :transform_params, :set_raven_context
   after_action :set_jsonp_format, :set_consumer_header
 
