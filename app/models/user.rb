@@ -376,7 +376,7 @@ class User < ApplicationRecord
       # send notification to Sentry
       # Raven.capture_exception(RuntimeError.new(result.body["errors"].first["title"]))if ENV["SENTRY_DSN"]
 
-      logger.error result.body["errors"].first["title"]
+      logger.error result.body["errors"].inspect
     else
       write_attribute(:github_put_code, result.body["put_code"])
     end

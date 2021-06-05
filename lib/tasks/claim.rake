@@ -81,6 +81,14 @@ namespace :claim do
     end
   end
 
+  desc "Push all waiting claims"
+  task waiting: :environment do
+    Claim.waiting.find_each do |claim|
+      ClaimJob.perform_later(claim)
+      puts "[#{claim.aasm_state}] Pushed waiting claim #{claim.doi} for user #{claim.orcid} to ORCID."
+    end
+  end
+
   desc "Get notification_access_token"
   task get_notification_access_token: :environment do
     response = Claim.last.notification.get_notification_access_token(

@@ -192,12 +192,13 @@ class Claim < ApplicationRecord
   def process_data(options = {})
     start
 
-    result = options[:collect_data] || collect_data
+    result = collect_data
 
     if result.body["skip"]
       return finish! if claimed_at.present?
 
       logger.info "[Skipped] #{uid} – #{doi}] #{result.body['reason']}"
+      write_attribute(:error_messages, nil)
 
       skip
     elsif result.body["errors"]
@@ -206,7 +207,7 @@ class Claim < ApplicationRecord
       # send notification to Sentry
       # Raven.capture_exception(RuntimeError.new(result.body["errors"].first["title"])) if ENV["SENTRY_DSN"]
 
-      logger.error "[Error] #{uid} – #{doi}] " + result.body["errors"].first["title"].inspect
+      logger.error "[Error] #{uid} – #{doi} " + result.body["errors"].inspect
 
       error!
     elsif result.body["notification"]

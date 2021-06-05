@@ -50,11 +50,18 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
       expect(response.body).to eq("reason" => "No auto-update permission", "skip" => true)
     end
 
-    it "invalid token" do
+    it "missing token" do
       user = FactoryBot.create(:invalid_user)
       subject = FactoryBot.create(:claim, user: user, orcid: "0000-0003-1419-240x", doi: "10.14454/v6e2-yc93", source_id: "orcid_update")
       response = subject.collect_data
       expect(response.body).to eq("reason" => "No user and/or ORCID token", "skip" => true)
+    end
+
+    it "invalid token" do
+      user = FactoryBot.create(:invalid_user, orcid_token: "123")
+      subject = FactoryBot.create(:claim, user: user, orcid: "0000-0003-1419-240x", doi: "10.14454/v6e2-yc93", source_id: "orcid_update")
+      response = subject.collect_data
+      expect(response.body).to eq("errors"=>[{"title"=>"Missing data"}])
     end
 
     it "no user" do
@@ -76,14 +83,6 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
     #   expect(subject.claimed_at).to be_blank
     #   expect(subject.state).to eq("failed")
     # end
-
-    it "no errors with dependency injection" do
-      options = { collect_data: OpenStruct.new(body: { "put_code" => "1069294" }) }
-      expect(subject.process_data(options)).to be true
-      expect(subject.put_code).to eq(put_code)
-      expect(subject.claimed_at).not_to be_blank
-      expect(subject.state).to eq("done")
-    end
 
     it "already exists" do
       FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/j6gr-cf48", claim_action: "create", claimed_at: Time.zone.now, put_code: put_code)
