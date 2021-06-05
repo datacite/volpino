@@ -32,7 +32,7 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
 
     it "already exists" do
       FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/1X4X-9056", claim_action: "create", claimed_at: Time.zone.now)
-      expect(subject.collect_data.body).to eq("Reason" => "already claimed.", "skip" => true)
+      expect(subject.collect_data.body).to eq("reason" => "already claimed.", "skip" => true)
     end
 
     # it 'delete claim' do

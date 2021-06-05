@@ -258,7 +258,7 @@ class User < ApplicationRecord
   def validate_email
     return true if email.blank?
 
-    unless email =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+    unless /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i.match?(email)
       errors.add :email, "is not a valid email address"
     end
   end

@@ -55,7 +55,7 @@ describe "users", type: :request, elasticsearch: true do
       end
 
       it "creates a user" do
-        post "/users", params: params, session: headers
+        post "/users", params, headers
 
         User.import
         sleep 1
@@ -72,7 +72,7 @@ describe "users", type: :request, elasticsearch: true do
       end
 
       it "returns a validation failure message" do
-        post "/users", params: params, session: headers
+        post "/users", params, headers
 
         expect(last_response.status).to eq(422)
         expect(json["errors"].first).to eq("source" => "uid", "title" => "Can't be blank")
@@ -89,7 +89,7 @@ describe "users", type: :request, elasticsearch: true do
       end
 
       it "returns status code 400" do
-        post "/users", params: params, session: headers
+        post "/users", params, headers
 
         expect(last_response.status).to eq(400)
       end
@@ -110,7 +110,7 @@ describe "users", type: :request, elasticsearch: true do
       end
 
       it "updates the record" do
-        put "/users/#{user.uid}", params: params, session: headers
+        put "/users/#{user.uid}", params, headers
 
         expect(last_response.status).to eq(200)
         expect(json.dig("data", "attributes", "name")).to eq("James Watt")
@@ -127,7 +127,7 @@ describe "users", type: :request, elasticsearch: true do
       end
 
       it "updates the record" do
-        put "/users/#{new_user.uid}", params: params, session: headers
+        put "/users/#{new_user.uid}", params, headers
 
         expect(last_response.status).to eq(201)
         expect(json.dig("data", "attributes", "name")).to eq(new_user.name)

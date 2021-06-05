@@ -26,7 +26,7 @@ module Resolvable
     end
 
     def get_doi_from_id(id)
-      if /(http|https):\/\/(dx\.)?doi\.org\/(\w+)/.match(id)
+      if /(http|https):\/\/(dx\.)?doi\.org\/(\w+)/.match?(id)
         uri = Addressable::URI.parse(id)
         uri.path[1..-1]
       elsif id.starts_with?("doi:")

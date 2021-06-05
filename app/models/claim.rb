@@ -192,7 +192,6 @@ class Claim < ApplicationRecord
   def process_data(options = {})
     start
 
-    ### depdency Injection for testing
     result = options[:collect_data] || collect_data
 
     if result.body["skip"]
@@ -238,7 +237,7 @@ class Claim < ApplicationRecord
 
   def collect_data(options = {})
     # already claimed
-    return OpenStruct.new(body: { "skip" => true, "Reason" => "already claimed." }) if to_be_created? && claimed_at.present?
+    return OpenStruct.new(body: { "skip" => true, "reason" => "already claimed." }) if to_be_created? && claimed_at.present?
 
     # user has not signed up yet or orcid_token is missing
     if user.blank? || orcid_token.blank?

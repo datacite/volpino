@@ -29,8 +29,8 @@ describe "/claims", type: :request, elasticsearch: true do
     end
 
     it "admin user" do
-      post uri, params: params, session: headers
-      puts last_response.body
+      post uri, params, headers
+
       expect(last_response.status).to eq(202)
       response = JSON.parse(last_response.body)
       expect(response["errors"]).to be_nil
@@ -58,7 +58,7 @@ describe "/claims", type: :request, elasticsearch: true do
 
     context "as admin user" do
       it "JSON" do
-        post uri, params: params, session: headers
+        post uri, params, headers
         expect(last_response.status).to eq(202)
 
         response = JSON.parse(last_response.body)
@@ -74,7 +74,7 @@ describe "/claims", type: :request, elasticsearch: true do
       let(:user) { FactoryBot.create(:staff_user) }
 
       it "JSON" do
-        post uri, params: params, session: headers
+        post uri, params, headers
         expect(last_response.status).to eq(403)
 
         response = JSON.parse(last_response.body)
@@ -105,7 +105,7 @@ describe "/claims", type: :request, elasticsearch: true do
       end
 
       it "JSON" do
-        post uri, params: params, session: headers
+        post uri, params, headers
 
         expect(last_response.status).to eq(202)
         response = JSON.parse(last_response.body)
@@ -125,7 +125,7 @@ describe "/claims", type: :request, elasticsearch: true do
       end
 
       it "JSON" do
-        post uri, params: params, session: headers
+        post uri, params, headers
         expect(last_response.status).to eq(422)
 
         response = JSON.parse(last_response.body)
@@ -141,7 +141,7 @@ describe "/claims", type: :request, elasticsearch: true do
       end
 
       it "JSON" do
-        post uri, params: params, session: headers
+        post uri, params, headers
         expect(last_response.status).to eq(422)
 
         response = JSON.parse(last_response.body)
@@ -158,7 +158,7 @@ describe "/claims", type: :request, elasticsearch: true do
       end
 
       it "JSON" do
-        post uri, params: params, session: headers
+        post uri, params, headers
         expect(last_response.status).to eq(422)
 
         response = JSON.parse(last_response.body)
@@ -173,7 +173,7 @@ describe "/claims", type: :request, elasticsearch: true do
       end
 
       it "JSON" do
-        post uri, params: params, session: headers
+        post uri, params, headers
         expect(last_response.status).to eq(401)
 
         response = JSON.parse(last_response.body)
@@ -190,7 +190,7 @@ describe "/claims", type: :request, elasticsearch: true do
       end
 
       it "JSON" do
-        post uri, params: params, session: headers
+        post uri, params, headers
         expect(last_response.status).to eq(422)
 
         response = JSON.parse(last_response.body)
@@ -202,7 +202,7 @@ describe "/claims", type: :request, elasticsearch: true do
       let(:params) { { "claim" => "10.1371/journal.pone.0036790 2012-05-15 New Dromaeosaurids (Dinosauria: Theropoda) from the Lower Cretaceous of Utah, and the Evolution of the Dromaeosaurid Tail" } }
 
       it "JSON" do
-        post uri, params: params, session: headers
+        post uri, params, headers
         expect(last_response.status).to eq(400)
         response = JSON.parse(last_response.body)
         expect(response["errors"].first["title"]).to start_with("undefined method")
@@ -221,7 +221,7 @@ describe "/claims", type: :request, elasticsearch: true do
 
     context "as admin user" do
       it "JSON" do
-        get uri, params: nil, session: headers
+        get uri, nil, headers
 
         expect(last_response.status).to eq(200)
         response = JSON.parse(last_response.body)
@@ -236,7 +236,7 @@ describe "/claims", type: :request, elasticsearch: true do
       let!(:claim) { FactoryBot.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
 
       it "JSON" do
-        get uri, params: nil, session: headers
+        get uri, nil, headers
 
         expect(last_response.status).to eq(200)
         response = JSON.parse(last_response.body)
@@ -251,7 +251,7 @@ describe "/claims", type: :request, elasticsearch: true do
       let!(:claim) { FactoryBot.create(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: user.uid) }
 
       it "JSON" do
-        get uri, params: nil, session: headers
+        get uri, nil, headers
         expect(last_response.status).to eq(200)
 
         response = JSON.parse(last_response.body)
@@ -268,7 +268,7 @@ describe "/claims", type: :request, elasticsearch: true do
       end
 
       it "JSON" do
-        get uri, params: nil, session: headers
+        get uri, nil, headers
         expect(last_response.status).to eq(401)
 
         response = JSON.parse(last_response.body)
@@ -281,10 +281,9 @@ describe "/claims", type: :request, elasticsearch: true do
       let(:uri) { "/claims?dois=#{doi}" }
 
       it "JSON" do
-        get uri, params: nil, session: headers
+        get uri, nil, headers
+        
         expect(last_response.status).to eq(200)
-        puts Claim.query(nil, page: { cursor: [], size: 3 }).results.to_a.inspect
-        puts last_response.body
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil
         item = response["data"].first
@@ -297,7 +296,7 @@ describe "/claims", type: :request, elasticsearch: true do
       let(:uri) { "/claims?dois=#{doi}" }
 
       it "JSON" do
-        get uri, params: nil, session: headers
+        get uri, nil, headers
         expect(last_response.status).to eq(200)
 
         response = JSON.parse(last_response.body)
@@ -319,7 +318,7 @@ describe "/claims", type: :request, elasticsearch: true do
 
     context "as admin user" do
       it "JSON" do
-        get uri, params: nil, session: headers
+        get uri, nil, headers
         expect(last_response.status).to eq(200)
 
         response = JSON.parse(last_response.body)
@@ -335,7 +334,7 @@ describe "/claims", type: :request, elasticsearch: true do
       let(:user) { FactoryBot.create(:staff_user) }
 
       it "JSON" do
-        get uri, params: nil, session: headers
+        get uri, nil, headers
         expect(last_response.status).to eq(200)
 
         response = JSON.parse(last_response.body)
@@ -351,7 +350,7 @@ describe "/claims", type: :request, elasticsearch: true do
       let(:user) { FactoryBot.create(:regular_user) }
 
       it "JSON" do
-        get uri, params: nil, session: headers
+        get uri, nil, headers
         expect(last_response.status).to eq(200)
 
         response = JSON.parse(last_response.body)
@@ -370,7 +369,7 @@ describe "/claims", type: :request, elasticsearch: true do
       end
 
       it "JSON" do
-        get uri, params: nil, session: headers
+        get uri, nil, headers
         expect(last_response.status).to eq(401)
 
         response = JSON.parse(last_response.body)
@@ -382,7 +381,7 @@ describe "/claims", type: :request, elasticsearch: true do
       let(:uri) { "/claims/#{claim.uuid}x" }
 
       it "JSON" do
-        get uri, params: nil, session: headers
+        get uri, nil, headers
         expect(last_response.status).to eq(404)
 
         response = JSON.parse(last_response.body)
@@ -402,7 +401,7 @@ describe "/claims", type: :request, elasticsearch: true do
 
     context "as admin user" do
       it "JSON" do
-        delete uri, params: nil, session: headers
+        delete uri, nil, headers
         expect(last_response.status).to eq(200)
 
         response = JSON.parse(last_response.body)
@@ -414,7 +413,7 @@ describe "/claims", type: :request, elasticsearch: true do
       let(:user) { FactoryBot.create(:staff_user) }
 
       it "JSON" do
-        delete uri, params: nil, session: headers
+        delete uri, nil, headers
         expect(last_response.status).to eq(403)
 
         response = JSON.parse(last_response.body)
@@ -441,7 +440,7 @@ describe "/claims", type: :request, elasticsearch: true do
       end
 
       it "JSON" do
-        delete uri, params: nil, session: headers
+        delete uri, nil, headers
         expect(last_response.status).to eq(401)
 
         response = JSON.parse(last_response.body)
@@ -453,7 +452,7 @@ describe "/claims", type: :request, elasticsearch: true do
       let(:uri) { "/claims/#{claim.uuid}x" }
 
       it "JSON" do
-        delete uri, params: nil, session: headers
+        delete uri, nil, headers
         expect(last_response.status).to eq(404)
 
         response = JSON.parse(last_response.body)
