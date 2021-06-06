@@ -195,9 +195,9 @@ class Claim < ApplicationRecord
     result = collect_data
 
     if result.body["skip"]
-      return finish! if claimed_at.present?
+      return finish! if put_code.present?
 
-      logger.info "[Skipped] #{uid} – #{doi}] #{result.body['reason']}"
+      logger.info "[Skipped] #{uid} – #{doi}: #{result.body['reason']}"
       write_attribute(:error_messages, nil)
 
       skip
@@ -207,14 +207,14 @@ class Claim < ApplicationRecord
       # send notification to Sentry
       # Raven.capture_exception(RuntimeError.new(result.body["errors"].first["title"])) if ENV["SENTRY_DSN"]
 
-      logger.error "[Error] #{uid} – #{doi} " + result.body["errors"].inspect
+      logger.error "[Error] #{uid} – #{doi}: #{result.body["errors"].inspect}"
 
       error!
     elsif result.body["notification"]
       write_attribute(:put_code, result.body["put_code"])
       write_attribute(:error_messages, [])
 
-      logger.error "[Notification] #{uid} – #{doi}] with Put Code #{result.body['put_code']}"
+      logger.error "[Notification] #{uid} – #{doi} with Put Code #{result.body['put_code']}"
 
       notify
     else
@@ -223,13 +223,13 @@ class Claim < ApplicationRecord
         write_attribute(:put_code, result.body["put_code"])
         write_attribute(:error_messages, [])
 
-        logger.info "[Done] #{uid} – #{doi}] with Put Code #{result.body['put_code']}"
+        logger.info "[Done] #{uid} – #{doi} with Put Code #{result.body['put_code']}"
       elsif to_be_deleted?
         write_attribute(:claimed_at, nil)
         write_attribute(:put_code, nil)
         write_attribute(:error_messages, [])
 
-        logger.info "[Deleted] #{uid} – #{doi}] with Put Code #{result.body['put_code']}"
+        logger.info "[Deleted] #{uid} – #{doi} with Put Code #{result.body['put_code']}"
       end
 
       finish!
@@ -238,7 +238,7 @@ class Claim < ApplicationRecord
 
   def collect_data(options = {})
     # already claimed
-    return OpenStruct.new(body: { "skip" => true, "reason" => "already claimed." }) if to_be_created? && claimed_at.present?
+    return OpenStruct.new(body: { "skip" => true, "reason" => "already claimed." }) if to_be_created? && put_code.present?
 
     # user has not signed up yet or orcid_token is missing
     if user.blank? || orcid_token.blank?
