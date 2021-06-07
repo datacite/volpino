@@ -17,7 +17,7 @@ http_interactions:
       message: ''
     headers:
       Date:
-      - Mon, 07 Jun 2021 08:13:43 GMT
+      - Mon, 07 Jun 2021 08:13:41 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Connection:
@@ -25,11 +25,11 @@ http_interactions:
       Cf-Cache-Status:
       - DYNAMIC
       Cf-Request-Id:
-      - 0a8721f9da00004aaf340bf000000001
+      - 0a8721f22f00004eb620aa0000000001
       Expect-Ct:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Report-To:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v2?s=tn%2BP6S9AO7TTZTRETUH8xV95L66qRTp0qrTpGk%2BpjyU3iTM9KiJDhfpuwkWHu9%2BqI%2BCnfZKX7RV27th0UhSQ1MPWU4B3ri63PmlyV%2F7UL7wU%2FesO"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v2?s=hHcbvEGSiKwG9DpSi9l7hnUQljD6ETfCgyHEbaRHLf5xjiJcaTiJrKPse2uIKMRrdQZRLb%2BJ6K1UHp9uTX5NfwU9IsQZti5yqcHK2Q2rWlZ5y2mm"}],"group":"cf-nel","max_age":604800}'
       Nel:
       - '{"report_to":"cf-nel","max_age":604800}'
       Strict-Transport-Security:
@@ -37,7 +37,7 @@ http_interactions:
       Server:
       - cloudflare
       Cf-Ray:
-      - 65b86c3c8fcd4aaf-FRA
+      - 65b86c304f2c4eb6-FRA
       Alt-Svc:
       - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400, h3=":443";
         ma=86400
@@ -51,10 +51,10 @@ http_interactions:
           }
         ]
     http_version: 
-  recorded_at: Mon, 07 Jun 2021 08:13:43 GMT
+  recorded_at: Mon, 07 Jun 2021 08:13:41 GMT
 - request:
     method: get
-    uri: https://api.datacite.org/dois/10.14454/v6e2-yc93?include=media,client
+    uri: https://api.datacite.org/dois/10.14454/1x4x-9056?include=media,client
     body:
       encoding: US-ASCII
       string: ''
@@ -69,7 +69,7 @@ http_interactions:
       message: Not Found
     headers:
       Date:
-      - Mon, 07 Jun 2021 08:13:44 GMT
+      - Mon, 07 Jun 2021 08:13:42 GMT
       Content-Type:
       - application/json; charset=utf-8
       Connection:
@@ -81,9 +81,9 @@ http_interactions:
       Vary:
       - Accept-Encoding, Origin
       X-Request-Id:
-      - 9ba91e91-675a-47df-b5ab-05b480865e7a
+      - e4675b1a-70e9-46f7-bda4-0a7a2353e7ed
       X-Runtime:
-      - '0.065983'
+      - '0.043736'
       X-Rack-Cors:
       - miss; no-origin
       X-Powered-By:
@@ -95,7 +95,7 @@ http_interactions:
       string: '{"errors":[{"status":"404","title":"The resource you are looking for
         doesn''t exist."}]}'
     http_version: 
-  recorded_at: Mon, 07 Jun 2021 08:13:44 GMT
+  recorded_at: Mon, 07 Jun 2021 08:13:42 GMT
 - request:
     method: get
     uri: https://doi.org/ra/10.14454
@@ -113,7 +113,7 @@ http_interactions:
       message: ''
     headers:
       Date:
-      - Mon, 07 Jun 2021 08:13:44 GMT
+      - Mon, 07 Jun 2021 08:13:42 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Connection:
@@ -121,11 +121,11 @@ http_interactions:
       Cf-Cache-Status:
       - DYNAMIC
       Cf-Request-Id:
-      - 0a8721fb6600002c2e683c6000000001
+      - 0a8721f3c500004e6808ab2000000001
       Expect-Ct:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Report-To:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v2?s=5h5oWuj7QTV8A5eVev4708ocpY%2Fc6ZsaIquFYuqDHW%2BhdQcTMf1j9yqXohqLYMGe%2BE5RjoTigA55Tq6JZPBE583WXqm%2FUFuCVB4jbTPCZpmmHgfh"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v2?s=rGkxUMBBcYC8Yiw4B38qQqyNLJFuS0U2XqAHS2%2Fu18YvHO%2FmdW6SWlLYugrhIB%2BPTGEtIzkbA9t31W4u%2BsdsHvphBu%2BKDCOOBp51j4t%2BdLUMizv0"}],"group":"cf-nel","max_age":604800}'
       Nel:
       - '{"report_to":"cf-nel","max_age":604800}'
       Strict-Transport-Security:
@@ -133,7 +133,7 @@ http_interactions:
       Server:
       - cloudflare
       Cf-Ray:
-      - 65b86c3f0eb42c2e-FRA
+      - 65b86c32dcfe4e68-FRA
       Alt-Svc:
       - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400, h3=":443";
         ma=86400
@@ -147,10 +147,10 @@ http_interactions:
           }
         ]
     http_version: 
-  recorded_at: Mon, 07 Jun 2021 08:13:44 GMT
+  recorded_at: Mon, 07 Jun 2021 08:13:42 GMT
 - request:
     method: get
-    uri: https://api.datacite.org/dois/10.14454/v6e2-yc93?include=media,client
+    uri: https://api.datacite.org/dois/10.14454/1x4x-9056?include=media,client
     body:
       encoding: US-ASCII
       string: ''
@@ -165,7 +165,7 @@ http_interactions:
       message: Not Found
     headers:
       Date:
-      - Mon, 07 Jun 2021 08:13:44 GMT
+      - Mon, 07 Jun 2021 08:13:42 GMT
       Content-Type:
       - application/json; charset=utf-8
       Connection:
@@ -177,9 +177,9 @@ http_interactions:
       Vary:
       - Accept-Encoding, Origin
       X-Request-Id:
-      - 4ee1e30f-6def-4a9a-9bcf-5a027157ae4d
+      - 19412bba-1ddf-43f9-888c-585859f7be7e
       X-Runtime:
-      - '0.035131'
+      - '0.186077'
       X-Rack-Cors:
       - miss; no-origin
       X-Powered-By:
@@ -191,5 +191,5 @@ http_interactions:
       string: '{"errors":[{"status":"404","title":"The resource you are looking for
         doesn''t exist."}]}'
     http_version: 
-  recorded_at: Mon, 07 Jun 2021 08:13:44 GMT
+  recorded_at: Mon, 07 Jun 2021 08:13:42 GMT
 recorded_with: VCR 3.0.3

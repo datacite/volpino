@@ -72,7 +72,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def globus
-    puts request.env["omniauth.auth"]
     auth = request.env["omniauth.auth"]
 
     if current_user.present?

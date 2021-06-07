@@ -17,7 +17,7 @@ module Authenticable
       payload = (JWT.decode token, public_key, true, algorithm: "RS256").first
 
       # check whether token has expired
-      return {} unless Time.now.to_i < payload["exp"]
+      return {} unless Time.now.to_i < payload["exp"].to_i
 
       payload
     rescue JWT::DecodeError => e

@@ -238,7 +238,7 @@ class Claim < ApplicationRecord
 
   def collect_data(options = {})
     # already claimed
-    return OpenStruct.new(body: { "skip" => true, "reason" => "already claimed." }) if to_be_created? && put_code.present?
+    # return OpenStruct.new(body: { "skip" => true, "reason" => "already claimed." }) if to_be_created? && put_code.present?
 
     # user has not signed up yet or orcid_token is missing
     if user.blank? || orcid_token.blank?
@@ -258,16 +258,16 @@ class Claim < ApplicationRecord
     return OpenStruct.new(body: { "skip" => true, "reason" => "Too many claims. Only 10,000 claims allowed." }) if user.claims.total_count > 10000
 
     # missing data raise errors
-    return OpenStruct.new(body: { "errors" => [{ "title" => "Missing data" }] }) if work.data.nil?
+    # return OpenStruct.new(body: { "errors" => [{ "title" => "Missing data" }] }) if work.data.nil?
 
     # validate data
     return OpenStruct.new(body: { "errors" => work.validation_errors.map { |error| { "title" => error } } }) if work.validation_errors.present?
 
     options[:sandbox] = (ENV["ORCID_URL"] == "https://sandbox.orcid.org")
 
-    # create or delete entry in ORCID record
+    # create or delete entry in ORCID record. If put_code exists, update entry
     if to_be_created?
-      work.create_work(options)
+      put_code.present? ? work.update_work(options) : work.create_work(options)
     elsif to_be_deleted?
       work.delete_work(options)
     end
