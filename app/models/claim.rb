@@ -155,7 +155,7 @@ class Claim < ApplicationRecord
       "claimed" => claimed,
       "created" => created,
       "updated" => updated,
-      "user" => user,
+      "user" => user
     }
   end
 
@@ -207,7 +207,7 @@ class Claim < ApplicationRecord
       # send notification to Sentry
       # Raven.capture_exception(RuntimeError.new(result.body["errors"].first["title"])) if ENV["SENTRY_DSN"]
 
-      logger.error "[Error] #{uid} – #{doi}: #{format_error_message(result.body["errors"]).first["title"]}"
+      logger.error "[Error] #{uid} – #{doi}: #{format_error_message(result.body["errors"]).inspect}"
 
       error!
     elsif result.body["notification"]
