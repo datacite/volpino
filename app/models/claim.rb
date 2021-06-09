@@ -141,21 +141,6 @@ class Claim < ApplicationRecord
 
   # also index id as workaround for finding the correct key in associations
   def as_indexed_json(_options = {})
-    if error_messages.blank?
-      error_messages = []
-    else
-      message = error_messages.first
-      if message["title"].is_a?(Hash) && message.dig("title", "developer-message").present?
-        title = message.dig("title", "developer-message")
-      elsif message["title"].is_a?(String)
-        title = message.dig("title")
-      else
-        title = nil
-      end
-
-      error_messages = { status: message["status"] || 400, title: title }
-    end
-
     {
       "id" => uuid,
       "uuid" => uuid,
@@ -217,12 +202,12 @@ class Claim < ApplicationRecord
 
       skip
     elsif result.body["errors"]
-      write_attribute(:error_messages, result.body["errors"])
+      write_attribute(:error_messages, format_error_message(result.body["errors"]))
 
       # send notification to Sentry
       # Raven.capture_exception(RuntimeError.new(result.body["errors"].first["title"])) if ENV["SENTRY_DSN"]
 
-      logger.error "[Error] #{uid} – #{doi}: #{result.body["errors"].inspect}"
+      logger.error "[Error] #{uid} – #{doi}: #{format_error_message(result.body["errors"]).first["title"]}"
 
       error!
     elsif result.body["notification"]
@@ -378,9 +363,25 @@ class Claim < ApplicationRecord
     count
   end
 
+  def format_error_message(messages)
+    Array.wrap(messages) do |msg|
+      if msg["title"].is_a?(Hash) && msg.dig("title", "developer-message").present?
+        title = msg.dig("title", "developer-message")
+      elsif msg["title"].is_a?(String)
+        title = msg.dig("title")
+      else
+        msg = nil
+      end
+  
+      { status: msg["status"] || 400, title: title }
+    end
+  end
+
   private
 
   def set_defaults
     self.claim_action = "create" if claim_action.blank?
+    
+    self.error_messages = format_error_message(error_messages)
   end
 end
