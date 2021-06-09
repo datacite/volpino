@@ -141,13 +141,28 @@ class Claim < ApplicationRecord
 
   # also index id as workaround for finding the correct key in associations
   def as_indexed_json(_options = {})
+    if error_messages.blank?
+      error_messages = []
+    else
+      message = error_messages.first
+      if message["title"].is_a?(Hash) && message.dig("title", "developer-message").present?
+        title = message.dig("title", "developer-message")
+      elsif message["title"].is_a?(String)
+        title = message.dig("title")
+      else
+        title = nil
+      end
+
+      error_messages = { status: message["status"] || 400, title: title }
+    end
+
     {
       "id" => uuid,
       "uuid" => uuid,
       "doi" => doi.downcase,
       "user_id" => orcid,
       "source_id" => source_id,
-      "error_messages" => error_messages.is_a?(String) ? eval(error_messages) : error_messages,
+      "error_messages" => error_messages,
       "claim_action" => claim_action,
       "put_code" => put_code,
       "state_number" => state_number,
@@ -198,7 +213,7 @@ class Claim < ApplicationRecord
       return finish! if put_code.present?
 
       logger.info "[Skipped] #{uid} – #{doi}: #{result.body['reason']}"
-      write_attribute(:error_messages, nil)
+      write_attribute(:error_messages, [])
 
       skip
     elsif result.body["errors"]
@@ -266,9 +281,14 @@ class Claim < ApplicationRecord
     options[:sandbox] = (ENV["ORCID_URL"] == "https://sandbox.orcid.org")
 
     # create or delete entry in ORCID record. If put_code exists, update entry
-    if to_be_created?
-      put_code.present? ? work.update_work(options) : work.create_work(options)
+    if to_be_created? && put_code.present?
+      logger.info "Claim #{uid} – #{doi} updated."
+      work.update_work(options)
+    elsif to_be_created?
+      logger.info "Claim #{uid} – #{doi} created."
+       work.create_work(options)
     elsif to_be_deleted?
+      logger.info "Claim #{uid} – #{doi} deleted."
       work.delete_work(options)
     end
   end

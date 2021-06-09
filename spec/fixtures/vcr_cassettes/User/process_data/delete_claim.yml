@@ -8,20 +8,22 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Mozilla/5.0 (compatible; Maremma/4.9.2; mailto:info@datacite.org)
+      - Mozilla/5.0 (compatible; Maremma/4.9.4; mailto:info@datacite.org)
       Accept:
       - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
       Content-Type:
       - application/vnd.orcid+xml
       Authorization:
       - Bearer <ORCID_TOKEN>
+      Accept-Encoding:
+      - gzip,deflate
   response:
     status:
       code: 403
       message: ''
     headers:
       Date:
-      - Mon, 07 Jun 2021 08:13:55 GMT
+      - Wed, 09 Jun 2021 17:10:38 GMT
       Content-Type:
       - application/vnd.orcid+xml; qs=5;charset=UTF-8
       Connection:
@@ -40,27 +42,22 @@ http_interactions:
       - DENY
       X-Content-Type-Options:
       - nosniff
+      Content-Encoding:
+      - gzip
       Cf-Cache-Status:
       - DYNAMIC
       Cf-Request-Id:
-      - 0a872224ba0000faf616324000000001
+      - 0a935a3c140000faeafd31b000000001
       Expect-Ct:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Server:
       - cloudflare
       Cf-Ray:
-      - 65b86c812f52faf6-DUS
+      - 65cbf9735b8afaea-DUS
     body:
       encoding: ASCII-8BIT
-      string: |
-        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-        <error xmlns="http://www.orcid.org/ns/error">
-            <response-code>403</response-code>
-            <developer-message>409 Conflict: The item has a limited or private visibility and your request doesn't have the required scope.</developer-message>
-            <user-message>You don't have the permissions to execute this action.</user-message>
-            <error-code>9038</error-code>
-            <more-info>https://members.orcid.org/api/resources/troubleshooting</more-info>
-        </error>
+      string: !binary |-
+        H4sIAAAAAAACA2WRwW7CMAyG730KK5edSpjYAVBbDpP2BOywY2kNWGriLnYLvP1cOmmg5RApv+3Pzu9idw0djJiEOJbudbF0gLHhluKpdJ/7j3ztQLSObd1xxNLdUNyuygpMiRNYcZTSnVX7rfeXy2XBqaHW7pOP4u9JrsrATpFQeo6CudGxeluuCv8szWktjthxjykPKFKfptQNvHM8dtToFvZnBFIMcK4Faugo2KsFG6ZPNNaKMJLQgTrSG9jccOMhQcLvAUWhZZT4olY8IqihpgAlA0hjTReF/99/nmuQB+mLB0M9gawikEw2CigDXrEZdAqRjdmo6QZ/gszcu0ezAZvlal34B2HOCJwwp3jkavJZzOiA4WArezC77mly077aoHhNPBw6lDOz2iIL/4fIfhtU2Q9Zj2GR+wEAAA==
     http_version: 
-  recorded_at: Mon, 07 Jun 2021 08:13:55 GMT
+  recorded_at: Wed, 09 Jun 2021 17:10:37 GMT
 recorded_with: VCR 3.0.3

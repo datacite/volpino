@@ -69,7 +69,7 @@ describe User, type: :model, vcr: true, elasticsearch: true do
 
     it "get data" do
       result = subject.get_data
-      expect(result.length).to eq(22)
+      expect(result.length).to eq(23)
       work = result.first
       path = work.fetch("work-summary", [{}]).first.fetch("source", {}).fetch("source-client-id", {}).fetch("path", nil)
       expect(path).to eq(ENV["ORCID_CLIENT_ID"])
@@ -79,7 +79,7 @@ describe User, type: :model, vcr: true, elasticsearch: true do
       result = subject.get_data
 
       result = subject.parse_data(result)
-      expect(result.length).to eq(22)
+      expect(result.length).to eq(23)
       expect(result.first).to eq("10.5256/f1000research.67475.r16884")
     end
   end
