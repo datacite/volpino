@@ -260,6 +260,9 @@ class Claim < ApplicationRecord
     # missing data raise errors
     # return OpenStruct.new(body: { "errors" => [{ "title" => "Missing data" }] }) if work.data.nil?
 
+    # orcid_token has expired
+    return OpenStruct.new(body: { "errors" => [{ "status" => 401, "title" => "token has expired." }] }) if user.orcid_expires_at < Date.today
+
     # validate data
     return OpenStruct.new(body: { "errors" => work.validation_errors.map { |error| { "title" => error } } }) if work.validation_errors.present?
 

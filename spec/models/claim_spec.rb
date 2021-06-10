@@ -58,6 +58,13 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
       expect(response.body).to eq("reason" => "No user and/or ORCID token", "skip" => true)
     end
 
+    it "expired token" do
+      user = FactoryBot.create(:valid_user, orcid_expires_at: Time.zone.now - 7.days)
+      subject = FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/v6e2-yc93", source_id: "orcid_update")
+      response = subject.collect_data
+      expect(response.body).to eq("errors"=>[{"status"=>401, "title"=>"token has expired."}])
+    end
+
     # TODO
     # it "invalid token" do
     #   user = FactoryBot.create(:invalid_user, orcid_token: "123")
