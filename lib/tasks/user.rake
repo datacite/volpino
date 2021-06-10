@@ -54,6 +54,11 @@ namespace :user do
     User.import_by_ids(from_id: from_id, until_id: until_id, index: ENV["INDEX"] || User.inactive_index)
   end
 
+  desc "Delete expired ORCID tokens"
+  task delete_expired_token: :environment do
+    User.delete_expired_token(index: ENV["INDEX"] || User.inactive_index)
+  end
+
   desc "Update all claims counts"
   task update_counts: :environment do
     User.find_each do |user|
