@@ -1,0 +1,201 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://doi.org/ra/10.14454
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Mozilla/5.0 (compatible; Maremma/4.9.4; mailto:info@datacite.org)
+      Accept:
+      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
+      Accept-Encoding:
+      - gzip,deflate
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Date:
+      - Thu, 10 Jun 2021 12:11:49 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Request-Id:
+      - 0a976f09bb00002c32daa81000000001
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v2?s=CuQmhabqID8XDHpu1lEWKd7mg4nCGQiklbE4VqXgA6kWGqbtpEvhALkmFgv7DeqgFMvk0exmTFSLslvtClNn8%2BOGvoDjhXg4Y4kLp3o5Pl124kJD"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"report_to":"cf-nel","max_age":604800}'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 65d28122b92b2c32-FRA
+      Alt-Svc:
+      - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400, h3=":443";
+        ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA4vmUlCoBmIFBSUXf08lKwUlQwM9QxMTUxMlHYhwkCNI1CWxJNE5syRVCShYyxULAOwjuKo3AAAA
+    http_version: 
+  recorded_at: Thu, 10 Jun 2021 12:11:49 GMT
+- request:
+    method: get
+    uri: https://api.stage.datacite.org/dois/10.14454/v6e2-yc93?include=media,client
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Mozilla/5.0 (compatible; Maremma/4.9.4; mailto:info@datacite.org)
+      Accept:
+      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
+      Accept-Encoding:
+      - gzip,deflate
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Thu, 10 Jun 2021 12:11:49 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Connection:
+      - keep-alive
+      Status:
+      - 404 Not Found
+      Cache-Control:
+      - no-cache
+      Vary:
+      - Accept-Encoding, Origin
+      Content-Encoding:
+      - gzip
+      X-Request-Id:
+      - 0d254798-437b-4ef2-a362-3aaac6aa4cb2
+      X-Runtime:
+      - '0.021120'
+      X-Rack-Cors:
+      - miss; no-origin
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.9
+      Server:
+      - nginx/1.14.0 + Phusion Passenger(R) 6.0.9
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAIUBwmAAAwzHMQqAMAwF0KuELC4iDp08h5s4FP1qsTSQpKCId9ftvYehKmo8TA+bR68/OfSBW/bkGf/GA6QwqbqAbqkUFZRFzlR22kRpFVhpnHAl847f+f0AAAD//wMArpOW4VcAAAA=
+    http_version: 
+  recorded_at: Thu, 10 Jun 2021 12:11:50 GMT
+- request:
+    method: get
+    uri: https://doi.org/ra/10.14454
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Mozilla/5.0 (compatible; Maremma/4.9.4; mailto:info@datacite.org)
+      Accept:
+      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
+      Accept-Encoding:
+      - gzip,deflate
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Date:
+      - Thu, 10 Jun 2021 12:11:50 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Request-Id:
+      - 0a976f0bad00001f2d229b0000000001
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v2?s=QCy4XgObIPK3nSsTZticXo2hDKJFCAc5aL3mMGzHuAtC1tdqI%2FJJKlM%2BNBcuenqxK1HMGwSCv%2Bv3wW0JIHyK1De1tHXh4JcQTN2%2Fh59kFWwM2yiJ"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"report_to":"cf-nel","max_age":604800}'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 65d28125e8a91f2d-FRA
+      Alt-Svc:
+      - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400, h3=":443";
+        ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA4vmUlCoBmIFBSUXf08lKwUlQwM9QxMTUxMlHYhwkCNI1CWxJNE5syRVCShYyxULAOwjuKo3AAAA
+    http_version: 
+  recorded_at: Thu, 10 Jun 2021 12:11:50 GMT
+- request:
+    method: get
+    uri: https://api.stage.datacite.org/dois/10.14454/v6e2-yc93?include=media,client
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Mozilla/5.0 (compatible; Maremma/4.9.4; mailto:info@datacite.org)
+      Accept:
+      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
+      Accept-Encoding:
+      - gzip,deflate
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Thu, 10 Jun 2021 12:11:50 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Connection:
+      - keep-alive
+      Status:
+      - 404 Not Found
+      Cache-Control:
+      - no-cache
+      Vary:
+      - Accept-Encoding, Origin
+      Content-Encoding:
+      - gzip
+      X-Runtime:
+      - '0.019920'
+      X-Rack-Cors:
+      - miss; no-origin
+      X-Request-Id:
+      - 8ba9863a-b900-4a60-832b-96f29013ec42
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.9
+      Server:
+      - nginx/1.14.0 + Phusion Passenger(R) 6.0.9
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAIYBwmAAAwzHMQqAMAwF0KuELC4iDp08h5s4FP1qsTSQpKCId9ftvYehKmo8TA+bR68/OfSBW/bkGf/GA6QwqbqAbqkUFZRFzlR22kRpFVhpnHAl847f+f0AAAD//wMArpOW4VcAAAA=
+    http_version: 
+  recorded_at: Thu, 10 Jun 2021 12:11:50 GMT
+recorded_with: VCR 3.0.3
