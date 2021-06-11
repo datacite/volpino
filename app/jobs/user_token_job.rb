@@ -7,7 +7,7 @@ class UserTokenJob < ApplicationJob
 
   def perform(user)
     ActiveRecord::Base.connection_pool.with_connection do
-      user.update(orcid_expires_at: "1970-01-01", orcid_token: nil),
+      user.update(orcid_expires_at: "1970-01-01", orcid_token: nil)
     end
   end
 end

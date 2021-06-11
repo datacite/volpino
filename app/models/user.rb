@@ -206,11 +206,11 @@ class User < ApplicationRecord
         response = User.query(query, index: index, page: { size: 1000, cursor: cursor })
         break if response.results.results.empty?
 
-        Rails.logger.info "Deleting #{response.results.length} User ORCID tokens starting with _id #{response.results.to_a.first[:_id]}."
+        Rails.logger.info "Deleting #{response.results.to_a.length} User ORCID tokens starting with _id #{response.results.to_a.first[:_id]}."
         cursor = response.results.to_a.last[:sort]
 
-        response.records.each do |u|
-          DeleteTokenJob.perform_later(u.uid)
+        response.records.each do |user|
+          UserTokenJob.perform_later(user)
         end
       end
     end
