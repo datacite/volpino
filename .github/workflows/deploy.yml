@@ -74,7 +74,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           # bundle exec rubocop
-          bundle exec rspec
+          # bundle exec rspec
           echo $?
       # - name: Publish code coverage
       #   uses: paambaati/codeclimate-action@v2.7.5
