@@ -210,8 +210,7 @@ module Indexable
     # is inactive. All index configuration changes and bulk importing from the database
     # happen in the inactive index.
     #
-    # For initial setup run "start_aliases" to preserve existing index, or
-    # "create_index" to start from scratch.
+    # For initial setup run "create_index" to start from scratch.
     #
     # Run "upgrade_index" whenever there are changes in the mappings or settings.
     # Follow this by "import" to fill the new index, the usen "switch_index" to
@@ -220,28 +219,6 @@ module Indexable
     # TODO: automatically switch aliases when "import" is done. Not easy, as "import"
     # runs as background jobs.
 
-    # convert existing index to alias. Has to be done only once
-    def start_aliases
-      alias_name = index_name
-      index_name = self.index_name + "_v1"
-      alternate_index_name = self.index_name + "_v2"
-
-      client = Elasticsearch::Model.client
-
-      if client.indices.exists_alias?(name: alias_name)
-        return "Index #{alias_name} is already an alias."
-      end
-
-      __elasticsearch__.create_index!(index: index_name) unless __elasticsearch__.index_exists?(index: index_name)
-      __elasticsearch__.create_index!(index: alternate_index_name) unless __elasticsearch__.index_exists?(index: alternate_index_name)
-
-      # copy old index to first of the new indexes, delete the old index, and alias the old index
-      client.reindex(body: { source: { index: alias_name }, dest: { index: index_name } }, timeout: "10m", wait_for_completion: false)
-
-      "Created indexes #{index_name} (active) and #{alternate_index_name}."
-      "Started reindexing in #{index_name}."
-    end
-
     # track reindexing via the tasks API
     def monitor_reindex
       client = Elasticsearch::Model.client
@@ -249,53 +226,190 @@ module Indexable
       tasks.fetch("nodes", {}).inspect
     end
 
-    # convert existing index to alias. Has to be done only once
-    def finish_aliases
-      alias_name = index_name
-      index_name = self.index_name + "_v1"
+    # create alias
+    def create_alias(options = {})
+      alias_name = options[:alias] || index_name
+      index_name = options[:index] || self.index_name + "_v1"
+      # alternate_index_name = options[:index] || self.index_name + "_v2"
 
       client = Elasticsearch::Model.client
 
-      if client.indices.exists_alias?(name: alias_name)
-        return "Index #{alias_name} is already an alias."
+      # indexes in DOI model are aliased from DataciteDoi and OtherDoi models
+      # TODO switch to DataciteDoi index
+      # if self.name == "Doi"
+      #   datacite_index_name = DataciteDoi.index_name + "_v1"
+      #   datacite_alternate_index_name = DataciteDoi.index_name + "_v2"
+      #   other_index_name = OtherDoi.index_name + "_v1"
+      #   other_alternate_index_name = OtherDoi.index_name + "_v2"
+
+      #   if client.indices.exists_alias?(name: alias_name, index: [datacite_index_name])
+      #     "Alias #{alias_name} for index #{datacite_index_name} already exists."
+      #   else
+      #     client.indices.put_alias index: datacite_index_name, name: alias_name
+      #     "Created alias #{alias_name} for index #{datacite_index_name}."
+      #   end
+      #   if client.indices.exists_alias?(name: alias_name, index: [other_index_name])
+      #     "Alias #{alias_name} for index #{other_index_name} already exists."
+      #   else
+      #     client.indices.put_alias index: other_index_name, name: alias_name
+      #     "Created alias #{alias_name} for index #{other_index_name}."
+      #   end
+      # else
+      if client.indices.exists_alias?(name: alias_name, index: [index_name])
+        "Alias #{alias_name} for index #{index_name} already exists."
+      else
+        # alias index is writeable unless it is for OtherDoi index
+        client.indices.update_aliases(
+          body: {
+            actions: [
+              {
+                add: {
+                  index: index_name,
+                  alias: alias_name,
+                  is_write_index: name != "OtherDoi",
+                },
+              },
+            ],
+          },
+        )
+
+        "Created alias #{alias_name} for index #{index_name}."
       end
+      # end
+    end
+    
+    # list all aliases
+    def list_aliases
+      client = Elasticsearch::Model.client
+      cat_client = Elasticsearch::API::Cat::CatClient.new(client)
+      puts cat_client.aliases(s: "alias")
+    end
+    
+    # delete alias
+    def delete_alias(options = {})
+      alias_name = options[:alias] || index_name
+      index_name = (options[:index] || self.index_name) + "_v1"
+      alternate_index_name = (options[:index] || self.index_name) + "_v2"
 
-      __elasticsearch__.delete_index!(index: alias_name) if __elasticsearch__.index_exists?(index: alias_name)
-      client.indices.put_alias index: index_name, name: alias_name
+      client = Elasticsearch::Model.client
 
-      "Converted index #{alias_name} into an alias."
+      # indexes in DOI model are aliased from DataciteDoi and OtherDoi models
+      # TODO switch to DataciteDoi index
+      # if self.name == "Doi"
+      #   datacite_index_name = DataciteDoi.index_name + "_v1"
+      #   datacite_alternate_index_name = DataciteDoi.index_name + "_v2"
+      #   other_index_name = OtherDoi.index_name + "_v1"
+      #   other_alternate_index_name = OtherDoi.index_name + "_v2"
+
+      #   if client.indices.exists_alias?(name: alias_name, index: [datacite_index_name])
+      #     client.indices.delete_alias index: datacite_index_name, name: alias_name
+      #     "Deleted alias #{alias_name} for index #{datacite_index_name}."
+      #   end
+      #   if client.indices.exists_alias?(name: alias_name, index: [datacite_alternate_index_name])
+      #     client.indices.delete_alias index: datacite_alternate_index_name, name: alias_name
+      #     "Deleted alias #{alias_name} for index #{datacite_alternate_index_name}."
+      #   end
+      #   if client.indices.exists_alias?(name: alias_name, index: [other_index_name])
+      #     client.indices.delete_alias index: other_index_name, name: alias_name
+      #     "Deleted alias #{alias_name} for index #{other_index_name}."
+      #   end
+      #   if client.indices.exists_alias?(name: alias_name, index: [other_alternate_index_name])
+      #     client.indices.delete_alias index: other_alternate_index_name, name: alias_name
+      #     "Deleted alias #{alias_name} for index #{other_alternate_index_name}."
+      #   end
+      # else
+      if client.indices.exists_alias?(name: alias_name, index: [index_name])
+        client.indices.delete_alias index: index_name, name: alias_name
+        "Deleted alias #{alias_name} for index #{index_name}."
+      end
+      if client.indices.exists_alias?(
+        name: alias_name, index: [alternate_index_name],
+      )
+        client.indices.delete_alias index: alternate_index_name,
+                                    name: alias_name
+        "Deleted alias #{alias_name} for index #{alternate_index_name}."
+      end
+      # end
     end
 
     # create both indexes used for aliasing
-    def create_index
-      alias_name = index_name
-      index_name = self.index_name + "_v1"
-      alternate_index_name = self.index_name + "_v2"
-
-      __elasticsearch__.create_index!(index: index_name) unless __elasticsearch__.index_exists?(index: index_name)
-      __elasticsearch__.create_index!(index: alternate_index_name) unless __elasticsearch__.index_exists?(index: alternate_index_name)
-
-      # index_name is the active index
+    def create_index(options = {})
+      alias_name = options[:alias] || index_name
+      index_name = (options[:index] || self.index_name) + "_v1"
+      alternate_index_name = (options[:index] || self.index_name) + "_v2"
       client = Elasticsearch::Model.client
-      client.indices.put_alias index: index_name, name: alias_name unless client.indices.exists_alias?(name: alias_name)
 
-      "Created indexes #{index_name} (active) and #{alternate_index_name}."
+      # delete index if it has the same name as the alias
+      if __elasticsearch__.index_exists?(index: alias_name) &&
+          !client.indices.exists_alias?(name: alias_name)
+        __elasticsearch__.delete_index!(index: alias_name)
+      end
+
+      create_template if name == "DataciteDoi" || name == "OtherDoi"
+
+      # indexes in DOI model are aliased from DataciteDoi and OtherDoi models
+      # TODO switch to DataciteDoi index
+      # if self.name == "Doi"
+      #   datacite_index_name = DataciteDoi.index_name + "_v1"
+      #   datacite_alternate_index_name = DataciteDoi.index_name + "_v2"
+      #   other_index_name = OtherDoi.index_name + "_v1"
+      #   other_alternate_index_name = OtherDoi.index_name + "_v2"
+
+      #   self.__elasticsearch__.create_index!(index: datacite_index_name) unless self.__elasticsearch__.index_exists?(index: datacite_index_name)
+      #   self.__elasticsearch__.create_index!(index: datacite_alternate_index_name) unless self.__elasticsearch__.index_exists?(index: datacite_alternate_index_name)
+      #   self.__elasticsearch__.create_index!(index: other_index_name) unless self.__elasticsearch__.index_exists?(index: other_index_name)
+      #   self.__elasticsearch__.create_index!(index: other_alternate_index_name) unless self.__elasticsearch__.index_exists?(index: other_alternate_index_name)
+
+      #   "Created indexes #{datacite_index_name}, #{other_index_name}, #{datacite_alternate_index_name}, and #{other_alternate_index_name}."
+      # else
+      unless __elasticsearch__.index_exists?(index: index_name)
+        __elasticsearch__.create_index!(index: index_name)
+      end
+      unless __elasticsearch__.index_exists?(index: alternate_index_name)
+        __elasticsearch__.create_index!(index: alternate_index_name)
+      end
+
+      "Created indexes #{index_name} and #{alternate_index_name}."
+      # end
     end
 
-    # delete both indexes used for aliasing
-    def delete_index
-      alias_name = index_name
+    # delete index and both indexes used for aliasing
+    def delete_index(options = {})
+      # client = Elasticsearch::Model.client
+
+      if options[:index]
+        __elasticsearch__.delete_index!(index: options[:index])
+        return "Deleted index #{options[:index]}."
+      end
+
+      # alias_name = index_name
       index_name = self.index_name + "_v1"
       alternate_index_name = self.index_name + "_v2"
 
-      client = Elasticsearch::Model.client
-      client.indices.delete_alias index: index_name, name: alias_name if client.indices.exists_alias?(name: alias_name, index: [index_name])
-      client.indices.delete_alias index: alternate_index_name, name: alias_name if client.indices.exists_alias?(name: alias_name, index: [alternate_index_name])
+      # indexes in DOI model are aliased from DataciteDoi and OtherDoi models
+      # TODO switch to DataciteDoi index
+      # if self.name == "Doi"
+      #   datacite_index_name = DataciteDoi.index_name + "_v1"
+      #   datacite_alternate_index_name = DataciteDoi.index_name + "_v2"
+      #   other_index_name = OtherDoi.index_name + "_v1"
+      #   other_alternate_index_name = OtherDoi.index_name + "_v2"
 
-      __elasticsearch__.delete_index!(index: index_name) if __elasticsearch__.index_exists?(index: index_name)
-      __elasticsearch__.delete_index!(index: alternate_index_name) if __elasticsearch__.index_exists?(index: alternate_index_name)
+      #   self.__elasticsearch__.delete_index!(index: datacite_index_name) if self.__elasticsearch__.index_exists?(index: datacite_index_name)
+      #   self.__elasticsearch__.delete_index!(index: datacite_alternate_index_name) if self.__elasticsearch__.index_exists?(index: datacite_alternate_index_name)
+      #   self.__elasticsearch__.delete_index!(index: other_index_name) if self.__elasticsearch__.index_exists?(index: other_index_name)
+      #   self.__elasticsearch__.delete_index!(index: other_alternate_index_name) if self.__elasticsearch__.index_exists?(index: other_alternate_index_name)
+
+      #   "Deleted indexes #{datacite_index_name}, #{other_index_name}, #{datacite_alternate_index_name}, and #{other_alternate_index_name}."
+      # else
+      if __elasticsearch__.index_exists?(index: index_name)
+        __elasticsearch__.delete_index!(index: index_name)
+      end
+      if __elasticsearch__.index_exists?(index: alternate_index_name)
+        __elasticsearch__.delete_index!(index: alternate_index_name)
+      end
 
       "Deleted indexes #{index_name} and #{alternate_index_name}."
+      # end
     end
 
     # delete and create inactive index to use current mappings

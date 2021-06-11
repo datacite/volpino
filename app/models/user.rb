@@ -193,7 +193,6 @@ class User < ApplicationRecord
   end
 
   def self.delete_expired_token(index: nil)
-    size = (options[:size] || 1000).to_i
     query = "orcid_expires_at:[1970-01-02 TO #{Date.today.strftime('%F')}]"
 
     response = User.query(query, index: index, page: { size: 1, cursor: [] })
@@ -204,7 +203,7 @@ class User < ApplicationRecord
       cursor = []
 
       while !response.results.results.empty?
-        response = User.query(query, index: index, page: { size: size, cursor: cursor })
+        response = User.query(query, index: index, page: { size: 1000, cursor: cursor })
         break if response.results.results.empty?
 
         Rails.logger.info "Deleting #{response.results.length} User ORCID tokens starting with _id #{response.results.to_a.first[:_id]}."

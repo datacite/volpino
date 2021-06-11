@@ -31,19 +31,24 @@ namespace :claim do
     puts Claim.active_index + " is the active index."
   end
 
-  desc "Start using alias indexes for claims"
-  task start_aliases: :environment do
-    puts Claim.start_aliases
-  end
-
   desc "Monitor reindexing for claims"
   task monitor_reindex: :environment do
     puts Claim.monitor_reindex
   end
 
-  desc "Wrap up starting using alias indexes for claims"
-  task finish_aliases: :environment do
-    puts Claim.finish_aliases
+  desc "Create alias for claims"
+  task create_alias: :environment do
+    puts Claim.create_alias(index: ENV["INDEX"], alias: ENV["ALIAS"])
+  end
+
+  desc "List aliases for claims"
+  task list_aliases: :environment do
+    puts Claim.list_aliases
+  end
+
+  desc "Delete alias for claims"
+  task delete_alias: :environment do
+    puts Claim.delete_alias(index: ENV["INDEX"], alias: ENV["ALIAS"])
   end
 
   desc "Import all claims"
@@ -81,13 +86,13 @@ namespace :claim do
     end
   end
 
-  desc "Push all waiting claims"
-  task waiting: :environment do
-    Claim.waiting.find_each do |claim|
-      ClaimJob.perform_later(claim)
-      puts "[#{claim.aasm_state}] Pushed waiting claim #{claim.doi} for user #{claim.orcid} to ORCID."
-    end
-  end
+  # desc "Push all waiting claims"
+  # task waiting: :environment do
+  #   Claim.waiting.find_each do |claim|
+  #     ClaimJob.perform_later(claim)
+  #     puts "[#{claim.aasm_state}] Pushed waiting claim #{claim.doi} for user #{claim.orcid} to ORCID."
+  #   end
+  # end
 
   desc "Get notification_access_token"
   task get_notification_access_token: :environment do

@@ -31,19 +31,24 @@ namespace :user do
     puts User.active_index + " is the active index."
   end
 
-  desc "Start using alias indexes for users"
-  task start_aliases: :environment do
-    puts User.start_aliases
-  end
-
   desc "Monitor reindexing for users"
   task monitor_reindex: :environment do
     puts User.monitor_reindex
   end
 
-  desc "Wrap up starting using alias indexes for users"
-  task finish_aliases: :environment do
-    puts User.finish_aliases
+  desc "Create alias for users"
+  task create_alias: :environment do
+    puts User.create_alias(index: ENV["INDEX"], alias: ENV["ALIAS"])
+  end
+
+  desc "List aliases for users"
+  task list_aliases: :environment do
+    puts User.list_aliases
+  end
+
+  desc "Delete alias for users"
+  task delete_alias: :environment do
+    puts User.delete_alias(index: ENV["INDEX"], alias: ENV["ALIAS"])
   end
 
   desc "Import all users"
