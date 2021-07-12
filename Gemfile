@@ -6,7 +6,7 @@ gem "rails", "~> 5.2.0"
 
 gem "aasm", "~> 5.0", ">= 5.0.6"
 gem "active_model_serializers", "~> 0.10.10"
-gem "addressable", "~> 2.7"
+gem "addressable", "~> 2.8"
 gem "aws-sdk-s3", require: false
 gem "aws-sdk-sqs", "~> 1.23", ">= 1.23.1"
 gem "base32-crockford-checksum", "~> 0.2.3"
