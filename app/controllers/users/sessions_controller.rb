@@ -38,6 +38,8 @@ class Users::SessionsController < Devise::SessionsController
                ".stage.datacite.org"
              elsif Rails.env.stage?
                ".test.datacite.org"
+             else
+               "localhost"
              end
 
     # URI.encode optional parameter needed to encode colon
