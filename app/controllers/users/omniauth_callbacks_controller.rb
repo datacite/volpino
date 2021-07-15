@@ -47,22 +47,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         redirect_to stored_location_for(:user) || setting_path("me")
       end
     elsif @user = User.where(github_uid: auth.uid).first
-      domain = if Rails.env.production?
-        ".datacite.org"
-      elsif Rails.env.stage? && ENV["ES_PREFIX"].present?
-        ".stage.datacite.org"
-      elsif Rails.env.stage?
-        ".test.datacite.org"
-      else
-        "localhost"
-      end
-
-      cookies[:_datacite] = {
-        value: encode_cookie(@user.jwt),
-        secure: !Rails.env.development? && !Rails.env.test?,
-        expires: 30.days.from_now,
-        domain: domain
-      }
+      cookies[:_datacite] = encode_cookie(@user.jwt)
 
       sign_in @user
 
@@ -117,12 +102,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         "localhost"
       end
 
-      cookies[:_datacite] = {
-        value: encode_cookie(@user.jwt),
-        secure: !Rails.env.development? && !Rails.env.test?,
-        expires: 30.days.from_now,
-        domain: domain
-      }
+      cookies[:_datacite] = encode_cookie(@user.jwt)
 
       redirect_to stored_location_for(:user) || setting_path("me")
     else
@@ -164,12 +144,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         "localhost"
       end
 
-      cookies[:_datacite] = {
-        value: encode_cookie(@user.jwt),
-        secure: !Rails.env.development? && !Rails.env.test?,
-        expires: 30.days.from_now,
-        domain: domain
-      }
+      cookies[:_datacite] = encode_cookie(@user.jwt)
 
       if stored_location_for(:user) == ENV["BLOG_URL"] + "/admin/"
         if @user.github_token.blank?

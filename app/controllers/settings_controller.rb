@@ -12,23 +12,8 @@ class SettingsController < ApplicationController
   def update
     @user.update(safe_params)
 
-    domain = if Rails.env.production?
-      ".datacite.org"
-    elsif Rails.env.stage? && ENV["ES_PREFIX"].present?
-      ".stage.datacite.org"
-    elsif Rails.env.stage?
-      ".test.datacite.org"
-    else
-      "localhost"
-    end
-
     # refresh cookie
-    cookies[:_datacite] = { 
-      value: encode_cookie(@user.jwt),
-      secure: !Rails.env.development? && !Rails.env.test?,
-      expires: 30.days.from_now,
-      domain: domain
-    }
+    cookies[:_datacite] = encode_cookie(@user.jwt)
 
     render :show
   end

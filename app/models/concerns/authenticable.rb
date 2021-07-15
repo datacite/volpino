@@ -40,6 +40,8 @@ module Authenticable
                  ".stage.datacite.org"
                elsif Rails.env.stage?
                  ".test.datacite.org"
+               else
+                 "localhost"
                end
 
       # URI.encode optional parameter needed to encode colon
