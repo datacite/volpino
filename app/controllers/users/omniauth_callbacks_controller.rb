@@ -126,7 +126,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if Time.zone.now > @user.expires_at || omniauth.present?
       auth_hash = User.get_auth_hash(auth, omniauth)
-      # @user.update(auth_hash)
+      @user.update(auth_hash)
 
       # push GitHub external identifier to ORCID if GitHub account is linked
       GithubJob.perform_later(@user) if @user.github_put_code.blank? && @user.github.present?
