@@ -7,5 +7,7 @@ class IndexJob < ApplicationJob
 
   def perform(obj)
     obj.__elasticsearch__.index_document
+  rescue SocketError
+    # ignore missing Elasticsearch socket
   end
 end
