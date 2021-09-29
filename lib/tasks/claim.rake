@@ -127,6 +127,27 @@ namespace :claim do
     puts "Claim for ORCID ID #{ENV['ORCID']} and DOI #{ENV['DOI']} created."
   end
 
+
+  desc "Force run claim"
+  task claim: :environment do
+    if ENV["DOI"].nil?
+      puts "ENV['DOI'] is required"
+      exit
+    end
+
+    if ENV["ORCID"].nil?
+      puts "ENV['ORCID'] is required"
+      exit
+    end
+
+    claim = Claim.where(orcid: ENV["ORCID"],
+                        doi: ENV["DOI"]).first_or_initialize
+
+    claim.process_data
+
+    puts "Claim for ORCID ID #{ENV['ORCID']} and DOI #{ENV['DOI']} triggered."
+  end
+
   desc "Queue claim jobs for all users"
   task all: :environment do
     User.find_each do |user|
