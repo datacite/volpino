@@ -50,6 +50,7 @@ ENV["ES_SCHEME"] ||= "http"
 ENV["ES_PORT"] ||= "80"
 ENV["ES_NAME"] ||= "elasticsearch"
 ENV["ES_PREFIX"] ||= ""
+ENV["SANDBOX"] ||= false
 
 module Volpino
   class Application < Rails::Application

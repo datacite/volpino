@@ -258,7 +258,7 @@ class Claim < ApplicationRecord
     return OpenStruct.new(body: { "skip" => true, "reason" => "Too many claims. Only 10,000 claims allowed." }) if user.claims.total_count > 10000
 
     # missing data raise errors
-    # return OpenStruct.new(body: { "errors" => [{ "title" => "Missing data" }] }) if work.data.nil?
+    return OpenStruct.new(body: { "errors" => [{ "title" => "Missing data" }] }) if work.data.nil?
 
     # orcid_token has expired, but is not default 1970-01-01
     return OpenStruct.new(body: { "errors" => [{ "status" => 401, "title" => "token has expired." }] }) if (Date.new(1970,1,2).beginning_of_day..Date.today.end_of_day) === user.orcid_expires_at
@@ -266,7 +266,7 @@ class Claim < ApplicationRecord
     # validate data
     return OpenStruct.new(body: { "errors" => work.validation_errors.map { |error| { "title" => error } } }) if work.validation_errors.present?
 
-    options[:sandbox] = (ENV["ORCID_URL"] == "https://sandbox.orcid.org")
+    options[:sandbox] = ENV["SANDBOX"] || (ENV["ORCID_URL"] == "https://sandbox.orcid.org")
 
     # create or delete entry in ORCID record. If put_code exists, update entry
     if to_be_created? && put_code.present?
@@ -286,7 +286,8 @@ class Claim < ApplicationRecord
   end
 
   def work
-    Work.new(doi: doi, orcid: orcid, orcid_token: orcid_token, put_code: put_code)
+    sandbox = ENV["SANDBOX"] || (ENV["ORCID_URL"] == "https://sandbox.orcid.org")
+    Work.new(doi: doi, orcid: orcid, orcid_token: orcid_token, put_code: put_code, sandbox: sandbox)
   end
 
   def notification
@@ -375,7 +376,7 @@ class Claim < ApplicationRecord
       else
         msg = nil
       end
-  
+
       { status: msg["status"] || 400, title: title }
     end
   end
@@ -384,7 +385,7 @@ class Claim < ApplicationRecord
 
   def set_defaults
     self.claim_action = "create" if claim_action.blank?
-    
+
     self.error_messages = format_error_message(error_messages)
   end
 end
