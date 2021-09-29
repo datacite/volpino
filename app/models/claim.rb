@@ -182,6 +182,7 @@ class Claim < ApplicationRecord
   end
 
   def queue_claim_job
+    logger.info "[Queue] #{uid} – #{doi}: Queued for claiming"
     ClaimJob.perform_later(self)
   end
 
