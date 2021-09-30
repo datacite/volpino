@@ -267,7 +267,7 @@ class Claim < ApplicationRecord
     # validate data
     return OpenStruct.new(body: { "errors" => work.validation_errors.map { |error| { "title" => error } } }) if work.validation_errors.present?
 
-    options[:sandbox] = ENV["SANDBOX"] || (ENV["ORCID_URL"] == "https://sandbox.orcid.org")
+    options[:sandbox] = ENV["SANDBOX"].present? || (ENV["ORCID_URL"] == "https://sandbox.orcid.org")
 
     # create or delete entry in ORCID record. If put_code exists, update entry
     if to_be_created? && put_code.present?
@@ -287,7 +287,7 @@ class Claim < ApplicationRecord
   end
 
   def work
-    sandbox = ENV["SANDBOX"] || (ENV["ORCID_URL"] == "https://sandbox.orcid.org")
+    sandbox = ENV["SANDBOX"].present? || (ENV["ORCID_URL"] == "https://sandbox.orcid.org")
     Work.new(doi: doi, orcid: orcid, orcid_token: orcid_token, put_code: put_code, sandbox: sandbox)
   end
 
