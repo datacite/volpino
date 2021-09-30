@@ -47,7 +47,7 @@ class Claim < ApplicationRecord
     state :working, :failed, :done, :ignored, :deleted, :notified
 
     event :start do
-      transitions from: %i[waiting failed ignored deleted notified], to: :working
+      transitions from: %i[waiting ignored deleted notified], to: :working
     end
 
     event :finish do
