@@ -2,6 +2,7 @@ class ClaimJob < ApplicationJob
   queue_as :volpino
 
   rescue_from ActiveJob::DeserializationError, ActiveRecord::ConnectionTimeoutError, Faraday::TimeoutError, RuntimeError do |error|
+    Rails.logger.info "Error triggered from claim job."
     Rails.logger.error error.message
   end
 
