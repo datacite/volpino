@@ -123,8 +123,8 @@ class ClaimsController < BaseController
   end
 
   def destroy
-    if @claim
-      @claim.assign_attributes(safe_params.slice(:source_id, 'delete'))
+    if @claim.present?
+      @claim.assign_attributes(safe_params.slice(:claim_action: "delete"))
 
       if @claim.save
         options = {}
