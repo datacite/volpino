@@ -123,10 +123,16 @@ class ClaimsController < BaseController
   end
 
   def destroy
-    if @claim.destroy
-      render json: { data: {} }, meta: { status: "deleted" }, status: :ok
+    @claim.assign_attributes(safe_params.slice(:source_id, 'delete'))
+
+    if @claim.save
+      options = {}
+      options[:include] = @include
+      options[:is_collection] = false
+      render json: ClaimSerializer.new(@claim, options).serialized_json, status: :accepted
     else
-      render json: { errors: [{ status: 400, title: "An error occured." }] }, status: :bad_request
+      logger.error @claim.errors.inspect
+      render json: serialize_errors(@claim.errors), include: @include, status: :unprocessable_entity
     end
   end
 
