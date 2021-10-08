@@ -220,15 +220,15 @@ class Claim < ApplicationRecord
       notify
     else
       if to_be_created?
-        write_attribute(:claimed_at, Time.zone.now)
-        write_attribute(:put_code, result.body["put_code"])
-        write_attribute(:error_messages, [])
+        update_attributes(claimed_at: Time.zone.now,
+                          put_code: result.body["put_code"],
+                          error_messages: [])
 
         logger.info "[Done] #{uid} – #{doi} with Put Code #{result.body['put_code']}"
       elsif to_be_deleted?
-        write_attribute(:claimed_at, nil)
-        write_attribute(:put_code, nil)
-        write_attribute(:error_messages, [])
+        update_attributes(claimed_at: nil,
+                          put_code: nil,
+                          error_messages: [])
 
         logger.info "[Deleted] #{uid} – #{doi} with Put Code #{result.body['put_code']}"
       end
