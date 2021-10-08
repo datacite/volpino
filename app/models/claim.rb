@@ -291,7 +291,7 @@ class Claim < ApplicationRecord
     # Note that if this is ever intended in future to support claiming for non datacite dois
     # Then we will need to change following to be looked up from a better location
     agency = "datacite"
-    Work.new(doi: doi, orcid: orcid, orcid_token: orcid_token, put_code: put_code, sandbox: sandbox, agency: from)
+    Work.new(doi: doi, orcid: orcid, orcid_token: orcid_token, put_code: put_code, sandbox: sandbox, agency: agency)
   end
 
   def notification
