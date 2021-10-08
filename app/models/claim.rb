@@ -290,8 +290,8 @@ class Claim < ApplicationRecord
     sandbox = ENV["SANDBOX"].present? || (ENV["ORCID_URL"] == "https://sandbox.orcid.org")
     # Note that if this is ever intended in future to support claiming for non datacite dois
     # Then we will need to change following to be looked up from a better location
-    from = "datacite"
-    Work.new(doi: doi, orcid: orcid, orcid_token: orcid_token, put_code: put_code, sandbox: sandbox, from: from)
+    agency = "datacite"
+    Work.new(doi: doi, orcid: orcid, orcid_token: orcid_token, put_code: put_code, sandbox: sandbox, agency: from)
   end
 
   def notification
