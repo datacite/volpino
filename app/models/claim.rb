@@ -230,7 +230,7 @@ class Claim < ApplicationRecord
                           put_code: nil,
                           error_messages: [])
 
-        logger.info "[Deleted] #{uid} – #{doi} with Put Code #{result.body['put_code']}"
+        logger.info "[Deleted] #{uid} – #{doi}"
       end
 
       finish!
