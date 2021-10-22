@@ -32,7 +32,7 @@ class Claim < ApplicationRecord
 
   before_create :create_uuid
   before_validation :set_defaults
-  after_commit :queue_claim_job, on: %i[create update]
+  after_save :queue_claim_job, on: %i[create update]
 
   validates :orcid, :doi, :source_id, presence: true
 
@@ -51,7 +51,7 @@ class Claim < ApplicationRecord
     end
 
     event :finish do
-      transitions from: [:working], to: :deleted, if: [:to_be_deleted?]
+      transitions from: %i[working], to: :deleted, if: :to_be_deleted?
       transitions from: %i[waiting working failed], to: :done
     end
 
@@ -199,21 +199,18 @@ class Claim < ApplicationRecord
       return finish! if put_code.present?
 
       logger.info "[Skipped] #{uid} – #{doi}: #{result.body['reason']}"
-      write_attribute(:error_messages, [])
+      update_attribute(:error_messages, [])
 
       skip
     elsif result.body["errors"]
-      write_attribute(:error_messages, format_error_message(result.body["errors"]))
-
-      # send notification to Sentry
-      # Raven.capture_exception(RuntimeError.new(result.body["errors"].first["title"])) if ENV["SENTRY_DSN"]
+      update_attribute(:error_messages, format_error_message(result.body["errors"]))
 
       logger.error "[Error] #{uid} – #{doi}: #{format_error_message(result.body["errors"]).inspect}"
 
       error!
     elsif result.body["notification"]
-      write_attribute(:put_code, result.body["put_code"])
-      write_attribute(:error_messages, [])
+      update_attributes(put_code: result.body["put_code"],
+                        error_messages: [])
 
       logger.error "[Notification] #{uid} – #{doi} with Put Code #{result.body['put_code']}"
 
@@ -238,9 +235,6 @@ class Claim < ApplicationRecord
   end
 
   def collect_data(options = {})
-    # already claimed
-    # return OpenStruct.new(body: { "skip" => true, "reason" => "already claimed." }) if to_be_created? && put_code.present?
-
     # user has not signed up yet or orcid_token is missing
     if user.blank? || orcid_token.blank?
       if ENV["NOTIFICATION_ACCESS_TOKEN"].present?
@@ -264,6 +258,9 @@ class Claim < ApplicationRecord
     # orcid_token has expired, but is not default 1970-01-01
     return OpenStruct.new(body: { "errors" => [{ "status" => 401, "title" => "token has expired." }] }) if (Date.new(1970,1,2).beginning_of_day..Date.today.end_of_day) === user.orcid_expires_at
 
+    # Don't go to orcid if we've got a claimed_at date but marked as still to create with no put_code
+    #return OpenStruct.new(body: { "skip" => true, "reason" => "Already claimed." }) if to_be_created? && !put_code.present? && claimed_at.present?
+
     # validate data
     return OpenStruct.new(body: { "errors" => work.validation_errors.map { |error| { "title" => error } } }) if work.validation_errors.present?
 
@@ -275,7 +272,7 @@ class Claim < ApplicationRecord
       work.update_work(options)
     elsif to_be_created?
       logger.info "Claim #{uid} – #{doi} created."
-       work.create_work(options)
+      work.create_work(options)
     elsif to_be_deleted?
       logger.info "Claim #{uid} – #{doi} deleted."
       work.delete_work(options)
