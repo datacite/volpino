@@ -1,5 +1,5 @@
-FROM phusion/passenger-full:1.0.9
-LABEL maintainer="mfenner@datacite.org"
+FROM phusion/passenger-full:2.0.0
+LABEL maintainer="support@datacite.org"
 
 # Set correct environment variables
 ENV HOME /home/app
