@@ -15,8 +15,8 @@ RUN groupmod -g 1000 app
 # Use baseimage-docker's init process
 CMD ["/sbin/my_init"]
 
-# Use Ruby 2.6.5
-RUN bash -lc 'rvm --default use ruby-2.6.5'
+# Use Ruby 2.6.8
+RUN bash -lc 'rvm --default use ruby-2.6.8'
 
 # Set debconf to run non-interactively
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
