@@ -217,9 +217,16 @@ class Claim < ApplicationRecord
       notify
     else
       if to_be_created?
-        update_columns(claimed_at: Time.zone.now,
-                          put_code: result.body["put_code"],
-                          error_messages: [])
+        to_update = {
+          :claimed_at => Time.zone.now,
+          :error_messages => []
+        }
+
+        if result.body["put_code"].present?
+          to_update[:put_code] = result.body["put_code"]
+        end
+
+        update_columns(to_update)
 
         logger.info "[Done] #{uid} – #{doi} with Put Code #{result.body['put_code']}"
       elsif to_be_deleted?
