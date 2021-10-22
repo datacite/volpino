@@ -32,7 +32,7 @@ class Claim < ApplicationRecord
 
   before_create :create_uuid
   before_validation :set_defaults
-  after_save :queue_claim_job, on: %i[create update]
+  after_commit :queue_claim_job, on: %i[create update]
 
   validates :orcid, :doi, :source_id, presence: true
 
@@ -199,17 +199,17 @@ class Claim < ApplicationRecord
       return finish! if put_code.present?
 
       logger.info "[Skipped] #{uid} – #{doi}: #{result.body['reason']}"
-      update_attribute(:error_messages, [])
+      update_column(:error_messages, [])
 
       skip
     elsif result.body["errors"]
-      update_attribute(:error_messages, format_error_message(result.body["errors"]))
+      update_column(:error_messages, format_error_message(result.body["errors"]))
 
       logger.error "[Error] #{uid} – #{doi}: #{format_error_message(result.body["errors"]).inspect}"
 
       error!
     elsif result.body["notification"]
-      update_attributes(put_code: result.body["put_code"],
+      update_column(put_code: result.body["put_code"],
                         error_messages: [])
 
       logger.error "[Notification] #{uid} – #{doi} with Put Code #{result.body['put_code']}"
@@ -217,13 +217,13 @@ class Claim < ApplicationRecord
       notify
     else
       if to_be_created?
-        update_attributes(claimed_at: Time.zone.now,
+        update_columns(claimed_at: Time.zone.now,
                           put_code: result.body["put_code"],
                           error_messages: [])
 
         logger.info "[Done] #{uid} – #{doi} with Put Code #{result.body['put_code']}"
       elsif to_be_deleted?
-        update_attributes(claimed_at: nil,
+        update_columns(claimed_at: nil,
                           put_code: nil,
                           error_messages: [])
 
