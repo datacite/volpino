@@ -52,7 +52,7 @@ class Claim < ApplicationRecord
 
     event :finish do
       transitions from: %i[working], to: :deleted, if: :to_be_deleted?
-      transitions from: %i[waiting working failed], to: :done
+      transitions from: %i[waiting working failed], to: :done, unless: :to_be_deleted?
     end
 
     event :notify do
