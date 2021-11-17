@@ -110,6 +110,9 @@ class ClaimsController < BaseController
     end
 
     if @claim.save
+
+      @claim.queue_claim_job
+
       options = {}
       options[:include] = @include
       options[:is_collection] = false
@@ -127,6 +130,8 @@ class ClaimsController < BaseController
       @claim.assign_attributes(claim_action: "delete")
 
       if @claim.save
+        @claim.queue_claim_job
+
         options = {}
         options[:include] = @include
         options[:is_collection] = false

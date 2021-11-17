@@ -32,7 +32,6 @@ class Claim < ApplicationRecord
 
   before_create :create_uuid
   before_validation :set_defaults
-  after_commit :queue_claim_job, on: %i[create update]
 
   validates :orcid, :doi, :source_id, presence: true
 
