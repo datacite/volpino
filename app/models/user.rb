@@ -374,6 +374,7 @@ class User < ApplicationRecord
 
       claim = Claim.where(orcid: orcid, doi: doi).first_or_initialize
       if claim.put_code.blank?
+        logger.info "[User] #{orcid} – #{doi}: Updating claim details for user"
         source_id = claim.new_record? ? "orcid_search" : claim.source_id
         claim.assign_attributes(source_id: source_id,
                                 state: "done",
