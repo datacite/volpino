@@ -102,7 +102,7 @@ class ClaimsController < BaseController
 
     if exists
       authorize! :update, @claim
-      @claim.assign_attributes(safe_params.slice(:source_id, :claim_action))
+      @claim.assign_attributes(safe_params.slice(:source_id, :claim_action).merge({aasm_state: "waiting"}))
     else
       @claim = Claim.new(safe_params)
       authorize! :new, @claim
@@ -127,7 +127,7 @@ class ClaimsController < BaseController
 
   def destroy
     if @claim.present?
-      @claim.assign_attributes(claim_action: "delete")
+      @claim.assign_attributes(claim_action: "delete", aasm_state: "waiting")
 
       if @claim.save
         @claim.queue_claim_job
