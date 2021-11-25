@@ -62,9 +62,6 @@ class Claim < ApplicationRecord
       transitions from: %i[waiting working ignored deleted notified], to: :failed
     end
 
-    event :skip do
-      transitions from: %i[waiting working failed deleted notified], to: :ignored
-    end
   end
 
   alias_attribute :created, :created_at
@@ -194,14 +191,7 @@ class Claim < ApplicationRecord
 
     result = collect_data
 
-    if result.body["skip"]
-      return finish! if put_code.present?
-
-      logger.info "[Skipped] #{uid} – #{doi}: #{result.body['reason']}"
-      update_column(:error_messages, [])
-
-      skip
-    elsif result.body["errors"]
+    if result.body["errors"]
       update_column(:error_messages, format_error_message(result.body["errors"]))
 
       logger.error "[Error] #{uid} – #{doi}: #{format_error_message(result.body["errors"]).inspect}"
@@ -248,15 +238,15 @@ class Claim < ApplicationRecord
         response.body["notification"] = true
         return response
       else
-        return OpenStruct.new(body: { "skip" => true, "reason" => "No user and/or ORCID token" })
+        return OpenStruct.new(body: { "errors" => [{ "title" => "No user and/or ORCID token" }] })
       end
     end
 
     # user has not given permission for auto-update
-    return OpenStruct.new(body: { "skip" => true, "reason" => "No auto-update permission" }) if source_id == "orcid_update" && user && !user.auto_update
+    return OpenStruct.new(body: { "errors" => [{ "title" => "No auto-update permission" }] }) if source_id == "orcid_update" && user && !user.auto_update
 
     # user has too many claims already
-    return OpenStruct.new(body: { "skip" => true, "reason" => "Too many claims. Only 10,000 claims allowed." }) if user.claims.total_count > 10000
+    return OpenStruct.new(body: { "errors" => [{ "title" => "Too many claims. Only 10,000 claims allowed." }] }) if user.claims.total_count > 10000
 
     # missing data raise errors
     return OpenStruct.new(body: { "errors" => [{ "title" => "Missing data" }] }) if work.data.nil?
