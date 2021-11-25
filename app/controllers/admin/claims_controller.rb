@@ -22,6 +22,8 @@ class Admin::ClaimsController < ApplicationController
 
     @claim.update(safe_params)
 
+    @claim.queue_claim_job
+
     load_index
 
     render :index
