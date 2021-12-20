@@ -100,6 +100,8 @@ TYPE_OF_WORK = {
 
   # Legacy types from older schema versions
   "Film" => "other",
+  ## V3.0 https://info.orcid.org/faq/what-work-types-does-orcid-support/
+  "Dissertation" => "dissertation-thesis",
   # pick up other legacy types as we go along
 }.freeze
 
