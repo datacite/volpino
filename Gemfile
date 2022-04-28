@@ -74,7 +74,7 @@ gem "maremma", ">= 4.3"
 gem "rack-utf8_sanitizer", "~> 1.6"
 
 gem "coffee-rails", "~> 4.1", ">= 4.1.1"
-gem "git", "~> 1.5"
+gem "git", "~> 1.11"
 gem "mini_magick", "~> 4.5", ">= 4.5.1"
 gem "rack-jwt"
 gem "remotipart", "~> 1.2"
