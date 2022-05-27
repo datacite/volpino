@@ -476,7 +476,7 @@ GEM
       docopt (~> 0.5)
       sysrandom
     racc (1.5.2)
-    rack (2.2.3)
+    rack (2.2.3.1)
     rack-cors (1.1.1)
       rack (>= 2.0.0)
     rack-jwt (0.4.0)
