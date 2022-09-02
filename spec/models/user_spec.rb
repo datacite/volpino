@@ -84,16 +84,16 @@ describe User, type: :model, vcr: true, elasticsearch: true do
     end
   end
 
-  describe "claims from notifications" do
+  describe "claims from failed" do
     subject { FactoryBot.create(:valid_user) }
 
-    let!(:claim) { FactoryBot.create(:claim, user: subject, orcid: "0000-0001-6528-2027", doi: "10.6084/M9.FIGSHARE.1041821", state: "notified") }
+    let!(:claim) { FactoryBot.create(:claim, user: subject, orcid: "0000-0001-6528-2027", doi: "10.6084/M9.FIGSHARE.1041821", state: "failed") }
 
     it "queue_claims_jobs" do
       subject.queue_claim_jobs
       expect(subject.claims.count).to eq(1)
       updated_claim = subject.claims.first
-      expect(updated_claim.state).to eq("notified")
+      expect(updated_claim.state).to eq("failed")
     end
   end
 end
