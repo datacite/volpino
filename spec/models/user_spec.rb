@@ -96,4 +96,16 @@ describe User, type: :model, vcr: true, elasticsearch: true do
       expect(updated_claim.state).to eq("failed")
     end
   end
+
+  describe "uid containing lowercase x" do
+    subject { FactoryBot.create(:valid_user, uid: "0000-0002-1111-827x") }
+
+    let!(:claim) { FactoryBot.create(:claim, user: subject, orcid: "0000-0002-1111-827x", doi: "10.6084/M9.FIGSHARE.1041821", state: "failed") }
+
+    it "creates Claim work and notification attributes with capital X for ORCID API" do
+      expect(claim.work.orcid).to eq("0000-0002-1111-827X")
+      expect(claim.notification.orcid).to eq("0000-0002-1111-827X")
+      expect(subject.claims.first.doi).to eq("10.6084/M9.FIGSHARE.1041821")
+    end
+  end
 end
