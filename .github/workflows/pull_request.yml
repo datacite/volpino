@@ -58,8 +58,8 @@ jobs:
           gem install bundler
           bundle config path vendor/bundle
           bundle install --jobs 4 --retry 3
-          sudo /etc/init.d/mysql start
-          # bundle exec rails db:setup RAILS_ENV=test      
+          # sudo /etc/init.d/mysql start
+          bundle exec rails db:setup RAILS_ENV=test      
       - name: Lint and Test
         env:
           MYSQL_PORT: ${{ job.services.mysql.ports[3306] }}
