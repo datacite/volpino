@@ -93,6 +93,7 @@ group :development, :test do
   gem "rubocop-performance", "~> 1.5", ">= 1.5.1"
   gem "rubocop-rails", "~> 2.8", ">= 2.8.1"
   gem "rubocop-packaging", "~> 0.5.1"
+  gem "rubocop-rspec", "~> 2.0", require: false
 end
 
 group :development do
