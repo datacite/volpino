@@ -7,6 +7,6 @@ describe "OmniauthCallbacks", type: :controller do
     jwt = "abc"
     cookie = subject.encode_cookie(jwt)
     expect(cookie[:value]).to start_with("{\"authenticated\":{\"authenticator\":\"authenticator:oauth2\"")
-    expect(cookie[:domain]).to be_nil
+    expect(cookie[:domain]).to eq("localhost")
   end
 end
