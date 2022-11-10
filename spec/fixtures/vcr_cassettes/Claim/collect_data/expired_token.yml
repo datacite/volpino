@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: https://doi.org/ra/10.14454
+    uri: https://api.stage.datacite.org/dois/10.14454/1x4x-9056?include=media,client
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Mozilla/5.0 (compatible; Maremma/4.9.4; mailto:info@datacite.org)
+      - Mozilla/5.0 (compatible; Maremma/4.9.5; mailto:info@datacite.org)
       Accept:
       - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
       Accept-Encoding:
@@ -16,186 +16,58 @@ http_interactions:
   response:
     status:
       code: 200
-      message: ''
+      message: OK
     headers:
       Date:
-      - Thu, 10 Jun 2021 12:11:49 GMT
-      Content-Type:
-      - application/json;charset=UTF-8
-      Connection:
-      - keep-alive
-      Content-Encoding:
-      - gzip
-      Cf-Cache-Status:
-      - DYNAMIC
-      Cf-Request-Id:
-      - 0a976f09bb00002c32daa81000000001
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Report-To:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v2?s=CuQmhabqID8XDHpu1lEWKd7mg4nCGQiklbE4VqXgA6kWGqbtpEvhALkmFgv7DeqgFMvk0exmTFSLslvtClNn8%2BOGvoDjhXg4Y4kLp3o5Pl124kJD"}],"group":"cf-nel","max_age":604800}'
-      Nel:
-      - '{"report_to":"cf-nel","max_age":604800}'
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - 65d28122b92b2c32-FRA
-      Alt-Svc:
-      - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400, h3=":443";
-        ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        H4sIAAAAAAAAA4vmUlCoBmIFBSUXf08lKwUlQwM9QxMTUxMlHYhwkCNI1CWxJNE5syRVCShYyxULAOwjuKo3AAAA
-    http_version: 
-  recorded_at: Thu, 10 Jun 2021 12:11:49 GMT
-- request:
-    method: get
-    uri: https://api.stage.datacite.org/dois/10.14454/v6e2-yc93?include=media,client
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Mozilla/5.0 (compatible; Maremma/4.9.4; mailto:info@datacite.org)
-      Accept:
-      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
-      Accept-Encoding:
-      - gzip,deflate
-  response:
-    status:
-      code: 404
-      message: Not Found
-    headers:
-      Date:
-      - Thu, 10 Jun 2021 12:11:49 GMT
+      - Fri, 19 Aug 2022 17:02:27 GMT
       Content-Type:
       - application/json; charset=utf-8
       Connection:
       - keep-alive
       Status:
-      - 404 Not Found
+      - 200 OK
+      X-Anonymous-Consumer:
+      - 'true'
       Cache-Control:
-      - no-cache
+      - max-age=0, private, must-revalidate
       Vary:
-      - Accept-Encoding, Origin
+      - Accept-Encoding
       Content-Encoding:
       - gzip
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
       X-Request-Id:
-      - 0d254798-437b-4ef2-a362-3aaac6aa4cb2
+      - d4ec34dc-3ce0-45a6-b793-efd5667835bd
+      X-Download-Options:
+      - noopen
+      Etag:
+      - W/"825cc83c62bbe5acb50c1cb9ae2c599b"
+      X-Frame-Options:
+      - SAMEORIGIN
       X-Runtime:
-      - '0.021120'
-      X-Rack-Cors:
-      - miss; no-origin
+      - '0.036727'
+      X-Content-Type-Options:
+      - nosniff
       X-Powered-By:
-      - Phusion Passenger(R) 6.0.9
+      - Phusion Passenger(R) 6.0.14
       Server:
-      - nginx/1.14.0 + Phusion Passenger(R) 6.0.9
+      - nginx/1.18.0 + Phusion Passenger(R) 6.0.14
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, PUT, PATCH, DELETE, OPTIONS
+      Access-Control-Allow-Headers:
+      - Accept,Access-Control-Allow-Origin,Access-Control-Expose-Headers,Access-Control-Allow-Methods,Access-Control-Allow-Headers,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Mx-ReqToken,X-Requested-With
+      Access-Control-Expose-Headers:
+      - Authorization
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAIUBwmAAAwzHMQqAMAwF0KuELC4iDp08h5s4FP1qsTSQpKCId9ftvYehKmo8TA+bR68/OfSBW/bkGf/GA6QwqbqAbqkUFZRFzlR22kRpFVhpnHAl847f+f0AAAD//wMArpOW4VcAAAA=
+        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
     http_version: 
-  recorded_at: Thu, 10 Jun 2021 12:11:50 GMT
-- request:
-    method: get
-    uri: https://doi.org/ra/10.14454
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Mozilla/5.0 (compatible; Maremma/4.9.4; mailto:info@datacite.org)
-      Accept:
-      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
-      Accept-Encoding:
-      - gzip,deflate
-  response:
-    status:
-      code: 200
-      message: ''
-    headers:
-      Date:
-      - Thu, 10 Jun 2021 12:11:50 GMT
-      Content-Type:
-      - application/json;charset=UTF-8
-      Connection:
-      - keep-alive
-      Content-Encoding:
-      - gzip
-      Cf-Cache-Status:
-      - DYNAMIC
-      Cf-Request-Id:
-      - 0a976f0bad00001f2d229b0000000001
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Report-To:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v2?s=QCy4XgObIPK3nSsTZticXo2hDKJFCAc5aL3mMGzHuAtC1tdqI%2FJJKlM%2BNBcuenqxK1HMGwSCv%2Bv3wW0JIHyK1De1tHXh4JcQTN2%2Fh59kFWwM2yiJ"}],"group":"cf-nel","max_age":604800}'
-      Nel:
-      - '{"report_to":"cf-nel","max_age":604800}'
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - 65d28125e8a91f2d-FRA
-      Alt-Svc:
-      - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400, h3=":443";
-        ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        H4sIAAAAAAAAA4vmUlCoBmIFBSUXf08lKwUlQwM9QxMTUxMlHYhwkCNI1CWxJNE5syRVCShYyxULAOwjuKo3AAAA
-    http_version: 
-  recorded_at: Thu, 10 Jun 2021 12:11:50 GMT
-- request:
-    method: get
-    uri: https://api.stage.datacite.org/dois/10.14454/v6e2-yc93?include=media,client
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Mozilla/5.0 (compatible; Maremma/4.9.4; mailto:info@datacite.org)
-      Accept:
-      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
-      Accept-Encoding:
-      - gzip,deflate
-  response:
-    status:
-      code: 404
-      message: Not Found
-    headers:
-      Date:
-      - Thu, 10 Jun 2021 12:11:50 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Connection:
-      - keep-alive
-      Status:
-      - 404 Not Found
-      Cache-Control:
-      - no-cache
-      Vary:
-      - Accept-Encoding, Origin
-      Content-Encoding:
-      - gzip
-      X-Runtime:
-      - '0.019920'
-      X-Rack-Cors:
-      - miss; no-origin
-      X-Request-Id:
-      - 8ba9863a-b900-4a60-832b-96f29013ec42
-      X-Powered-By:
-      - Phusion Passenger(R) 6.0.9
-      Server:
-      - nginx/1.14.0 + Phusion Passenger(R) 6.0.9
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        H4sIAIYBwmAAAwzHMQqAMAwF0KuELC4iDp08h5s4FP1qsTSQpKCId9ftvYehKmo8TA+bR68/OfSBW/bkGf/GA6QwqbqAbqkUFZRFzlR22kRpFVhpnHAl847f+f0AAAD//wMArpOW4VcAAAA=
-    http_version: 
-  recorded_at: Thu, 10 Jun 2021 12:11:50 GMT
+  recorded_at: Fri, 19 Aug 2022 17:02:27 GMT
 recorded_with: VCR 3.0.3

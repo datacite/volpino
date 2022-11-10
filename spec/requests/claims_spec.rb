@@ -402,10 +402,10 @@ describe "/claims", type: :request, elasticsearch: true do
     context "as admin user" do
       it "JSON" do
         delete uri, nil, headers
-        expect(last_response.status).to eq(200)
+        expect(last_response.status).to eq(202)
 
         response = JSON.parse(last_response.body)
-        expect(response).to eq("data" => {})
+        expect(response.dig("data", "attributes", "claimAction")).to eq("delete")
       end
     end
 
