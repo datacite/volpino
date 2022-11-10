@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RandomController < BaseController
   before_action :authenticate_user_from_token!
   load_and_authorize_resource Phrase

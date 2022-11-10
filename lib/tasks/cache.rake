@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :cache do
   desc "Update cached API responses for admin dashboard"
   task update: :environment do

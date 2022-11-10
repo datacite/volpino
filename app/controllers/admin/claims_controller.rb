@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admin::ClaimsController < ApplicationController
   before_action :load_user, only: %i[index edit update destroy]
   before_action :load_claim, only: %i[edit update destroy]
@@ -36,67 +38,65 @@ class Admin::ClaimsController < ApplicationController
   end
 
   protected
+    def load_index
+      sort = case params[:sort]
+             when "relevance" then { "_score" => { order: "desc" } }
+             when "doi" then { "doi" => { order: "asc" } }
+             when "-doi" then { "doi" => { order: "desc" } }
+             when "orcid" then { orcid: { order: "asc" } }
+             when "-orcid" then { orcid: { order: "desc" } }
+             when "created" then { created: { order: "asc" } }
+             when "-created" then { created: { order: "desc" } }
+             when "updated" then { updated: { order: "asc" } }
+             when "-updated" then { updated: { order: "desc" } }
+             else { "updated" => { order: "desc" } }
+      end
 
-  def load_index
-    sort = case params[:sort]
-           when "relevance" then { "_score" => { order: "desc" } }
-           when "doi" then { "doi" => { order: "asc" } }
-           when "-doi" then { "doi" => { order: "desc" } }
-           when "orcid" then { orcid: { order: "asc" } }
-           when "-orcid" then { orcid: { order: "desc" } }
-           when "created" then { created: { order: "asc" } }
-           when "-created" then { created: { order: "desc" } }
-           when "updated" then { updated: { order: "asc" } }
-           when "-updated" then { updated: { order: "desc" } }
-           else { "updated" => { order: "desc" } }
-           end
+      @page = params[:page] || 1
 
-    @page = params[:page] || 1
+      response = Claim.query(params[:query],
+                             dois: params[:dois],
+                             user_id: params[:user_id],
+                             source_id: params[:source_id],
+                             claim_action: params[:claim_action],
+                             state: params[:state],
+                             created: params[:created],
+                             claimed: params[:claimed],
+                             page: { number: @page },
+                             sort: sort)
 
-    response = Claim.query(params[:query],
-                           dois: params[:dois],
-                           user_id: params[:user_id],
-                           source_id: params[:source_id],
-                           claim_action: params[:claim_action],
-                           state: params[:state],
-                           created: params[:created],
-                           claimed: params[:claimed],
-                           page: { number: @page },
-                           sort: sort)
+      @total = response.results.total
+      @claims = response.results
 
-    @total = response.results.total
-    @claims = response.results
-
-    @created = @total > 0 ? facet_by_year(response.response.aggregations.created.buckets) : nil
-    @sources = @total > 0 ? facet_by_key(response.response.aggregations.sources.buckets) : nil
-    @users = @total > 0 ? facet_by_id(response.response.aggregations.users.buckets) : nil
-    @claim_actions = @total > 0 ? facet_by_key(response.response.aggregations.claim_actions.buckets) : nil
-    @states = @total > 0 ? facet_by_key(response.response.aggregations.states.buckets) : nil
-  end
-
-  def load_user
-    if user_signed_in?
-      @user = current_user
-    else
-      fail CanCan::AccessDenied.new("Please sign in first.", :read, User)
+      @created = @total > 0 ? facet_by_year(response.response.aggregations.created.buckets) : nil
+      @sources = @total > 0 ? facet_by_key(response.response.aggregations.sources.buckets) : nil
+      @users = @total > 0 ? facet_by_id(response.response.aggregations.users.buckets) : nil
+      @claim_actions = @total > 0 ? facet_by_key(response.response.aggregations.claim_actions.buckets) : nil
+      @states = @total > 0 ? facet_by_key(response.response.aggregations.states.buckets) : nil
     end
-  end
 
-  def load_claim
-    if user_signed_in?
-      @claim = Claim.where(uuid: params[:id]).first
-    else
-      fail CanCan::AccessDenied.new("Please sign in first.", :read, Claim)
+    def load_user
+      if user_signed_in?
+        @user = current_user
+      else
+        fail CanCan::AccessDenied.new("Please sign in first.", :read, User)
+      end
     end
-  end
+
+    def load_claim
+      if user_signed_in?
+        @claim = Claim.where(uuid: params[:id]).first
+      else
+        fail CanCan::AccessDenied.new("Please sign in first.", :read, Claim)
+      end
+    end
 
   private
-
-  def safe_params
-    params.require(:claim).permit(:state,
-                                  :aasm_state,
-                                  :put_code,
-                                  :claim_action,
-                                  :error_messages)
-  end
+    def safe_params
+      params.require(:claim).permit(:state,
+                                    :aasm_state,
+                                    :put_code,
+                                    :claim_action,
+                                    :error_messages)
+    end
 end

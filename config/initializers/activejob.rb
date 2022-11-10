@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ActiveJob::Base
   # monkey patch for ActiveJob bug, see https://github.com/rails/rails/issues/22044
   def serialize

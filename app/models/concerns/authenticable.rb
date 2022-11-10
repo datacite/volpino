@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Authenticable
   extend ActiveSupport::Concern
 
@@ -35,14 +37,14 @@ module Authenticable
       value = '{"authenticated":{"authenticator":"authenticator:oauth2","access_token":"' + jwt + '","expires_in":' + expires_in.to_s + ',"expires_at":' + expires_at.to_s + "}}"
 
       domain = if Rails.env.production?
-                 ".datacite.org"
-               elsif Rails.env.stage? && ENV["ES_PREFIX"].present?
-                 ".stage.datacite.org"
-               elsif Rails.env.stage?
-                 ".test.datacite.org"
-               else
-                 "localhost"
-               end
+        ".datacite.org"
+      elsif Rails.env.stage? && ENV["ES_PREFIX"].present?
+        ".stage.datacite.org"
+      elsif Rails.env.stage?
+        ".test.datacite.org"
+      else
+        "localhost"
+      end
 
       # URI.encode optional parameter needed to encode colon
       { value: value, # URI.encode(value, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")),

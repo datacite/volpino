@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Typeable
   extend ActiveSupport::Concern
 
@@ -38,7 +40,7 @@ module Typeable
                 when "Report"
                   "report"
                 end
-              end # double CASE statement ends
+      end # double CASE statement ends
 
       type || TYPE_OF_WORK[internal_work_type] || "other"
     end

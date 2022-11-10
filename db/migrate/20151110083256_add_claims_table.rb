@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddClaimsTable < ActiveRecord::Migration[4.2]
   def change
     create_table "claims", force: :cascade do |t|

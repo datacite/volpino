@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 describe Claim, type: :model, vcr: true, elasticsearch: true do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveFacebookFields < ActiveRecord::Migration[4.2]
   def change
     remove_column :users, :facebook_uid, :string, limit: 191

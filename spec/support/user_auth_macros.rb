@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module UserAuthMacros
   def sign_in(role = "admin", credentials = nil)
     if credentials == "invalid"

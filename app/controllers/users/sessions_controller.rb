@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Users::SessionsController < Devise::SessionsController
   # prepend_before_action :authenticate_user!, :only => [:destroy]
 
@@ -33,14 +35,14 @@ class Users::SessionsController < Devise::SessionsController
     value = '{"authenticated":{}}'
 
     domain = if Rails.env.production?
-               ".datacite.org"
-             elsif Rails.env.stage? && ENV["ES_PREFIX"].present?
-               ".stage.datacite.org"
-             elsif Rails.env.stage?
-               ".test.datacite.org"
-             else
-               "localhost"
-             end
+      ".datacite.org"
+    elsif Rails.env.stage? && ENV["ES_PREFIX"].present?
+      ".stage.datacite.org"
+    elsif Rails.env.stage?
+      ".test.datacite.org"
+    else
+      "localhost"
+    end
 
     # URI.encode optional parameter needed to encode colon
     { value: value, # URI.encode(value, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")),

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ClaimsController < BaseController
   # prepend_before_action :load_user, only: [:index]
   prepend_before_action :authenticate_user_from_token!
@@ -25,26 +27,26 @@ class ClaimsController < BaseController
            when "updated" then { updated: { order: "asc" } }
            when "-updated" then { updated: { order: "desc" } }
            else { "updated" => { order: "desc" } }
-           end
+    end
 
     page = page_from_params(params)
 
     response = if params[:id].present?
-                 Claim.find_by(id: params[:id])
-               elsif params[:ids].present?
-                 Claim.find_by_id(params[:ids], page: page, sort: sort)
-               else
-                 Claim.query(params[:query],
-                             dois: params[:dois],
-                             user_id: params[:user_id],
-                             source_id: params[:source_id],
-                             claim_action: params[:claim_action],
-                             state: params[:state],
-                             created: params[:created],
-                             claimed: params[:claimed],
-                             page: page,
-                             sort: sort)
-               end
+      Claim.find_by(id: params[:id])
+    elsif params[:ids].present?
+      Claim.find_by_id(params[:ids], page: page, sort: sort)
+    else
+      Claim.query(params[:query],
+                  dois: params[:dois],
+                  user_id: params[:user_id],
+                  source_id: params[:source_id],
+                  claim_action: params[:claim_action],
+                  state: params[:state],
+                  created: params[:created],
+                  claimed: params[:claimed],
+                  page: page,
+                  sort: sort)
+    end
 
     begin
       total = response.results.total
@@ -102,7 +104,7 @@ class ClaimsController < BaseController
 
     if exists
       authorize! :update, @claim
-      @claim.assign_attributes(safe_params.slice(:source_id, :claim_action).merge({aasm_state: "waiting"}))
+      @claim.assign_attributes(safe_params.slice(:source_id, :claim_action).merge({ aasm_state: "waiting" }))
     else
       @claim = Claim.new(safe_params)
       authorize! :new, @claim
@@ -147,42 +149,40 @@ class ClaimsController < BaseController
   end
 
   protected
+    def load_claim
+      @claim = Claim.where(uuid: params[:id]).first
 
-  def load_claim
-    @claim = Claim.where(uuid: params[:id]).first
-
-    fail ActiveRecord::RecordNotFound if @claim.blank?
-  end
-
-  def load_user
-    return nil if params[:user_id].blank?
-
-    @user = User.where(uid: params[:user_id]).first
-
-    fail ActiveRecord::RecordNotFound if @user.blank?
-  end
-
-  def set_include
-    if params[:include].present?
-      @include = params[:include].split(",").map { |i| i.downcase.underscore.to_sym }
-      @include = @include & [:user]
-    else
-      @include = [:user]
+      fail ActiveRecord::RecordNotFound if @claim.blank?
     end
-  end
 
-  def human_source_name(source_id)
-    sources.fetch(source_id, nil)
-  end
+    def load_user
+      return nil if params[:user_id].blank?
 
-  def sources
-    { "orcid_search" => "ORCID Search and Link",
-      "orcid_update" => "ORCID Auto-Update" }
-  end
+      @user = User.where(uid: params[:user_id]).first
+
+      fail ActiveRecord::RecordNotFound if @user.blank?
+    end
+
+    def set_include
+      if params[:include].present?
+        @include = params[:include].split(",").map { |i| i.downcase.underscore.to_sym }
+        @include = @include & [:user]
+      else
+        @include = [:user]
+      end
+    end
+
+    def human_source_name(source_id)
+      sources.fetch(source_id, nil)
+    end
+
+    def sources
+      { "orcid_search" => "ORCID Search and Link",
+        "orcid_update" => "ORCID Auto-Update" }
+    end
 
   private
-
-  def safe_params
-    params.require(:claim).permit(:uuid, :orcid, :doi, :source_id, :claim_action)
-  end
+    def safe_params
+      params.require(:claim).permit(:uuid, :orcid, :doi, :source_id, :claim_action)
+    end
 end

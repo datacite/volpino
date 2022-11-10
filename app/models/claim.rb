@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "nokogiri"
 require "orcid_client"
 
@@ -25,8 +27,8 @@ class Claim < ApplicationRecord
 
   include Elasticsearch::Model
 
-  SUBJECT = "Add your published work(s) to your ORCID record".freeze
-  INTRO = "Hello, You may not be familiar with DataCite. Our data centers send us publication information (including ORCID iDs and DOIs), and we ensure that your work can be found, linked and cited. It looks like you have included your ORCID iD with a recent publication submission and that has been passed to us by your data center. We would like to auto-update your ORCID record with information about these published work(s) published, starting today with those listed below, so you don’t have to search for and add them manually, now or in the future. Please click ‘Grant permissions’ below to set this up.".freeze
+  SUBJECT = "Add your published work(s) to your ORCID record"
+  INTRO = "Hello, You may not be familiar with DataCite. Our data centers send us publication information (including ORCID iDs and DOIs), and we ensure that your work can be found, linked and cited. It looks like you have included your ORCID iD with a recent publication submission and that has been passed to us by your data center. We would like to auto-update your ORCID record with information about these published work(s) published, starting today with those listed below, so you don’t have to search for and add them manually, now or in the future. Please click ‘Grant permissions’ below to set this up."
 
   belongs_to :user, foreign_key: "orcid", primary_key: "uid", inverse_of: :claims
 
@@ -61,7 +63,6 @@ class Claim < ApplicationRecord
     event :error do
       transitions from: %i[waiting working ignored deleted notified], to: :failed
     end
-
   end
 
   alias_attribute :created, :created_at
@@ -207,8 +208,8 @@ class Claim < ApplicationRecord
     else
       if to_be_created?
         to_update = {
-          :claimed_at => Time.zone.now,
-          :error_messages => []
+          claimed_at: Time.zone.now,
+          error_messages: []
         }
 
         if result.body["put_code"].present?
@@ -252,10 +253,10 @@ class Claim < ApplicationRecord
     return OpenStruct.new(body: { "errors" => [{ "title" => "Missing data" }] }) if work.data.nil?
 
     # orcid_token has expired, but is not default 1970-01-01
-    return OpenStruct.new(body: { "errors" => [{ "status" => 401, "title" => "token has expired." }] }) if (Date.new(1970,1,2).beginning_of_day..Date.today.end_of_day) === user.orcid_expires_at
+    return OpenStruct.new(body: { "errors" => [{ "status" => 401, "title" => "token has expired." }] }) if (Date.new(1970, 1, 2).beginning_of_day..Date.today.end_of_day) === user.orcid_expires_at
 
     # Don't go to orcid if we've got a claimed_at date but marked as still to create with no put_code
-    #return OpenStruct.new(body: { "skip" => true, "reason" => "Already claimed." }) if to_be_created? && !put_code.present? && claimed_at.present?
+    # return OpenStruct.new(body: { "skip" => true, "reason" => "Already claimed." }) if to_be_created? && !put_code.present? && claimed_at.present?
 
     # validate data
     return OpenStruct.new(body: { "errors" => work.validation_errors.map { |error| { "title" => error } } }) if work.validation_errors.present?
@@ -318,12 +319,12 @@ class Claim < ApplicationRecord
 
     id = options[:id].to_i
     index = if Rails.env.test?
-              "claims-test"
-            elsif options[:index].present?
-              options[:index]
-            else
-              inactive_index
-            end
+      "claims-test"
+    elsif options[:index].present?
+      options[:index]
+    else
+      inactive_index
+    end
     errors = 0
     count = 0
 
@@ -379,10 +380,9 @@ class Claim < ApplicationRecord
   end
 
   private
+    def set_defaults
+      self.claim_action = "create" if claim_action.blank?
 
-  def set_defaults
-    self.claim_action = "create" if claim_action.blank?
-
-    self.error_messages = format_error_message(error_messages)
-  end
+      self.error_messages = format_error_message(error_messages)
+    end
 end

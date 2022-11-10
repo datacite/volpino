@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RoleSerializer < ActiveModel::Serializer
   cache key: "role"
   attributes :name, :updated

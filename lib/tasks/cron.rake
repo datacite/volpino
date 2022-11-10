@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :cron do
   desc "Hourly cron task"
   task hourly: :environment do

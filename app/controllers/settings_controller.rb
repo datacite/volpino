@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SettingsController < ApplicationController
   before_action :load_user
 
@@ -19,32 +21,30 @@ class SettingsController < ApplicationController
   end
 
   protected
-
-  def load_user
-    if user_signed_in?
-      @user = current_user
-    else
-      fail CanCan::AccessDenied.new("Please sign in first.", :read, User)
+    def load_user
+      if user_signed_in?
+        @user = current_user
+      else
+        fail CanCan::AccessDenied.new("Please sign in first.", :read, User)
+      end
     end
-  end
 
   private
-
-  def safe_params
-    params.require(:user).permit(:name,
-                                 :email,
-                                 :auto_update,
-                                 :role_id,
-                                 :is_public,
-                                 :beta_tester,
-                                 :provider_id,
-                                 :client_id,
-                                 :expires_at,
-                                 :orcid_token,
-                                 :orcid_expires_at,
-                                 :github,
-                                 :github_uid,
-                                 :github_token,
-                                 :authentication_token)
-  end
+    def safe_params
+      params.require(:user).permit(:name,
+                                   :email,
+                                   :auto_update,
+                                   :role_id,
+                                   :is_public,
+                                   :beta_tester,
+                                   :provider_id,
+                                   :client_id,
+                                   :expires_at,
+                                   :orcid_token,
+                                   :orcid_expires_at,
+                                   :github,
+                                   :github_uid,
+                                   :github_token,
+                                   :authentication_token)
+    end
 end

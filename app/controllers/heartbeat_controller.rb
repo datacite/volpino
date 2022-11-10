@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HeartbeatController < ApplicationController
   def index
     heartbeat = Heartbeat.new

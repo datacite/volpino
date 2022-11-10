@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   rescue_from ActiveRecord::RecordInvalid do |exception|
     redirect_to root_path, alert: exception.message
@@ -92,15 +94,15 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       sign_in @user
-      domain = if Rails.env.production?
-        ".datacite.org"
-      elsif Rails.env.stage? && ENV["ES_PREFIX"].present?
-        ".stage.datacite.org"
-      elsif Rails.env.stage?
-        ".test.datacite.org"
-      else
-        "localhost"
-      end
+      # domain = if Rails.env.production?
+      #   ".datacite.org"
+      # elsif Rails.env.stage? && ENV["ES_PREFIX"].present?
+      #   ".stage.datacite.org"
+      # elsif Rails.env.stage?
+      #   ".test.datacite.org"
+      # else
+      #   "localhost"
+      # end
 
       cookies[:_datacite] = encode_cookie(@user.jwt)
 
@@ -134,15 +136,15 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       sign_in @user
-      domain = if Rails.env.production?
-        ".datacite.org"
-      elsif Rails.env.stage? && ENV["ES_PREFIX"].present?
-        ".stage.datacite.org"
-      elsif Rails.env.stage?
-        ".test.datacite.org"
-      else
-        "localhost"
-      end
+      # domain = if Rails.env.production?
+      #   ".datacite.org"
+      # elsif Rails.env.stage? && ENV["ES_PREFIX"].present?
+      #   ".stage.datacite.org"
+      # elsif Rails.env.stage?
+      #   ".test.datacite.org"
+      # else
+      #   "localhost"
+      # end
 
       cookies[:_datacite] = encode_cookie(@user.jwt)
 

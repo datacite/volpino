@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :import do
   desc "Import works for all users"
   task all: :environment do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddGithubFields < ActiveRecord::Migration[4.2]
   def up
     add_column :users, :github, :string, limit: 191
