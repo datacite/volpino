@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 source "https://rubygems.org"
 
 gem "bootsnap", "~> 1.4", ">= 1.4.4", require: false
@@ -91,9 +89,10 @@ group :development, :test do
   gem "rspec-benchmark", "~> 0.4.0"
   gem "rspec-graphql_matchers", "~> 1.1"
   gem "rspec-rails", "~> 3.8", ">= 3.8.2"
-  gem "rubocop", "~> 0.77.0"
+  gem "rubocop", "~> 1.3", ">= 1.3.1"
   gem "rubocop-performance", "~> 1.5", ">= 1.5.1"
-  gem "rubocop-rails", "~> 2.4"
+  gem "rubocop-rails", "~> 2.8", ">= 2.8.1"
+  gem "rubocop-packaging", "~> 0.5.1"
 end
 
 group :development do
