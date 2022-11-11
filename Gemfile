@@ -33,7 +33,7 @@ gem "strip_attributes", "~> 1.9", ">= 1.9.2"
 gem "tzinfo-data", "~> 1.2019", ">= 1.2019.3"
 
 gem "bergamasco", "~> 0.3.17"
-gem "commonmarker", "~> 0.21.0"
+gem "commonmarker", "~> 0.23.6"
 gem "country_select", "~> 4.0"
 gem "dalli", "~> 2.7", ">= 2.7.10"
 gem "hashie"
