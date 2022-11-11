@@ -94,15 +94,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       sign_in @user
-      # domain = if Rails.env.production?
-      #   ".datacite.org"
-      # elsif Rails.env.stage? && ENV["ES_PREFIX"].present?
-      #   ".stage.datacite.org"
-      # elsif Rails.env.stage?
-      #   ".test.datacite.org"
-      # else
-      #   "localhost"
-      # end
 
       cookies[:_datacite] = encode_cookie(@user.jwt)
 
@@ -136,15 +127,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       sign_in @user
-      # domain = if Rails.env.production?
-      #   ".datacite.org"
-      # elsif Rails.env.stage? && ENV["ES_PREFIX"].present?
-      #   ".stage.datacite.org"
-      # elsif Rails.env.stage?
-      #   ".test.datacite.org"
-      # else
-      #   "localhost"
-      # end
 
       cookies[:_datacite] = encode_cookie(@user.jwt)
 
