@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :github do
   desc "Push Github usernames to ORCID for all users"
   task all: :environment do

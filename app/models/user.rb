@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "orcid_client"
 
 class User < ApplicationRecord
@@ -140,12 +142,12 @@ class User < ApplicationRecord
 
     id = options[:id].to_i
     index = if Rails.env.test?
-              "users-test"
-            elsif options[:index].present?
-              options[:index]
-            else
-              inactive_index
-            end
+      "users-test"
+    elsif options[:index].present?
+      options[:index]
+    else
+      inactive_index
+    end
     errors = 0
     count = 0
 
@@ -306,7 +308,7 @@ class User < ApplicationRecord
 
   def self.timestamp(credentials)
     ts = credentials&.expires_at
-    ts = Time.at(ts).utc if ts.present?
+    Time.at(ts).utc if ts.present?
   end
 
   def jwt
@@ -343,7 +345,7 @@ class User < ApplicationRecord
 
   def collect_data(options = {})
     result = get_data(options)
-    result = parse_data(result, options)
+    parse_data(result, options)
   end
 
   def queue_claim_jobs

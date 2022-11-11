@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   def icon(icon, text = nil, html_options = {})
     if text.is_a?(Hash)

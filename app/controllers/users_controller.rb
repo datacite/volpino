@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersController < BaseController
   # include helper module for caching infrequently changing resources
   include Cacheable
@@ -44,12 +46,12 @@ class UsersController < BaseController
     page = page_from_params(params)
 
     response = if params[:id].present?
-                 User.find_by(id: params[:id])
-               elsif params[:ids].present?
-                 User.find_by_id(params[:ids], page: page, sort: sort)
-               else
-                 User.query(params[:query], page: page, sort: sort)
-               end
+      User.find_by(id: params[:id])
+    elsif params[:ids].present?
+      User.find_by_id(params[:ids], page: page, sort: sort)
+    else
+      User.query(params[:query], page: page, sort: sort)
+    end
 
     begin
       total = response.results.total
@@ -130,34 +132,32 @@ class UsersController < BaseController
   def destroy; end
 
   protected
-
-  def load_user
-    @user = User.where(uid: params[:id]).first
-    fail ActiveRecord::RecordNotFound if @user.blank?
-  end
-
-  def set_include
-    if params[:include].present?
-      @include = params[:include].split(",").map { |i| i.downcase.underscore }.join(",")
-      @include = @include & [:claims]
-    else
-      @include = []
+    def load_user
+      @user = User.where(uid: params[:id]).first
+      fail ActiveRecord::RecordNotFound if @user.blank?
     end
-  end
+
+    def set_include
+      if params[:include].present?
+        @include = params[:include].split(",").map { |i| i.downcase.underscore }.join(",")
+        @include = @include & [:claims]
+      else
+        @include = []
+      end
+    end
 
   private
+    def safe_params
+      fail JSON::ParserError, "You need to provide a payload following the JSONAPI spec" if params[:data].blank?
 
-  def safe_params
-    fail JSON::ParserError, "You need to provide a payload following the JSONAPI spec" if params[:data].blank?
-
-    ActiveModelSerializers::Deserialization.jsonapi_parse!(
-      params,
-      only: [
-        :id, :uid, :name, "givenNames", "familyName", :email, :beta_tester, :role, :provider, :client
-      ],
-      keys: {
-        id: :uid, "givenNames" => :given_names, "familyName" => :family_name
-      },
-    )
-  end
+      ActiveModelSerializers::Deserialization.jsonapi_parse!(
+        params,
+        only: [
+          :id, :uid, :name, "givenNames", "familyName", :email, :beta_tester, :role, :provider, :client
+        ],
+        keys: {
+          id: :uid, "givenNames" => :given_names, "familyName" => :family_name
+        },
+      )
+    end
 end

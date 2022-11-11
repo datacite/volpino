@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Indexable
   extend ActiveSupport::Concern
 
@@ -15,11 +17,9 @@ module Indexable
     end
 
     before_destroy do
-      begin
-        __elasticsearch__.delete_document
-      rescue Elasticsearch::Transport::Transport::Errors::NotFound
-        nil
-      end
+      __elasticsearch__.delete_document
+    rescue Elasticsearch::Transport::Transport::Errors::NotFound
+      nil
     end
   end
 
@@ -277,14 +277,14 @@ module Indexable
       end
       # end
     end
-    
+
     # list all aliases
     def list_aliases
       client = Elasticsearch::Model.client
       cat_client = Elasticsearch::API::Cat::CatClient.new(client)
       puts cat_client.aliases(s: "alias")
     end
-    
+
     # delete alias
     def delete_alias(options = {})
       alias_name = options[:alias] || index_name

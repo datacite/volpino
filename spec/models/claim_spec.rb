@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 describe Claim, type: :model, vcr: true, elasticsearch: true do
@@ -48,21 +50,21 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
       user = FactoryBot.create(:valid_user, auto_update: false)
       subject = FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/v6e2-yc93", source_id: "orcid_update")
       response = subject.collect_data
-      expect(response.body).to eq({"errors"=>[{"title"=>"No auto-update permission"}]})
+      expect(response.body).to eq({ "errors" => [{ "title" => "No auto-update permission" }] })
     end
 
     it "missing token" do
       user = FactoryBot.create(:invalid_user)
       subject = FactoryBot.create(:claim, user: user, orcid: "0000-0003-1419-240x", doi: "10.14454/v6e2-yc93", source_id: "orcid_update")
       response = subject.collect_data
-      expect(response.body).to eq({"errors"=>[{"title"=>"No user and/or ORCID token"}]})
+      expect(response.body).to eq({ "errors" => [{ "title" => "No user and/or ORCID token" }] })
     end
 
     it "expired token" do
       user = FactoryBot.create(:valid_user, orcid_expires_at: Time.zone.now - 7.days)
       subject = FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/1X4X-9056", source_id: "orcid_update")
       response = subject.collect_data
-      expect(response.body).to eq("errors"=>[{"status"=>401, "title"=>"token has expired."}])
+      expect(response.body).to eq("errors" => [{ "status" => 401, "title" => "token has expired." }])
     end
 
     # TODO
@@ -76,7 +78,7 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
     it "no user" do
       subject = FactoryBot.create(:claim, orcid: "0000-0001-6528-2027", doi: "10.14454/v6e2-yc93")
       response = subject.collect_data
-      expect(subject.collect_data.body).to eq("errors" => [{"title"=>"No user and/or ORCID token"}])
+      expect(response.body).to eq("errors" => [{ "title" => "No user and/or ORCID token" }])
     end
   end
 

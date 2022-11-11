@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_permitted_parameters, if: :devise_controller?
 
@@ -6,12 +8,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   protected
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:name, :family_name, :given_names, :email) }
+    end
 
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:name, :family_name, :given_names, :email) }
-  end
-
-  def after_inactive_sign_up_path_for(_resource_or_scope)
-    session["user_return_to"] || root_path
-  end
+    def after_inactive_sign_up_path_for(_resource_or_scope)
+      session["user_return_to"] || root_path
+    end
 end

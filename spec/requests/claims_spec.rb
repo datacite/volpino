@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 describe "/claims", type: :request, elasticsearch: true do
@@ -282,7 +284,7 @@ describe "/claims", type: :request, elasticsearch: true do
 
       it "JSON" do
         get uri, nil, headers
-        
+
         expect(last_response.status).to eq(200)
         response = JSON.parse(last_response.body)
         expect(response["errors"]).to be_nil

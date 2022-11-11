@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Metadatable
   extend ActiveSupport::Concern
 
@@ -20,12 +22,12 @@ module Metadatable
       family_name = message.dig("name", "family-name", "value")
 
       name = if message.dig("name", "credit-name", "value").present?
-               message.dig("name", "credit-name", "value")
-             elsif given_names.present? || family_name.present?
-               [given_names, family_name].join(" ")
-             else
-               uid
-             end
+        message.dig("name", "credit-name", "value")
+      elsif given_names.present? || family_name.present?
+        [given_names, family_name].join(" ")
+      else
+        uid
+      end
 
       {
         uid: uid,

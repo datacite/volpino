@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ClaimJob < ApplicationJob
   queue_as :volpino
 

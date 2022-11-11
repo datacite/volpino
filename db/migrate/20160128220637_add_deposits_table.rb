@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddDepositsTable < ActiveRecord::Migration[4.2]
   def change
     create_table "deposits", force: :cascade do |t|

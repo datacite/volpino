@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserTokenJob < ApplicationJob
   queue_as :volpino
 

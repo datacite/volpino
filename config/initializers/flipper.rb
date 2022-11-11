@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "flipper"
 require "flipper/adapters/redis"
 require "active_support/notifications"
@@ -12,7 +14,7 @@ Flipper.configure do |config|
       cache = ActiveSupport::Cache::MemCacheStore.new(ENV["MEMCACHE_SERVERS"])
       adapter = Flipper::Adapters::ActiveSupportCacheStore.new(adapter, cache, expires_in: 1.hour)
     end
-    flipper = Flipper.new(adapter, instrumenter: ActiveSupport::Notifications)
+    Flipper.new(adapter, instrumenter: ActiveSupport::Notifications)
   end
 end
 

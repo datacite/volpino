@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class Role < Base
   attr_reader :id, :name, :updated_at
 
   ROLES =
-    ROLES_DATE = "2017-09-13".freeze
+    ROLES_DATE = "2017-09-13"
 
   def initialize(attributes, _options = {})
     @id = attributes.fetch("id")

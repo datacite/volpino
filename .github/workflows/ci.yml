@@ -87,6 +87,6 @@ jobs:
           ORCID_CLIENT_ID: ${{ secrets.ORCID_CLIENT_ID_FOR_TESTING }}
           ORCID_TOKEN: ${{ secrets.ORCID_TOKEN_FOR_TESTING }}
         run: |
-          # bundle exec rubocop
+          bundle exec rubocop
           bundle exec rspec
           echo $? 

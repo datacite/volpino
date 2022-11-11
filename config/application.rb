@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "boot"
 
 require "rails/all"
@@ -100,15 +102,15 @@ module Volpino
 
     # set Active Job queueing backend
     config.active_job.queue_adapter = if ENV["AWS_REGION"]
-                                        :shoryuken
-                                      else
-                                        :inline
-                                      end
+      :shoryuken
+    else
+      :inline
+    end
     queue_name_prefix = if Rails.env.stage?
-                          ENV["ES_PREFIX"].present? ? "stage" : "test"
-                        else
-                          Rails.env
-                        end
+      ENV["ES_PREFIX"].present? ? "stage" : "test"
+    else
+      Rails.env
+    end
     config.active_job.queue_name_prefix = queue_name_prefix
   end
 end

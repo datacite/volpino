@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddEmailConfirmation < ActiveRecord::Migration[4.2]
   def up
     add_column :users, :confirmation_token, :string, limit: 191

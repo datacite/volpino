@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # set ENV variables for testing
 ENV["RAILS_ENV"] = "test"
 ENV["ORCID_URL"] = "https://sandbox.orcid.org"

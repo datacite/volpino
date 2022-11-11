@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeClaimsTable < ActiveRecord::Migration[4.2]
   def up
     remove_foreign_key "claims", "users"

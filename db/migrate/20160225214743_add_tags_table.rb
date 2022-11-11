@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddTagsTable < ActiveRecord::Migration[4.2]
   def change
     create_table "services_tags", id: false, force: :cascade do |t|

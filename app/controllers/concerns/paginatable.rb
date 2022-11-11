@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Paginatable
   extend ActiveSupport::Concern
 
@@ -7,10 +9,10 @@ module Paginatable
       p = params.to_unsafe_h.dig(:page)
 
       page = if p.is_a?(Hash)
-               p.symbolize_keys
-             else
-               {}
-             end
+        p.symbolize_keys
+      else
+        {}
+      end
 
       # All cursors will need to be decoded from the param
       # Check for presence of :cursor key, value can be empty

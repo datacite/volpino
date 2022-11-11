@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BaseController < ApplicationController
   # include base controller methods
   include Authenticable
@@ -73,7 +75,7 @@ class BaseController < ApplicationController
   end
 
   unless Rails.env.development?
-    rescue_from *RESCUABLE_EXCEPTIONS do |exception|
+    rescue_from(*RESCUABLE_EXCEPTIONS) do |exception|
       status = case exception.class.to_s
                when "CanCan::AuthorizationNotPerformed", "JWT::DecodeError" then 401
                when "CanCan::AccessDenied" then 403
@@ -83,7 +85,7 @@ class BaseController < ApplicationController
                when "ActiveModel::ForbiddenAttributesError", "ActionController::ParameterMissing", "ActionController::UnpermittedParameters", "ActiveModelSerializers::Adapter::JsonApi::Deserialization::InvalidDocument" then 422
                when "SocketError" then 500
                else 400
-               end
+      end
 
       if status == 401
         message = "Bad credentials."
@@ -111,30 +113,29 @@ class BaseController < ApplicationController
   end
 
   protected
-
-  def current_ability
-    @current_ability ||= Ability.new(current_user)
-  end
-
-  # def is_admin?
-  #   current_user && current_user.role == "staff_admin"
-  # end
-  #
-  # def is_admin_or_staff?
-  #   current_user && %w(staff_admin staff_user).include?(current_user.role)
-  # end
-
-  def set_raven_context
-    if current_user.try(:uid)
-      Raven.user_context(
-        email: current_user.email,
-        id: current_user.uid,
-        ip_address: request.ip,
-      )
-    else
-      Raven.user_context(
-        ip_address: request.ip,
-      )
+    def current_ability
+      @current_ability ||= Ability.new(current_user)
     end
-  end
+
+    # def is_admin?
+    #   current_user && current_user.role == "staff_admin"
+    # end
+    #
+    # def is_admin_or_staff?
+    #   current_user && %w(staff_admin staff_user).include?(current_user.role)
+    # end
+
+    def set_raven_context
+      if current_user.try(:uid)
+        Raven.user_context(
+          email: current_user.email,
+          id: current_user.uid,
+          ip_address: request.ip,
+        )
+      else
+        Raven.user_context(
+          ip_address: request.ip,
+        )
+      end
+    end
 end

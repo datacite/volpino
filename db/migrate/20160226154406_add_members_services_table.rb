@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddMembersServicesTable < ActiveRecord::Migration[4.2]
   def up
     add_column :claims, :error_messages, :text

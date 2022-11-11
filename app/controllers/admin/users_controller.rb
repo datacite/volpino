@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admin::UsersController < ApplicationController
   # include base controller methods
   include Authenticable
@@ -32,59 +34,57 @@ class Admin::UsersController < ApplicationController
   end
 
   protected
-
-  def load_user
-    if user_signed_in?
-      @user = User.where(uid: params[:id]).first
-    else
-      fail CanCan::AccessDenied.new("Please sign in first.", :read, User)
+    def load_user
+      if user_signed_in?
+        @user = User.where(uid: params[:id]).first
+      else
+        fail CanCan::AccessDenied.new("Please sign in first.", :read, User)
+      end
     end
-  end
 
-  def load_index
-    authorize! :manage, Phrase
+    def load_index
+      authorize! :manage, Phrase
 
-    sort = case params[:sort]
-           when "relevance" then { "_score" => { order: "desc" } }
-           when "name" then { "family_name.raw" => { order: "asc" } }
-           when "-name" then { "family_name.raw" => { order: "desc" } }
-           when "created" then { created_at: { order: "asc" } }
-           when "-created" then { created_at: { order: "desc" } }
-           else { "family_name.raw" => { order: "asc" } }
-           end
+      sort = case params[:sort]
+             when "relevance" then { "_score" => { order: "desc" } }
+             when "name" then { "family_name.raw" => { order: "asc" } }
+             when "-name" then { "family_name.raw" => { order: "desc" } }
+             when "created" then { created_at: { order: "asc" } }
+             when "-created" then { created_at: { order: "desc" } }
+             else { "family_name.raw" => { order: "asc" } }
+      end
 
-    @page = params[:page] || 1
+      @page = params[:page] || 1
 
-    response = User.query(params[:query],
-                          created: params[:created],
-                          role_id: params[:role_id],
-                          page: { number: @page },
-                          sort: sort)
+      response = User.query(params[:query],
+                            created: params[:created],
+                            role_id: params[:role_id],
+                            page: { number: @page },
+                            sort: sort)
 
-    @total = response.results.total
-    @users = response.results
+      @total = response.results.total
+      @users = response.results
 
-    @created = @total > 0 ? facet_by_year(response.response.aggregations.created.buckets) : nil
-    @roles = @total > 0 ? facet_by_key(response.response.aggregations.roles.buckets) : nil
-  end
+      @created = @total > 0 ? facet_by_year(response.response.aggregations.created.buckets) : nil
+      @roles = @total > 0 ? facet_by_key(response.response.aggregations.roles.buckets) : nil
+    end
 
   private
-
-  def safe_params
-    params.require(:user).permit(:name,
-                                 :email,
-                                 :auto_update,
-                                 :role_id,
-                                 :is_public,
-                                 :beta_tester,
-                                 :provider_id,
-                                 :client_id,
-                                 :expires_at,
-                                 :orcid_token,
-                                 :orcid_expires_at,
-                                 :github,
-                                 :github_uid,
-                                 :github_token,
-                                 :authentication_token)
-  end
+    def safe_params
+      params.require(:user).permit(:name,
+                                   :email,
+                                   :auto_update,
+                                   :role_id,
+                                   :is_public,
+                                   :beta_tester,
+                                   :provider_id,
+                                   :client_id,
+                                   :expires_at,
+                                   :orcid_token,
+                                   :orcid_expires_at,
+                                   :github,
+                                   :github_uid,
+                                   :github_token,
+                                   :authentication_token)
+    end
 end
