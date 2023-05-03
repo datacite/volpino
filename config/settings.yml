@@ -14,13 +14,13 @@ datacite:
     url: /jobopportunities.html
   services_links:
   - name: Create DOIs with Fabrica
-  - url: https://doi.datacite.org
+    url: https://doi.datacite.org
   - name: Discover metadata with Commons
-  - url: https://commons.datacite.org
+    url: https://commons.datacite.org
   - name: Integrate with APIs
-  - url: https://datacite.org/integratorapis.html
+    url: https://datacite.org/integratorapis.html
   - name: Partner Services
-  - url: https://datacite.org/partnerservices.html
+    url: https://datacite.org/partnerservices.html
   resources_links:
   - name: Metadata schema
     url: https://schema.datacite.org
