@@ -10,7 +10,6 @@
             <div class="row">
               <div class='col-md-10 col-md-offset-2'>
                 <div class="form-group">
-                  <%= f.input :is_public, label: "Record is public", input_html: { class: "form-user" } %>
                   <%= f.input :auto_update, label: "Auto-Update is enabled", input_html: { class: "form-user" } %>
                   <%= f.input :beta_tester, label: "Beta Tester", input_html: { class: "form-user" } %>
                 </div>
@@ -56,12 +55,6 @@
         </div>
         <div class="panel-body">
           <dl class="dl-horizontal">
-            <dt>Record</dt>
-            <% if @user.is_public %>
-              <dd>is public</dd>
-            <% else %>
-              <dd class="text-info">is private</dd>
-            <% end %>
             <dt>Auto-Update</dt>
             <% if @user.auto_update %>
               <dd>is enabled</dd>
