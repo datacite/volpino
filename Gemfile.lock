@@ -183,7 +183,7 @@ GEM
     cuprite (0.13)
       capybara (>= 2.1, < 4)
       ferrum (~> 0.11.0)
-    dalli (2.7.11)
+    dalli (3.2.3)
     database_cleaner (2.0.1)
       database_cleaner-active_record (~> 2.0.0)
     database_cleaner-active_record (2.0.1)
@@ -710,7 +710,7 @@ DEPENDENCIES
   config (~> 2.2, >= 2.2.1)
   country_select (~> 4.0)
   cuprite (~> 0.9)
-  dalli (~> 2.7, >= 2.7.10)
+  dalli (~> 3.2)
   database_cleaner
   devise (~> 4.8)
   dotenv (~> 2.7, >= 2.7.5)
