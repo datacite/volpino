@@ -61,7 +61,7 @@ RUN /sbin/setuser app npm install
 
 # Install Ruby gems
 WORKDIR /home/app/webapp
-RUN gem install bundler && \
+RUN gem install bundler -v 2.4.22 && \
     /sbin/setuser app bundle install --path vendor/bundle
 
 # Add Runit script for shoryuken workers
