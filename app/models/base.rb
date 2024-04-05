@@ -38,7 +38,4 @@ class Base
     klass.new(params)
   end
 
-  def self.sanitize(text, options = {})
-    Bergamasco::Sanitize.sanitize(text, options)
-  end
 end
