@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   post "/profiles/graphql", to: "graphql#execute"
   get "/profiles/graphql", to: "index#method_not_allowed"
