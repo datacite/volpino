@@ -37,5 +37,4 @@ class Base
   def self.parse_include(klass, params)
     klass.new(params)
   end
-
 end

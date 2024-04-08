@@ -11,7 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2024_04_08_143711) do
-
   create_table "claims", id: :integer, charset: "utf8mb4", force: :cascade do |t|
     t.string "uuid", limit: 191
     t.string "doi", limit: 191
@@ -116,5 +115,4 @@ ActiveRecord::Schema.define(version: 2024_04_08_143711) do
     t.index ["is_public"], name: "index_users_on_is_public"
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
-
 end
