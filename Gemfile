@@ -46,7 +46,7 @@ gem "rack-cors", "~> 1.0", require: "rack/cors"
 gem "rouge", "~> 3.15"
 gem "simple_form", "~> 4.1.0"
 
-gem "cancancan", "~> 2.3"
+gem "cancancan", "~> 3.0"
 gem "devise", "~> 4.8"
 gem "gravtastic", "~> 3.2", ">= 3.2.6"
 gem "jwt", "~> 2.2", ">= 2.2.1"
