@@ -3,8 +3,8 @@
 source "https://rubygems.org"
 
 gem "bootsnap", "~> 1.4", ">= 1.4.4", require: false
-gem "mysql2", "~> 0.4.4"
-gem "rails", "~> 5.2.0"
+gem "mysql2", "~> 0.5.0"
+gem "rails", "~> 6.0"
 
 gem "aasm", "~> 5.0", ">= 5.0.6"
 gem "active_model_serializers", "~> 0.10.10"
@@ -23,7 +23,7 @@ gem "flipper-ui"
 gem "nilify_blanks", "~> 1.3"
 gem "oj", ">= 2.8.3"
 gem "oj_mimic_json", "~> 1.0", ">= 1.0.1"
-gem "orcid_client", "~> 0.10.1"
+gem "orcid_client", "~> 0.11.0"
 gem "postrank-uri", "~> 1.0", ">= 1.0.24"
 gem "pwqgen.rb", "~> 0.1.0"
 gem "rake", "~> 12.0"
@@ -32,7 +32,6 @@ gem "shoryuken", "~> 5.0", ">= 5.0.3"
 gem "strip_attributes", "~> 1.9", ">= 1.9.2"
 gem "tzinfo-data", "~> 1.2019", ">= 1.2019.3"
 
-gem "bergamasco", "~> 0.3.17"
 gem "commonmarker", "~> 0.21.0"
 gem "country_select", "~> 4.0"
 gem "dalli", "~> 2.7", ">= 2.7.10"
