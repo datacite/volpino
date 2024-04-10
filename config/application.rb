@@ -95,7 +95,7 @@ module Volpino
     end
 
     # Use memcached as cache store
-    config.cache_store = :dalli_store, nil, { namespace: ENV["APPLICATION"], compress: true }
+    config.cache_store = :mem_cache_store, ENV["MEMCACHE_SERVERS"], { namespace: ENV["APPLICATION"] }
 
     # compress responses with deflate or gzip
     config.middleware.use Rack::Deflater
