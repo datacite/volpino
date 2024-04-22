@@ -118,7 +118,7 @@ class ClaimsController < BaseController
       options = {}
       options[:include] = @include
       options[:is_collection] = false
-      render json: ClaimSerializer.new(@claim, options).serialized_json, status: :accepted
+      render json: ClaimSerializer.new(@claim, options).serializable_hash.to_json, status: :accepted
     else
       logger.error @claim.errors.inspect
       render json: serialize_errors(@claim.errors), include: @include, status: :unprocessable_entity
