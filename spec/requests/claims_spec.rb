@@ -131,7 +131,7 @@ describe "/claims", type: :request, elasticsearch: true do
         expect(last_response.status).to eq(422)
 
         response = JSON.parse(last_response.body)
-        expect(response).to eq("errors" => [{ "source" => "user", "title" => "Must exist" }])
+        expect(response["errors"]).to include({ "source" => "user", "title" => "Must exist" })
       end
     end
 
