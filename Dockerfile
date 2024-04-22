@@ -1,4 +1,4 @@
-FROM phusion/passenger-full:2.5.1
+FROM --platform=linux/amd64 phusion/passenger-full:2.5.1
 LABEL maintainer="support@datacite.org"
 
 # Set correct environment variables
