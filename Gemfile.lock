@@ -673,7 +673,7 @@ GEM
     unicode_utils (1.4.0)
     validates_email_format_of (1.6.3)
       i18n
-    vcr (3.0.3)
+    vcr (6.2.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     webmock (3.14.0)
@@ -793,7 +793,7 @@ DEPENDENCIES
   tzinfo-data (~> 1.2019, >= 1.2019.3)
   uglifier (~> 2.7, >= 2.7.2)
   validates_email_format_of (~> 1.6, >= 1.6.3)
-  vcr (~> 3.0.3)
+  vcr (~> 6.2)
   webmock (~> 3.1)
   with_env (~> 1.1)
 
