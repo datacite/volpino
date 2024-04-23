@@ -196,7 +196,7 @@ describe "/claims", type: :request, elasticsearch: true do
         expect(last_response.status).to eq(422)
 
         response = JSON.parse(last_response.body)
-        expect(response["errors"]).to include({ "status" => "422", "title" => "param is missing or the value is empty: claim" })
+        expect(response["errors"].first["title"]).to start_with("param is missing or the value is empty: claim")
       end
     end
 

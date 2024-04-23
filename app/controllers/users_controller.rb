@@ -30,7 +30,7 @@ class UsersController < BaseController
     options[:is_collection] = false
     options[:params] = { current_ability: current_ability }
 
-    render json: UserSerializer.new(@user, options).serialized_json, status: :ok
+    render json: UserSerializer.new(@user, options).serializable_hash.to_json, status: :ok
   end
 
   def index
@@ -78,9 +78,9 @@ class UsersController < BaseController
 
       fields = fields_from_params(params)
       if fields
-        render json: UserSerializer.new(response.results, options.merge(fields: fields)).serialized_json, status: :ok
+        render json: UserSerializer.new(response.results, options.merge(fields: fields)).serializable_hash.to_json, status: :ok
       else
-        render json: UserSerializer.new(response.results, options).serialized_json, status: :ok
+        render json: UserSerializer.new(response.results, options).serializable_hash.to_json, status: :ok
       end
     rescue Elasticsearch::Transport::Transport::Errors::BadRequest => e
       Raven.capture_exception(e)
@@ -98,7 +98,7 @@ class UsersController < BaseController
     if @user.save
       options = {}
       options[:is_collection] = false
-      render json: UserSerializer.new(@user, options).serialized_json, status: :created
+      render json: UserSerializer.new(@user, options).serializable_hash.to_json, status: :created
     else
       logger.error @user.errors.inspect
       render json: serialize_errors(@user.errors), status: :unprocessable_entity
@@ -122,7 +122,7 @@ class UsersController < BaseController
     if @user.save
       options = {}
       options[:is_collection] = false
-      render json: UserSerializer.new(@user, options).serialized_json, status: status
+      render json: UserSerializer.new(@user, options).serializable_hash.to_json, status: status
     else
       logger.error @user.errors.inspect
       render json: serialize_errors(@user.errors), status: :unprocessable_entity
