@@ -96,6 +96,7 @@ Rails.application.configure do
 
   require "flipper/middleware/memoizer"
   config.middleware.use Flipper::Middleware::Memoizer
+  config.flipper.memoize = false
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false

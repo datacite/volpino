@@ -49,6 +49,7 @@ Rails.application.configure do
 
   require "flipper/middleware/memoizer"
   config.middleware.use Flipper::Middleware::Memoizer
+  config.flipper.memoize = false
 
   BetterErrors::Middleware.allow_ip! ENV["TRUSTED_IP"]
 

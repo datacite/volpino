@@ -1,90 +1,92 @@
 # frozen_string_literal: true
 
-class Admin::UsersController < ApplicationController
-  # include base controller methods
-  include Authenticable
+module Admin
+  class Admin::UsersController < ApplicationController
+    # include base controller methods
+    include Authenticable
 
-  before_action :load_user, only: %i[edit update destroy]
-  load_and_authorize_resource except: [:index]
+    before_action :load_user, only: %i[edit update destroy]
+    load_and_authorize_resource except: [:index]
 
-  def index
-    load_index
+    def index
+      load_index
 
-    render :index
-  end
-
-  def edit
-    load_index
-
-    render :edit
-  end
-
-  def update
-    # admin updates user account
-    @user.update(safe_params)
-
-    load_index
-    render :edit
-  end
-
-  def destroy
-    @user.destroy
-    load_index
-    render :index
-  end
-
-  protected
-    def load_user
-      if user_signed_in?
-        @user = User.where(uid: params[:id]).first
-      else
-        fail CanCan::AccessDenied.new("Please sign in first.", :read, User)
-      end
+      render :index
     end
 
-    def load_index
-      authorize! :manage, Phrase
+    def edit
+      load_index
 
-      sort = case params[:sort]
-             when "relevance" then { "_score" => { order: "desc" } }
-             when "name" then { "family_name.raw" => { order: "asc" } }
-             when "-name" then { "family_name.raw" => { order: "desc" } }
-             when "created" then { created_at: { order: "asc" } }
-             when "-created" then { created_at: { order: "desc" } }
-             else { "family_name.raw" => { order: "asc" } }
+      render :edit
+    end
+
+    def update
+      # admin updates user account
+      @user.update(safe_params)
+
+      load_index
+      render :edit
+    end
+
+    def destroy
+      @user.destroy
+      load_index
+      render :index
+    end
+
+    protected
+      def load_user
+        if user_signed_in?
+          @user = User.where(uid: params[:id]).first
+        else
+          fail CanCan::AccessDenied.new("Please sign in first.", :read, User)
+        end
       end
 
-      @page = params[:page] || 1
+      def load_index
+        authorize! :manage, Phrase
 
-      response = User.query(params[:query],
-                            created: params[:created],
-                            role_id: params[:role_id],
-                            page: { number: @page },
-                            sort: sort)
+        sort = case params[:sort]
+              when "relevance" then { "_score" => { order: "desc" } }
+              when "name" then { "family_name.raw" => { order: "asc" } }
+              when "-name" then { "family_name.raw" => { order: "desc" } }
+              when "created" then { created_at: { order: "asc" } }
+              when "-created" then { created_at: { order: "desc" } }
+              else { "family_name.raw" => { order: "asc" } }
+        end
 
-      @total = response.results.total
-      @users = response.results
+        @page = params[:page] || 1
 
-      @created = @total > 0 ? facet_by_year(response.response.aggregations.created.buckets) : nil
-      @roles = @total > 0 ? facet_by_key(response.response.aggregations.roles.buckets) : nil
-    end
+        response = User.query(params[:query],
+                              created: params[:created],
+                              role_id: params[:role_id],
+                              page: { number: @page },
+                              sort: sort)
 
-  private
-    def safe_params
-      params.require(:user).permit(:name,
-                                   :email,
-                                   :auto_update,
-                                   :role_id,
-                                   :is_public,
-                                   :beta_tester,
-                                   :provider_id,
-                                   :client_id,
-                                   :expires_at,
-                                   :orcid_token,
-                                   :orcid_expires_at,
-                                   :github,
-                                   :github_uid,
-                                   :github_token,
-                                   :authentication_token)
-    end
+        @total = response.results.total
+        @users = response.results
+
+        @created = @total > 0 ? facet_by_year(response.response.aggregations.created.buckets) : nil
+        @roles = @total > 0 ? facet_by_key(response.response.aggregations.roles.buckets) : nil
+      end
+
+    private
+      def safe_params
+        params.require(:user).permit(:name,
+                                    :email,
+                                    :auto_update,
+                                    :role_id,
+                                    :is_public,
+                                    :beta_tester,
+                                    :provider_id,
+                                    :client_id,
+                                    :expires_at,
+                                    :orcid_token,
+                                    :orcid_expires_at,
+                                    :github,
+                                    :github_uid,
+                                    :github_token,
+                                    :authentication_token)
+      end
+  end
 end

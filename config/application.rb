@@ -57,7 +57,7 @@ ENV["SANDBOX"] ||= nil
 module Volpino
   class Application < Rails::Application
     # autoload files in lib folder
-    config.autoload_paths << Rails.root.join("lib")
+    config.autoload_lib(ignore: nil)
 
     # include graphql
     config.paths.add Rails.root.join("app", "graphql", "types").to_s, eager_load: true
@@ -70,7 +70,7 @@ module Volpino
     config.filter_parameters += [:jwt]
 
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.0
+    config.load_defaults 7.1
 
     # configure logging
     config.active_job.logger = nil
