@@ -12,7 +12,7 @@ class ClaimsController < BaseController
     options[:include] = @include
     options[:is_collection] = false
 
-    render json: ClaimSerializer.new(@claim, options).serialized_json, status: :ok
+    render json: ClaimSerializer.new(@claim, options).serializable_hash.to_json, status: :ok
   end
 
   def index
@@ -84,9 +84,9 @@ class ClaimsController < BaseController
 
       fields = fields_from_params(params)
       if fields
-        render json: ClaimSerializer.new(response.results, options.merge(fields: fields)).serialized_json, status: :ok
+        render json: ClaimSerializer.new(response.results, options.merge(fields: fields)).serializable_hash.to_json, status: :ok
       else
-        render json: ClaimSerializer.new(response.results, options).serialized_json, status: :ok
+        render json: ClaimSerializer.new(response.results, options).serializable_hash.to_json, status: :ok
       end
     rescue Elasticsearch::Transport::Transport::Errors::BadRequest => e
       Raven.capture_exception(e)
@@ -112,13 +112,12 @@ class ClaimsController < BaseController
     end
 
     if @claim.save
-
       @claim.queue_claim_job
 
       options = {}
       options[:include] = @include
       options[:is_collection] = false
-      render json: ClaimSerializer.new(@claim, options).serialized_json, status: :accepted
+      render json: ClaimSerializer.new(@claim, options).serializable_hash.to_json, status: :accepted
     else
       logger.error @claim.errors.inspect
       render json: serialize_errors(@claim.errors), include: @include, status: :unprocessable_entity
@@ -137,7 +136,7 @@ class ClaimsController < BaseController
         options = {}
         options[:include] = @include
         options[:is_collection] = false
-        render json: ClaimSerializer.new(@claim, options).serialized_json, status: :accepted
+        render json: ClaimSerializer.new(@claim, options).serializable_hash.to_json, status: :accepted
       else
         logger.error @claim.errors.inspect
         render json: serialize_errors(@claim.errors), include: @include, status: :unprocessable_entity
