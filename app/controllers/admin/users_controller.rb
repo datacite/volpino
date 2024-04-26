@@ -47,12 +47,12 @@ module Admin
         authorize! :manage, Phrase
 
         sort = case params[:sort]
-              when "relevance" then { "_score" => { order: "desc" } }
-              when "name" then { "family_name.raw" => { order: "asc" } }
-              when "-name" then { "family_name.raw" => { order: "desc" } }
-              when "created" then { created_at: { order: "asc" } }
-              when "-created" then { created_at: { order: "desc" } }
-              else { "family_name.raw" => { order: "asc" } }
+               when "relevance" then { "_score" => { order: "desc" } }
+               when "name" then { "family_name.raw" => { order: "asc" } }
+               when "-name" then { "family_name.raw" => { order: "desc" } }
+               when "created" then { created_at: { order: "asc" } }
+               when "-created" then { created_at: { order: "desc" } }
+               else { "family_name.raw" => { order: "asc" } }
         end
 
         @page = params[:page] || 1

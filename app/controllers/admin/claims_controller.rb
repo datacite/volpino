@@ -41,16 +41,16 @@ module Admin
     protected
       def load_index
         sort = case params[:sort]
-              when "relevance" then { "_score" => { order: "desc" } }
-              when "doi" then { "doi" => { order: "asc" } }
-              when "-doi" then { "doi" => { order: "desc" } }
-              when "orcid" then { orcid: { order: "asc" } }
-              when "-orcid" then { orcid: { order: "desc" } }
-              when "created" then { created: { order: "asc" } }
-              when "-created" then { created: { order: "desc" } }
-              when "updated" then { updated: { order: "asc" } }
-              when "-updated" then { updated: { order: "desc" } }
-              else { "updated" => { order: "desc" } }
+               when "relevance" then { "_score" => { order: "desc" } }
+               when "doi" then { "doi" => { order: "asc" } }
+               when "-doi" then { "doi" => { order: "desc" } }
+               when "orcid" then { orcid: { order: "asc" } }
+               when "-orcid" then { orcid: { order: "desc" } }
+               when "created" then { created: { order: "asc" } }
+               when "-created" then { created: { order: "desc" } }
+               when "updated" then { updated: { order: "asc" } }
+               when "-updated" then { updated: { order: "desc" } }
+               else { "updated" => { order: "desc" } }
         end
 
         @page = params[:page] || 1
