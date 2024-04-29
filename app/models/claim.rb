@@ -86,7 +86,7 @@ class Claim < ApplicationRecord
   scope :auto_update, -> { where(source_id: "orcid_update").where("claimed_at IS NOT NULL") }
   scope :total_count, -> { where(claim_action: "create").count }
 
-  serialize :error_messages, JSON
+  serialize :error_messages, coder: JSON
 
   # use different index for testing
   index_name Rails.env.test? ? "claims-test" : "claims"
