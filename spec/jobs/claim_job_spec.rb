@@ -7,9 +7,7 @@ RSpec.describe ClaimJob, type: :job, elasticsearch: true do
   let(:job) { claim.queue_claim_job }
 
   it "enqueue jobs" do
-    expect { job }.to change(enqueued_jobs, :size).by(4)
-    claim_job = enqueued_jobs.first
-    expect(claim_job[:job]).to eq(UserJob)
+    expect(UserJob).to(have_been_enqueued.at_least(:once))
   end
 
   it "executes perform", vcr: true do

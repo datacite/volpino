@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class Admin::UsersController < ApplicationController
+  class UsersController < ApplicationController
     # include base controller methods
     include Authenticable
 

@@ -91,7 +91,7 @@ group :development, :test do
   gem "binding_of_caller"
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "rspec-benchmark", "~> 0.4.0"
-  gem "rspec-graphql_matchers", "~> 1.1"
+  gem "rspec-graphql_matchers", "~> 1.4"
   gem "rspec-rails", "~> 6.1", ">= 6.1.1"
   gem "rubocop", "~> 1.3", ">= 1.3.1"
   gem "rubocop-performance", "~> 1.5", ">= 1.5.1"
@@ -118,9 +118,9 @@ group :test do
   gem "factory_bot_rails", "~> 4.8", ">= 4.8.2"
   gem "hashdiff", [">= 1.0.0.beta1", "< 2.0.0"]
   gem "shoulda-matchers", "~> 4.1", ">= 4.1.2"
-  gem "simplecov", "~> 0.17.1"
+  gem "simplecov", "~> 0.22.0"
   gem "test-prof", "~> 0.10.2"
-  gem "vcr", "~> 6.2"
+  gem "vcr", "~> 6.1"
   gem "webmock", "~> 3.1"
   gem "with_env", "~> 1.1"
 end

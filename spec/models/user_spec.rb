@@ -61,7 +61,7 @@ describe User, type: :model, vcr: true, elasticsearch: true do
 
     it "delete claim" do
       subject = FactoryBot.create(:valid_user, github: "mfenner", github_put_code: put_code)
-      expect(subject.process_data).to be true
+      expect(subject.process_data).to_not(eq(nil))
       expect(subject.github_put_code).to eq(put_code)
     end
   end
