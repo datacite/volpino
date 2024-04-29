@@ -34,7 +34,7 @@ Rails.application.configure do
   config.active_storage.service = :test
 
   # set Active Job queueing backend
-  config.active_job.queue_adapter = :test
+  config.active_job.queue_adapter = :inline
 
   config.action_mailer.perform_caching = false
 
