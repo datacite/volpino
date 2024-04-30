@@ -12,7 +12,7 @@ gem "addressable", "~> 2.7"
 gem "aws-sdk-s3", require: false
 gem "aws-sdk-sqs", "~> 1.23", ">= 1.23.1"
 gem "base32-crockford-checksum", "~> 0.2.3"
-gem "config", "~> 2.2", ">= 2.2.1"
+gem "config", "~> 5.4"
 gem "dotenv", "~> 2.7", ">= 2.7.5"
 # IMPORTANT!!!
 # We have monkey patched this gem -> config/initializers/serialization_core.rb

@@ -12,7 +12,7 @@ Flipper.configure do |config|
     adapter = Flipper::Adapters::Redis.new(client)
     unless Rails.env.test?
       cache = ActiveSupport::Cache::MemCacheStore.new(ENV["MEMCACHE_SERVERS"])
-      adapter = Flipper::Adapters::ActiveSupportCacheStore.new(adapter, cache, expires_in: 1.hour)
+      adapter = Flipper::Adapters::ActiveSupportCacheStore.new(adapter, cache, 1.hour)
     end
     Flipper.new(adapter, instrumenter: ActiveSupport::Notifications)
   end
