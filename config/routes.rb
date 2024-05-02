@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   devise_scope :user do
     get "sign_in", to: "users/sessions#new", as: :new_session
     post "sign_in", to: "users/session#create", as: :session
-    # get "sign_out", to: "users/sessions#destroy", as: :destroy_user_session
+    get "sign_out", to: "users/sessions#destroy", as: :destroy_user_session
 
     get "link_orcid", to: "users/sessions#link_orcid", as: :link_orcid_session
 
