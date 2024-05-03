@@ -51,7 +51,7 @@ class User < ApplicationRecord
   alias_attribute :updated, :updated_at
   alias_attribute :given_name, :given_names
 
-  serialize :other_names, JSON
+  serialize :other_names, coder: JSON
 
   # use different index for testing
   index_name Rails.env.test? ? "users-test" : "users"

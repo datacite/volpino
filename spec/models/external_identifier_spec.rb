@@ -54,7 +54,7 @@ describe ExternalIdentifier, type: :model, vcr: true, elasticsearch: true do
   end
 
   it "data" do
-    xml = File.read(fixture_path + "external_identifier.xml")
+    xml = File.read(fixture_paths[0] + "external_identifier.xml")
     expect(subject.data).to eq(xml)
   end
 end

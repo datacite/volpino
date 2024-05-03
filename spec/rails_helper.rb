@@ -91,7 +91,7 @@ RSpec.configure do |config|
   # don't use transactions, use database_clear gem via support file
   config.use_transactional_fixtures = false
 
-  config.fixture_path = "#{::Rails.root}/spec/fixtures/"
+  config.fixture_paths = ["#{::Rails.root}/spec/fixtures/"]
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

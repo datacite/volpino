@@ -10,15 +10,6 @@ describe Work, type: :model, vcr: true, elasticsearch: true do
   subject { Work.new(doi: doi, orcid: user.uid, orcid_token: user.orcid_token, put_code: put_code) }
 
   describe "push to ORCID", order: :defined do
-    # describe 'post' do
-    #   subject { Work.new(doi: doi, orcid: user.uid, orcid_token: user.orcid_token) }
-
-    #   it 'should create work' do
-    #     response = subject.create_work(sandbox: true)
-    #     expect(response.body["put_code"]).not_to be_blank
-    #   end
-    # end
-
     describe "get" do
       it "should get works" do
         response = subject.get_works(sandbox: true)
@@ -28,13 +19,6 @@ describe Work, type: :model, vcr: true, elasticsearch: true do
         expect(work["external-ids"]).to eq("external-id" => [{ "external-id-normalized" => { "transient" => true, "value" => "10.5256/f1000research.67475.r16884" }, "external-id-normalized-error" => nil, "external-id-relationship" => "self", "external-id-type" => "doi", "external-id-url" => nil, "external-id-value" => "10.5256/f1000research.67475.r16884" }])
       end
     end
-
-    # describe 'put' do
-    #   it 'should update work' do
-    #     response = subject.update_work(sandbox: true)
-    #     expect(response.body.dig("data", "work", "put_code")).to eq(put_code)
-    #   end
-    # end
 
     describe "delete" do
       it "should delete work" do
@@ -50,28 +34,9 @@ describe Work, type: :model, vcr: true, elasticsearch: true do
       expect(subject.schema.errors).to be_empty
     end
 
-    # it 'validates data' do
-    #   expect(subject.validation_errors).to be_empty
-    # end
-
     it "validates data with errors" do
       allow(subject).to receive(:metadata) { OpenStruct.new }
       expect(subject.validation_errors).to eq(["-1:0: ERROR: The document has no document element."])
     end
   end
-
-  # describe 'contributors' do
-  #   it 'valid' do
-  #     expect(subject.contributors).to eq([{:credit_name=>"Martin Fenner", :orcid=>"https://orcid.org/0000-0003-1419-2405"}])
-  #   end
-  # end
-
-  # it 'publication_date' do
-  #   expect(subject.publication_date).to eq("year"=>"2016", "month"=>"12", "day"=>"20")
-  # end
-
-  # it 'data' do
-  #   xml = File.read(fixture_path + 'work.xml')
-  #   expect(subject.data).to eq(xml)
-  # end
 end
