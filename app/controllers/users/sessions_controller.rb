@@ -18,8 +18,14 @@ module Users
 
     # GET /sign_out
     def destroy
-      cookies[:_datacite] = empty_cookie
-      super
+      begin
+        cookies[:_datacite] = empty_cookie
+        super
+      rescue => err
+        logger.error("bryceson checking errors")
+        logger.error(err)
+        Raven.capture_exception(err)
+      end
     end
 
     def link_orcid
