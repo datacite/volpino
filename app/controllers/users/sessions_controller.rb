@@ -18,9 +18,8 @@ module Users
 
     # GET /sign_out
     def destroy
-      begin
-        cookies[:_datacite] = empty_cookie
-        super
+      cookies[:_datacite] = empty_cookie
+      super
       rescue => err
         logger.error("bryceson checking errors")
         logger.error(err)
