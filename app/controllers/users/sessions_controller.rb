@@ -54,5 +54,12 @@ module Users
         secure: !Rails.env.development? && !Rails.env.test?,
         domain: domain }
     end
+
+    private
+      def redirect_options
+        {
+          allow_other_host: true
+        }
+      end
   end
 end
