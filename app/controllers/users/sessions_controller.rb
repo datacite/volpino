@@ -56,10 +56,10 @@ module Users
     end
 
     private
-    def redirect_options
-      {
-        allow_other_host: true
-      }
-    end
+      def redirect_options
+        {
+          allow_other_host: true
+        }
+      end
   end
 end
