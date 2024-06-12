@@ -56,7 +56,6 @@ module Users
     end
 
     private
-
     def redirect_options
       {
         allow_other_host: true
