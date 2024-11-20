@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 
 gem "bootsnap", "~> 1.4", ">= 1.4.4", require: false
-gem 'msgpack', "~> 1.4.4"
+gem "msgpack", "~> 1.4.4"
 gem "mysql2", "~> 0.5.0"
 gem "rails", "~> 7.1", ">= 7.1.3"
 
