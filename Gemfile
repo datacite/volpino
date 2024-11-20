@@ -3,6 +3,7 @@
 source "https://rubygems.org"
 
 gem "bootsnap", "~> 1.4", ">= 1.4.4", require: false
+gem 'msgpack', "~> 1.4.4"
 gem "mysql2", "~> 0.5.0"
 gem "rails", "~> 7.1", ">= 7.1.3"
 
@@ -26,7 +27,7 @@ gem "flipper-ui"
 gem "nilify_blanks", "~> 1.3"
 gem "oj", ">= 2.8.3"
 gem "oj_mimic_json", "~> 1.0", ">= 1.0.1"
-gem "orcid_client", "~> 0.12.0"
+gem "orcid_client", "~> 0.15.0"
 gem "postrank-uri", "~> 1.1"
 gem "pwqgen.rb", "~> 0.1.0"
 gem "rake", "~> 12.0"
