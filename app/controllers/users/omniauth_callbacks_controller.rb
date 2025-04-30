@@ -111,9 +111,6 @@ module Users
 
       if current_user.present?
         @user = current_user
-        @user.update(orcid_expires_at: User.timestamp(auth.credentials),
-                    orcid_token: auth.credentials.token)
-        flash[:notice] = "ORCID token successfully refreshed."
       else
         @user = User.from_omniauth(auth, provider: "globus")
       end
@@ -128,6 +125,11 @@ module Users
 
       if @user.persisted?
         sign_in @user
+
+        # Refresh ORCID token
+        @user.update(orcid_expires_at: User.timestamp(auth.credentials),
+                    orcid_token: auth.credentials.token)
+        flash[:notice] = "ORCID token successfully refreshed."
 
         cookies[:_datacite] = encode_cookie(@user.jwt)
 
