@@ -105,7 +105,16 @@ module Users
       end
     end
 
+    def test_orcid_callback
+      Rails.logger.info "[TEST CALLBACK] Headers: #{request.headers.env.select { |k, _| k.to_s.start_with?('HTTP_') }}"
+      Rails.logger.info "[TEST CALLBACK] Params: #{params.inspect}"
+
+      render plain: "Test ORCID callback hit!"
+    end
+
+
     def orcid
+      byebug
       auth = request.env["omniauth.auth"]
       omniauth = flash[:omniauth] || {}
 
