@@ -339,7 +339,7 @@ GEM
       rdoc
       reline (>= 0.4.2)
     iso8601 (0.9.1)
-    jmespath (1.4.0)
+    jmespath (1.6.1)
     json (2.5.1)
     json-canonicalization (1.0.0)
     json-ld (3.3.2)
