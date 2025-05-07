@@ -114,8 +114,8 @@ module Users
 
 
     def orcid
-      byebug
       auth = request.env["omniauth.auth"]
+      omni_params = request.env["omniauth.params"]
       omniauth = flash[:omniauth] || {}
 
       if current_user.present?
@@ -135,10 +135,12 @@ module Users
       if @user.persisted?
         sign_in @user
 
-        # Refresh ORCID token
-        @user.update(orcid_expires_at: User.timestamp(auth.credentials),
-                    orcid_token: auth.credentials.token)
-        flash[:notice] = "ORCID token successfully refreshed."
+        # Refresh ORCID token if the flag is present
+        if omni_params["fetch_token"].present?
+          @user.update(orcid_expires_at: User.timestamp(auth.credentials),
+                       orcid_token: auth.credentials.token)
+          flash[:notice] = "ORCID token successfully refreshed."
+        end
 
         cookies[:_datacite] = encode_cookie(@user.jwt)
 

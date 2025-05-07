@@ -81,8 +81,7 @@
                 <p>Delete ORCID token to no longer allow DataCite to update your ORCID record.</p>
                 <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Delete ORCID Token".html_safe, setting_path("me", user: { orcid_token: nil, orcid_expires_at: Time.zone.now }), { method: :put, remote: true, class: 'btn btn-social btn-orcid btn-fill' } %>
               <% else %>
-                <p>Get ORCID token to allow DataCite to update your ORCID record.</p>
-                <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Get ORCID Token".html_safe, user_orcid_omniauth_authorize_path, method: :post, :id => "sign-in-orcid", class: 'btn btn-social btn-orcid btn-fill' %>
+                <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Get ORCID Token".html_safe, user_orcid_omniauth_authorize_path(fetch_token: true), method: :post, :id => "sign-in-orcid", class: 'btn btn-social btn-orcid btn-fill' %>
               <% end %>
             </dd>
           </dl>
