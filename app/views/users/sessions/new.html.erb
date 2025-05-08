@@ -12,7 +12,7 @@
             <% else %>
               <div class="register-card-globus">
                 <h3 class="title">Sign In</h3>
-                <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Sign in with ORCID".html_safe, user_orcid_omniauth_authorize_path, method: :post, :id => "sign-in-orcid", class: 'btn btn-block btn-social btn-orcid btn-fill' %>
+                <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Sign in with ORCID".html_safe, user_orcid_omniauth_authorize_path(fetch_token: false, redirect_to_commons: false), method: :post, :id => "sign-in-orcid", class: 'btn btn-block btn-social btn-orcid btn-fill' %>
               </div>
             <% end %>
           </div>
