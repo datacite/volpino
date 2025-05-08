@@ -5,9 +5,6 @@ Rails.application.routes.draw do
   get "/profiles/graphql", to: "index#method_not_allowed"
 
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
-  devise_scope :user do
-    get "/auth/test_orcid_callback", to: "users/omniauth_callbacks#test_orcid_callback"
-  end
 
   devise_scope :user do
     get "sign_in", to: "users/sessions#new", as: :new_session

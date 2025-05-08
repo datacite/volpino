@@ -105,14 +105,6 @@ module Users
       end
     end
 
-    def test_orcid_callback
-      Rails.logger.info "[TEST CALLBACK] Headers: #{request.headers.env.select { |k, _| k.to_s.start_with?('HTTP_') }}"
-      Rails.logger.info "[TEST CALLBACK] Params: #{params.inspect}"
-
-      render plain: "Test ORCID callback hit!"
-    end
-
-
     def orcid
       auth = request.env["omniauth.auth"]
       omni_params = request.env["omniauth.params"]
@@ -169,7 +161,6 @@ module Users
       else
         flash[:alert] = @user.errors.map { |k, v| "#{k}: #{v}" }.join("<br />").html_safe || "Error signing in with #{provider}"
         redirect_to root_path
-        nil
       end
     end
 
