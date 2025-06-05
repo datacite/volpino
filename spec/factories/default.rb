@@ -25,11 +25,13 @@ FactoryBot.define do
     factory :valid_user do
       uid { "0000-0001-6528-2027" }
       orcid_token { ENV["ORCID_TOKEN"] }
+      orcid_search_and_link_access_token { "TEST_SEARCH_AND_LINK_TOKEN" }
     end
 
     factory :invalid_user do
       uid { "0000-0001-6528-2027" }
       orcid_token { nil }
+      orcid_search_and_link_access_token { nil }
     end
 
     initialize_with { User.where(uid: uid).first_or_initialize }

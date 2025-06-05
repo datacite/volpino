@@ -75,6 +75,20 @@
         </div>
         <div class="panel-body">
           <dl class="dl-horizontal">
+            <dt>Link Works to ORCID</dt>
+            <dd>
+              <% if @user.orcid_search_and_link_access_token %>
+                <p>Revoke access for DataCite to link DataCite DOIs to you ORCID record using the "Add to ORCID Record" button in DataCite Commons</p>
+                <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Disable".html_safe, :orcid_search_and_link_revoke, method: :get, :id => "orcid-search-and-link-disable", class: 'btn btn-social btn-orcid btn-fill' %>
+              <% else %>
+                <p>Allow DataCite to link DataCite DOIs to you ORCID record using the "Add to ORCID Record" button in DataCite Commons</p>
+                <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Enable".html_safe, :orcid_search_and_link_auth, method: :get, :id => "orcid-search-and-link-enable", class: 'btn btn-social btn-orcid btn-fill' %>
+              <% end %>
+            </dd>
+          </dl>
+        </div>
+        <div class="panel-body">
+          <dl class="dl-horizontal">
             <dt>ORCID Permissions</dt>
             <dd>
               <% if Time.zone.now < @user.orcid_expires_at %>
