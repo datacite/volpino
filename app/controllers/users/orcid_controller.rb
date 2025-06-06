@@ -196,7 +196,7 @@ module Users
 
 
       def parse_tokens(body)
-        tokens = JSON.parse(response.body)
+        tokens = JSON.parse(body)
         expires_at = Time.now.utc + tokens["expires_in"].seconds
 
         {
