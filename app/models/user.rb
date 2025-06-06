@@ -75,6 +75,9 @@ class User < ApplicationRecord
       indexes :role_id,       type: :keyword
       indexes :role_name,     type: :keyword
       indexes :orcid_token,   type: :keyword
+      indexes :orcid_auto_update_access_token,   type: :keyword
+      indexes :orcid_auto_update_refresh_token,   type: :keyword
+      indexes :orcid_auto_update_expires_at,   type: :date
       indexes :orcid_search_and_link_access_token,   type: :keyword
       indexes :orcid_search_and_link_refresh_token,   type: :keyword
       indexes :orcid_search_and_link_expires_at,   type: :date
@@ -109,6 +112,9 @@ class User < ApplicationRecord
       "is_active" => is_active,
       "orcid_token" => orcid_token,
       "orcid_expires_at" => orcid_expires_at,
+      "orcid_auto_update_access_token" => orcid_auto_update_access_token,
+      "orcid_auto_update_refresh_token" => orcid_auto_update_refresh_token,
+      "orcid_auto_update_expires_at" => orcid_auto_update_expires_at,
       "orcid_search_and_link_access_token" => orcid_search_and_link_access_token,
       "orcid_search_and_link_refresh_token" => orcid_search_and_link_refresh_token,
       "orcid_search_and_link_expires_at" => orcid_search_and_link_expires_at,
