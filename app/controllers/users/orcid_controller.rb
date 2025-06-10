@@ -6,16 +6,16 @@ require "json"
 module Users
   class OrcidController < ApplicationController
     BASE_URL = "#{ENV["ORCID_URL"]}/oauth"
+    SCOPES_AUTO_UPDATE = ["/activities/update", "/person/update", "/read-limited"].freeze
+    SCOPES_SEARCH_AND_LINK = ["/activities/update", "/person/update", "/read-limited"].freeze
 
     before_action :load_user
 
     # Auto-update methods
     def auto_update_auth
-      scope = "/authenticate" # TODO: Change to the appropriate scope for auto-update
-
       auth_url = build_auth_url(ENV["ORCID_AUTO_UPDATE_CLIENT_ID"],
                                 ENV["ORCID_AUTO_UPDATE_REDIRECT_URI"],
-                                scope)
+                                SCOPES_AUTO_UPDATE.join(" "))
 
       redirect_to auth_url
     end
@@ -26,9 +26,9 @@ module Users
                         ENV["ORCID_AUTO_UPDATE_CLIENT_SECRET"],
                         params[:code])
 
-      @user.update(orcid_auto_update_access_token: tokens["access_token"],
-                   orcid_auto_update_refresh_token: tokens["refresh_token"],
-                   orcid_auto_update_expires_at: tokens["expires_at"])
+      @user.update(orcid_auto_update_access_token: tokens[:access_token],
+                   orcid_auto_update_refresh_token: tokens[:refresh_token],
+                   orcid_auto_update_expires_at: tokens[:expires_at])
 
       redirect_to stored_location_for(:user) || setting_path("me")
     end
@@ -39,9 +39,9 @@ module Users
                        ENV["ORCID_AUTO_UPDATE_CLIENT_SECRET"],
                        @user.orcid_auto_update_refresh_token)
 
-      @user.update(orcid_auto_update_access_token: tokens["access_token"],
-                   orcid_auto_update_refresh_token: tokens["refresh_token"],
-                   orcid_auto_update_expires_at: tokens["expires_at"])
+      @user.update(orcid_auto_update_access_token: tokens[:access_token],
+                   orcid_auto_update_refresh_token: tokens[:refresh_token],
+                   orcid_auto_update_expires_at: tokens[:expires_at])
 
       redirect_to stored_location_for(:user) || setting_path("me")
     end
@@ -62,11 +62,9 @@ module Users
 
     # Search and Link methods
     def search_and_link_auth
-      scope = "/authenticate" # TODO: Change to the appropriate scope for search and link
-
       auth_url = build_auth_url(ENV["ORCID_SEARCH_AND_LINK_CLIENT_ID"],
-                                ENV["ORCID_SEARCH_AND_LINK_REDIRECT_URI"],
-                                scope)
+                                ENV["ORCID_SEARCH_AND_LINK_REDIRECT_URI"] + "?redirect_to_commons=false",
+                                SCOPES_SEARCH_AND_LINK.join(" "))
 
       redirect_to auth_url
     end
@@ -77,12 +75,12 @@ module Users
                         ENV["ORCID_SEARCH_AND_LINK_CLIENT_SECRET"],
                         params[:code])
 
-      @user.update(orcid_search_and_link_access_token: tokens["access_token"],
-                   orcid_search_and_link_refresh_token: tokens["refresh_token"],
-                   orcid_search_and_link_expires_at: tokens["expires_at"])
+      @user.update(orcid_search_and_link_access_token: tokens[:access_token],
+                   orcid_search_and_link_refresh_token: tokens[:refresh_token],
+                   orcid_search_and_link_expires_at: tokens[:expires_at])
 
       # Redirect to Commons if the flag isn't explicitly false. Otherwise redirect to profile settings
-      if omni_params["redirect_to_commons"] != "false"
+      if params["redirect_to_commons"] != "false"
         redirect_to "#{ENV['COMMONS_URL']}/orcid.org/#{current_user.orcid}"
       else
         redirect_to stored_location_for(:user) || setting_path("me")
@@ -95,9 +93,9 @@ module Users
                        ENV["ORCID_SEARCH_AND_LINK_CLIENT_SECRET"],
                        @user.orcid_search_and_link_refresh_token)
 
-      @user.update(orcid_search_and_link_access_token: tokens["access_token"],
-                   orcid_search_and_link_refresh_token: tokens["refresh_token"],
-                   orcid_search_and_link_expires_at: tokens["expires_at"])
+      @user.update(orcid_search_and_link_access_token: tokens[:access_token],
+                   orcid_search_and_link_refresh_token: tokens[:refresh_token],
+                   orcid_search_and_link_expires_at: tokens[:expires_at])
 
       redirect_to stored_location_for(:user) || setting_path("me")
     end
