@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeOrcidTokensNullable < ActiveRecord::Migration[7.1]
   def change
     change_column_null :users, :orcid_auto_update_access_token, true
