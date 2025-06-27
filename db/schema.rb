@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -110,12 +108,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_10_031120) do
     t.string "organization", limit: 191
     t.string "orcid_auto_update_access_token", limit: 191
     t.datetime "orcid_auto_update_expires_at", precision: nil, default: "1970-01-01 00:00:00"
-    t.string "orcid_search_and_link_access_token"
-    t.string "orcid_search_and_link_refresh_token"
+    t.text "orcid_search_and_link_access_token"
+    t.text "orcid_search_and_link_refresh_token"
     t.datetime "orcid_search_and_link_expires_at"
-    t.string "orcid_token"
+    t.text "orcid_token"
     t.datetime "orcid_expires_at"
-    t.string "orcid_auto_update_refresh_token"
+    t.text "orcid_auto_update_refresh_token"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["family_name", "given_names"], name: "index_users_on_family_name_and_given_names"
     t.index ["github"], name: "index_users_on_github", unique: true
@@ -123,4 +121,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_10_031120) do
     t.index ["is_public"], name: "index_users_on_is_public"
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
+
 end
