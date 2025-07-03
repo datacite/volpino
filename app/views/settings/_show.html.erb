@@ -1,157 +1,34 @@
 <div class="row">
-  <div class='col-md-9'>
-    <div class="panel panel-default" id="content-account">
-      <% if can?(:update, @user) && (controller.action_name == "edit" || (controller.action_name == "update" && !@user.errors.empty?)) %>
-        <div class="panel-heading">          
-          <h3 class="panel-title">Settings</h3>
+  <div class="col-md-9">
+        <div class="panel-body settings-container">
+          <h2 class="settings-name col-span-full"><%= @user.name %></h2>
+          <p class="settings-orcid-link col-span-full"><%= link_to @user.orcid_as_url, @user.orcid %></p>
+
+          <h3 class="settings-section-header col-span-full">Link Works to ORCID</h3>
+          <p class="settings-section-text">Allow DataCite to link DataCite DOIs to you ORCID record using the "Add to ORCID Record" button in DataCite Commons</p>
+          <% if @user.orcid_search_and_link_access_token %>
+            <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Disable".html_safe, :orcid_search_and_link_revoke, method: :get, :id => "orcid-search-and-link-disable", class: "btn btn-social btn-orcid btn-fill settings-button settings-button-disable" %>
+            <span class="col-span-2 enabled-pill">✓ Enabled</span>
+          <% else %>
+            <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Enable".html_safe, :orcid_search_and_link_auth, method: :get, :id => "orcid-search-and-link-enable", class: "btn btn-social btn-orcid btn-fill settings-button settings-button-enable" %>
+          <% end %>
+
+          <div class="col-span-2 separator"></div>
+
+          <h3 class="settings-section-header col-span-full">ORCID Auto-Update</h3>
+          <p class="settings-section-text">Allow DataCite to add Works to your ORCID record automatically when your ORCID is included as a creator in a DataCite DOI metadata</p>
+          <% if @user.orcid_auto_update_access_token %>
+            <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Disable".html_safe, :orcid_auto_update_revoke, method: :get, :id => "orcid-auto-update-disable", class: "btn btn-social btn-orcid btn-fill settings-button settings-button-disable" %>
+            <span class="col-span-2 enabled-pill">✓ Enabled</span>
+          <% else %>
+            <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Enable".html_safe, :orcid_auto_update_auth, method: :get, :id => "orcid-auto-update-enable", class: "btn btn-social btn-orcid btn-fill settings-button settings-button-enable" %>
+          <% end %>
+
+
+          <div class="col-span-2 separator"></div>
+          <div></div>
+
+          <%= link_to "Find Works", "#{ENV['COMMONS_URL']}/doi.org?query=creators_and_contributors.nameIdentifiers.nameIdentifier:(#{@user.uid} OR \"https://orcid.org/#{@user.uid}\")&registration-agency=datacite", :class => "find-works-button", :id => "find-user-works" %>
         </div>
-        <%= simple_form_for @user, url: setting_path("me"), html: { role: "form", remote: true } do |f| %>
-          <div class="panel-body">
-            <div class="row">
-              <div class='col-md-10 col-md-offset-2'>
-                <div class="form-group">
-                  <%= f.input :auto_update, label: "Auto-Update is enabled", input_html: { class: "form-user" } %>
-                  <%= f.input :beta_tester, label: "Beta Tester", input_html: { class: "form-user" } %>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="panel-footer clearfix">
-            <div class="form-group pull-right">
-              <%= link_to 'Cancel', setting_path("me"), { :remote => true, :class => 'btn btn-sm' } %>
-              <%= f.submit "Save ", class: "btn btn-sm btn-fill" %>
-            </div>
-          </div>
-        <% end %>
-      <% else %>
-        <div class="panel-heading">          
-          <h3 class="panel-title">Settings</h3>
-        </div>
-        <div class="panel-body">
-          <dl class="dl-horizontal">
-            <dt>ORCID ID</dt>
-            <dd><%= link_to @user.orcid_as_url, @user.orcid %></dd>  
-            <% if @user.name.present? %>
-              <dt>Name</dt>
-              <dd><%= @user.name %></dd>
-            <% end %>
-            <% if @user.other_names.present? %>
-              <dt>Other Names</dt>
-              <dd><%= h(@user.other_names.join(', ')) %></dd>
-            <% end %>
-            <% if @user.organization.present? %>
-              <dt>Organization</dt>
-              <dd><%= @user.organization %></dd>
-            <% end %>
-            <% if @user.email.present? %>
-              <dt>Email</dt>
-              <dd><%= @user.email %></dd>
-            <% end %>
-            <% if @user.github.present? %>
-              <dt>Github</dt>
-              <dd><%= link_to @user.github, "https://github.com/#{@user.github}" %></dd>
-            <% end %>
-          </dl>
-        </div>
-        <div class="panel-body">
-          <dl class="dl-horizontal">
-            <dt>Auto-Update</dt>
-            <% if @user.auto_update %>
-              <dd>is enabled</dd>
-            <% else %>
-              <dd class="text-info">is disabled</dd>
-            <% end %>
-          </dl>
-        </div>
-        <div class="panel-body">
-          <dl class="dl-horizontal">
-            <dt>Role</dt>
-            <dd><%= @user.role.name %></dd>
-            <% if @user.beta_tester %>
-              <dt>Beta Tester</dt>
-              <dd>is true</dd>
-            <% end %>
-          </dl>
-        </div>
-        <div class="panel-body">
-          <dl class="dl-horizontal">
-            <dt>Link Works to ORCID</dt>
-            <dd>
-              <% if @user.orcid_search_and_link_access_token %>
-                <p>Revoke access for DataCite to link DataCite DOIs to you ORCID record using the "Add to ORCID Record" button in DataCite Commons</p>
-                <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Disable".html_safe, :orcid_search_and_link_revoke, method: :get, :id => "orcid-search-and-link-disable", class: 'btn btn-social btn-orcid btn-fill' %>
-              <% else %>
-                <p>Allow DataCite to link DataCite DOIs to you ORCID record using the "Add to ORCID Record" button in DataCite Commons</p>
-                <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Enable".html_safe, :orcid_search_and_link_auth, method: :get, :id => "orcid-search-and-link-enable", class: 'btn btn-social btn-orcid btn-fill' %>
-              <% end %>
-            </dd>
-          </dl>
-        </div>
-        <div class="panel-body">
-          <dl class="dl-horizontal">
-            <dt>ORCID Auto-Update</dt>
-            <dd>
-              <% if @user.orcid_auto_update_access_token %>
-                <p>Revoke access DataCite to add Works to your ORCID record automatically when your ORCID is included as a creator in a DataCite DOI metadata</p>
-                <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Disable".html_safe, :orcid_auto_update_revoke, method: :get, :id => "orcid-auto-update-disable", class: 'btn btn-social btn-orcid btn-fill' %>
-              <% else %>
-                <p>Allow DataCite to add Works to your ORCID record automatically when your ORCID is included as a creator in a DataCite DOI metadata</p>
-                <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Enable".html_safe, :orcid_auto_update_auth, method: :get, :id => "orcid-auto-update-enable", class: 'btn btn-social btn-orcid btn-fill' %>
-              <% end %>
-            </dd>
-          </dl>
-        </div>
-        <div class="panel-body">
-          <dl class="dl-horizontal">
-            <dt>ORCID Auto-Update</dt>
-            <dd>
-              <% if @user.orcid_auto_update_access_token %>
-                <p>Revoke access DataCite to add Works to your ORCID record automatically when your ORCID is included as a creator in a DataCite DOI metadata</p>
-                <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Disable".html_safe, :orcid_auto_update_revoke, method: :get, :id => "orcid-auto-update-disable", class: 'btn btn-social btn-orcid btn-fill' %>
-              <% else %>
-                <p>Allow DataCite to add Works to your ORCID record automatically when your ORCID is included as a creator in a DataCite DOI metadata</p>
-                <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Enable".html_safe, :orcid_auto_update_auth, method: :get, :id => "orcid-auto-update-enable", class: 'btn btn-social btn-orcid btn-fill' %>
-              <% end %>
-            </dd>
-          </dl>
-        </div>
-        <% if @user.orcid_expires_at && Time.zone.now < @user.orcid_expires_at %>
-          <div class="panel-body">
-            <dl class="dl-horizontal">
-              <dt>ORCID Claims</dt>
-              <dd>
-                <p><span class="label label-success"><%= @user.claims.done.count %> created</span> <span class="label label-warning"><%= @user.claims.deleted.count %> deleted</span> <span class="label label-default"><%= @user.claims.waiting.count %> queued</span> <span class="label label-danger"><%= @user.claims.failed.count %> failed</span></p>
-                <% if @user.claims.last %>
-                  <% if Rails.env.production? %>
-                    <p>Last claim for DOI <a href="https://search.datacite.org/works/<%= @user.claims.last.doi %>"><%= @user.claims.last.doi %></a> on <%= l @user.claims.last.created_at, format: :medium %>.
-                  <% else %>
-                    <p>Last claim for DOI <a href="https://search.stage.datacite.org/works/<%= @user.claims.last.doi %>"><%= @user.claims.last.doi %></a> on <%= l @user.claims.last.created_at, format: :medium %>.
-                  <% end %>
-                <% end %>
-              </dd>
-            </dl>
-          </div>
-        <% end %>
-        <div class="panel-body">
-          <dl class="dl-horizontal">
-            <dt>GitHub Permissions</dt>
-            <dd>
-              <% if @user.github_token %>
-                <p>Delete GitHub token to no longer allow DataCite to link your ORCID and GitHub accounts.</p>
-                <%= link_to "<img id=\"github-logo\" src=\"#{ENV["CDN_URL"]}/images/github.png\" alt=\"GitHub icon\"/>&nbsp;Delete GitHub Token".html_safe, setting_path("me", user: { github_token: nil }), { method: :put, remote: true, class: 'btn btn-social btn-github btn-fill' } %>
-              <% else %>
-                <p>Get GitHub token to allow DataCite to link your ORCID and GitHub accounts.</p>
-                <%= link_to "<img id=\"github-logo\" src=\"#{ENV["CDN_URL"]}/images/github.png\" alt=\"GitHub icon\"/>&nbsp;Get GitHub Token".html_safe, user_github_omniauth_authorize_path, method: :post, :id => "sign-in-github", class: 'btn btn-social btn-github btn-fill' %>
-              <% end %>
-            </dd>
-          </dl>
-        </div>
-        <div class="panel-footer clearfix">
-          <div class="form-group pull-right">
-            <%= link_to 'Update', edit_setting_path("me"), :remote => true, :class => 'btn btn-sm', id: "#{@user.id}-edit" %>
-          </div>
-        </div>
-      <% end %>
-    </div>
   </div> 
 </div>
