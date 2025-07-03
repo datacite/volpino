@@ -71,4 +71,17 @@ namespace :user do
       puts "User #{user.uid} has #{user.claims_count} claims."
     end
   end
+
+  desc "Nullify ORCID auto-update tokens for users who had not previously opted in to Auto-update"
+  task nullify_auto_update_tokens: :environment do
+    users = User.where(auto_update: false).where.not(orcid_auto_update_access_token: [nil, ""])
+    puts "Users that have an auto-update token but auto_update = false: #{users.count}"
+
+    users.update_all(
+      orcid_auto_update_access_token: nil,
+      orcid_auto_update_refresh_token: nil,
+      orcid_auto_update_expires_at: nil
+    )
+    puts "Done"
+  end
 end
