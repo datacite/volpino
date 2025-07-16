@@ -37,7 +37,7 @@ module Users
     def auto_update_refresh
       tokens = refresh(ENV["ORCID_AUTO_UPDATE_CLIENT_ID"],
                        ENV["ORCID_AUTO_UPDATE_CLIENT_SECRET"],
-                       @user.orcid_auto_update_refresh_token)
+                       @user.orcid_AUTO_UPDATE_refresh_token)
 
       @user.update(orcid_auto_update_access_token: tokens[:access_token],
                    orcid_auto_update_refresh_token: tokens[:refresh_token],
@@ -50,7 +50,7 @@ module Users
     def auto_update_revoke
       revoke(ENV["ORCID_AUTO_UPDATE_CLIENT_ID"],
              ENV["ORCID_AUTO_UPDATE_CLIENT_SECRET"],
-             @user.orcid_auto_update_access_token)
+             @user.orcid_AUTO_UPDATE_access_token)
 
       @user.update(orcid_auto_update_access_token: nil,
                    orcid_auto_update_refresh_token: nil,
