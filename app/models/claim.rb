@@ -285,7 +285,7 @@ class Claim < ApplicationRecord
   end
 
   def orcid_token_expired
-    expires_at = source_id == "orcid_search" ? user.orcid_search_and_link_expires_at : user.orcid_auto_update_expires_at
+    expires_at = source_id == "orcid_search" ? user.orcid_search_and_link_expires_at : user.orcid_expires_at
     (Date.new(1970, 1, 2).beginning_of_day..Date.today.end_of_day) === expires_at
   end
 
