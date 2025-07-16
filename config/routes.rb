@@ -14,10 +14,6 @@ Rails.application.routes.draw do
     get "link_orcid", to: "users/sessions#link_orcid", as: :link_orcid_session
 
     get "auth", to: "users/omniauth_callbacks#forward"
-
-    get "orcid/search_and_link/auth", to: "users/orcid#search_and_link_auth", as: :orcid_search_and_link_auth
-    get "orcid/search_and_link/callback", to: "users/orcid#search_and_link_callback", as: :orcid_search_and_link_callback
-    get "orcid/search_and_link/revoke", to: "users/orcid#search_and_link_revoke", as: :orcid_search_and_link_revoke
   end
 
   # enable feature flags api
