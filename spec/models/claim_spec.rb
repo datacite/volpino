@@ -80,7 +80,7 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
       end
 
       it "expired token" do
-        user = FactoryBot.create(:valid_user, orcid_auto_update_expires_at: Time.zone.now - 7.days, orcid_search_and_link_expires_at: Time.zone.now - 7.days)
+        user = FactoryBot.create(:valid_user, orcid_expires_at: Time.zone.now - 7.days, orcid_search_and_link_expires_at: Time.zone.now - 7.days)
         subject = FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/1X4X-9056", source_id: source)
         response = subject.collect_data
         expect(response.body).to eq("errors" => [{ "status" => 401, "title" => "token has expired." }])

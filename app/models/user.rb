@@ -378,8 +378,7 @@ class User < ApplicationRecord
 
     Array.wrap(works).select do |work|
       work.extend Hashie::Extensions::DeepFetch
-      source_client_id = work.deep_fetch("work-summary", 0, "source", "source-client-id", "path") { nil }
-      source_client_id == ENV["ORCID_AUTO_UPDATE_CLIENT_ID"] || source_client_id == ENV["ORCID_SEARCH_AND_LINK_CLIENT_ID"]
+      work.deep_fetch("work-summary", 0, "source", "source-client-id", "path") { nil } == ENV["ORCID_CLIENT_ID"]
     end
   end
 
