@@ -36,6 +36,7 @@ html {
   font-size: 1.2rem;
 }
 
+.secondary-text,
 .settings-section-text {
   font-size: 0.9rem;
   color: #7C8998;
