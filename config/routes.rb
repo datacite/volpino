@@ -15,13 +15,8 @@ Rails.application.routes.draw do
 
     get "auth", to: "users/omniauth_callbacks#forward"
 
-    get "orcid/auto_update/auth",     to: "users/orcid#auto_update_auth",     as: :orcid_auto_update_auth
-    get "orcid/auto_update/callback", to: "users/orcid#auto_update_callback", as: :orcid_auto_update_callback
-    get "orcid/auto_update/refresh",  to: "users/orcid#auto_update_refresh",  as: :orcid_auto_update_refresh
-    get "orcid/auto_update/revoke",   to: "users/orcid#auto_update_revoke",   as: :orcid_auto_update_revoke
     get "orcid/search_and_link/auth", to: "users/orcid#search_and_link_auth", as: :orcid_search_and_link_auth
     get "orcid/search_and_link/callback", to: "users/orcid#search_and_link_callback", as: :orcid_search_and_link_callback
-    get "orcid/search_and_link/refresh",  to: "users/orcid#search_and_link_refresh",  as: :orcid_search_and_link_refresh
     get "orcid/search_and_link/revoke", to: "users/orcid#search_and_link_revoke", as: :orcid_search_and_link_revoke
   end
 

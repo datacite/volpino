@@ -6,109 +6,102 @@ require "json"
 module Users
   class OrcidController < ApplicationController
     BASE_URL = "#{ENV["ORCID_URL"]}/oauth"
-    SCOPES_AUTO_UPDATE = ["/activities/update", "/person/update", "/read-limited"].freeze
-    SCOPES_SEARCH_AND_LINK = ["/activities/update", "/person/update", "/read-limited"].freeze
+    CLIENT_ID = ENV["ORCID_SEARCH_AND_LINK_CLIENT_ID"]
+    CLIENT_SECRET = ENV["ORCID_SEARCH_AND_LINK_CLIENT_SECRET"]
 
     before_action :load_user
 
-    # Auto-update methods
-    def auto_update_auth
-      auth_url = build_auth_url(ENV["ORCID_AUTO_UPDATE_CLIENT_ID"],
-                                ENV["ORCID_AUTO_UPDATE_REDIRECT_URI"],
-                                SCOPES_AUTO_UPDATE.join(" "))
-
-      redirect_to auth_url
-    end
-
-
-    def auto_update_callback
-      tokens = callback(ENV["ORCID_AUTO_UPDATE_CLIENT_ID"],
-                        ENV["ORCID_AUTO_UPDATE_CLIENT_SECRET"],
-                        params[:code])
-
-      @user.update(orcid_auto_update_access_token: tokens[:access_token],
-                   orcid_auto_update_refresh_token: tokens[:refresh_token],
-                   orcid_auto_update_expires_at: tokens[:expires_at])
-
-      redirect_to stored_location_for(:user) || setting_path("me")
-    end
-
-
-    def auto_update_refresh
-      tokens = refresh(ENV["ORCID_AUTO_UPDATE_CLIENT_ID"],
-                       ENV["ORCID_AUTO_UPDATE_CLIENT_SECRET"],
-                       @user.orcid_AUTO_UPDATE_refresh_token)
-
-      @user.update(orcid_auto_update_access_token: tokens[:access_token],
-                   orcid_auto_update_refresh_token: tokens[:refresh_token],
-                   orcid_auto_update_expires_at: tokens[:expires_at])
-
-      redirect_to stored_location_for(:user) || setting_path("me")
-    end
-
-
-    def auto_update_revoke
-      revoke(ENV["ORCID_AUTO_UPDATE_CLIENT_ID"],
-             ENV["ORCID_AUTO_UPDATE_CLIENT_SECRET"],
-             @user.orcid_AUTO_UPDATE_access_token)
-
-      @user.update(orcid_auto_update_access_token: nil,
-                   orcid_auto_update_refresh_token: nil,
-                   orcid_auto_update_expires_at: nil)
-
-      redirect_to stored_location_for(:user) || setting_path("me")
-    end
-
-
-    # Search and Link methods
     def search_and_link_auth
-      auth_url = build_auth_url(ENV["ORCID_SEARCH_AND_LINK_CLIENT_ID"],
-                                ENV["ORCID_SEARCH_AND_LINK_REDIRECT_URI"] + "?redirect_to_commons=false",
-                                SCOPES_SEARCH_AND_LINK.join(" "))
+      response_type = "code"
+      scope = "/authenticate"
+      redirect_uri = ENV["ORCID_SEARCH_AND_LINK_REDIRECT_URI"]
+
+      auth_url = "#{BASE_URL}/authorize?client_id=#{CLIENT_ID}&response_type=#{response_type}&scope=#{scope}&redirect_uri=#{redirect_uri}"
 
       redirect_to auth_url
     end
-
 
     def search_and_link_callback
-      tokens = callback(ENV["ORCID_SEARCH_AND_LINK_CLIENT_ID"],
-                        ENV["ORCID_SEARCH_AND_LINK_CLIENT_SECRET"],
-                        params[:code])
+      conn = Faraday.new(BASE_URL + "/token")
 
-      @user.update(orcid_search_and_link_access_token: tokens[:access_token],
-                   orcid_search_and_link_refresh_token: tokens[:refresh_token],
-                   orcid_search_and_link_expires_at: tokens[:expires_at])
+      body = {
+        client_id: CLIENT_ID,
+        client_secret: CLIENT_SECRET,
+        grant_type: "authorization_code",
+        code: params[:code],
+      }
 
-      # Redirect to Commons if the flag isn't explicitly false. Otherwise redirect to profile settings
-      if params["redirect_to_commons"] != "false"
-        redirect_to "#{ENV['COMMONS_URL']}/orcid.org/#{current_user.orcid}"
-      else
-        redirect_to stored_location_for(:user) || setting_path("me")
+      response = conn.post do |req|
+        req.headers["Accept"] = "application/json"
+        req.body = body
       end
-    end
 
+      if response.success?
+        tokens = JSON.parse(response.body)
+        expires_at = Time.now.utc + tokens["expires_in"].seconds
 
-    def search_and_link_refresh
-      tokens = refresh(ENV["ORCID_SEARCH_AND_LINK_CLIENT_ID"],
-                       ENV["ORCID_SEARCH_AND_LINK_CLIENT_SECRET"],
-                       @user.orcid_search_and_link_refresh_token)
-
-      @user.update(orcid_search_and_link_access_token: tokens[:access_token],
-                   orcid_search_and_link_refresh_token: tokens[:refresh_token],
-                   orcid_search_and_link_expires_at: tokens[:expires_at])
+        @user.update(orcid_search_and_link_access_token: tokens["access_token"],
+                     orcid_search_and_link_refresh_token: tokens["refresh_token"],
+                     orcid_search_and_link_expires_at: expires_at)
+      else
+        puts "Error exchanging code for tokens: #{response.status} - #{response.body}"
+        nil
+      end
 
       redirect_to stored_location_for(:user) || setting_path("me")
     end
 
+    def search_and_link_refresh
+      conn = Faraday.new(BASE_URL + "/token")
+
+      body = {
+        client_id: CLIENT_ID,
+        client_secret: CLIENT_SECRET,
+        refresh_token: @user.orcid_search_and_link_refresh_token,
+        grant_type: "refresh_token",
+        code: params[:code],
+      }
+
+      response = conn.post do |req|
+        req.body = body
+      end
+
+      if response.success?
+        tokens = JSON.parse(response.body)
+        expires_at = Time.now.utc + tokens["expires_in"].seconds
+
+        @user.update(orcid_search_and_link_access_token: tokens["access_token"],
+                     orcid_search_and_link_refresh_token: tokens["refresh_token"],
+                     orcid_search_and_link_expires_at: expires_at)
+      else
+        puts "Error refreshing tokens: #{response.status} - #{response.body}"
+        nil
+      end
+
+      redirect_to stored_location_for(:user) || setting_path("me")
+    end
 
     def search_and_link_revoke
-      revoke(ENV["ORCID_SEARCH_AND_LINK_CLIENT_ID"],
-             ENV["ORCID_SEARCH_AND_LINK_CLIENT_SECRET"],
-             @user.orcid_search_and_link_access_token)
+      conn = Faraday.new(BASE_URL + "/revoke")
 
-      @user.update(orcid_search_and_link_access_token: nil,
-                   orcid_search_and_link_refresh_token: nil,
-                   orcid_search_and_link_expires_at: nil)
+      body = {
+        client_id: CLIENT_ID,
+        client_secret: CLIENT_SECRET,
+        token: @user.orcid_search_and_link_access_token,
+      }
+
+      response = conn.post do |req|
+        req.body = body
+      end
+
+      if response.success?
+        @user.update(orcid_search_and_link_access_token: nil,
+                     orcid_search_and_link_refresh_token: nil,
+                     orcid_search_and_link_expires_at: nil)
+      else
+        puts "Error revoking tokens: #{response.status} - #{response.body}"
+        nil
+      end
 
       redirect_to stored_location_for(:user) || setting_path("me")
     end
@@ -121,87 +114,5 @@ module Users
         fail CanCan::AccessDenied.new("Please sign in first.", :read, User)
       end
     end
-
-    private
-      def build_auth_url(client_id, redirect_uri, scope)
-        response_type = "code"
-        "#{BASE_URL}/authorize?client_id=#{client_id}&response_type=#{response_type}&scope=#{scope}&redirect_uri=#{redirect_uri}"
-      end
-
-
-      def callback(client_id, client_secret, code)
-        conn = Faraday.new(BASE_URL + "/token")
-
-        body = {
-          client_id: client_id,
-          client_secret: client_secret,
-          grant_type: "authorization_code",
-          code: code,
-        }
-
-        response = conn.post do |req|
-          req.headers["Accept"] = "application/json"
-          req.body = body
-        end
-
-        unless response.success?
-          raise "Error exchanging code for tokens: #{response.status} - #{response.body}"
-        end
-
-        parse_tokens(response.body)
-      end
-
-
-      def refresh(client_id, client_secret, refresh_token)
-        conn = Faraday.new(BASE_URL + "/token")
-
-        body = {
-          client_id: client_id,
-          client_secret: client_secret,
-          refresh_token: refresh_token,
-          grant_type: "refresh_token",
-        }
-
-        response = conn.post do |req|
-          req.body = body
-        end
-
-        unless response.success?
-          raise "Error refreshing tokens: #{response.status} - #{response.body}"
-        end
-
-        parse_tokens(response.body)
-      end
-
-
-      def revoke(client_id, client_secret, access_token)
-        conn = Faraday.new(BASE_URL + "/revoke")
-
-        body = {
-          client_id: client_id,
-          client_secret: client_secret,
-          token: access_token,
-        }
-
-        response = conn.post do |req|
-          req.body = body
-        end
-
-        unless response.success?
-          raise "Error revoking tokens: #{response.status} - #{response.body}"
-        end
-      end
-
-
-      def parse_tokens(body)
-        tokens = JSON.parse(response.body)
-        expires_at = Time.now.utc + tokens["expires_in"].seconds
-
-        {
-          access_token: tokens["access_token"],
-          refresh_token: tokens["refresh_token"],
-          expires_at: expires_at
-        }
-      end
   end
 end
