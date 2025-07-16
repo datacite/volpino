@@ -281,7 +281,7 @@ class Claim < ApplicationRecord
   end
 
   def orcid_token
-    source_id == "orcid_search" ? user.orcid_search_and_link_access_token : user.orcid_auto_update_access_token
+    source_id == "orcid_search" ? user.orcid_search_and_link_access_token : user.orcid_token
   end
 
   def orcid_token_expired

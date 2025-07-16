@@ -25,7 +25,7 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
     it "uses the auto update token" do
       user = FactoryBot.create(:valid_user, auto_update: false)
       subject = FactoryBot.create(:claim, user: user, source_id: "orcid_update")
-      expect(subject.orcid_token).to eq(user.orcid_auto_update_access_token)
+      expect(subject.orcid_token).to eq(user.orcid_token)
     end
 
     it "uses the search and link token" do
@@ -130,13 +130,12 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
       #   expect(subject.state).to eq("failed")
       # end
 
-      ## This test is no longer necessary as the auto_update flag has been replaced by presence of auto_update token
-      # it "no permission for auto-update" do
-      #   user = FactoryBot.create(:valid_user, auto_update: false)
-      #   subject = FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/j6gr-cf48", source_id: source)
-      #   expect(subject.process_data).to be true
-      #   expect(subject.state).to eq("failed") # This used to be 'ignored' but the code is correctly returning an error struct and thus setting it to failed
-      # end
+      it "no permission for auto-update" do
+        user = FactoryBot.create(:valid_user, auto_update: false)
+        subject = FactoryBot.create(:claim, user: user, orcid: "0000-0001-6528-2027", doi: "10.14454/j6gr-cf48", source_id: source)
+        expect(subject.process_data).to be true
+        expect(subject.state).to eq("failed") # This used to be 'ignored' but the code is correctly returning an error struct and thus setting it to failed
+      end
 
       it "invalid token" do
         user = FactoryBot.create(:invalid_user)
