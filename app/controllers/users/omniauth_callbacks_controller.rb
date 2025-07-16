@@ -107,6 +107,7 @@ module Users
 
     def orcid
       auth = request.env["omniauth.auth"]
+      omni_params = request.env["omniauth.params"]
       omniauth = flash[:omniauth] || {}
 
       if current_user.present?
@@ -126,6 +127,13 @@ module Users
       if @user.persisted?
         sign_in @user
 
+        # Refresh ORCID token if the flag isn't explicitly false
+        if omni_params["fetch_token"] != "false"
+          @user.update(orcid_expires_at: User.timestamp(auth.credentials),
+                       orcid_token: auth.credentials.token)
+          flash[:notice] = "ORCID token successfully refreshed."
+        end
+
         cookies[:_datacite] = encode_cookie(@user.jwt)
 
         if stored_location_for(:user) == ENV["BLOG_URL"] + "/admin/"
@@ -142,7 +150,13 @@ module Users
 
           netlify_response(token: token, content: content)
         else
-          redirect_to stored_location_for(:user) || setting_path("me")
+
+          # Redirect to Commons if the flag isn't explicitly false. Otherwise redirect to profile settings
+          if omni_params["redirect_to_commons"] != "false"
+            redirect_to "#{ENV['COMMONS_URL']}/orcid.org/#{current_user.orcid}"
+          else
+            redirect_to stored_location_for(:user) || setting_path("me")
+          end
         end
       else
         flash[:alert] = @user.errors.map { |k, v| "#{k}: #{v}" }.join("<br />").html_safe || "Error signing in with #{provider}"

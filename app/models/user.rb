@@ -309,10 +309,7 @@ class User < ApplicationRecord
       github: options.fetch("github", nil),
       github_uid: options.fetch("github_uid", nil),
       github_token: options.fetch("github_token", nil),
-      email: auth.extra.id_info? ? auth.extra.id_info.email : nil,
-      orcid_token: auth.credentials.token,
-      orcid_expires_at: User.timestamp(auth.credentials)
-    }.compact
+      email: auth.extra.id_info? ? auth.extra.id_info.email : nil }.compact
   end
 
   def self.timestamp(credentials)
