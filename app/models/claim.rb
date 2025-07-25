@@ -280,6 +280,15 @@ class Claim < ApplicationRecord
     write_attribute(:uuid, SecureRandom.uuid) if uuid.blank?
   end
 
+  def orcid_token
+    source_id == "orcid_search" ? user.orcid_search_and_link_access_token : user.orcid_auto_update_access_token
+  end
+
+  def orcid_token_expired
+    expires_at = source_id == "orcid_search" ? user.orcid_search_and_link_expires_at : user.orcid_auto_update_expires_at
+    (Date.new(1970, 1, 2).beginning_of_day..Date.today.end_of_day) === expires_at
+  end
+
   def work
     sandbox = ENV["SANDBOX"].present? || (ENV["ORCID_URL"] == "https://sandbox.orcid.org")
     # Note that if this is ever intended in future to support claiming for non datacite dois
