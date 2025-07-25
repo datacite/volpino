@@ -85,6 +85,8 @@ jobs:
           MEMCACHE_SERVERS: localhost:${{ job.services.memcached.ports[11211] }}
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}
           ORCID_CLIENT_ID: ${{ secrets.ORCID_CLIENT_ID_FOR_TESTING }}
+          ORCID_AUTO_UPDATE_CLIENT_ID: ${{ secrets.ORCID_CLIENT_ID_FOR_TESTING }}
+          ORCID_SEARCH_AND_LINK_CLIENT_ID: ${{ secrets.ORCID_CLIENT_ID_FOR_TESTING }}
           ORCID_TOKEN: ${{ secrets.ORCID_TOKEN_FOR_TESTING }}
         run: |
           bundle exec rubocop
