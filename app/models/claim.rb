@@ -253,7 +253,7 @@ class Claim < ApplicationRecord
     return OpenStruct.new(body: { "errors" => [{ "title" => "Missing data" }] }) if work.data.nil?
 
     # orcid_token has expired, but is not default 1970-01-01
-    return OpenStruct.new(body: { "errors" => [{ "status" => 401, "title" => "token has expired." }] }) if (Date.new(1970, 1, 2).beginning_of_day..Date.today.end_of_day) === user.orcid_expires_at
+    return OpenStruct.new(body: { "errors" => [{ "status" => 401, "title" => "token has expired." }] }) if orcid_token_expired
 
     # Don't go to orcid if we've got a claimed_at date but marked as still to create with no put_code
     # return OpenStruct.new(body: { "skip" => true, "reason" => "Already claimed." }) if to_be_created? && !put_code.present? && claimed_at.present?

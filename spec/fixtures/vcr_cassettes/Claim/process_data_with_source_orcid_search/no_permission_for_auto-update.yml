@@ -1,0 +1,296 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.stage.datacite.org/dois/10.14454/j6gr-cf48?include=media,client
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Mozilla/5.0 (compatible; Maremma/5.0.0; mailto:info@datacite.org)
+      Accept:
+      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
+      Accept-Encoding:
+      - gzip,deflate
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 05 Jun 2025 23:04:58 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Anonymous-Consumer:
+      - 'true'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - '0'
+      X-Request-Id:
+      - 1e260712-3817-4594-9dcb-ee48426ddd61
+      Etag:
+      - W/"2c7a93fdc326fb6c2cf4db54e9223257"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.039189'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.27
+      Server:
+      - nginx/1.18.0 + Phusion Passenger(R) 6.0.27
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, PUT, PATCH, DELETE, OPTIONS
+      Access-Control-Allow-Headers:
+      - Accept,Access-Control-Allow-Origin,Access-Control-Expose-Headers,Access-Control-Allow-Methods,Access-Control-Allow-Headers,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Mx-ReqToken,X-Requested-With
+      Access-Control-Expose-Headers:
+      - Authorization
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+  recorded_at: Thu, 05 Jun 2025 23:04:58 GMT
+- request:
+    method: get
+    uri: https://api.stage.datacite.org/dois/10.14454/j6gr-cf48?include=media,client
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Mozilla/5.0 (compatible; Maremma/5.0.0; mailto:info@datacite.org)
+      Accept:
+      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
+      Accept-Encoding:
+      - gzip,deflate
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 05 Jun 2025 23:04:59 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Anonymous-Consumer:
+      - 'true'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - '0'
+      X-Request-Id:
+      - ddb993ab-cc00-44be-be7c-71e1f631d6a7
+      Etag:
+      - W/"f9545ad0dc3c9d873e530ac9fe01acdc"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.120017'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.27
+      Server:
+      - nginx/1.18.0 + Phusion Passenger(R) 6.0.27
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, PUT, PATCH, DELETE, OPTIONS
+      Access-Control-Allow-Headers:
+      - Accept,Access-Control-Allow-Origin,Access-Control-Expose-Headers,Access-Control-Allow-Methods,Access-Control-Allow-Headers,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Mx-ReqToken,X-Requested-With
+      Access-Control-Expose-Headers:
+      - Authorization
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+  recorded_at: Thu, 05 Jun 2025 23:04:59 GMT
+- request:
+    method: get
+    uri: https://api.stage.datacite.org/dois/10.14454/j6gr-cf48?include=media,client
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Mozilla/5.0 (compatible; Maremma/5.0.0; mailto:info@datacite.org)
+      Accept:
+      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
+      Accept-Encoding:
+      - gzip,deflate
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 05 Jun 2025 23:05:00 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Anonymous-Consumer:
+      - 'true'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - '0'
+      X-Request-Id:
+      - ebbb7b6a-ac8c-43b0-8fd2-a155280b3f50
+      Etag:
+      - W/"c02777a7b5317e11c134118f0dd208d0"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.060334'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.27
+      Server:
+      - nginx/1.18.0 + Phusion Passenger(R) 6.0.27
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, PUT, PATCH, DELETE, OPTIONS
+      Access-Control-Allow-Headers:
+      - Accept,Access-Control-Allow-Origin,Access-Control-Expose-Headers,Access-Control-Allow-Methods,Access-Control-Allow-Headers,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Mx-ReqToken,X-Requested-With
+      Access-Control-Expose-Headers:
+      - Authorization
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+  recorded_at: Thu, 05 Jun 2025 23:05:00 GMT
+- request:
+    method: post
+    uri: https://api.sandbox.orcid.org/v3.0/0000-0001-6528-2027/work
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <work:work xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:common="http://www.orcid.org/ns/common" xmlns:work="http://www.orcid.org/ns/work" visibility="public" xsi:schemaLocation="http://www.orcid.org/ns/work ../work-3.0.xsd">
+          <work:title>
+            <common:title>Test</common:title>
+          </work:title>
+          <work:journal-title>DataCite</work:journal-title>
+          <work:type>other</work:type>
+          <common:publication-date>
+            <common:year>2019</common:year>
+          </common:publication-date>
+          <common:external-ids>
+            <common:external-id>
+              <common:external-id-type>doi</common:external-id-type>
+              <common:external-id-value>10.14454/j6gr-cf48</common:external-id-value>
+              <common:external-id-relationship>self</common:external-id-relationship>
+            </common:external-id>
+          </common:external-ids>
+          <work:contributors>
+            <work:contributor>
+              <common:contributor-orcid>
+                <common:uri>https://orcid.org/0000-0003-1419-2405</common:uri>
+                <common:path>0000-0003-1419-2405</common:path>
+                <common:host>orcid.org</common:host>
+              </common:contributor-orcid>
+              <work:credit-name>Martin Fenner</work:credit-name>
+            </work:contributor>
+          </work:contributors>
+        </work:work>
+    headers:
+      User-Agent:
+      - Mozilla/5.0 (compatible; Maremma/5.0.0; mailto:info@datacite.org)
+      Accept:
+      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
+      Content-Type:
+      - application/vnd.orcid+xml
+      Authorization:
+      - Bearer TEST_SEARCH_AND_LINK_TOKEN
+      Accept-Encoding:
+      - gzip,deflate
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Date:
+      - Thu, 05 Jun 2025 23:05:00 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 94b34ff1ac796786-DFW
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-store
+      Pragma:
+      - no-cache
+      Www-Authenticate:
+      - 'Bearer realm="ORCID T2 API", error="invalid_token", error_description="Invalid
+        access token: TEST_SEARCH_AND_LINK_TOKEN"'
+      Strict-Transport-Security:
+      - max-age=31536000 ; includeSubDomains
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - DENY
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - accept-encoding
+      Content-Encoding:
+      - gzip
+      X-Target:
+      - reg-sbox-mapi-use2-a1
+      X-Via:
+      - a1
+      Cf-Cache-Status:
+      - DYNAMIC
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAKrmUlBQSi0qyi9SUrBSUMrMK0vMyUyJL8nPTs1T0oFLxqekFicXZRaUZObngRV6QhQqJCYnpxYXK4DVWymEuAaHxAe7OgY5e8Q7+rnE+3j6eceH+Hu7+ilx1QIAAAD//wMAZy+8J2sAAAA=
+  recorded_at: Thu, 05 Jun 2025 23:05:00 GMT
+recorded_with: VCR 6.2.0

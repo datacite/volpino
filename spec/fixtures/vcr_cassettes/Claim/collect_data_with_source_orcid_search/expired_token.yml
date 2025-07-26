@@ -1,0 +1,299 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.stage.datacite.org/dois/10.14454/1x4x-9056?include=media,client
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Mozilla/5.0 (compatible; Maremma/5.0.0; mailto:info@datacite.org)
+      Accept:
+      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
+      Accept-Encoding:
+      - gzip,deflate
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 05 Jun 2025 23:05:16 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Anonymous-Consumer:
+      - 'true'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - '0'
+      X-Request-Id:
+      - 11141a19-afb8-4d76-a113-b494342791ef
+      Etag:
+      - W/"07b2805274bbc57630b9f044a27b0a5d"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.039572'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.27
+      Server:
+      - nginx/1.18.0 + Phusion Passenger(R) 6.0.27
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, PUT, PATCH, DELETE, OPTIONS
+      Access-Control-Allow-Headers:
+      - Accept,Access-Control-Allow-Origin,Access-Control-Expose-Headers,Access-Control-Allow-Methods,Access-Control-Allow-Headers,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Mx-ReqToken,X-Requested-With
+      Access-Control-Expose-Headers:
+      - Authorization
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+  recorded_at: Thu, 05 Jun 2025 23:05:15 GMT
+- request:
+    method: get
+    uri: https://api.stage.datacite.org/dois/10.14454/1x4x-9056?include=media,client
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Mozilla/5.0 (compatible; Maremma/5.0.0; mailto:info@datacite.org)
+      Accept:
+      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
+      Accept-Encoding:
+      - gzip,deflate
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 05 Jun 2025 23:05:16 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Anonymous-Consumer:
+      - 'true'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - '0'
+      X-Request-Id:
+      - d5f83607-a04d-4320-8a2e-977efeb6f552
+      Etag:
+      - W/"07b2805274bbc57630b9f044a27b0a5d"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.034096'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.27
+      Server:
+      - nginx/1.18.0 + Phusion Passenger(R) 6.0.27
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, PUT, PATCH, DELETE, OPTIONS
+      Access-Control-Allow-Headers:
+      - Accept,Access-Control-Allow-Origin,Access-Control-Expose-Headers,Access-Control-Allow-Methods,Access-Control-Allow-Headers,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Mx-ReqToken,X-Requested-With
+      Access-Control-Expose-Headers:
+      - Authorization
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+  recorded_at: Thu, 05 Jun 2025 23:05:16 GMT
+- request:
+    method: get
+    uri: https://api.stage.datacite.org/dois/10.14454/1x4x-9056?include=media,client
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Mozilla/5.0 (compatible; Maremma/5.0.0; mailto:info@datacite.org)
+      Accept:
+      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
+      Accept-Encoding:
+      - gzip,deflate
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 05 Jun 2025 23:05:17 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Anonymous-Consumer:
+      - 'true'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - '0'
+      X-Request-Id:
+      - 2fb0f010-b5a7-406b-bf97-b10850a5e17c
+      Etag:
+      - W/"f3a84733999c13c0d05261115f78bf38"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.028995'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.27
+      Server:
+      - nginx/1.18.0 + Phusion Passenger(R) 6.0.27
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, PUT, PATCH, DELETE, OPTIONS
+      Access-Control-Allow-Headers:
+      - Accept,Access-Control-Allow-Origin,Access-Control-Expose-Headers,Access-Control-Allow-Methods,Access-Control-Allow-Headers,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Mx-ReqToken,X-Requested-With
+      Access-Control-Expose-Headers:
+      - Authorization
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+  recorded_at: Thu, 05 Jun 2025 23:05:17 GMT
+- request:
+    method: post
+    uri: https://api.sandbox.orcid.org/v3.0/0000-0001-6528-2027/work
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <work:work xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:common="http://www.orcid.org/ns/common" xmlns:work="http://www.orcid.org/ns/work" visibility="public" xsi:schemaLocation="http://www.orcid.org/ns/work ../work-3.0.xsd">
+          <work:title>
+            <common:title>Cool DOI's</common:title>
+          </work:title>
+          <work:journal-title>DataCite</work:journal-title>
+          <work:short-description>In 1998 Tim Berners-Lee coined the term cool URIs (1998), that is URIs that don’t change. We know that URLs referenced in the scholarly literature are often not cool, leading to link rot (Klein et al., 2014) and making it hard or impossible to find...</work:short-description>
+          <work:type>other</work:type>
+          <common:publication-date>
+            <common:year>2016</common:year>
+            <common:month>12</common:month>
+            <common:day>15</common:day>
+          </common:publication-date>
+          <common:external-ids>
+            <common:external-id>
+              <common:external-id-type>doi</common:external-id-type>
+              <common:external-id-value>10.14454/1X4X-9056</common:external-id-value>
+              <common:external-id-relationship>self</common:external-id-relationship>
+            </common:external-id>
+          </common:external-ids>
+          <work:contributors>
+            <work:contributor>
+              <common:contributor-orcid>
+                <common:uri>https://orcid.org/0000-0003-1419-2405</common:uri>
+                <common:path>0000-0003-1419-2405</common:path>
+                <common:host>orcid.org</common:host>
+              </common:contributor-orcid>
+              <work:credit-name>Martin Fenner</work:credit-name>
+            </work:contributor>
+          </work:contributors>
+        </work:work>
+    headers:
+      User-Agent:
+      - Mozilla/5.0 (compatible; Maremma/5.0.0; mailto:info@datacite.org)
+      Accept:
+      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
+      Content-Type:
+      - application/vnd.orcid+xml
+      Authorization:
+      - Bearer TEST_SEARCH_AND_LINK_TOKEN
+      Accept-Encoding:
+      - gzip,deflate
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Date:
+      - Thu, 05 Jun 2025 23:05:17 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 94b3505b6b90e843-DFW
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-store
+      Pragma:
+      - no-cache
+      Www-Authenticate:
+      - 'Bearer realm="ORCID T2 API", error="invalid_token", error_description="Invalid
+        access token: TEST_SEARCH_AND_LINK_TOKEN"'
+      Strict-Transport-Security:
+      - max-age=31536000 ; includeSubDomains
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - DENY
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - accept-encoding
+      Content-Encoding:
+      - gzip
+      X-Target:
+      - reg-sbox-mapi-use2-a1
+      X-Via:
+      - a1
+      Cf-Cache-Status:
+      - DYNAMIC
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAKrmUlBQSi0qyi9SUrBSUMrMK0vMyUyJL8nPTs1T0oFLxqekFicXZRaUZObngRV6QhQqJCYnpxYXK4DVWymEuAaHxAe7OgY5e8Q7+rnE+3j6eceH+Hu7+ilx1QIAAAD//wMAZy+8J2sAAAA=
+  recorded_at: Thu, 05 Jun 2025 23:05:17 GMT
+recorded_with: VCR 6.2.0
