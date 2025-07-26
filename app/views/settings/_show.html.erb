@@ -101,6 +101,20 @@
             </dd>
           </dl>
         </div>
+        <div class="panel-body">
+          <dl class="dl-horizontal">
+            <dt>ORCID Auto-Update</dt>
+            <dd>
+              <% if @user.orcid_auto_update_access_token %>
+                <p>Revoke access DataCite to add Works to your ORCID record automatically when your ORCID is included as a creator in a DataCite DOI metadata</p>
+                <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Disable".html_safe, :orcid_auto_update_revoke, method: :get, :id => "orcid-auto-update-disable", class: 'btn btn-social btn-orcid btn-fill' %>
+              <% else %>
+                <p>Allow DataCite to add Works to your ORCID record automatically when your ORCID is included as a creator in a DataCite DOI metadata</p>
+                <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Enable".html_safe, :orcid_auto_update_auth, method: :get, :id => "orcid-auto-update-enable", class: 'btn btn-social btn-orcid btn-fill' %>
+              <% end %>
+            </dd>
+          </dl>
+        </div>
         <% if @user.orcid_expires_at && Time.zone.now < @user.orcid_expires_at %>
           <div class="panel-body">
             <dl class="dl-horizontal">
