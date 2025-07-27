@@ -133,6 +133,10 @@ class User < ApplicationRecord
     }
   end
 
+  def self.from_orcid(uid)
+    where(uid: uid).first_or_create
+  end
+
   def self.from_omniauth(auth, options = {})
     where(provider: options[:provider], uid: options[:uid] || auth.uid).first_or_create
   end
