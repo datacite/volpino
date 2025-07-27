@@ -2,6 +2,8 @@
 :root {
   --datacite-light-blue: #00B1E2;
   --datacite-dark-blue: #243B54;
+  --background-gray: #DCDEE0;
+  --color-gray: #7C8998;
 }
 
 html {
@@ -13,8 +15,9 @@ html {
   padding-top: 3rem;
   padding-bottom: 3rem;
   display: grid;
-  grid-template-columns: 1fr max-content max-content;
+  grid-template-columns: 1fr max-content;
   column-gap: 2rem;
+
   border: none !important;
   box-shadow: 0px 28px 36px -10px rgba(13, 96, 212, 0.08) !important;
   margin-bottom: 6rem;
@@ -32,6 +35,10 @@ html {
 
 
 .settings-section-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.2rem;
+
   font-weight: bold;
   font-size: 1.2rem;
 }
@@ -39,7 +46,7 @@ html {
 .secondary-text,
 .settings-section-text {
   font-size: 0.9rem;
-  color: #7C8998;
+  color: var(--color-gray);
 }
 
 .settings-button {
@@ -77,29 +84,58 @@ html {
   border: none !important;
 }
 
-.enabled-pill {
+.pill {
   width: max-content;
-  background-color: rgba(0, 177, 226, .2);
-  color: var(--datacite-dark-blue);
   font-size: 0.8rem !important;
+  font-weight: normal;
   border-radius: 40px;
   padding: 0.25em 0.75em;
 }
 
+.pill.enabled {
+  background-color: rgba(0, 177, 226, .2);
+  color: var(--datacite-dark-blue);
+  font-size: 5em 0.75em;
+}
+
+.pill.disabled {
+  background-color: var(--background-gray);
+  color: var(black);
+  font-size: 5em 0.75em;
+}
+
 .find-works-button {
+  display: inline-flex;
+  gap: 1.2em;
+  align-items: center;
+
+  margin-bottom: 10px;
+
   height: min-content;
+  width: max-content;
   border: none;
   font-size: 1rem;
-  padding: 0.75rem 4rem;
+  padding: 0.75rem 3rem;
   background-color: #037AAD;
   border-radius: 100px;
   color: white;
-  grid-column: 3;
 }
 
 .find-works-button:hover {
   color: white;
   background-color: var(--datacite-dark-blue);
+}
+
+.find-works-explanatory {
+  font-size: 0.9rem;
+  color: var(--color-gray);
+  margin-top: 0.5rem;
+}
+
+.center-vertically {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
 }
 
 .separator {

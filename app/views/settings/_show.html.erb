@@ -1,34 +1,47 @@
 <div class="row">
   <div class="col-md-9">
-        <div class="panel-body settings-container">
-          <h2 class="settings-name col-span-full"><%= @user.name %></h2>
-          <p class="settings-orcid-link col-span-full"><%= link_to @user.orcid_as_url, @user.orcid %></p>
+    <div class="panel-body settings-container">
+      <h2 class="settings-name col-span-full"><%= @user.name %></h2>
+      <p class="settings-orcid-link col-span-full"><%= link_to @user.orcid_as_url, @user.orcid %></p>
 
-          <h3 class="settings-section-header col-span-full">Link Works to ORCID</h3>
-          <p class="settings-section-text">Allow DataCite to link DataCite DOIs to you ORCID record using the "Add to ORCID Record" button in DataCite Commons</p>
-          <% if @user.orcid_search_and_link_access_token %>
-            <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Disable".html_safe, :orcid_search_and_link_revoke, method: :get, :id => "orcid-search-and-link-disable", class: "btn btn-social btn-orcid btn-fill settings-button settings-button-disable" %>
-            <span class="col-span-2 enabled-pill">✓ Enabled</span>
-          <% else %>
-            <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Enable".html_safe, :orcid_search_and_link_auth, method: :get, :id => "orcid-search-and-link-enable", class: "btn btn-social btn-orcid btn-fill settings-button settings-button-enable" %>
-          <% end %>
+      <h3 class="settings-section-header col-span-full">Link Works to ORCID
+        <% if @user.orcid_search_and_link_access_token %>
+          <span class="col-span-2 pill enabled">✓ Enabled</span>
+        <% else %>
+          <span class="col-span-2 pill disabled">Disabled</span>
+        <% end %>
+      </h3>
+      <p class="settings-section-text">
+      Allow DataCite to link DataCite DOIs to you ORCID record using the "Add to ORCID Record" button in DataCite Commons
+      </p>
 
-          <div class="col-span-2 separator"></div>
+      <% if @user.orcid_search_and_link_access_token %>
+        <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Disable".html_safe, :orcid_search_and_link_revoke, method: :get, :id => "orcid-search-and-link-disable", class: "btn btn-social btn-orcid btn-fill settings-button settings-button-disable" %>
+      <% else %>
+        <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Enable".html_safe, :orcid_search_and_link_auth, method: :get, :id => "orcid-search-and-link-enable", class: "btn btn-social btn-orcid btn-fill settings-button settings-button-enable" %>
+      <% end %>
 
-          <h3 class="settings-section-header col-span-full">ORCID Auto-Update</h3>
-          <p class="settings-section-text">Allow DataCite to add Works to your ORCID record automatically when your ORCID is included as a creator in a DataCite DOI metadata</p>
-          <% if @user.orcid_auto_update_access_token %>
-            <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Disable".html_safe, :orcid_auto_update_revoke, method: :get, :id => "orcid-auto-update-disable", class: "btn btn-social btn-orcid btn-fill settings-button settings-button-disable" %>
-            <span class="col-span-2 enabled-pill">✓ Enabled</span>
-          <% else %>
-            <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Enable".html_safe, :orcid_auto_update_auth, method: :get, :id => "orcid-auto-update-enable", class: "btn btn-social btn-orcid btn-fill settings-button settings-button-enable" %>
-          <% end %>
+      <div class="col-span-2 separator"></div>
+
+      <h3 class="settings-section-header col-span-full">ORCID Auto-Update
+        <% if @user.orcid_auto_update_access_token %>
+          <span class="col-span-2 pill enabled">✓ Enabled</span>
+        <% else %>
+          <span class="col-span-2 pill disabled">Disabled</span>
+        <% end %>
+      </h3>
+      <p class="settings-section-text">Allow DataCite to add Works to your ORCID record automatically when your ORCID is included as a creator in a DataCite DOI metadata</p>
+      <% if @user.orcid_auto_update_access_token %>
+        <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Disable".html_safe, :orcid_auto_update_revoke, method: :get, :id => "orcid-auto-update-disable", class: "btn btn-social btn-orcid btn-fill settings-button settings-button-disable" %>
+      <% else %>
+        <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Click to Enable".html_safe, :orcid_auto_update_auth, method: :get, :id => "orcid-auto-update-enable", class: "btn btn-social btn-orcid btn-fill settings-button settings-button-enable" %>
+      <% end %>
 
 
-          <div class="col-span-2 separator"></div>
-          <div></div>
+      <div class="col-span-2 separator"></div>
 
-          <%= link_to "Find Works", "#{ENV['COMMONS_URL']}/doi.org?query=creators_and_contributors.nameIdentifiers.nameIdentifier:(#{@user.uid} OR \"https://orcid.org/#{@user.uid}\")&registration-agency=datacite", :class => "find-works-button", :id => "find-user-works" %>
-        </div>
+      <%= link_to "Find Works <svg width=\"26\" height=\"13\" viewBox=\"0 0 26 13\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M0 6.5H24\" stroke=\"#FFFFFF\" stroke-width=\"1.5\"></path> <path d=\"M18.6569 12.3137L24.3137 6.65687L18.6569 1.00001\" stroke=\"#FFFFFF\" stroke-width=\"1.5\"></path></svg>".html_safe, "#{ENV['COMMONS_URL']}/doi.org?query=creators_and_contributors.nameIdentifiers.nameIdentifier:(#{@user.uid} OR \"https://orcid.org/#{@user.uid}\")&registration-agency=datacite", :class => "find-works-button", :id => "find-user-works" %>
+      <p class="secondary-text col-span-full">Search DataCite Commons for Works associated with your ORCID iD</p>
+    </div>
   </div> 
 </div>
