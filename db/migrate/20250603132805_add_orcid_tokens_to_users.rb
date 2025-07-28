@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddOrcidSearchAndLinkTokensToUsers < ActiveRecord::Migration[7.1]
+class AddOrcidTokensToUsers < ActiveRecord::Migration[7.1]
   def up
     execute "ALTER TABLE users ROW_FORMAT=DYNAMIC"
   end

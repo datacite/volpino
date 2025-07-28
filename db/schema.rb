@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_10_031120) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_03_132805) do
   create_table "claims", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "uuid", limit: 191
     t.string "doi", limit: 191
@@ -110,12 +110,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_10_031120) do
     t.string "organization", limit: 191
     t.string "orcid_auto_update_access_token", limit: 191
     t.datetime "orcid_auto_update_expires_at", precision: nil, default: "1970-01-01 00:00:00"
-    t.text "orcid_search_and_link_access_token"
-    t.text "orcid_search_and_link_refresh_token"
-    t.datetime "orcid_search_and_link_expires_at"
-    t.text "orcid_token"
+    t.string "orcid_auto_update_refresh_token"
+    t.string "orcid_token"
     t.datetime "orcid_expires_at"
-    t.text "orcid_auto_update_refresh_token"
+    t.string "orcid_search_and_link_access_token"
+    t.string "orcid_search_and_link_refresh_token"
+    t.datetime "orcid_search_and_link_expires_at"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["family_name", "given_names"], name: "index_users_on_family_name_and_given_names"
     t.index ["github"], name: "index_users_on_github", unique: true
