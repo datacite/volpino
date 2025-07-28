@@ -77,10 +77,7 @@ namespace :user do
     users = User.where(auto_update: false).where.not(orcid_token: [nil, ""])
     puts "Users that have an orcid token but auto_update = false: #{users.count}"
 
-    users.update_all(
-      orcid_token: nil,
-      orcid_expires_at: nil
-    )
+    users.update_all(orcid_token: "")
     puts "Done"
   end
 
