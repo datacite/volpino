@@ -75,12 +75,6 @@ class User < ApplicationRecord
       indexes :role_id,       type: :keyword
       indexes :role_name,     type: :keyword
       indexes :orcid_token,   type: :keyword
-      indexes :orcid_auto_update_access_token,   type: :keyword
-      indexes :orcid_auto_update_refresh_token,   type: :keyword
-      indexes :orcid_auto_update_expires_at,   type: :date
-      indexes :orcid_search_and_link_access_token,   type: :keyword
-      indexes :orcid_search_and_link_refresh_token,   type: :keyword
-      indexes :orcid_search_and_link_expires_at,   type: :date
       indexes :created,       type: :date
       indexes :updated,       type: :date
       indexes :orcid_expires_at, type: :date
@@ -112,12 +106,6 @@ class User < ApplicationRecord
       "is_active" => is_active,
       "orcid_token" => orcid_token,
       "orcid_expires_at" => orcid_expires_at,
-      "orcid_auto_update_access_token" => orcid_auto_update_access_token,
-      "orcid_auto_update_refresh_token" => orcid_auto_update_refresh_token,
-      "orcid_auto_update_expires_at" => orcid_auto_update_expires_at,
-      "orcid_search_and_link_access_token" => orcid_search_and_link_access_token,
-      "orcid_search_and_link_refresh_token" => orcid_search_and_link_refresh_token,
-      "orcid_search_and_link_expires_at" => orcid_search_and_link_expires_at,
       "claims_count" => claims_count,
     }
   end
@@ -315,10 +303,7 @@ class User < ApplicationRecord
       github: options.fetch("github", nil),
       github_uid: options.fetch("github_uid", nil),
       github_token: options.fetch("github_token", nil),
-      email: auth.extra.id_info? ? auth.extra.id_info.email : nil,
-      orcid_token: auth.credentials.token,
-      orcid_expires_at: User.timestamp(auth.credentials)
-    }.compact
+      email: auth.extra.id_info? ? auth.extra.id_info.email : nil }.compact
   end
 
   def self.timestamp(credentials)
@@ -378,8 +363,7 @@ class User < ApplicationRecord
 
     Array.wrap(works).select do |work|
       work.extend Hashie::Extensions::DeepFetch
-      source_client_id = work.deep_fetch("work-summary", 0, "source", "source-client-id", "path") { nil }
-      source_client_id == ENV["ORCID_AUTO_UPDATE_CLIENT_ID"] || source_client_id == ENV["ORCID_SEARCH_AND_LINK_CLIENT_ID"]
+      work.deep_fetch("work-summary", 0, "source", "source-client-id", "path") { nil } == ENV["ORCID_CLIENT_ID"]
     end
   end
 

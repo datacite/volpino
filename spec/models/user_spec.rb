@@ -74,7 +74,7 @@ describe User, type: :model, vcr: true, elasticsearch: true do
       expect(result.length).to eq(23)
       work = result.first
       path = work.fetch("work-summary", [{}]).first.fetch("source", {}).fetch("source-client-id", {}).fetch("path", nil)
-      expect(path).to eq(ENV["ORCID_AUTO_UPDATE_CLIENT_ID"])
+      expect(path).to eq(ENV["ORCID_CLIENT_ID"])
     end
 
     it "parse data" do
