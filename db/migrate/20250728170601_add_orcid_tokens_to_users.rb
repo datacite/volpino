@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 class AddOrcidTokensToUsers < ActiveRecord::Migration[7.1]
-  def up
-    execute "ALTER TABLE users ROW_FORMAT=DYNAMIC"
-  end
-
   def change
     # Rename existing ORCID columns to be the auto-update columns
     rename_column :users, :orcid_token, :orcid_auto_update_access_token
@@ -23,9 +19,5 @@ class AddOrcidTokensToUsers < ActiveRecord::Migration[7.1]
     add_column :users, :orcid_search_and_link_access_token, :string, null: true
     add_column :users, :orcid_search_and_link_refresh_token, :string, null: true
     add_column :users, :orcid_search_and_link_expires_at, :datetime, null: true
-  end
-
-  def down
-    execute "ALTER TABLE users ROW_FORMAT=COMPACT"
   end
 end

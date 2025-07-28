@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_03_132805) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_28_170601) do
   create_table "claims", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "uuid", limit: 191
     t.string "doi", limit: 191
@@ -80,7 +78,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_03_132805) do
     t.index ["created_at"], name: "index_status_created_at"
   end
 
-  create_table "users", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "users", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", limit: 191
     t.string "family_name", limit: 191
     t.string "given_names", limit: 191
@@ -123,4 +121,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_03_132805) do
     t.index ["is_public"], name: "index_users_on_is_public"
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
+
 end
