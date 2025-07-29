@@ -131,6 +131,7 @@ module Users
         if omni_params["fetch_token"] != "false"
           @user.update(orcid_expires_at: User.timestamp(auth.credentials),
                        orcid_token: auth.credentials.token)
+          logger.info "ORCID token: #{@user.orcid_token} (#{auth.credentials.token})"
           flash[:notice] = "ORCID token successfully refreshed."
         end
 
