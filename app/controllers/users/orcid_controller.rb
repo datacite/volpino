@@ -17,7 +17,6 @@ module Users
                                 ENV["ORCID_AUTO_UPDATE_REDIRECT_URI"],
                                 SCOPES_AUTO_UPDATE.join(" "))
 
-      logger.info "AUTH URL: #{auth_url}"
       redirect_to auth_url
     end
 
@@ -29,13 +28,9 @@ module Users
 
       @user = User.from_orcid(response[:id])
 
-      logger.info "User (before update): #{@user.inspect}"
-      logger.info "access token: #{@user.orcid_auto_update_access_token}"
       @user.update(orcid_auto_update_access_token: response[:access_token],
                    orcid_auto_update_refresh_token: response[:refresh_token],
                    orcid_auto_update_expires_at: response[:expires_at])
-      logger.info "User (after update): #{@user.inspect}"
-      logger.info "access token: #{@user.orcid_auto_update_access_token}"
 
       redirect_to stored_location_for(:user) || setting_path("me")
     end
@@ -73,7 +68,6 @@ module Users
                                 ENV["ORCID_SEARCH_AND_LINK_REDIRECT_URI"] + "?redirect_to_commons=false",
                                 SCOPES_SEARCH_AND_LINK.join(" "))
 
-      logger.info "AUTH URL: #{auth_url}"
       redirect_to auth_url
     end
 
@@ -86,13 +80,9 @@ module Users
 
       @user = User.from_orcid(response[:id])
 
-      logger.info "User (before update): #{@user.inspect}"
-      logger.info "access token: #{@user.orcid_search_and_link_access_token}"
       @user.update(orcid_search_and_link_access_token: response[:access_token],
                    orcid_search_and_link_refresh_token: response[:refresh_token],
                    orcid_search_and_link_expires_at: response[:expires_at])
-      logger.info "User (after update): #{@user.inspect}"
-      logger.info "access token: #{@user.orcid_search_and_link_access_token}"
 
       # Redirect to Commons if the flag isn't explicitly false. Otherwise redirect to profile settings
       if params["redirect_to_commons"] != "false"
