@@ -243,9 +243,6 @@ class Claim < ApplicationRecord
       end
     end
 
-    # user has not given permission for auto-update
-    return OpenStruct.new(body: { "errors" => [{ "title" => "No auto-update permission" }] }) if source_id == "orcid_update" && user && !user.auto_update
-
     # user has too many claims already
     return OpenStruct.new(body: { "errors" => [{ "title" => "Too many claims. Only 10,000 claims allowed." }] }) if user.claims.total_count > 10000
 
