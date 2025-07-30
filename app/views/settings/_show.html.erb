@@ -2,7 +2,7 @@
   <div class="col-md-9">
     <div class="panel-body settings-container">
       <h2 class="settings-name col-span-full"><%= @user.name %></h2>
-      <p class="settings-orcid-link col-span-full"><%= link_to @user.orcid_as_url, @user.orcid %></p>
+      <%= link_to @user.orcid_as_url, @user.orcid_as_url, class: "settings-orcid-link col-span-full" %>
 
       <h3 class="settings-section-header col-span-full">Link Works to ORCID
         <% if @user.orcid_search_and_link_access_token %>
