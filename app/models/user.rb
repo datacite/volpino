@@ -264,7 +264,7 @@ class User < ApplicationRecord
   end
 
   def orcid_as_url
-    Rails.env.test? ? ENV["ORCID_URL"] + "/" + orcid : "https://orcid.org/" + orcid
+    ENV["ORCID_URL"] ? ENV["ORCID_URL"] + "/" + orcid : "https://orcid.org/" + orcid
   end
 
   def flipper_id
