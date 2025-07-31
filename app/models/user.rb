@@ -260,7 +260,7 @@ class User < ApplicationRecord
   end
 
   def orcid
-    uid
+    uid.upcase
   end
 
   def orcid_as_url
