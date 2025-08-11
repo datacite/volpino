@@ -222,13 +222,6 @@ Devise.setup do |config|
                   scope: "/authenticate",
                   provider_ignores_state: true
 
-  config.omniauth :github, ENV["GITHUB_CLIENT_ID"],
-                  ENV["GITHUB_CLIENT_SECRET"],
-                  scope: "user,repo"
-
-  config.omniauth :globus, ENV["GLOBUS_CLIENT_ID"],
-                  ENV["GLOBUS_CLIENT_SECRET"]
-
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
