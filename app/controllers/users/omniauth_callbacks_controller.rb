@@ -25,86 +25,6 @@ module Users
       redirect_to root_path
     end
 
-    def github
-      auth = request.env["omniauth.auth"]
-
-      if current_user.present?
-        @user = current_user
-        @user.update(github: auth.info.nickname,
-                    github_uid: auth.uid,
-                    github_token: auth.credentials.token)
-
-        flash[:notice] = "Account successfully linked with GitHub account."
-
-        if stored_location_for(:user) == ENV["BLOG_URL"] + "/admin/"
-          if @user.role_id == "staff_admin"
-            token = @user.github_token
-            content = nil
-          else
-            token = nil
-            content = "No permission."
-          end
-
-          netlify_response(token: token, content: content)
-        else
-          redirect_to stored_location_for(:user) || setting_path("me")
-        end
-      elsif @user = User.where(github_uid: auth.uid).first
-        cookies[:_datacite] = encode_cookie(@user.jwt)
-
-        sign_in @user
-
-        if stored_location_for(:user) == ENV["BLOG_URL"] + "/admin/"
-          if @user.role_id == "staff_admin"
-            token = @user.github_token
-            content = nil
-          else
-            token = nil
-            content = "No permission."
-          end
-
-          netlify_response(token: token, content: content)
-        else
-          redirect_to stored_location_for(:user) || setting_path("me")
-        end
-      else
-        flash[:omniauth] = { "github" => auth.info.nickname,
-                            "github_uid" => auth.uid,
-                            "github_token" => auth.credentials.token }
-        redirect_to "/link_orcid"
-      end
-    end
-
-    def globus
-      auth = request.env["omniauth.auth"]
-
-      if current_user.present?
-        @user = current_user
-        @user.update(email: auth.info.email, organization: auth.extra.id_info? ? auth.extra.id_info.organization : nil)
-        flash[:notice] = "Account successfully linked with Globus account."
-        redirect_to user_path("me") && return
-      else
-        # extract ORCID ID from preferred_username
-        @user = User.from_omniauth(auth, provider: "globus", uid: auth.extra.id_info.preferred_username[0..18])
-      end
-
-      if Time.zone.now > @user.expires_at
-        auth_hash = User.get_auth_hash(auth, authentication_token: auth.credentials.token, expires_at: Time.at(auth.credentials.expires_at).utc)
-        @user.update(auth_hash)
-      end
-
-      if @user.persisted?
-        sign_in @user
-
-        cookies[:_datacite] = encode_cookie(@user.jwt)
-
-        redirect_to stored_location_for(:user) || setting_path("me")
-      else
-        flash[:alert] = @user.errors.map { |k, v| "#{k}: #{v}" }.join("<br />").html_safe || "Error signing in with #{provider}"
-        redirect_to root_path
-      end
-    end
-
     def orcid
       auth = request.env["omniauth.auth"]
       omniauth = flash[:omniauth] || {}
@@ -148,17 +68,6 @@ module Users
         flash[:alert] = @user.errors.map { |k, v| "#{k}: #{v}" }.join("<br />").html_safe || "Error signing in with #{provider}"
         redirect_to root_path
       end
-    end
-
-    def netlify_response(token: nil, content: nil)
-      content = { token: token, provider: "github" } if token.present?
-      content ||= "Error authenticating user."
-
-      message = "success" if token.present?
-      message ||= "error"
-
-      @post_message = "authorization:github:#{message}:#{content.to_json}".to_json
-      render "users/sessions/netlify", layout: false, status: :ok
     end
   end
 end

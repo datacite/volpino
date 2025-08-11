@@ -3,19 +3,11 @@
       <div class="container">
         <div class="row">
           <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 ">
-            <% if Rails.env.production? %>
-              <div class="register-card-globus">
-                <h3 class="title">Sign In</h3>
-                <%= link_to "<img id=\"globus-logo\" src=\"#{ENV["CDN_URL"]}/images/globus.png\" alt=\"Globus icon\"/> Sign in with Globus".html_safe, user_globus_omniauth_authorize_path, method: :post, :id => "sign-in-globus", class: 'btn btn-block btn-social btn-globus btn-fill' %>
-                <p>Globus allows you to login via your institutional account (if supported), Google or ORCID. <a href="https://docs.globus.org/api/auth/specification/" target="_blank">Learn More</a></p>
-              </div>
-            <% else %>
-              <div class="register-card-globus">
-                <h3 class="title">Sign In</h3>
-                <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Sign in with ORCID".html_safe, user_orcid_omniauth_authorize_path(fetch_token: false, redirect_to_commons: false), method: :post, :id => "sign-in-orcid", class: 'btn btn-block btn-social btn-orcid btn-fill' %>
-                <p class="secondary-text">We use your ORCID information to customize your experience with DataCite Commons and help you add works to your profile once you’ve signed in.</p>
-              </div>
-            <% end %>
+            <div class="register-card-globus">
+              <h3 class="title">Sign In</h3>
+              <%= link_to "<img id=\"orcid-logo\" src=\"#{ENV["CDN_URL"]}/images/orcid.png\" alt=\"ORCID icon\"/>&nbsp;Sign in with ORCID".html_safe, user_orcid_omniauth_authorize_path(fetch_token: false, redirect_to_commons: false), method: :post, :id => "sign-in-orcid", class: 'btn btn-block btn-social btn-orcid btn-fill' %>
+              <p class="secondary-text">We use your ORCID information to customize your experience with DataCite Commons and help you add works to your profile once you’ve signed in.</p>
+            </div>
           </div>
         </div>
     </div>
