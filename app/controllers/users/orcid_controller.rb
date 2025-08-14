@@ -79,6 +79,7 @@ module Users
 
 
       @user = User.from_orcid(response[:id])
+      sign_in @user
 
       @user.update(orcid_search_and_link_access_token: response[:access_token],
                    orcid_search_and_link_refresh_token: response[:refresh_token],
