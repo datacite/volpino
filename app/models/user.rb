@@ -138,7 +138,7 @@ class User < ApplicationRecord
   end
 
   def self.from_omniauth(auth, options = {})
-    where(provider: options[:provider], uid: options[:uid] || auth.uid).first_or_create
+    where(uid: options[:uid] || auth.uid).first_or_create
   end
 
   def self.import_by_ids(options = {})
