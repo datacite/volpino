@@ -79,12 +79,15 @@ module Users
 
 
       @user = User.from_orcid(response[:id])
-      sign_in @user
-      cookies[:_datacite] = encode_cookie(@user.jwt)
 
       @user.update(orcid_search_and_link_access_token: response[:access_token],
                    orcid_search_and_link_refresh_token: response[:refresh_token],
                    orcid_search_and_link_expires_at: response[:expires_at])
+
+      @user.update(name: response[:name]) if @user.name.blank?
+
+      sign_in @user
+      cookies[:_datacite] = encode_cookie(@user.jwt)
 
       # Redirect to Commons if the flag isn't explicitly false. Otherwise redirect to profile settings
       if params["redirect_to_commons"] != "false"
@@ -206,6 +209,7 @@ module Users
 
         {
           id: body["orcid"],
+          name: body["name"],
           access_token: body["access_token"],
           refresh_token: body["refresh_token"],
           expires_at: expires_at
