@@ -1,22 +1,17 @@
-FROM phusion/passenger-full:2.5.1
+FROM phusion/passenger-full:3.1.5
 LABEL maintainer="support@datacite.org"
 
 # Set correct environment variables
-ENV HOME /home/app
+ENV HOME=/home/app
 
 # Allow app user to read /etc/container_environment
 RUN usermod -a -G docker_env app
-
-# This is to ensure when mounting volumes the non root user is actually our app user.
-# This ensures editing on both host/container.
-RUN usermod -u 1000 app
-RUN groupmod -g 1000 app
 
 # Use baseimage-docker's init process
 CMD ["/sbin/my_init"]
 
 # Use Ruby 3.1.4
-RUN bash -lc 'rvm --default use ruby-3.1.4'
+RUN bash -lc 'rvm --default use ruby-3.2.9'
 
 # Set debconf to run non-interactively
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
@@ -30,7 +25,7 @@ RUN apt-get update && \
 # Update installed APT packages, clean up when done
 RUN apt-get update && \
     apt-get upgrade -y -o Dpkg::Options::="--force-confold" && \
-    apt-get install ntp wget google-chrome-stable python-dev pkg-config fontconfig libpng-dev libjpeg-dev libcairo2-dev libfreetype6-dev -y && \
+    apt-get install ntp wget google-chrome-stable python3-dev pkg-config fontconfig libpng-dev libjpeg-dev libcairo2-dev libfreetype6-dev -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -61,7 +56,7 @@ RUN /sbin/setuser app npm install
 
 # Install Ruby gems
 WORKDIR /home/app/webapp
-RUN gem install bundler -v 2.4.22 && \
+RUN gem install bundler -v 2.6.9 && \
     /sbin/setuser app bundle install --path vendor/bundle
 
 # Add Runit script for shoryuken workers

@@ -42,4 +42,3 @@ doc/dependencies*
 .env.*
 !.env.example
 !.env.build
-.ruby-version
