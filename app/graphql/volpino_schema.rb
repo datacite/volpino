@@ -12,18 +12,18 @@ class VolpinoSchema < GraphQL::Schema
   query(QueryType)
 
   use GraphQL::Batch
-end
 
-rescue_from ActiveRecord::RecordNotFound do |_exception|
-  raise GraphQL::ExecutionError, "Record not found"
-end
+  rescue_from ActiveRecord::RecordNotFound do |_exception|
+    raise GraphQL::ExecutionError, "Record not found"
+  end
 
-rescue_from ActiveRecord::RecordInvalid do |exception|
-  raise GraphQL::ExecutionError, exception.record.errors.full_messages.join("\n")
-end
+  rescue_from ActiveRecord::RecordInvalid do |exception|
+    raise GraphQL::ExecutionError, exception.record.errors.full_messages.join("\n")
+  end
 
-rescue_from StandardError do |exception|
-  Raven.capture_exception(exception)
-  message = Rails.env.production? ? "We are sorry, but an error has occured. This problem has been logged and support has been notified. Please try again later. If the error persists please contact support." : exception.message
-  raise GraphQL::ExecutionError, message
+  rescue_from StandardError do |exception|
+    Raven.capture_exception(exception)
+    message = Rails.env.production? ? "We are sorry, but an error has occured. This problem has been logged and support has been notified. Please try again later. If the error persists please contact support." : exception.message
+    raise GraphQL::ExecutionError, message
+  end
 end
