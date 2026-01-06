@@ -224,7 +224,6 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.4.4)
     docile (1.4.0)
-    docopt (0.6.1)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     dotenv (2.7.6)
@@ -500,9 +499,6 @@ GEM
       date
       stringio
     public_suffix (4.0.7)
-    pwqgen.rb (0.1.0)
-      docopt (~> 0.5)
-      sysrandom
     racc (1.8.1)
     rack (2.2.21)
     rack-cors (1.1.1)
@@ -696,7 +692,6 @@ GEM
     sxp (2.0.0)
       matrix (~> 0.4)
       rdf (~> 3.3)
-    sysrandom (1.0.5)
     test-prof (0.10.2)
     thor (1.4.0)
     timeout (0.6.0)
@@ -808,7 +803,6 @@ DEPENDENCIES
   omniauth-rails_csrf_protection (~> 1.0)
   orcid_client (~> 0.16.0)
   postrank-uri (~> 1.1)
-  pwqgen.rb (~> 0.1.0)
   rack-cors (~> 1.0)
   rack-jwt
   rack-utf8_sanitizer (~> 1.6)

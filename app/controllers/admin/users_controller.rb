@@ -44,7 +44,7 @@ module Admin
       end
 
       def load_index
-        authorize! :manage, Phrase
+        authorize! :manage, User
 
         sort = case params[:sort]
                when "relevance" then { "_score" => { order: "desc" } }

@@ -63,7 +63,6 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: "json" } do
     scope module: :v1, constraints: ApiConstraint.new(version: 1, default: :true) do
       resources :claims
-      resources :random, only: [:index]
       resources :roles, only: %i[show index]
       resources :services
       resources :tags
