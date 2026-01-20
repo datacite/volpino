@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 source "https://rubygems.org"
 
 gem "bootsnap", "~> 1.4", ">= 1.4.4", require: false
@@ -31,7 +29,7 @@ gem "orcid_client", "~> 0.16.0"
 gem "postrank-uri", "~> 1.1"
 gem "rake", "~> 12.0"
 gem "sentry-raven", "~> 3.1", ">= 3.1.2"
-gem "shoryuken", "~> 5.0", ">= 5.0.3"
+gem "shoryuken", "~> 7.0"
 gem "strip_attributes", "~> 1.9", ">= 1.9.2"
 gem "tzinfo-data", "~> 1.2019", ">= 1.2019.3"
 
