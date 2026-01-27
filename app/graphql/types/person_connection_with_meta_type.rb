@@ -2,9 +2,8 @@
 
 class PersonConnectionWithMetaType < BaseConnection
   edge_type(PersonEdgeType)
-  field_class GraphQL::Cache::Field
 
-  field :total_count, Integer, null: false, cache: true
+  field :total_count, Integer, null: false
 
   def total_count
     args = object.arguments

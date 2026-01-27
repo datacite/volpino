@@ -128,7 +128,6 @@ class Claim < ApplicationRecord
         given_names: { type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true } } },
         family_name: { type: :text, fields: { keyword: { type: "keyword" }, raw: { type: "text", "analyzer": "string_lowercase", "fielddata": true } } },
         github: { type: :keyword },
-        claimed: { type: :date },
         created: { type: :date },
         updated: { type: :date },
         is_active: { type: :boolean },
@@ -149,10 +148,10 @@ class Claim < ApplicationRecord
       "put_code" => put_code,
       "state_number" => state_number,
       "aasm_state" => aasm_state,
-      "claimed" => claimed,
-      "created" => created,
-      "updated" => updated,
-      "user" => user
+      "claimed" => claimed.try(:iso8601),
+      "created" => created.try(:iso8601),
+      "updated" => updated.try(:iso8601),
+      "user" => serialize_user
     }
   end
 
@@ -386,6 +385,22 @@ class Claim < ApplicationRecord
   end
 
   private
+    def serialize_user
+      return nil unless user.present?
+
+      {
+        "id" => user.id,
+        "uid" => user.uid,
+        "name" => user.name,
+        "given_names" => user.given_names,
+        "family_name" => user.family_name,
+        "github" => user.github,
+        "created" => user.created_at.try(:iso8601),
+        "updated" => user.updated_at.try(:iso8601),
+        "is_active" => user.is_active
+      }
+    end
+
     def set_defaults
       self.claim_action = "create" if claim_action.blank?
 

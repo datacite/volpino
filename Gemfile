@@ -1,11 +1,9 @@
-# frozen_string_literal: true
-
 source "https://rubygems.org"
 
 gem "bootsnap", "~> 1.4", ">= 1.4.4", require: false
 gem "msgpack", "~> 1.4.4"
 gem "mysql2", "~> 0.5.0"
-gem "rails", "~> 7.1", ">= 7.1.3"
+gem "rails", "~> 7.2", ">= 7.2.3"
 
 gem "aasm", "~> 5.0", ">= 5.0.6"
 gem "active_model_serializers", "~> 0.10.10"
@@ -29,10 +27,9 @@ gem "oj", ">= 2.8.3"
 gem "oj_mimic_json", "~> 1.0", ">= 1.0.1"
 gem "orcid_client", "~> 0.16.0"
 gem "postrank-uri", "~> 1.1"
-gem "pwqgen.rb", "~> 0.1.0"
 gem "rake", "~> 12.0"
 gem "sentry-raven", "~> 3.1", ">= 3.1.2"
-gem "shoryuken", "~> 5.0", ">= 5.0.3"
+gem "shoryuken", "~> 7.0"
 gem "strip_attributes", "~> 1.9", ">= 1.9.2"
 gem "tzinfo-data", "~> 1.2019", ">= 1.2019.3"
 
@@ -71,10 +68,8 @@ gem "elasticsearch-model", "~> 7.0", require: "elasticsearch/model"
 gem "elasticsearch-rails", "~> 7.0"
 gem "faraday_middleware-aws-sigv4", "~> 0.3.0"
 gem "google-protobuf", "3.19.6"
-gem "graphql", "~> 1.9", ">= 1.9.16"
-gem "graphql-batch", "~> 0.4.1"
-gem "graphql-cache", "~> 0.6.0"
-gem "graphql-errors", "~> 0.4.0"
+gem "graphql", "~> 2.0.0"
+gem "graphql-batch", "~> 0.5.1"
 gem "maremma", "~> 5.0"
 gem "rack-utf8_sanitizer", "~> 1.6"
 
@@ -92,7 +87,7 @@ group :development, :test do
   gem "binding_of_caller"
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "rspec-benchmark", "~> 0.4.0"
-  gem "rspec-graphql_matchers", "~> 1.4"
+  gem "rspec-graphql_matchers", "2.0.0.pre.rc.0"
   gem "rspec-rails", "~> 6.1", ">= 6.1.1"
   gem "rubocop", "~> 1.3", ">= 1.3.1"
   gem "rubocop-performance", "~> 1.5", ">= 1.5.1"
@@ -112,8 +107,7 @@ group :test do
   gem "capybara", "~> 3.31"
   gem "capybara-screenshot", "~> 1.0", ">= 1.0.24"
   gem "cuprite", "~> 0.9"
-  gem "database_cleaner"
-  gem "database_cleaner-active_record", "~> 2.1"
+  gem "database_cleaner-active_record", "~> 2.2", ">= 2.2.2"
   gem "elasticsearch-extensions", "~> 0.0.29"
   gem "email_spec", "~> 2.2"
   gem "factory_bot_rails", "~> 4.8", ">= 4.8.2"

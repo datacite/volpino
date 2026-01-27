@@ -146,7 +146,7 @@
                       <%= link_to 'delete token', admin_user_path(user.uid, user: { orcid_token: nil, orcid_expires_at: Time.zone.now }), { method: :put, remote: true, class: 'btn btn-sm btn-warning btn-fill' } %>
                     </div>
                   <% end %>
-                  <% if user.uid != current_user.uid && can?(:manage, Phrase) %>
+                  <% if user.uid != current_user.uid && can?(:manage, user) %>
                     <div class="btn-group btn-group-sm pull-right">
                       <%= link_to "Delete".html_safe, admin_user_path(user.uid, query: params[:query], role_id: params[:role_id], page: params[:page]), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-fill btn-sm', id: "#{user.uid}-delete" %>
                     </div>
