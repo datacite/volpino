@@ -1,4 +1,4 @@
-FROM phusion/passenger-full:3.1.5
+FROM phusion/passenger-full:3.1.6
 LABEL maintainer="support@datacite.org"
 
 # Set correct environment variables
@@ -10,8 +10,8 @@ RUN usermod -a -G docker_env app
 # Use baseimage-docker's init process
 CMD ["/sbin/my_init"]
 
-# Use Ruby 3.1.4
-RUN bash -lc 'rvm --default use ruby-3.2.9'
+# Use Ruby 3.2.10
+RUN bash -lc 'rvm --default use ruby-3.2.10'
 
 # Set debconf to run non-interactively
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
