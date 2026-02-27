@@ -317,7 +317,7 @@ GEM
       rchardet (~> 1.8)
     globalid (1.3.0)
       activesupport (>= 6.1)
-    google-protobuf (3.19.6)
+    google-protobuf (3.25.5)
     graphql (2.0.32)
       base64
     graphql-batch (0.5.4)
@@ -777,7 +777,7 @@ DEPENDENCIES
   flipper-redis
   flipper-ui
   git (~> 1.5)
-  google-protobuf (= 3.19.6)
+  google-protobuf (= 3.25.5)
   graphql (~> 2.0.0)
   graphql-batch (~> 0.5.1)
   gravtastic (~> 3.2, >= 3.2.6)
