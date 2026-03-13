@@ -20,8 +20,17 @@ class User < ApplicationRecord
 
   include Elasticsearch::Model
 
-  nilify_blanks
-  strip_attributes only: %i[given_names family_name name other_names]
+  strip_attributes except: %i[
+    authentication_token
+    confirmation_token
+    github_token
+    orcid_token
+    orcid_auto_update_access_token
+    orcid_auto_update_refresh_token
+    orcid_search_and_link_access_token
+    orcid_search_and_link_refresh_token
+  ],
+  collapse_spaces: true
 
   # include hash helper
   include Hashie::Extensions::DeepFetch

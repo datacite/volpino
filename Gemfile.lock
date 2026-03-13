@@ -457,9 +457,6 @@ GEM
     net-smtp (0.5.1)
       net-protocol
     netrc (0.11.0)
-    nilify_blanks (1.4.0)
-      activerecord (>= 4.0.0)
-      activesupport (>= 4.0.0)
     nio4r (2.7.5)
     nokogiri (1.19.1)
       mini_portile2 (~> 2.8.2)
@@ -685,7 +682,7 @@ GEM
       concurrent-ruby (~> 1.0, >= 1.0.2)
       logger
     set (1.1.2)
-    shoryuken (7.0.0)
+    shoryuken (7.0.1)
       aws-sdk-sqs (>= 1.66.0)
       concurrent-ruby
       thor
@@ -826,7 +823,6 @@ DEPENDENCIES
   msgpack (~> 1.8)
   mysql2 (~> 0.5.7)
   namae (~> 1.0, >= 1.0.1)
-  nilify_blanks (~> 1.4)
   nokogiri (~> 1.10, >= 1.10.7)
   oauth2 (~> 1.4)
   oj (~> 3.16, >= 3.16.16)
@@ -855,7 +851,7 @@ DEPENDENCIES
   rubocop-rspec (~> 2.0)
   sentry-rails (~> 6.4, >= 6.4.1)
   sentry-ruby (~> 6.4, >= 6.4.1)
-  shoryuken (~> 7.0)
+  shoryuken (~> 7.0, >= 7.0.1)
   shoulda-matchers (~> 4.1, >= 4.1.2)
   simple_form (~> 4.1.0)
   simplecov (~> 0.22.0)
