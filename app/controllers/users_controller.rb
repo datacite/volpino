@@ -83,7 +83,7 @@ class UsersController < BaseController
         render json: UserSerializer.new(response.results, options).serializable_hash.to_json, status: :ok
       end
     rescue Elasticsearch::Transport::Transport::Errors::BadRequest => e
-      Raven.capture_exception(e)
+      Sentry.capture_exception(e)
 
       message = JSON.parse(e.message[6..-1]).to_h.dig("error", "root_cause", 0, "reason")
 

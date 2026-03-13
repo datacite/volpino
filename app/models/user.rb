@@ -422,9 +422,6 @@ class User < ApplicationRecord
 
     if result.body["skip"]
     elsif result.body["errors"]
-      # send notification to Sentry
-      # Raven.capture_exception(RuntimeError.new(result.body["errors"].first["title"]))if ENV["SENTRY_DSN"]
-
       logger.error result.body["errors"].inspect
     else
       write_attribute(:github_put_code, result.body["put_code"])
