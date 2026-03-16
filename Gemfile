@@ -64,7 +64,6 @@ gem "graphql", "~> 2.0.0"
 gem "graphql-batch", "~> 0.5.1"
 gem "maremma", "~> 6.0"
 
-gem "coffee-rails", "~> 4.1", ">= 4.1.1"
 gem "git", "~> 1.5"
 gem "mini_magick", "~> 5.3", ">= 5.3.1"
 gem "remotipart", "~> 1.2"
