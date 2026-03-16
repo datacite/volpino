@@ -47,7 +47,7 @@ class User < ApplicationRecord
 
   has_many :claims, primary_key: "uid", foreign_key: "orcid", inverse_of: :user
 
-  devise :omniauthable, omniauth_providers: %i[orcid github globus]
+  devise :omniauthable, omniauth_providers: %i[orcid github]
 
   validates :uid, presence: true, uniqueness: { case_sensitive: false }
   validate :validate_email

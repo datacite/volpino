@@ -114,7 +114,7 @@ class UsersController < BaseController
       @user.assign_attributes(safe_params)
       status = :ok
     else
-      @user = User.new(safe_params.merge(uid: params[:id], provider: "globus"))
+      @user = User.new(safe_params.merge(uid: params[:id], provider: "orcid"))
       authorize! :new, @user
       status = :created
     end
