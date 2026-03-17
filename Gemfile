@@ -49,7 +49,7 @@ gem "rouge", "~> 3.15"
 gem "simple_form", "~> 4.1.0"
 
 gem "cancancan", "~> 3.0"
-gem "devise", "~> 4.8", ">= 4.8.1"
+gem "devise", "~> 5.0"
 gem "gravtastic", "~> 3.2", ">= 3.2.6"
 gem "jwt", "~> 2.2", ">= 2.2.1"
 gem "mailgun-ruby", "~> 1.2"
