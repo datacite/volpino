@@ -65,45 +65,37 @@ gem "graphql-batch", "~> 0.5.1"
 gem "maremma", "~> 6.0"
 
 gem "mini_magick", "~> 5.3", ">= 5.3.1"
-gem "remotipart", "~> 1.2"
-gem "sprockets", "~> 3.7", ">= 3.7.2"
-gem "sprockets-rails", "~> 3.2", ">= 3.2.1", require: "sprockets/railtie"
-gem "uglifier", "~> 2.7", ">= 2.7.2"
+gem "sprockets", "~> 4.2", ">= 4.2.2"
+gem "sprockets-rails", "~> 3.5", ">= 3.5.2", require: "sprockets/railtie"
 
 group :development, :test do
-  gem "better_errors"
-  gem "binding_of_caller"
-  gem "byebug", platforms: %i[mri mingw x64_mingw]
-  gem "rspec-benchmark", "~> 0.4.0"
-  gem "rspec-graphql_matchers", "2.0.0.pre.rc.0"
-  gem "rspec-rails", "~> 6.1", ">= 6.1.1"
-  gem "rubocop", "~> 1.3", ">= 1.3.1"
+  gem "better_errors", "~> 2.10", ">= 2.10.1"
+  gem "binding_of_caller", "~> 2.0"
+  gem "byebug", "~> 13.0", platforms: %i[mri mingw x64_mingw]
+  gem "rspec-rails", "~> 8.0", ">= 8.0.4"
+  gem "rubocop", "~> 1.85", ">= 1.85.1"
   gem "rubocop-performance", "~> 1.5", ">= 1.5.1"
-  gem "rubocop-rails", "~> 2.8", ">= 2.8.1"
-  gem "rubocop-packaging", "~> 0.5.1"
-  gem "rubocop-rspec", "~> 2.0", require: false
+  gem "rubocop-rails", "~> 2.34", ">= 2.34.3"
+  gem "rubocop-packaging", "~> 0.6.0"
+  gem "rubocop-rspec", "~> 3.9", require: false
 end
 
 group :development do
-  gem "listen", "~> 3.9"
-  gem "spring"
-  gem "spring-commands-rspec"
+  gem "listen", "~> 3.10"
+  gem "spring", "~> 4.4", ">= 4.4.2"
   gem "spring-watcher-listen", "~> 2.1"
 end
 
 group :test do
-  gem "capybara", "~> 3.31"
-  gem "capybara-screenshot", "~> 1.0", ">= 1.0.24"
-  gem "cuprite", "~> 0.9"
+  gem "capybara", "~> 3.40"
+  gem "capybara-screenshot", "~> 1.0", ">= 1.0.27"
+  gem "cuprite", "~> 0.17"
   gem "database_cleaner-active_record", "~> 2.2", ">= 2.2.2"
-  gem "elasticsearch-extensions", "~> 0.0.29"
   gem "email_spec", "~> 2.2"
-  gem "factory_bot_rails", "~> 4.8", ">= 4.8.2"
-  gem "hashdiff", [">= 1.0.0.beta1", "< 2.0.0"]
-  gem "shoulda-matchers", "~> 4.1", ">= 4.1.2"
+  gem "factory_bot_rails", "~> 6.5", ">= 6.5.1"
+  gem "shoulda-matchers", "~> 7.0", ">= 7.0.1"
   gem "simplecov", "~> 0.22.0"
-  gem "test-prof", "~> 0.10.2"
-  gem "vcr", "~> 6.1"
-  gem "webmock", "~> 3.1"
-  gem "with_env", "~> 1.1"
+  gem "test-prof", "~> 1.5", ">= 1.5.2"
+  gem "vcr", "~> 6.4"
+  gem "webmock", "~> 3.26", ">= 3.26.1"
 end
