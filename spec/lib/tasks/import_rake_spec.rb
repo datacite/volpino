@@ -20,7 +20,6 @@ end
 
 describe "import:one", vcr: true, rake: true, elasticsearch: true do
   include ActiveJob::TestHelper
-  include WithEnv
   include_context "rake"
 
   let(:user) { FactoryBot.create(:user, uid: "0000-0003-1419-2405") }

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative "boot"
 
 require "rails/all"
@@ -112,5 +110,6 @@ module Volpino
       Rails.env
     end
     config.active_job.queue_name_prefix = queue_name_prefix
+    config.active_storage.variant_processor = :disabled
   end
 end

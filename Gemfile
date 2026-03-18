@@ -74,7 +74,7 @@ group :development, :test do
   gem "byebug", "~> 13.0", platforms: %i[mri mingw x64_mingw]
   gem "rspec-rails", "~> 8.0", ">= 8.0.4"
   gem "rubocop", "~> 1.85", ">= 1.85.1"
-  gem "rubocop-performance", "~> 1.5", ">= 1.5.1"
+  gem "rubocop-performance", "~> 1.26", ">= 1.26.1"
   gem "rubocop-rails", "~> 2.34", ">= 2.34.3"
   gem "rubocop-packaging", "~> 0.6.0"
   gem "rubocop-rspec", "~> 3.9", require: false
