@@ -13,20 +13,20 @@ describe User, type: :model, vcr: true, elasticsearch: true do
   it { is_expected.to strip_attribute(:name).collapse_spaces }
 
 
-  describe 'attribute normalization' do
-    it 'converts empty strings to nil' do
-      user = User.new(name: '  ', given_names: '', family_name: '   ')
+  describe "attribute normalization" do
+    it "converts empty strings to nil" do
+      user = User.new(name: "  ", given_names: "", family_name: "   ")
       user.valid?
       expect(user.name).to be_nil
       expect(user.given_names).to be_nil
       expect(user.family_name).to be_nil
     end
 
-    it 'preserves non-empty values' do
-      user = User.new(name: '  John Doe  ', given_names: '  John  ')
+    it "preserves non-empty values" do
+      user = User.new(name: "  John Doe  ", given_names: "  John  ")
       user.valid?
-      expect(user.name).to eq('John Doe')
-      expect(user.given_names).to eq('John')
+      expect(user.name).to eq("John Doe")
+      expect(user.given_names).to eq("John")
     end
   end
 

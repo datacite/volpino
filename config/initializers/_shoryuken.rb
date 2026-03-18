@@ -7,7 +7,7 @@ module Shoryuken
       class SentryReporter
         def call(worker_instance, queue, sqs_msg, body)
           Sentry.with_scope do |scope|
-            scope.set_tags(job: body['job_class'], queue:)
+            scope.set_tags(job: body["job_class"], queue:)
             scope.set_context(:message, body)
 
             Sentry.with_exception_captured do
