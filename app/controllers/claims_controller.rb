@@ -88,7 +88,7 @@ class ClaimsController < BaseController
       else
         render json: ClaimSerializer.new(response.results, options).serializable_hash.to_json, status: :ok
       end
-    rescue Elasticsearch::Transport::Transport::Errors::BadRequest => e
+    rescue Elastic::Transport::Transport::Errors::BadRequest => e
       Sentry.capture_exception(e)
 
       message = JSON.parse(e.message[6..-1]).to_h.dig("error", "root_cause", 0, "reason")

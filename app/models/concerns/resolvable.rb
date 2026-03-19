@@ -7,12 +7,20 @@ module Resolvable
     require "addressable/uri"
 
     def get_normalized_url(url)
-      url = PostRank::URI.clean(url)
-      if PostRank::URI.valid?(url)
-        url
+      uri = Addressable::URI.parse(url)
+      uri.normalize!
+
+      if uri.query_values
+        uri.query_values = uri.query_values.reject do |k, _|
+          k.match?(/^utm_|^ref$|^source$/)
+        end
       end
-    rescue Addressable::URI::InvalidURIError => e
-      { error: e.message }
+
+      uri.fragment = nil # optional: remove #stuff
+
+      uri.to_s
+    rescue Addressable::URI::InvalidURIError
+      nil
     end
 
     def doi_as_url(doi)

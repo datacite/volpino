@@ -357,7 +357,7 @@ class Claim < ApplicationRecord
     end
 
     count
-  rescue Elasticsearch::Transport::Transport::Errors::RequestEntityTooLarge, Faraday::ConnectionFailed, ActiveRecord::LockWaitTimeout => e
+  rescue Elastic::Transport::Transport::Errors::RequestEntityTooLarge, Faraday::ConnectionFailed, ActiveRecord::LockWaitTimeout => e
     Rails.logger.error "[Elasticsearch] Error #{e.message} importing claims with IDs #{id} - #{(id + 499)}."
 
     count = 0

@@ -200,7 +200,7 @@ class User < ApplicationRecord
     end
 
     count
-  rescue Elasticsearch::Transport::Transport::Errors::RequestEntityTooLarge, Faraday::ConnectionFailed, ActiveRecord::LockWaitTimeout => e
+  rescue Elastic::Transport::Transport::Errors::RequestEntityTooLarge, Faraday::ConnectionFailed, ActiveRecord::LockWaitTimeout => e
     Rails.logger.info "[Elasticsearch] Error #{e.message} importing users with IDs #{id} - #{(id + 499)}."
 
     count = 0
