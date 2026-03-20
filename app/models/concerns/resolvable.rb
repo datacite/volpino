@@ -8,6 +8,8 @@ module Resolvable
 
     def get_normalized_url(url)
       uri = Addressable::URI.parse(url)
+      return nil if uri.host.blank?
+
       uri.normalize!
 
       if uri.query_values
