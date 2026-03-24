@@ -179,7 +179,6 @@ class User < ApplicationRecord
     User.where(id: id..(id + 499)).find_in_batches(batch_size: 500) do |users|
       response = User.__elasticsearch__.client.bulk \
         index: index,
-        type: User.document_type,
         body: users.map { |user| { index: { _id: user.id, data: user.as_indexed_json } } }
 
       # try to handle errors
