@@ -68,7 +68,7 @@ module Volpino
     config.filter_parameters += [:jwt]
 
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.2
+    config.load_defaults 8.1
 
     # configure logging
     config.active_job.logger = nil
