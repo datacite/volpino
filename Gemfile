@@ -3,7 +3,7 @@ source "https://rubygems.org"
 gem "bootsnap", "~> 1.23", require: false
 gem "msgpack", "~> 1.8"
 gem "mysql2", "~> 0.5.7"
-gem "rails", "~> 8.1", ">= 8.1.2"
+gem "rails", "~> 8.1", ">= 8.1.2.1"
 
 gem "aasm", "~> 5.5", ">= 5.5.2"
 gem "active_model_serializers", "~> 0.10.16"
@@ -41,7 +41,7 @@ gem "nokogiri", "~> 1.19", ">= 1.19.1"
 gem "simple_form", "~> 5.4", ">= 5.4.1"
 
 gem "cancancan", "~> 3.6", ">= 3.6.1"
-gem "devise", "~> 5.0", ">= 5.0.2"
+gem "devise", "~> 5.0", ">= 5.0.3"
 gem "jwt", "~> 3.1", ">= 3.1.2"
 gem "mailgun-ruby", "~> 1.4", ">= 1.4.2" # not sure this is used
 gem "omniauth", "~> 2.1", ">= 2.1.4"
@@ -95,4 +95,6 @@ group :test do
   gem "test-prof", "~> 1.5", ">= 1.5.2"
   gem "vcr", "~> 6.4"
   gem "webmock", "~> 3.26", ">= 3.26.1"
+  gem "bundler-audit", "~> 0.9.3"
+  gem "brakeman", "~> 8.0"
 end
