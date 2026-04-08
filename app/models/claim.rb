@@ -265,6 +265,7 @@ class Claim < ApplicationRecord
 
       if source_id == "orcid_search" && stale_put_code?(response)
         logger.info "Claim #{uid} – #{doi} re-created."
+        self.put_code = nil
         work.create_work(options)
       else
         logger.info "Claim #{uid} – #{doi} updated."
