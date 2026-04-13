@@ -261,8 +261,16 @@ class Claim < ApplicationRecord
 
     # create or delete entry in ORCID record. If put_code exists, update entry
     if to_be_created? && put_code.present?
-      logger.info "Claim #{uid} – #{doi} updated."
-      work.update_work(options)
+      response = work.update_work(options)
+
+      if source_id == "orcid_search" && stale_put_code?(response)
+        logger.info "Claim #{uid} – #{doi} re-created."
+        self.put_code = nil
+        work.create_work(options)
+      else
+        logger.info "Claim #{uid} – #{doi} updated."
+        response
+      end
     elsif to_be_created?
       logger.info "Claim #{uid} – #{doi} created."
       work.create_work(options)
@@ -270,6 +278,11 @@ class Claim < ApplicationRecord
       logger.info "Claim #{uid} – #{doi} deleted."
       work.delete_work(options)
     end
+  end
+
+  def stale_put_code?(response)
+    errors = format_error_message(response.body["errors"])
+    errors.any? { |error| error["status"] == 404 && error["title"] == "Not found" }
   end
 
   def create_uuid
