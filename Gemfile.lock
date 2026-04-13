@@ -713,7 +713,7 @@ GEM
     unicode-display_width (2.3.0)
     unicode-types (1.10.0)
     unicode_utils (1.4.0)
-    uri (0.13.0)
+    uri (0.13.3)
     useragent (0.16.11)
     validates_email_format_of (1.6.3)
       i18n
