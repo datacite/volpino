@@ -20,10 +20,12 @@ class ClaimSerializer
 
   attribute :error_messages do |object|
     if object.error_messages.is_a?(String)
-      eval(object.error_messages)
+      JSON.parse(object.error_messages)
     else
       Array.wrap(object.error_messages)
     end
+  rescue JSON::ParserError
+    Array.wrap(object.error_messages)
   end
 
   attribute :state, &:aasm_state

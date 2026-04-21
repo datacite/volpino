@@ -8,10 +8,27 @@ describe User, type: :model, vcr: true, elasticsearch: true do
 
   it { is_expected.to validate_uniqueness_of(:uid).case_insensitive }
   it { is_expected.to have_many(:claims) }
-  it { is_expected.to strip_attribute :given_names }
-  it { is_expected.to strip_attribute :family_name }
-  it { is_expected.to strip_attribute :other_names }
-  it { is_expected.to strip_attribute :name }
+  it { is_expected.to strip_attribute(:given_names).collapse_spaces }
+  it { is_expected.to strip_attribute(:family_name).collapse_spaces }
+  it { is_expected.to strip_attribute(:name).collapse_spaces }
+
+
+  describe "attribute normalization" do
+    it "converts empty strings to nil" do
+      user = User.new(name: "  ", given_names: "", family_name: "   ")
+      user.valid?
+      expect(user.name).to be_nil
+      expect(user.given_names).to be_nil
+      expect(user.family_name).to be_nil
+    end
+
+    it "preserves non-empty values" do
+      user = User.new(name: "  John Doe  ", given_names: "  John  ")
+      user.valid?
+      expect(user.name).to eq("John Doe")
+      expect(user.given_names).to eq("John")
+    end
+  end
 
   describe "jwt" do
     subject { FactoryBot.create(:regular_user) }
@@ -31,33 +48,8 @@ describe User, type: :model, vcr: true, elasticsearch: true do
     end
   end
 
-  # describe 'push_github_identifier', :order => :defined do
-  #   let(:put_code) { 5583 }
-  #   it 'no errors' do
-  #     expect(subject.github_to_be_created?).to be true
-  #     response = subject.push_github_identifier
-  #     expect(response.body["put_code"]).to eq(put_code)
-  #     expect(response.status).to eq(201)
-  #   end
-
-  #   it 'delete claim' do
-  #     subject = FactoryBot.create(:valid_user, github: "mfenner", github_put_code: put_code)
-  #     expect(subject.github_to_be_deleted?).to be true
-  #     response = subject.push_github_identifier
-  #     expect(response.body["data"]).to be_blank
-  #     expect(response.body["errors"]).to be_nil
-  #     expect(response.status).to eq(204)
-  #   end
-  # end
-
   describe "process_data", order: :defined do
     let(:put_code) { 5582 }
-
-    # it 'no errors' do
-    #   subject = FactoryBot.create(:valid_user, github: "mfenner", github_put_code: nil)
-    #   expect(subject.process_data).to be true
-    #   expect(subject.github_put_code).to eq(put_code)
-    # end
 
     it "delete claim" do
       subject = FactoryBot.create(:valid_user, github: "mfenner", github_put_code: put_code)
