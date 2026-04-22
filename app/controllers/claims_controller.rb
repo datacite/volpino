@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ClaimsController < BaseController
+  include ClaimsHelper
+
   # prepend_before_action :load_user, only: [:index]
   prepend_before_action :authenticate_user_from_token!
   before_action :load_claim, only: %i[show destroy]
@@ -88,8 +90,8 @@ class ClaimsController < BaseController
       else
         render json: ClaimSerializer.new(response.results, options).serializable_hash.to_json, status: :ok
       end
-    rescue Elasticsearch::Transport::Transport::Errors::BadRequest => e
-      Raven.capture_exception(e)
+    rescue Elastic::Transport::Transport::Errors::BadRequest => e
+      Sentry.capture_exception(e)
 
       message = JSON.parse(e.message[6..-1]).to_h.dig("error", "root_cause", 0, "reason")
 
@@ -173,11 +175,6 @@ class ClaimsController < BaseController
 
     def human_source_name(source_id)
       sources.fetch(source_id, nil)
-    end
-
-    def sources
-      { "orcid_search" => "ORCID Search and Link",
-        "orcid_update" => "ORCID Auto-Update" }
     end
 
   private

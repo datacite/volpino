@@ -349,7 +349,6 @@ class Claim < ApplicationRecord
     Claim.where(id: id..(id + 499)).find_in_batches(batch_size: 500) do |claims|
       response = Claim.__elasticsearch__.client.bulk \
         index: index,
-        type: Claim.document_type,
         body: claims.map { |claim| { index: { _id: claim.id, data: claim.as_indexed_json } } }
 
       # try to handle errors
@@ -370,7 +369,7 @@ class Claim < ApplicationRecord
     end
 
     count
-  rescue Elasticsearch::Transport::Transport::Errors::RequestEntityTooLarge, Faraday::ConnectionFailed, ActiveRecord::LockWaitTimeout => e
+  rescue Elastic::Transport::Transport::Errors::RequestEntityTooLarge, Faraday::ConnectionFailed, ActiveRecord::LockWaitTimeout => e
     Rails.logger.error "[Elasticsearch] Error #{e.message} importing claims with IDs #{id} - #{(id + 499)}."
 
     count = 0
