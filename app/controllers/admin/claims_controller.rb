@@ -2,6 +2,8 @@
 
 module Admin
   class ClaimsController < ApplicationController
+    include ClaimsHelper
+
     before_action :load_user, only: %i[index edit update destroy]
     before_action :load_claim, only: %i[edit update destroy]
     load_and_authorize_resource
