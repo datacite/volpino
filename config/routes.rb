@@ -25,6 +25,20 @@ Rails.application.routes.draw do
     get "orcid/search_and_link/revoke", to: "users/orcid#search_and_link_revoke", as: :orcid_search_and_link_revoke
   end
 
+  # enable feature flags api
+  flipper_app = Flipper::Api.app(Flipper) do |builder|
+    public_key = OpenSSL::PKey::RSA.new(ENV["JWT_PUBLIC_KEY"].to_s.gsub('\n', "\n"))
+    builder.use Rack::JWT::Auth, secret: public_key, verify: true, options: { algorithm: "RS256" } do |payload|
+      return false if payload.blank?
+
+      # check whether token has expired
+      return false unless Time.now.to_i < payload["exp"]
+
+      ["staff_admin", "staff_user"].include?(payload["role_id"])
+    end
+  end
+  mount flipper_app, at: "/api/flipper"
+
   authenticate :user, lambda { |u| u.is_admin? } do
     mount Flipper::UI.app(Flipper) => "/flipper"
   end

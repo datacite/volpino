@@ -20,6 +20,7 @@ end
 
 describe "import:one", vcr: true, rake: true, elasticsearch: true do
   include ActiveJob::TestHelper
+  include WithEnv
   include_context "rake"
 
   let(:user) { FactoryBot.create(:user, uid: "0000-0003-1419-2405") }
@@ -30,12 +31,8 @@ describe "import:one", vcr: true, rake: true, elasticsearch: true do
   end
 
   it "should run" do
-    had_orcid = ENV.key?("ORCID")
-    original_orcid = ENV["ORCID"]
-
-    ENV["ORCID"] = "0000-0003-1419-2405"
-    expect(capture_stdout { subject.invoke }).to eq(output)
-  ensure
-    had_orcid ? ENV["ORCID"] = original_orcid : ENV.delete("ORCID")
+    with_env("ORCID" => "0000-0003-1419-2405") do
+      expect(capture_stdout { subject.invoke }).to eq(output)
+    end
   end
 end

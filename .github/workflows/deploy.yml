@@ -40,7 +40,6 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ github.repository }}:latest
-          build-args: GIT_TAG=latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
       - name: Push to GitHub Packages
@@ -50,7 +49,6 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository }}:latest
-          build-args: GIT_TAG=latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 

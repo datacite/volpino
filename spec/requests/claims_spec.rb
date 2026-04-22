@@ -155,7 +155,7 @@ describe "/claims", type: :request, elasticsearch: true do
       let(:claim) { FactoryBot.build(:claim, uuid: "c7a026ca-51f9-4be9-b3fb-c15580f98e58", orcid: "0000-0002-1825-0097", source_id: nil) }
       let(:params) do
         { "claim" => { "uuid" => claim.uuid,
-                       "orcid" => user.orcid,
+                       "orcid" => claim.orcid,
                        "doi" => claim.doi } }
       end
 
@@ -196,7 +196,7 @@ describe "/claims", type: :request, elasticsearch: true do
         expect(last_response.status).to eq(422)
 
         response = JSON.parse(last_response.body)
-        expect(response["errors"].first["title"]).to start_with("param is missing or the value is empty or invalid: claim")
+        expect(response["errors"].first["title"]).to start_with("param is missing or the value is empty: claim")
       end
     end
 

@@ -60,7 +60,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 4.0.1
+          ruby-version: 3.2.10
       - uses: actions/cache@v4
         with:
           path: vendor/bundle
@@ -77,13 +77,7 @@ jobs:
           bundle install --jobs 4 --retry 3
           # sudo /etc/init.d/mysql start
           bundle exec rails db:setup RAILS_ENV=test
-      - name: Lint with Rubocop
-        run: bundle exec rubocop
-      - name: Security Analysis with Brakeman
-        run: bundle exec brakeman --no-pager
-      - name: Dependency Security Audit
-        run: bundle exec bundler-audit check --update
-      - name: Run Tests
+      - name: Lint and Test
         env:
           MYSQL_PORT: ${{ job.services.mysql.ports[3306] }}
           ES_HOST: localhost:${{ job.services.elasticsearch.ports[9200] }}
@@ -94,4 +88,7 @@ jobs:
           ORCID_AUTO_UPDATE_CLIENT_ID: ${{ secrets.ORCID_CLIENT_ID_FOR_TESTING }}
           ORCID_SEARCH_AND_LINK_CLIENT_ID: ${{ secrets.ORCID_CLIENT_ID_FOR_TESTING }}
           ORCID_TOKEN: ${{ secrets.ORCID_TOKEN_FOR_TESTING }}
-        run: bundle exec rspec
+        run: |
+          bundle exec rubocop
+          bundle exec rspec
+          echo $?

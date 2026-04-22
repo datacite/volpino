@@ -22,7 +22,7 @@ class VolpinoSchema < GraphQL::Schema
   end
 
   rescue_from StandardError do |exception|
-    Sentry.capture_exception(exception)
+    Raven.capture_exception(exception)
     message = Rails.env.production? ? "We are sorry, but an error has occured. This problem has been logged and support has been notified. Please try again later. If the error persists please contact support." : exception.message
     raise GraphQL::ExecutionError, message
   end
