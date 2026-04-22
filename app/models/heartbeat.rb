@@ -21,7 +21,7 @@ class Heartbeat
 
   def memcached_up?
     host = ENV["MEMCACHE_SERVERS"] || ENV["HOSTNAME"]
-    memcached_client = Dalli::Client.new("#{host}:11211", serializer: JSON)
+    memcached_client = Dalli::Client.new("#{host}:11211")
     memcached_client.alive!
     true
   rescue StandardError

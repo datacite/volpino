@@ -20,17 +20,8 @@ class User < ApplicationRecord
 
   include Elasticsearch::Model
 
-  strip_attributes except: %i[
-    authentication_token
-    confirmation_token
-    github_token
-    orcid_token
-    orcid_auto_update_access_token
-    orcid_auto_update_refresh_token
-    orcid_search_and_link_access_token
-    orcid_search_and_link_refresh_token
-  ],
-  collapse_spaces: true
+  nilify_blanks
+  strip_attributes only: %i[given_names family_name name other_names]
 
   # include hash helper
   include Hashie::Extensions::DeepFetch
@@ -47,7 +38,7 @@ class User < ApplicationRecord
 
   has_many :claims, primary_key: "uid", foreign_key: "orcid", inverse_of: :user
 
-  devise :omniauthable, omniauth_providers: %i[orcid github]
+  devise :omniauthable, omniauth_providers: %i[orcid github globus]
 
   validates :uid, presence: true, uniqueness: { case_sensitive: false }
   validate :validate_email
@@ -179,6 +170,7 @@ class User < ApplicationRecord
     User.where(id: id..(id + 499)).find_in_batches(batch_size: 500) do |users|
       response = User.__elasticsearch__.client.bulk \
         index: index,
+        type: User.document_type,
         body: users.map { |user| { index: { _id: user.id, data: user.as_indexed_json } } }
 
       # try to handle errors
@@ -199,7 +191,7 @@ class User < ApplicationRecord
     end
 
     count
-  rescue Elastic::Transport::Transport::Errors::RequestEntityTooLarge, Faraday::ConnectionFailed, ActiveRecord::LockWaitTimeout => e
+  rescue Elasticsearch::Transport::Transport::Errors::RequestEntityTooLarge, Faraday::ConnectionFailed, ActiveRecord::LockWaitTimeout => e
     Rails.logger.info "[Elasticsearch] Error #{e.message} importing users with IDs #{id} - #{(id + 499)}."
 
     count = 0
@@ -430,6 +422,9 @@ class User < ApplicationRecord
 
     if result.body["skip"]
     elsif result.body["errors"]
+      # send notification to Sentry
+      # Raven.capture_exception(RuntimeError.new(result.body["errors"].first["title"]))if ENV["SENTRY_DSN"]
+
       logger.error result.body["errors"].inspect
     else
       write_attribute(:github_put_code, result.body["put_code"])

@@ -18,7 +18,7 @@ module Indexable
 
     before_destroy do
       __elasticsearch__.delete_document
-    rescue Elastic::Transport::Transport::Errors::NotFound
+    rescue Elasticsearch::Transport::Transport::Errors::NotFound
       nil
     end
   end
