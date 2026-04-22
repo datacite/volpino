@@ -43,6 +43,7 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ github.repository }}:${{ steps.set_git_vars.outputs.GIT_TAG }}
+          build-args: GIT_TAG=${{ steps.set_git_vars.outputs.GIT_TAG }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
       - name: Push to GitHub Packages
@@ -52,6 +53,7 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository }}:${{ steps.set_git_vars.outputs.GIT_TAG }}
+          build-args: GIT_TAG=${{ steps.set_git_vars.outputs.GIT_TAG }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 

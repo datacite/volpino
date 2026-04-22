@@ -82,8 +82,8 @@ class UsersController < BaseController
       else
         render json: UserSerializer.new(response.results, options).serializable_hash.to_json, status: :ok
       end
-    rescue Elasticsearch::Transport::Transport::Errors::BadRequest => e
-      Raven.capture_exception(e)
+    rescue Elastic::Transport::Transport::Errors::BadRequest => e
+      Sentry.capture_exception(e)
 
       message = JSON.parse(e.message[6..-1]).to_h.dig("error", "root_cause", 0, "reason")
 
@@ -114,7 +114,7 @@ class UsersController < BaseController
       @user.assign_attributes(safe_params)
       status = :ok
     else
-      @user = User.new(safe_params.merge(uid: params[:id], provider: "globus"))
+      @user = User.new(safe_params.merge(uid: params[:id], provider: "orcid"))
       authorize! :new, @user
       status = :created
     end

@@ -6,7 +6,7 @@ SEARCHABLE_MODELS = [Claim, User].freeze
 RSpec.configure do |config|
   config.around :example, elasticsearch: true do |example|
     SEARCHABLE_MODELS.each do |model|
-      if Elasticsearch::Model.client.indices.exists? index: model.index_name
+      if Elasticsearch::Model.client.indices.exists? index: model.index_name.to_s
         model.__elasticsearch__.create_index! force: true
       else
         model.__elasticsearch__.create_index!

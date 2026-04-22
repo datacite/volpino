@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
@@ -10,11 +8,16 @@ Rails.application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
+  config.enable_reloading = true
+
   # Do not eager load code on boot.
   config.eager_load = false
 
   # Show full error reports.
   config.consider_all_requests_local = true
+
+  # Enable server timing.
+  config.server_timing = true
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
@@ -85,6 +88,27 @@ Rails.application.configure do
 
   # set Active Job queueing backend
   config.active_job.queue_adapter = :inline
+
+  # Append comments with runtime information tags to SQL queries in logs.
+  config.active_record.query_log_tags_enabled = true
+
+  # Highlight code that enqueued background job in logs.
+  config.active_job.verbose_enqueue_logs = true
+
+  # Highlight code that triggered redirect in logs.
+  config.action_dispatch.verbose_redirect_logs = true
+
+  # Raises error for missing translations.
+  # config.i18n.raise_on_missing_translations = true
+
+  # Annotate rendered view with file names.
+  config.action_view.annotate_rendered_view_with_filenames = true
+
+  # Uncomment if you wish to allow Action Cable access from any origin.
+  # config.action_cable.disable_request_forgery_protection = true
+
+  # Raise error when a before_action's only/except options reference missing actions.
+  config.action_controller.raise_on_missing_callback_actions = true
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
