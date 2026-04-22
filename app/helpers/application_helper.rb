@@ -16,6 +16,88 @@ module ApplicationHelper
     html
   end
 
+  def markdown(text)
+    text = CommonMarker.render_html(text)
+    syntax_highlighter(text).html_safe
+  end
+
+  def syntax_highlighter(html)
+    formatter = Rouge::Formatters::HTML.new(css_class: "hll")
+    lexer = Rouge::Lexers::Shell.new
+
+    doc = Nokogiri::HTML::DocumentFragment.parse(html)
+    doc.search("//pre").each { |pre| pre.replace formatter.format(lexer.lex(pre.text)) }
+    doc.to_s
+  end
+
+  def public_text
+    if !user_signed_in?
+      "panel-default"
+    elsif current_user.is_public
+      "panel-success"
+    else
+      "panel-warning"
+    end
+  end
+
+  def auto_update_text
+    if !user_signed_in?
+      "panel-default"
+    elsif current_user.auto_update
+      "panel-success"
+    else
+      "panel-warning"
+    end
+  end
+
+  def email_text
+    if current_user.has_email?
+      "success"
+    else
+      "warning"
+    end
+  end
+
+  def claim_text
+    if current_user.claims.failed.count > 0
+      "panel-warning"
+    elsif current_user.claims.done.count > 0
+      "panel-success"
+    elsif current_user.claims.stale.count > 0
+      "panel-info"
+    else
+      "panel-default"
+    end
+  end
+
+  def true_text
+    if !user_signed_in?
+      ""
+    elsif current_user.is_public
+      '<span class="small pull-right">true</span>'
+    else
+      '<span class="small pull-right">false</span>'
+    end
+  end
+
+  def enabled_text
+    if !user_signed_in?
+      ""
+    elsif current_user.auto_update
+      '<span class="small pull-right">enabled</span>'
+    else
+      '<span class="small pull-right">disabled</span>'
+    end
+  end
+
+  def subscribed_text
+    if current_user.has_email?
+      '<span class="small pull-right">subscribed</span>'
+    else
+      '<span class="small pull-right">not subscribed</span>'
+    end
+  end
+
   def devise_current_user
     @devise_current_user ||= warden.authenticate(scope: :user)
   end
@@ -29,12 +111,29 @@ module ApplicationHelper
     end
   end
 
+  def human_source_name(source_id)
+    sources.fetch(source_id, nil)
+  end
+
+  def sources
+    { "orcid_search" => "ORCID Search and Link",
+      "orcid_update" => "ORCID Auto-Update" }
+  end
+
   def aasm_states
     ["waiting", "working", "done", "failed", "ignored", "notified"]
   end
 
   def settings
     Settings[ENV["MODE"]]
+  end
+
+  def worker_label(status)
+    case status
+    when "working" then "panel-success"
+    when "waiting" then "panel-default"
+    else "panel-warning"
+    end
   end
 
   def state_label(state)

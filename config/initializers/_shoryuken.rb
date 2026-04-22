@@ -4,16 +4,11 @@
 module Shoryuken
   module Middleware
     module Server
-      class SentryReporter
-        def call(worker_instance, queue, sqs_msg, body)
-          Sentry.with_scope do |scope|
-            scope.set_tags(job: body["job_class"], queue:)
-            scope.set_context(:message, body)
-
-            Sentry.with_exception_captured do
-              yield
-            end
-          end
+      class RavenReporter
+        def call(_worker_instance, queue, _sqs_msg, body)
+          tags = { job: body["job_class"], queue: queue }
+          context = { message: body }
+          Raven.capture(tags: tags, extra: context) { yield }
         end
       end
     end
@@ -24,7 +19,7 @@ Shoryuken.configure_server do |config|
   config.server_middleware do |chain|
     # remove logging of timing events
     chain.remove Shoryuken::Middleware::Server::Timing
-    chain.add Shoryuken::Middleware::Server::SentryReporter
+    chain.add Shoryuken::Middleware::Server::RavenReporter
   end
 end
 

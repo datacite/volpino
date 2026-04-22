@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "boot"
 
 require "rails/all"
@@ -68,7 +70,7 @@ module Volpino
     config.filter_parameters += [:jwt]
 
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 8.1
+    config.load_defaults 7.2
 
     # configure logging
     config.active_job.logger = nil
@@ -110,6 +112,5 @@ module Volpino
       Rails.env
     end
     config.active_job.queue_name_prefix = queue_name_prefix
-    config.active_storage.variant_processor = :disabled
   end
 end

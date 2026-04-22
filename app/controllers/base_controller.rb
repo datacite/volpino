@@ -22,7 +22,7 @@ class BaseController < ApplicationController
   serialization_scope :current_ability
 
   skip_before_action :verify_authenticity_token
-  before_action :default_format_json, :transform_params, :set_sentry_context
+  before_action :default_format_json, :transform_params, :set_raven_context
   after_action :set_jsonp_format, :set_consumer_header
 
   # from https://github.com/spree/spree/blob/master/api/app/controllers/spree/api/base_controller.rb
@@ -103,7 +103,7 @@ class BaseController < ApplicationController
       elsif ["JSON::ParserError", "Nokogiri::XML::SyntaxError", "ActionDispatch::Http::Parameters::ParseError"].include?(exception.class.to_s)
         message = exception.message
       else
-        Sentry.capture_exception(exception)
+        Raven.capture_exception(exception)
 
         message = exception.message
       end
@@ -125,15 +125,15 @@ class BaseController < ApplicationController
     #   current_user && %w(staff_admin staff_user).include?(current_user.role)
     # end
 
-    def set_sentry_context
+    def set_raven_context
       if current_user.try(:uid)
-        Sentry.set_user(
+        Raven.user_context(
           email: current_user.email,
           id: current_user.uid,
           ip_address: request.ip,
         )
       else
-        Sentry.set_user(
+        Raven.user_context(
           ip_address: request.ip,
         )
       end

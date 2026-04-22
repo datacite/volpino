@@ -32,7 +32,7 @@ module Users
       if current_user.present?
         @user = current_user
       else
-        @user = User.from_omniauth(auth, provider: "orcid")
+        @user = User.from_omniauth(auth, provider: "globus")
       end
 
       if Time.zone.now > @user.expires_at || omniauth.present?
