@@ -23,6 +23,7 @@ require "webmock/rspec"
 require "rack/test"
 require "aasm/rspec"
 require "devise"
+require "colorize"
 require "maremma"
 require "strip_attributes/matchers"
 
