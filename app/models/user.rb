@@ -43,7 +43,6 @@ class User < ApplicationRecord
   before_create :set_role
 
   after_commit :queue_user_job, on: :create
-  after_commit :queue_claim_jobs, on: :create
 
   has_many :claims, primary_key: "uid", foreign_key: "orcid", inverse_of: :user
 
