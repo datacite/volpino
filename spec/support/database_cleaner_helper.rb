@@ -9,10 +9,6 @@ RSpec.configure do |config|
     DatabaseCleaner[:active_record].strategy = :transaction
   end
 
-  config.before(:each, js: true) do
-    DatabaseCleaner[:active_record].strategy = :truncation, { pre_count: true }
-  end
-
   config.before(:each) do
     DatabaseCleaner[:active_record].start
   end

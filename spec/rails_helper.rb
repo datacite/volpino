@@ -14,10 +14,6 @@ require "rspec/rails"
 require "shoulda-matchers"
 require "email_spec"
 require "factory_bot_rails"
-require "capybara/rspec"
-require "capybara/rails"
-require "capybara/cuprite"
-require "capybara-screenshot/rspec"
 require "database_cleaner/active_record"
 require "webmock/rspec"
 require "rack/test"
@@ -35,23 +31,6 @@ Shoulda::Matchers.configure do |config|
     with.test_framework :rspec
     with.library :rails
   end
-end
-
-Capybara.register_driver :cuprite do |app|
-  Capybara::Cuprite::Driver.new(app,
-                                timeout: 60,
-                                window_size: [1440, 1024],
-                                # host: "127.0.0.1",
-                                # port: 33689,
-                                browser_options: { "no-sandbox" => nil })
-end
-
-Capybara.javascript_driver = :cuprite
-Capybara.default_selector = :css
-
-Capybara.configure do |config|
-  config.match = :prefer_exact
-  config.ignore_hidden_elements = true
 end
 
 WebMock.disable_net_connect!(
