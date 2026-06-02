@@ -84,9 +84,6 @@ group :development do
 end
 
 group :test do
-  gem "capybara", "~> 3.40"
-  gem "capybara-screenshot", "~> 1.0", ">= 1.0.27"
-  gem "cuprite", "~> 0.17"
   gem "database_cleaner-active_record", "~> 2.2", ">= 2.2.2"
   gem "email_spec", "~> 2.2"
   gem "factory_bot_rails", "~> 6.5", ">= 6.5.1"
