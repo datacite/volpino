@@ -462,7 +462,7 @@ GEM
       time
       uri
     optimist (3.2.1)
-    orcid_client (0.18.1)
+    orcid_client (0.19.1)
       activesupport (~> 8.1, >= 8.1.2)
       bolognese (~> 2.7)
       builder (~> 3.3)
@@ -761,7 +761,7 @@ DEPENDENCIES
   omniauth-github (~> 2.0)
   omniauth-orcid (~> 2.0)
   omniauth-rails_csrf_protection (~> 2.0, >= 2.0.1)
-  orcid_client (~> 0.18.1)
+  orcid_client (~> 0.19.1)
   rails (~> 8.1, >= 8.1.2.1)
   rake (~> 13.3, >= 13.3.1)
   repost (~> 0.5.1)
