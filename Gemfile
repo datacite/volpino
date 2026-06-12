@@ -49,7 +49,6 @@ gem "omniauth-github", "~> 2.0"
 gem "omniauth-orcid", "~> 2.0"
 gem "omniauth-rails_csrf_protection", "~> 2.0", ">= 2.0.1"
 gem "repost", "~> 0.5.1"
-gem "oauth2", ">= 2.0.22"
 
 gem "apollo-federation", "~> 3.10", ">= 3.10.3"
 gem "elasticsearch", "~> 8.19", ">= 8.19.3"

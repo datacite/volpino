@@ -759,7 +759,6 @@ DEPENDENCIES
   mysql2 (~> 0.5.7)
   namae (~> 1.2)
   nokogiri (~> 1.19, >= 1.19.1)
-  oauth2 (>= 2.0.22)
   oj (~> 3.16, >= 3.16.16)
   omniauth (~> 2.1, >= 2.1.4)
   omniauth-github (~> 2.0)
