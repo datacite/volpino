@@ -5,15 +5,16 @@ module Shoryuken
   module Middleware
     module Server
       class SentryReporter
-        def call(worker_instance, queue, sqs_msg, body)
+        def call(_worker_instance, queue, _sqs_msg, body)
           Sentry.with_scope do |scope|
-            scope.set_tags(job: body["job_class"], queue:)
-            scope.set_context(:message, body)
-
-            Sentry.with_exception_captured do
-              yield
-            end
+            context_hash = body.is_a?(Hash) ? body : JSON.parse(body)
+            scope.set_tags(job: context_hash["job_class"], queue: queue)
+            scope.set_context(:message, context_hash)
+            yield
           end
+        rescue StandardError => e
+          Sentry.capture_exception(e)
+          raise
         end
       end
     end
