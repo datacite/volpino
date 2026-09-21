@@ -37,7 +37,7 @@ gem "lograge", "~> 0.14.0"
 gem "logstash-logger", "~> 1.0"
 
 gem "namae", "~> 1.2"
-gem "nokogiri", "~> 1.19", ">= 1.19.1"
+gem "nokogiri", "~> 1.19"
 gem "simple_form", "~> 5.4", ">= 5.4.1"
 
 gem "cancancan", "~> 3.6", ">= 3.6.1"

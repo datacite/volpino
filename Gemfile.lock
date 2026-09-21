@@ -426,7 +426,7 @@ GEM
     net-smtp (0.5.1)
       net-protocol
     nio4r (2.7.5)
-    nokogiri (1.19.3)
+    nokogiri (1.19.4)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     oauth2 (2.0.22)
@@ -758,7 +758,7 @@ DEPENDENCIES
   msgpack (~> 1.8)
   mysql2 (~> 0.5.7)
   namae (~> 1.2)
-  nokogiri (~> 1.19, >= 1.19.1)
+  nokogiri (~> 1.19)
   oj (~> 3.16, >= 3.16.16)
   omniauth (~> 2.1, >= 2.1.4)
   omniauth-github (~> 2.0)
