@@ -14,7 +14,9 @@ class CreateClaimWorker
     ActiveRecord::Base.connection_pool.with_connection do
       return if orcid.blank? || doi.blank?
 
-      User.find_or_create_by(uid: orcid)
+      # Do not bother trying to create a claim if no user exists already.
+      # A user must exist and have a valid orcid claiming setup i.e. a orcid auth token
+      return unless User.exists?(uid: orcid)
 
       @claim = Claim.where(orcid: orcid, doi: doi).first
       exists = @claim.present?
