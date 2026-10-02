@@ -18,7 +18,7 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
   #     expect(subject.work.validation_errors).to be_empty
   #   end
   # end
-
+  
   describe "claim uses correct token" do
     let(:user) { FactoryBot.create(:valid_user) }
 
@@ -76,6 +76,18 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
 
     it "when user is not eligible for trust marker" do
       expect(claim_for_ineligible_doi.eligible_for_trust_marker_in_orcid?).to be false
+    end
+  end
+
+  describe "claim requests" do
+    it "claiming only makes one get and one post request" do
+      user = FactoryBot.create(:valid_user, uid: "0000-0002-4684-9769", auto_update: false)
+      subject = FactoryBot.create(:claim, user: user, doi: "10.82610/3pst-w184", source_id: "orcid_search")
+
+      expect(Maremma).to receive(:get).once.and_call_original
+      expect(Maremma).to receive(:post).once.and_return(OpenStruct.new(body: {}, headers: {}))
+
+      subject.collect_data
     end
   end
 
