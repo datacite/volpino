@@ -33,6 +33,100 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
       subject = FactoryBot.create(:claim, user: user, source_id: "orcid_search")
       expect(subject.orcid_token).to eq(user.orcid_search_and_link_access_token)
     end
+
+    it "uses auto update token when eligible for trust marker and claimed via orcid_search" do
+      user = FactoryBot.create(:valid_user, uid: "0000-0002-4684-9769", auto_update: false)
+      subject = FactoryBot.create(:claim, user: user, doi: "10.82610/3pst-w184", source_id: "orcid_search")
+      expect(subject.orcid_token).to eq(user.orcid_auto_update_access_token)
+    end
+
+    it "uses search and link token when eligible for trust marker and claimed via orcid_search but user has not added auto update token" do
+      user = FactoryBot.create(:valid_user, uid: "0000-0002-4684-9769", orcid_auto_update_access_token: nil, auto_update: false)
+      subject = FactoryBot.create(:claim, user: user, doi: "10.82610/3pst-w184", source_id: "orcid_search")
+      expect(subject.orcid_token).to eq(user.orcid_search_and_link_access_token)
+    end
+
+    it "uses search and link token when not eligible for trust marker and claimed via orcid_search" do
+      user = FactoryBot.create(:valid_user, uid: "0000-0002-4684-9769", auto_update: false)
+      subject = FactoryBot.create(:claim, user: user, doi: "10.0138/arra-bqw1234", source_id: "orcid_search")
+      expect(subject.orcid_token).to eq(user.orcid_search_and_link_access_token)
+    end
+
+    it "uses auto update token when eligible for trust marker and claimed via orcid_update" do
+      user = FactoryBot.create(:valid_user, uid: "0000-0002-4684-9769", auto_update: false)
+      subject = FactoryBot.create(:claim, user: user, doi: "10.82610/3pst-w184", source_id: "orcid_update")
+      expect(subject.orcid_token).to eq(user.orcid_auto_update_access_token)
+    end
+
+    it "uses nil when claimed via orcid_update but user has not added auto update token" do
+      user = FactoryBot.create(:valid_user, uid: "0000-0002-4684-9769", orcid_auto_update_access_token: nil, auto_update: false)
+      subject = FactoryBot.create(:claim, user: user, doi: "10.82610/3pst-w184", source_id: "orcid_update")
+      expect(subject.orcid_token).to be_nil
+    end
+  end
+
+  describe "claim eligibility for trust marker with source_id orcid_search" do
+    let(:user) { FactoryBot.create(:valid_user, uid: "0000-0002-4684-9769") }
+    let(:claim_for_eligible_doi) { FactoryBot.create(:claim, user: user, doi: "10.82610/3pst-w184", source_id: "orcid_search") }
+    let(:claim_for_ineligible_doi) { FactoryBot.create(:claim, user: user, doi: "10.0138/arra-bqw1234", source_id: "orcid_search") }
+
+    it "when user is eligible for trust marker" do
+      expect(claim_for_eligible_doi.eligible_for_trust_marker_in_orcid?).to be true
+    end
+
+    it "when user is not eligible for trust marker" do
+      expect(claim_for_ineligible_doi.eligible_for_trust_marker_in_orcid?).to be false
+    end
+  end
+
+  describe "claim requests" do
+    it "claiming only makes one get and one post request" do
+      user = FactoryBot.create(:valid_user, uid: "0000-0002-4684-9769", auto_update: false)
+      subject = FactoryBot.create(:claim, user: user, doi: "10.82610/3pst-w184", source_id: "orcid_search")
+
+      expect(Maremma).to receive(:get).once.and_call_original
+      expect(Maremma).to receive(:post).once.and_return(OpenStruct.new(body: {}, headers: {}))
+
+      subject.collect_data
+    end
+  end
+
+  describe "sends the correct token to ORCID based on eligibility for trust marker" do
+    it "when eligible for trust marker with source_id orcid_search and user has auto update token" do
+      user = FactoryBot.create(:valid_user, uid: "0000-0002-4684-9769", auto_update: false)
+      subject = FactoryBot.create(:claim, user: user, doi: "10.82610/3pst-w184", source_id: "orcid_search")
+
+      expect(Maremma).to receive(:post).with(anything, hash_including(bearer: user.orcid_auto_update_access_token)).and_return(OpenStruct.new(body: {}, headers: {}))
+
+      subject.collect_data
+    end
+
+    it "when eligible for trust marker with source_id orcid_search and user doesn't have auto update token" do
+      user = FactoryBot.create(:valid_user, uid: "0000-0002-4684-9769", orcid_auto_update_access_token: nil, auto_update: false)
+      subject = FactoryBot.create(:claim, user: user, doi: "10.82610/3pst-w184", source_id: "orcid_search")
+
+      expect(Maremma).to receive(:post).with(anything, hash_including(bearer: user.orcid_search_and_link_access_token)).and_return(OpenStruct.new(body: {}, headers: {}))
+
+      subject.collect_data
+    end
+
+    it "when not eligible for trust marker with source_id orcid_search" do
+      user = FactoryBot.create(:valid_user, uid: "0000-0002-4684-9769", auto_update: false)
+      subject = FactoryBot.create(:claim, user: user, doi: "10.0138/arra-bqw1234", source_id: "orcid_search")
+
+      expect(Maremma).to receive(:post).with(anything, hash_including(bearer: user.orcid_search_and_link_access_token)).and_return(OpenStruct.new(body: {}, headers: {}))
+
+      subject.collect_data
+    end
+
+    it "when eligible for trust marker with source_id orcid_update" do
+      user = FactoryBot.create(:valid_user, uid: "0000-0002-4684-9769", auto_update: false)
+      subject = FactoryBot.create(:claim, user: user, doi: "10.82610/3pst-w184", source_id: "orcid_update")
+
+      expect(Maremma).to receive(:post).with(anything, hash_including(bearer: user.orcid_auto_update_access_token)).and_return(OpenStruct.new(body: {}, headers: {}))
+
+      subject.collect_data
+    end
   end
 
   sources = [ "orcid_search", "orcid_update" ]

@@ -1,0 +1,106 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.stage.datacite.org/dois/10.0138/arra-bqw1234?include=media,client
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Mozilla/5.0 (compatible; Maremma/6.0.0; mailto:info@datacite.org)
+      Accept:
+      - text/html,application/json,application/xml;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
+      Accept-Encoding:
+      - gzip,deflate
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 01 Oct 2026 15:19:09 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Anonymous-Consumer:
+      - 'true'
+      Cache-Control:
+      - no-cache
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - ''
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - '0'
+      X-Request-Id:
+      - c8a46ff9-689d-4ebb-aa21-54cd0d930e4e
+      X-Runtime:
+      - '0.013547'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.1.2
+      Server:
+      - nginx/1.24.0 + Phusion Passenger(R) 6.1.2
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, PUT, PATCH, DELETE, OPTIONS
+      Access-Control-Allow-Headers:
+      - Accept,Access-Control-Allow-Origin,Access-Control-Expose-Headers,Access-Control-Allow-Methods,Access-Control-Allow-Headers,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Mx-ReqToken,X-Requested-With
+      Access-Control-Expose-Headers:
+      - Authorization
+      X-Lupoversion:
+      - main
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"10.0138/arra-bqw1234","type":"dois","attributes":{"doi":"10.0138/arra-bqw1234","prefix":"10.0138","suffix":"arra-bqw1234","identifiers":[{"identifier":"E-GEOD-34814","identifierType":"PURL"}],"alternateIdentifiers":[{"alternateIdentifierType":"PURL","alternateIdentifier":"E-GEOD-34814"}],"creators":[{"name":"Hallllett,
+        Richard","nameType":"Personal","givenName":"Richard","familyName":"Hallett","affiliation":["B.
+        Braun (United States)","B \u0026 B"],"nameIdentifiers":[{"schemeUri":"https://orcid.org","nameIdentifier":"https://orcid.org/0000-0002-8599-0773","nameIdentifierScheme":"ORCID"}]}],"titles":[{"title":"CORDIS
+        - EU research projects under FP5 (1998-2002) - Updated Mon 14"}],"publisher":"Publications
+        Office of the European Union","container":{},"publicationYear":2015,"subjects":[{"subject":"FOS:
+        Health sciences","schemeUri":"http://www.oecd.org/science/inno/38235147.pdf","subjectScheme":"Fields
+        of Science and Technology (FOS)","classificationCode":"3.3"},{"subject":"FOS:
+        Health sciences","schemeUri":"http://www.oecd.org/science/inno/38235147.pdf","subjectScheme":"Fields
+        of Science and Technology (FOS)"}],"contributors":[{"name":"Vogt, Suzanne","nameType":"Personal","givenName":"Suzanne","familyName":"Vogt","affiliation":["Bagadhar
+        Brahma Kishan College"],"contributorType":"ContactPerson","nameIdentifiers":[{"schemeUri":"https://orcid.org","nameIdentifier":"https://orcid.org/0000-0001-8866-3199","nameIdentifierScheme":"ORCID"}]}],"dates":[{"date":"2018-12-14","dateType":"Updated","dateInformation":"Test
+        Date!"},{"date":"2015","dateType":"Issued"}],"language":"en","types":{"ris":"DATA","bibtex":"misc","citeproc":"dataset","schemaOrg":"Dataset","resourceType":"This
+        dataset contains all projects funded by the European Union under the fifth
+        framework programme for research and technological development (FP5) from
+        1998 to 2002.","resourceTypeGeneral":"Dataset"},"relatedIdentifiers":[{"relationType":"IsCitedBy","relatedIdentifier":"ark:/13030/tqb3kh97gh8w","resourceTypeGeneral":"Dataset","relatedIdentifierType":"ARK"}],"relatedItems":[{"issue":"Issue
+        11","number":"article number 1111","titles":[{"title":"Test Related Item"}],"volume":"Volume
+        3","creators":[{"name":"Mouse, Minnie","nameType":"Personal","givenName":"Minnie","familyName":"Mouse"}],"contributors":[{"name":"Mouse,
+        Mickey","nameType":"Personal","givenName":"Mickey","familyName":"Mouse","contributorType":"Editor"}],"relationType":"IsCitedBy","publicationYear":"2025","relatedItemType":"Dataset","relatedItemIdentifier":{"relatedItemIdentifier":"https://n2t.net/ark:/99999/12345","relatedItemIdentifierType":"URL"}}],"sizes":["100TB","100GB"],"formats":["application/andrew-inset","application/applixware"],"version":"1.0","rightsList":[{"rights":"BSD
+        Zero Clause License","rightsUri":"http://landley.net/toybox/license.html","schemeUri":"https://spdx.org/licenses/","rightsIdentifier":"0bsd","rightsIdentifierScheme":"SPDX"},{"rights":"Attribution
+        Assurance License","rightsUri":"https://opensource.org/licenses/attribution","schemeUri":"https://spdx.org/licenses/","rightsIdentifier":"aal","rightsIdentifierScheme":"SPDX"}],"descriptions":[{"lang":"aa","description":"This
+        dataset contains all projects funded by the European Union under the fifth
+        framework programme for research and technological development (FP5) from
+        1998 to 2002.The file ''FP5 Projects'' contains the public grant information
+        for each project, including the following information: Record Control Number
+        (RCN), project ID (grant agreement number), project acronym, project status,
+        funding programme, topic, project title, project start date, project end date,
+        project objective, project total cost, EC max contribution (commitment), call
+        ID, funding scheme (type of action), coordinator, coordinator country, participants
+        (ordered in a semi-colon separated list), participant countries (ordered in
+        a semi-colon separated list).The participating organisations are listed in
+        the file ''FP5 Organisations'' which includes: project Record Control Number
+        (RCN), project ID, project acronym, organisation role, organisation ID, organisation
+        name, organisation short name, organisation type, participati","descriptionType":"Abstract"},{"lang":"af","description":"Test
+        description 2!!","descriptionType":"Abstract"}],"geoLocations":[{"geoLocationBox":{"eastBoundLongitude":-70.73464,"northBoundLatitude":43.03331,"southBoundLatitude":43.027,"westBoundLongitude":-70.747},"geoLocationPlace":"New
+        Hampshire Seacoast","geoLocationPoint":{"pointLatitude":43.03134153747683,"pointLongitude":-70.74256546404821}}],"fundingReferences":[{"awardUri":"https://award.org/grants/1111","awardTitle":"Test
+        Award Title","funderName":"A. E. Finley Foundation","awardNumber":"1111","funderIdentifier":"https://doi.org/10.13039/100001615","funderIdentifierType":"Crossref
+        Funder ID"},{"funderName":"B.W. Bastian Foundation","funderIdentifier":"https://doi.org/10.13039/100029042","funderIdentifierType":"Crossref
+        Funder ID"}],"xml":"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHJlc291cmNlIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhtbG5zPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtNCIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtNCBodHRwOi8vc2NoZW1hLmRhdGFjaXRlLm9yZy9tZXRhL2tlcm5lbC00L21ldGFkYXRhLnhzZCI+CiAgPGlkZW50aWZpZXIgaWRlbnRpZmllclR5cGU9IkRPSSI+MTAuMDEzOC9BUlJBLUJRVzEyMzQ8L2lkZW50aWZpZXI+CiAgPGNyZWF0b3JzPgogICAgPGNyZWF0b3I+CiAgICAgIDxjcmVhdG9yTmFtZSBuYW1lVHlwZT0iUGVyc29uYWwiPkhhbGxldHQsIFJpY2hhcmQ8L2NyZWF0b3JOYW1lPgogICAgICA8Z2l2ZW5OYW1lPlJpY2hhcmQ8L2dpdmVuTmFtZT4KICAgICAgPGZhbWlseU5hbWU+SGFsbGV0dDwvZmFtaWx5TmFtZT4KICAgICAgPG5hbWVJZGVudGlmaWVyIG5hbWVJZGVudGlmaWVyU2NoZW1lPSJPUkNJRCIgc2NoZW1lVVJJPSJodHRwczovL29yY2lkLm9yZyI+aHR0cHM6Ly9vcmNpZC5vcmcvMDAwMC0wMDAyLTg1OTktMDc3MzwvbmFtZUlkZW50aWZpZXI+CiAgICAgIDxhZmZpbGlhdGlvbiBhZmZpbGlhdGlvbklkZW50aWZpZXI9Imh0dHBzOi8vcm9yLm9yZy8wMzl4M3M4NjUiIGFmZmlsaWF0aW9uSWRlbnRpZmllclNjaGVtZT0iUk9SIiBzY2hlbWVVUkk9Imh0dHBzOi8vcm9yLm9yZyI+Qi4gQnJhdW4gKFVuaXRlZCBTdGF0ZXMpPC9hZmZpbGlhdGlvbj4KICAgICAgPGFmZmlsaWF0aW9uIGFmZmlsaWF0aW9uSWRlbnRpZmllcj0iaHR0cHM6Ly9yb3Iub3JnLzAyNXQzN2IzOSIgYWZmaWxpYXRpb25JZGVudGlmaWVyU2NoZW1lPSJST1IiIHNjaGVtZVVSST0iaHR0cHM6Ly9yb3Iub3JnIj5CICZhbXA7IEI8L2FmZmlsaWF0aW9uPgogICAgPC9jcmVhdG9yPgogIDwvY3JlYXRvcnM+CiAgPHRpdGxlcz4KICAgIDx0aXRsZT5DT1JESVMgLSBFVSByZXNlYXJjaCBwcm9qZWN0cyB1bmRlciBGUDUgKDE5OTgtMjAwMikgLSBVcGRhdGVkIE1vbiAxNDwvdGl0bGU+CiAgPC90aXRsZXM+CiAgPHB1Ymxpc2hlcj5QdWJsaWNhdGlvbnMgT2ZmaWNlIG9mIHRoZSBFdXJvcGVhbiBVbmlvbjwvcHVibGlzaGVyPgogIDxwdWJsaWNhdGlvblllYXI+MjAxNTwvcHVibGljYXRpb25ZZWFyPgogIDxyZXNvdXJjZVR5cGUgcmVzb3VyY2VUeXBlR2VuZXJhbD0iRGF0YXNldCI+VGhpcyBkYXRhc2V0IGNvbnRhaW5zIGFsbCBwcm9qZWN0cyBmdW5kZWQgYnkgdGhlIEV1cm9wZWFuIFVuaW9uIHVuZGVyIHRoZSBmaWZ0aCBmcmFtZXdvcmsgcHJvZ3JhbW1lIGZvciByZXNlYXJjaCBhbmQgdGVjaG5vbG9naWNhbCBkZXZlbG9wbWVudCAoRlA1KSBmcm9tIDE5OTggdG8gMjAwMi48L3Jlc291cmNlVHlwZT4KICA8c3ViamVjdHM+CiAgICA8c3ViamVjdCBzdWJqZWN0U2NoZW1lPSJGaWVsZHMgb2YgU2NpZW5jZSBhbmQgVGVjaG5vbG9neSAoRk9TKSIgc2NoZW1lVVJJPSJodHRwOi8vd3d3Lm9lY2Qub3JnL3NjaWVuY2UvaW5uby8zODIzNTE0Ny5wZGYiIGNsYXNzaWZpY2F0aW9uQ29kZT0iMy4zIj5GT1M6IEhlYWx0aCBzY2llbmNlczwvc3ViamVjdD4KICAgIDxzdWJqZWN0IHN1YmplY3RTY2hlbWU9IkZpZWxkcyBvZiBTY2llbmNlIGFuZCBUZWNobm9sb2d5IChGT1MpIiBzY2hlbWVVUkk9Imh0dHA6Ly93d3cub2VjZC5vcmcvc2NpZW5jZS9pbm5vLzM4MjM1MTQ3LnBkZiI+Rk9TOiBIZWFsdGggc2NpZW5jZXM8L3N1YmplY3Q+CiAgPC9zdWJqZWN0cz4KICA8Y29udHJpYnV0b3JzPgogICAgPGNvbnRyaWJ1dG9yIGNvbnRyaWJ1dG9yVHlwZT0iQ29udGFjdFBlcnNvbiI+CiAgICAgIDxjb250cmlidXRvck5hbWUgbmFtZVR5cGU9IlBlcnNvbmFsIj5Wb2d0LCBTdXphbm5lPC9jb250cmlidXRvck5hbWU+CiAgICAgIDxnaXZlbk5hbWU+U3V6YW5uZTwvZ2l2ZW5OYW1lPgogICAgICA8ZmFtaWx5TmFtZT5Wb2d0PC9mYW1pbHlOYW1lPgogICAgICA8bmFtZUlkZW50aWZpZXIgbmFtZUlkZW50aWZpZXJTY2hlbWU9Ik9SQ0lEIiBzY2hlbWVVUkk9Imh0dHBzOi8vb3JjaWQub3JnIj5odHRwczovL29yY2lkLm9yZy8wMDAwLTAwMDEtODg2Ni0zMTk5PC9uYW1lSWRlbnRpZmllcj4KICAgICAgPGFmZmlsaWF0aW9uIGFmZmlsaWF0aW9uSWRlbnRpZmllcj0iaHR0cHM6Ly9yb3Iub3JnLzAwZHkyM3IyNCIgYWZmaWxpYXRpb25JZGVudGlmaWVyU2NoZW1lPSJST1IiIHNjaGVtZVVSST0iaHR0cHM6Ly9yb3Iub3JnIj5CYWdhZGhhciBCcmFobWEgS2lzaGFuIENvbGxlZ2U8L2FmZmlsaWF0aW9uPgogICAgPC9jb250cmlidXRvcj4KICA8L2NvbnRyaWJ1dG9ycz4KICA8ZGF0ZXM+CiAgICA8ZGF0ZSBkYXRlVHlwZT0iVXBkYXRlZCIgZGF0ZUluZm9ybWF0aW9uPSJUZXN0IERhdGUhIj4yMDE4LTEyLTE0PC9kYXRlPgogICAgPGRhdGUgZGF0ZVR5cGU9Iklzc3VlZCI+MjAxNTwvZGF0ZT4KICA8L2RhdGVzPgogIDxsYW5ndWFnZT5lbjwvbGFuZ3VhZ2U+CiAgPGFsdGVybmF0ZUlkZW50aWZpZXJzPgogICAgPGFsdGVybmF0ZUlkZW50aWZpZXIgYWx0ZXJuYXRlSWRlbnRpZmllclR5cGU9IlBVUkwiPkUtR0VPRC0zNDgxNDwvYWx0ZXJuYXRlSWRlbnRpZmllcj4KICA8L2FsdGVybmF0ZUlkZW50aWZpZXJzPgogIDxyZWxhdGVkSWRlbnRpZmllcnM+CiAgICA8cmVsYXRlZElkZW50aWZpZXIgcmVsYXRlZElkZW50aWZpZXJUeXBlPSJBUksiIHJlbGF0aW9uVHlwZT0iSXNDaXRlZEJ5IiByZXNvdXJjZVR5cGVHZW5lcmFsPSJEYXRhc2V0Ij5hcms6LzEzMDMwL3RxYjNraDk3Z2g4dzwvcmVsYXRlZElkZW50aWZpZXI+CiAgPC9yZWxhdGVkSWRlbnRpZmllcnM+CiAgPHJlbGF0ZWRJdGVtcz4KICAgIDxyZWxhdGVkSXRlbSByZWxhdGVkSXRlbVR5cGU9IkRhdGFzZXQiIHJlbGF0aW9uVHlwZT0iSXNDaXRlZEJ5Ij4KICAgICAgPHJlbGF0ZWRJdGVtSWRlbnRpZmllciByZWxhdGVkSXRlbUlkZW50aWZpZXJUeXBlPSJVUkwiPmh0dHBzOi8vbjJ0Lm5ldC9hcms6Lzk5OTk5LzEyMzQ1PC9yZWxhdGVkSXRlbUlkZW50aWZpZXI+CiAgICAgIDxjcmVhdG9ycz4KICAgICAgICA8Y3JlYXRvcj4KICAgICAgICAgIDxjcmVhdG9yTmFtZSBuYW1lVHlwZT0iUGVyc29uYWwiPk1vdXNlLCBNaW5uaWU8L2NyZWF0b3JOYW1lPgogICAgICAgICAgPGdpdmVuTmFtZT5NaW5uaWU8L2dpdmVuTmFtZT4KICAgICAgICAgIDxmYW1pbHlOYW1lPk1vdXNlPC9mYW1pbHlOYW1lPgogICAgICAgIDwvY3JlYXRvcj4KICAgICAgPC9jcmVhdG9ycz4KICAgICAgPHRpdGxlcz4KICAgICAgICA8dGl0bGU+VGVzdCBSZWxhdGVkIEl0ZW08L3RpdGxlPgogICAgICA8L3RpdGxlcz4KICAgICAgPHB1YmxpY2F0aW9uWWVhcj4yMDI1PC9wdWJsaWNhdGlvblllYXI+CiAgICAgIDx2b2x1bWU+Vm9sdW1lIDM8L3ZvbHVtZT4KICAgICAgPGlzc3VlPklzc3VlIDExPC9pc3N1ZT4KICAgICAgPG51bWJlcj5hcnRpY2xlIG51bWJlciAxMTExPC9udW1iZXI+CiAgICAgIDxjb250cmlidXRvcnM+CiAgICAgICAgPGNvbnRyaWJ1dG9yIGNvbnRyaWJ1dG9yVHlwZT0iRWRpdG9yIj4KICAgICAgICAgIDxjb250cmlidXRvck5hbWUgbmFtZVR5cGU9IlBlcnNvbmFsIj5Nb3VzZSwgTWlja2V5PC9jb250cmlidXRvck5hbWU+CiAgICAgICAgICA8Z2l2ZW5OYW1lPk1pY2tleTwvZ2l2ZW5OYW1lPgogICAgICAgICAgPGZhbWlseU5hbWU+TW91c2U8L2ZhbWlseU5hbWU+CiAgICAgICAgPC9jb250cmlidXRvcj4KICAgICAgPC9jb250cmlidXRvcnM+CiAgICA8L3JlbGF0ZWRJdGVtPgogIDwvcmVsYXRlZEl0ZW1zPgogIDxzaXplcz4KICAgIDxzaXplPjEwMFRCPC9zaXplPgogICAgPHNpemU+MTAwR0I8L3NpemU+CiAgPC9zaXplcz4KICA8Zm9ybWF0cz4KICAgIDxmb3JtYXQ+YXBwbGljYXRpb24vYW5kcmV3LWluc2V0PC9mb3JtYXQ+CiAgICA8Zm9ybWF0PmFwcGxpY2F0aW9uL2FwcGxpeHdhcmU8L2Zvcm1hdD4KICA8L2Zvcm1hdHM+CiAgPHZlcnNpb24+MS4wPC92ZXJzaW9uPgogIDxyaWdodHNMaXN0PgogICAgPHJpZ2h0cyByaWdodHNVUkk9Imh0dHA6Ly9sYW5kbGV5Lm5ldC90b3lib3gvbGljZW5zZS5odG1sIiByaWdodHNJZGVudGlmaWVyPSIwYnNkIiByaWdodHNJZGVudGlmaWVyU2NoZW1lPSJTUERYIiBzY2hlbWVVUkk9Imh0dHBzOi8vc3BkeC5vcmcvbGljZW5zZXMvIj5CU0QgWmVybyBDbGF1c2UgTGljZW5zZTwvcmlnaHRzPgogICAgPHJpZ2h0cyByaWdodHNVUkk9Imh0dHBzOi8vb3BlbnNvdXJjZS5vcmcvbGljZW5zZXMvYXR0cmlidXRpb24iIHJpZ2h0c0lkZW50aWZpZXI9ImFhbCIgcmlnaHRzSWRlbnRpZmllclNjaGVtZT0iU1BEWCIgc2NoZW1lVVJJPSJodHRwczovL3NwZHgub3JnL2xpY2Vuc2VzLyI+QXR0cmlidXRpb24gQXNzdXJhbmNlIExpY2Vuc2U8L3JpZ2h0cz4KICA8L3JpZ2h0c0xpc3Q+CiAgPGRlc2NyaXB0aW9ucz4KICAgIDxkZXNjcmlwdGlvbiB4bWw6bGFuZz0iYWEiIGRlc2NyaXB0aW9uVHlwZT0iQWJzdHJhY3QiPlRoaXMgZGF0YXNldCBjb250YWlucyBhbGwgcHJvamVjdHMgZnVuZGVkIGJ5IHRoZSBFdXJvcGVhbiBVbmlvbiB1bmRlciB0aGUgZmlmdGggZnJhbWV3b3JrIHByb2dyYW1tZSBmb3IgcmVzZWFyY2ggYW5kIHRlY2hub2xvZ2ljYWwgZGV2ZWxvcG1lbnQgKEZQNSkgZnJvbSAxOTk4IHRvIDIwMDIuVGhlIGZpbGUgJ0ZQNSBQcm9qZWN0cycgY29udGFpbnMgdGhlIHB1YmxpYyBncmFudCBpbmZvcm1hdGlvbiBmb3IgZWFjaCBwcm9qZWN0LCBpbmNsdWRpbmcgdGhlIGZvbGxvd2luZyBpbmZvcm1hdGlvbjogUmVjb3JkIENvbnRyb2wgTnVtYmVyIChSQ04pLCBwcm9qZWN0IElEIChncmFudCBhZ3JlZW1lbnQgbnVtYmVyKSwgcHJvamVjdCBhY3JvbnltLCBwcm9qZWN0IHN0YXR1cywgZnVuZGluZyBwcm9ncmFtbWUsIHRvcGljLCBwcm9qZWN0IHRpdGxlLCBwcm9qZWN0IHN0YXJ0IGRhdGUsIHByb2plY3QgZW5kIGRhdGUsIHByb2plY3Qgb2JqZWN0aXZlLCBwcm9qZWN0IHRvdGFsIGNvc3QsIEVDIG1heCBjb250cmlidXRpb24gKGNvbW1pdG1lbnQpLCBjYWxsIElELCBmdW5kaW5nIHNjaGVtZSAodHlwZSBvZiBhY3Rpb24pLCBjb29yZGluYXRvciwgY29vcmRpbmF0b3IgY291bnRyeSwgcGFydGljaXBhbnRzIChvcmRlcmVkIGluIGEgc2VtaS1jb2xvbiBzZXBhcmF0ZWQgbGlzdCksIHBhcnRpY2lwYW50IGNvdW50cmllcyAob3JkZXJlZCBpbiBhIHNlbWktY29sb24gc2VwYXJhdGVkIGxpc3QpLlRoZSBwYXJ0aWNpcGF0aW5nIG9yZ2FuaXNhdGlvbnMgYXJlIGxpc3RlZCBpbiB0aGUgZmlsZSAnRlA1IE9yZ2FuaXNhdGlvbnMnIHdoaWNoIGluY2x1ZGVzOiBwcm9qZWN0IFJlY29yZCBDb250cm9sIE51bWJlciAoUkNOKSwgcHJvamVjdCBJRCwgcHJvamVjdCBhY3JvbnltLCBvcmdhbmlzYXRpb24gcm9sZSwgb3JnYW5pc2F0aW9uIElELCBvcmdhbmlzYXRpb24gbmFtZSwgb3JnYW5pc2F0aW9uIHNob3J0IG5hbWUsIG9yZ2FuaXNhdGlvbiB0eXBlLCBwYXJ0aWNpcGF0aTwvZGVzY3JpcHRpb24+CiAgICA8ZGVzY3JpcHRpb24geG1sOmxhbmc9ImFmIiBkZXNjcmlwdGlvblR5cGU9IkFic3RyYWN0Ij5UZXN0IGRlc2NyaXB0aW9uIDIhITwvZGVzY3JpcHRpb24+CiAgPC9kZXNjcmlwdGlvbnM+CiAgPGdlb0xvY2F0aW9ucz4KICAgIDxnZW9Mb2NhdGlvbj4KICAgICAgPGdlb0xvY2F0aW9uUGxhY2U+TmV3IEhhbXBzaGlyZSBTZWFjb2FzdDwvZ2VvTG9jYXRpb25QbGFjZT4KICAgICAgPGdlb0xvY2F0aW9uUG9pbnQ+CiAgICAgICAgPHBvaW50TGF0aXR1ZGU+NDMuMDMxMzQxNTM3NDc2ODM8L3BvaW50TGF0aXR1ZGU+CiAgICAgICAgPHBvaW50TG9uZ2l0dWRlPi03MC43NDI1NjU0NjQwNDgyMTwvcG9pbnRMb25naXR1ZGU+CiAgICAgIDwvZ2VvTG9jYXRpb25Qb2ludD4KICAgICAgPGdlb0xvY2F0aW9uQm94PgogICAgICAgIDx3ZXN0Qm91bmRMb25naXR1ZGU+LTcwLjc0Nzwvd2VzdEJvdW5kTG9uZ2l0dWRlPgogICAgICAgIDxlYXN0Qm91bmRMb25naXR1ZGU+LTcwLjczNDY0PC9lYXN0Qm91bmRMb25naXR1ZGU+CiAgICAgICAgPHNvdXRoQm91bmRMYXRpdHVkZT40My4wMjc8L3NvdXRoQm91bmRMYXRpdHVkZT4KICAgICAgICA8bm9ydGhCb3VuZExhdGl0dWRlPjQzLjAzMzMxPC9ub3J0aEJvdW5kTGF0aXR1ZGU+CiAgICAgIDwvZ2VvTG9jYXRpb25Cb3g+CiAgICA8L2dlb0xvY2F0aW9uPgogIDwvZ2VvTG9jYXRpb25zPgogIDxmdW5kaW5nUmVmZXJlbmNlcz4KICAgIDxmdW5kaW5nUmVmZXJlbmNlPgogICAgICA8ZnVuZGVyTmFtZT5BLiBFLiBGaW5sZXkgRm91bmRhdGlvbjwvZnVuZGVyTmFtZT4KICAgICAgPGZ1bmRlcklkZW50aWZpZXIgZnVuZGVySWRlbnRpZmllclR5cGU9IkNyb3NzcmVmIEZ1bmRlciBJRCI+aHR0cHM6Ly9kb2kub3JnLzEwLjEzMDM5LzEwMDAwMTYxNTwvZnVuZGVySWRlbnRpZmllcj4KICAgICAgPGF3YXJkTnVtYmVyIGF3YXJkVVJJPSJodHRwczovL2F3YXJkLm9yZy9ncmFudHMvMTExMSI+MTExMTwvYXdhcmROdW1iZXI+CiAgICAgIDxhd2FyZFRpdGxlPlRlc3QgQXdhcmQgVGl0bGU8L2F3YXJkVGl0bGU+CiAgICA8L2Z1bmRpbmdSZWZlcmVuY2U+CiAgICA8ZnVuZGluZ1JlZmVyZW5jZT4KICAgICAgPGZ1bmRlck5hbWU+Qi5XLiBCYXN0aWFuIEZvdW5kYXRpb248L2Z1bmRlck5hbWU+CiAgICAgIDxmdW5kZXJJZGVudGlmaWVyIGZ1bmRlcklkZW50aWZpZXJUeXBlPSJDcm9zc3JlZiBGdW5kZXIgSUQiPmh0dHBzOi8vZG9pLm9yZy8xMC4xMzAzOS8xMDAwMjkwNDI8L2Z1bmRlcklkZW50aWZpZXI+CiAgICA8L2Z1bmRpbmdSZWZlcmVuY2U+CiAgPC9mdW5kaW5nUmVmZXJlbmNlcz4KPC9yZXNvdXJjZT4K","url":"https://example.org","contentUrl":null,"metadataVersion":5,"schemaVersion":"http://datacite.org/schema/kernel-4","source":"fabricaForm","isActive":true,"state":"findable","reason":null,"viewCount":0,"viewsOverTime":[],"downloadCount":0,"downloadsOverTime":[],"referenceCount":0,"citationCount":0,"citationsOverTime":[],"partCount":0,"partOfCount":0,"versionCount":0,"versionOfCount":0,"created":"2026-06-17T13:52:54.000Z","registered":"2026-08-24T17:58:22.000Z","published":"2015","updated":"2026-09-09T10:04:08.000Z"},"relationships":{"client":{"data":{"id":"datacite.rph","type":"clients"}},"provider":{"data":{"id":"aa","type":"providers"}},"media":{"data":{"id":"10.0138/arra-bqw1234","type":"media"}},"references":{"data":[]},"citations":{"data":[]},"parts":{"data":[]},"partOf":{"data":[]},"versions":{"data":[]},"versionOf":{"data":[]}}},"included":[{"id":"datacite.rph","type":"clients","attributes":{"name":"DataCite
+        Test RPH (stage)","symbol":"DATACITE.RPH","year":2017,"alternateName":null,"description":null,"language":["en"],"clientType":"repository","domains":"*","re3data":null,"opendoar":null,"issn":{},"url":null,"created":"2017-12-07T14:23:04.000Z","updated":"2026-06-17T13:36:50.000Z","isActive":true},"relationships":{"provider":{"data":{"id":"aa","type":"providers"}},"consortium":{"data":{"id":"AKRISTIA","type":"providers"}},"prefixes":{"data":[{"id":"10.0138","type":"prefixes"},{"id":"10.70048","type":"prefixes"},{"id":"10.80220","type":"prefixes"}]}}}]}'
+  recorded_at: Thu, 01 Oct 2026 15:19:09 GMT
+recorded_with: VCR 6.4.0
