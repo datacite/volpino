@@ -18,7 +18,7 @@ describe Claim, type: :model, vcr: true, elasticsearch: true do
   #     expect(subject.work.validation_errors).to be_empty
   #   end
   # end
-  
+
   describe "claim uses correct token" do
     let(:user) { FactoryBot.create(:valid_user) }
 
