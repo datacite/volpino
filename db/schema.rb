@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_084328) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_142037) do
   create_table "claims", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "aasm_state", limit: 191
     t.string "claim_action", limit: 191, default: "create"
@@ -24,6 +24,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_084328) do
     t.integer "state_number", default: 0
     t.datetime "updated_at", precision: nil, null: false
     t.string "uuid", limit: 191
+    t.index ["claim_action"], name: "index_claims_on_claim_action"
     t.index ["created_at"], name: "index_claims_created_at"
     t.index ["orcid", "doi"], name: "index_claims_on_orcid_and_doi"
     t.index ["orcid"], name: "index_claims_uid"
