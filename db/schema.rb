@@ -25,7 +25,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_084328) do
     t.datetime "updated_at", precision: nil, null: false
     t.string "uuid", limit: 191
     t.index ["created_at"], name: "index_claims_created_at"
-    t.index ["orcid", "doi", "created_at"], name: "index_claims_on_orcid_and_doi_and_created_at"
+    t.index ["orcid", "doi"], name: "index_claims_on_orcid_and_doi"
     t.index ["orcid"], name: "index_claims_uid"
     t.index ["put_code"], name: "index_claims_on_put_code"
     t.index ["source_id"], name: "index_claims_source_id"
