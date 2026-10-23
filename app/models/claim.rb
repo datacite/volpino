@@ -286,7 +286,7 @@ class Claim < ApplicationRecord
 
   def stale_put_code?(response)
     errors = format_error_message(response.body["errors"])
-    errors.any? { |error| (error["status"] == 404 && error["title"] == "Not found") || error["status"] == 403 || error["status"] == 400 }
+    errors.any? { |error| (error[:status] == 404 && error[:title] == "Not found") || error[:status] == 403 || error[:status] == 400 }
   end
 
   def create_uuid
