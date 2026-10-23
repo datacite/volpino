@@ -269,6 +269,7 @@ class Claim < ApplicationRecord
       if source_id == "orcid_search" && stale_put_code?(response)
         logger.info "Claim #{uid} – #{doi} re-created."
         self.put_code = nil
+        work.instance_variable_set(:@put_code, nil)
         work.create_work(options)
       else
         logger.info "Claim #{uid} – #{doi} updated."
@@ -403,7 +404,7 @@ class Claim < ApplicationRecord
   end
 
   def format_error_message(messages)
-    Array.wrap(messages) do |msg|
+    Array.wrap(messages).map do |msg|
       if msg["title"].is_a?(Hash) && msg.dig("title", "developer-message").present?
         title = msg.dig("title", "developer-message")
       elsif msg["title"].is_a?(String)
