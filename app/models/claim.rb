@@ -6,6 +6,7 @@ require "orcid_client"
 class Claim < ApplicationRecord
   # include view helpers
   include ActionView::Helpers::TextHelper
+  include Bolognese::Utils
 
   # include helper module for DOI resolution
   include Resolvable
@@ -259,6 +260,8 @@ class Claim < ApplicationRecord
 
     options[:sandbox] = ENV["SANDBOX"].present? || (ENV["ORCID_URL"] == "https://sandbox.orcid.org")
 
+    work.instance_variable_set(:@orcid_token, orcid_token)
+
     # create or delete entry in ORCID record. If put_code exists, update entry
     if to_be_created? && put_code.present?
       response = work.update_work(options)
@@ -266,6 +269,7 @@ class Claim < ApplicationRecord
       if source_id == "orcid_search" && stale_put_code?(response)
         logger.info "Claim #{uid} – #{doi} re-created."
         self.put_code = nil
+        work.instance_variable_set(:@put_code, nil)
         work.create_work(options)
       else
         logger.info "Claim #{uid} – #{doi} updated."
@@ -282,7 +286,7 @@ class Claim < ApplicationRecord
 
   def stale_put_code?(response)
     errors = format_error_message(response.body["errors"])
-    errors.any? { |error| error["status"] == 404 && error["title"] == "Not found" }
+    errors.any? { |error| (error[:status] == 404 && error[:title] == "Not found") || error[:status] == 403 || error[:status] == 400 }
   end
 
   def create_uuid
@@ -290,7 +294,24 @@ class Claim < ApplicationRecord
   end
 
   def orcid_token
-    source_id == "orcid_search" ? user.orcid_search_and_link_access_token : user.orcid_auto_update_access_token
+    # ORCID auto-update claims always use the auto-update token
+    return user.orcid_auto_update_access_token if source_id == "orcid_update"
+    # ORCID search and link claims use the auto-update token if the claim is eligible for a trust marker and the user has an auto-update token
+    # The trust marker only appears for claims with the auto-update token
+    return user.orcid_auto_update_access_token if source_id == "orcid_search" && eligible_for_trust_marker_in_orcid? && user.orcid_auto_update_access_token.present?
+
+    user.orcid_search_and_link_access_token
+  end
+
+  def eligible_for_trust_marker_in_orcid?
+    return false unless work.metadata.present? && user.present?
+
+    Array.wrap(work.metadata.creators).any? do |creator|
+      Array(creator["nameIdentifiers"]).any? do |name_identifier|
+        next false unless name_identifier["nameIdentifierScheme"] == "ORCID"
+        validate_orcid(name_identifier["nameIdentifier"]) == user.uid
+      end
+    end
   end
 
   def orcid_token_expired
@@ -299,11 +320,11 @@ class Claim < ApplicationRecord
   end
 
   def work
-    sandbox = ENV["SANDBOX"].present? || (ENV["ORCID_URL"] == "https://sandbox.orcid.org")
-    # Note that if this is ever intended in future to support claiming for non datacite dois
-    # Then we will need to change following to be looked up from a better location
-    agency = "datacite"
-    Work.new(doi: doi, orcid: orcid.upcase, orcid_token: orcid_token, put_code: put_code, sandbox: sandbox, agency: agency)
+    @work ||= begin
+      sandbox = ENV["SANDBOX"].present? || (ENV["ORCID_URL"] == "https://sandbox.orcid.org")
+      agency = "datacite"
+      Work.new(doi: doi, orcid: orcid.upcase, orcid_token: nil, put_code: put_code, sandbox: sandbox, agency: agency)
+    end
   end
 
   def notification
@@ -383,7 +404,7 @@ class Claim < ApplicationRecord
   end
 
   def format_error_message(messages)
-    Array.wrap(messages) do |msg|
+    Array.wrap(messages).map do |msg|
       if msg["title"].is_a?(Hash) && msg.dig("title", "developer-message").present?
         title = msg.dig("title", "developer-message")
       elsif msg["title"].is_a?(String)
