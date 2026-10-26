@@ -15,8 +15,8 @@ class CreateClaimWorker
       return if orcid.blank? || doi.blank?
 
       # Do not bother trying to create a claim if no user exists already.
-      # A user must exist and have a valid orcid claiming setup i.e. a orcid auth token
-      return unless User.exists?(uid: orcid)
+      # A user must exist and have a non-empty orcid_auto_update_access_token
+      return unless User.where(uid: orcid).where.not(orcid_auto_update_access_token: [nil, ""]).exists?
 
       @claim = Claim.where(orcid: orcid, doi: doi).first
       exists = @claim.present?

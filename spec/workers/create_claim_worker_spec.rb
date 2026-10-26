@@ -1,7 +1,13 @@
 require "rails_helper"
 
 RSpec.describe(CreateClaimWorker, type: :worker, vcr: true, elasticsearch: true) do
-  let!(:user) { FactoryBot.create(:valid_user, uid: "0000-0001-6528-2027") }
+  let!(:user) do
+    FactoryBot.create(
+      :valid_user,
+      uid: "0000-0001-6528-2027",
+      orcid_auto_update_expires_at: 1.year.from_now
+    )
+  end
 
   let(:data) do
     { "doi" => "10.14454/1X4X-9056",
